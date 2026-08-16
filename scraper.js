@@ -12,7 +12,6 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
-
 const db = admin.firestore();
 
 async function runScraper() {
@@ -27,9 +26,9 @@ async function runScraper() {
     for (const doc of companiesSnapshot.docs) {
       const company = doc.data();
       if (company.career_url) {
-        console.log(`🔍 Feldolgozás: ${company.name || "Cég"} -> ${company.career_url}`);
+        console.log(`\n🔍 Feldolgozás: ${company.name || "Cég"} -> ${company.career_url}`);
         const frissAllasok = await scrapeJobsFromUrl(company.career_url);
-        console.log(`✅ Talált állások: ${frissAllasok.length} db`);
+        console.log(`✅ Összesen talált állások (minden oldal): ${frissAllasok.length} db`);
 
         for (const job of frissAllasok) {
           const jobId = (job.url || company.name + job.title).replace(/[^a-zA-Z0-9]/g, "").substring(0, 50);
@@ -46,99 +45,139 @@ async function runScraper() {
         }
       }
     }
-    console.log("🎉 Szinkronizáció sikeresen befejeződött!");
+    console.log("\n🎉 Szinkronizáció sikeresen befejeződött!");
   } catch (error) {
     console.error("❌ Hiba történt:", error);
     process.exit(1);
   }
 }
 
-async function scrapeJobsFromUrl(url) {
-  const extractedJobs = [];
-  try {
-    const response = await fetch(url, {
-      headers: {
-        "Accept": "application/json, application/rss+xml, text/html, */*",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
-      },
-    });
+async function scrapeJobsFromUrl(baseUrl) {
+  const allExtractedJobs = [];
+  let startrow = 0;
+  const maxPages = 10; // Max 10 oldalig megy el (kb. 250 állás cégenként)
 
-    const contentType = response.headers.get("content-type") || "";
-    const rawText = await response.text();
+  for (let page = 1; page <= maxPages; page++) {
+    const extractedJobs = [];
+    
+    // Lapozás az SAP/Taleo rendszerekhez (startrow)
+    let currentUrl = baseUrl;
+    if (page > 1) {
+      currentUrl = baseUrl.includes('?') 
+        ? `${baseUrl}&startrow=${startrow}` 
+        : `${baseUrl}?startrow=${startrow}`;
+    }
+    
+    console.log(`   ⬇️ Oldal ${page} letöltése...`);
 
-    if (contentType.includes("application/json") || rawText.trim().startsWith('{') || rawText.trim().startsWith('[')) {
-      console.log("   📡 JSON API válasz észlelve...");
-      try {
-        const data = JSON.parse(rawText);
-        let jobArray = Array.isArray(data) ? data : data.items || data.results || data.data || data.jobs || [];
-        jobArray.forEach(item => {
+    try {
+      const response = await fetch(currentUrl, {
+        headers: {
+          "Accept": "application/json, application/rss+xml, text/html, */*",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        },
+      });
+
+      const rawText = await response.text();
+      let pageHasJobs = false;
+
+      // 1. JSON API
+      if (rawText.trim().startsWith('{') || rawText.trim().startsWith('[')) {
+        try {
+          const data = JSON.parse(rawText);
+          let jobArray = Array.isArray(data) ? data : data.items || data.results || data.data || data.jobs || [];
+          jobArray.forEach(item => {
+            extractedJobs.push({
+              title: item.title || item.name || item.jobTitle || "Névtelen",
+              url: item.url || item.applyUrl || currentUrl,
+              location: item.location || item.city || "Nincs megadva",
+              datePosted: item.datePosted || new Date().toISOString(),
+              description: (item.description || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
+            });
+          });
+          pageHasJobs = extractedJobs.length > 0;
+        } catch (e) {}
+      }
+
+      // 2. RSS / XML feed
+      if (!pageHasJobs && (rawText.includes('<?xml') || rawText.includes('<rss') || rawText.includes('<feed'))) {
+        const $ = cheerio.load(rawText, { xmlMode: true });
+        $('item, entry').each((i, el) => {
           extractedJobs.push({
-            title: item.title || item.name || item.jobTitle || "Névtelen",
-            url: item.url || item.applyUrl || url,
-            location: item.location || item.city || "Nincs megadva",
-            datePosted: item.datePosted || new Date().toISOString(),
-            description: (item.description || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
+            title: $(el).find('title').text().trim() || "Névtelen",
+            url: $(el).find('link').text().trim() || currentUrl,
+            location: "Magyarország",
+            datePosted: $(el).find('pubDate, updated').text() || new Date().toISOString(),
+            description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
           });
         });
-        return extractedJobs;
-      } catch (e) {}
-    }
-
-    if (rawText.includes('<?xml') || rawText.includes('<rss') || rawText.includes('<feed')) {
-      console.log("   🧲 RSS/XML feed észlelve (Nagyvállalati mód)...");
-      const $ = cheerio.load(rawText, { xmlMode: true });
-      $('item, entry').each((i, el) => {
-        extractedJobs.push({
-          title: $(el).find('title').text().trim() || "Névtelen",
-          url: $(el).find('link').text().trim() || url,
-          location: "Magyarország",
-          datePosted: $(el).find('pubDate, updated').text() || new Date().toISOString(),
-          description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
-        });
-      });
-      if (extractedJobs.length > 0) return extractedJobs;
-    }
-
-    console.log("   📄 HTML weboldal észlelve...");
-    const $ = cheerio.load(rawText);
-    $('script[type="application/ld+json"]').each((i, el) => {
-      try {
-        const data = JSON.parse($(el).html());
-        const items = Array.isArray(data) ? data : [data];
-        items.forEach((item) => {
-          if (item["@type"] === "JobPosting") {
-            extractedJobs.push({
-              title: item.title || "Névtelen",
-              url: item.url || url,
-              location: item.jobLocation?.address?.addressLocality || "Nincs",
-              datePosted: item.datePosted || new Date().toISOString(),
-              description: item.description ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..." : "",
-            });
-          }
-        });
-      } catch (err) {}
-    });
-    if (extractedJobs.length > 0) return extractedJobs;
-
-    console.log("   ⚠️ Okos HTML Fallback indítása...");
-    $('a').each((i, el) => {
-      const href = $(el).attr('href');
-      const text = $(el).text().trim().replace(/\s+/g, ' ');
-      if (href && (href.includes('/job/') || href.includes('/position/')) && text.length > 5) {
-        extractedJobs.push({
-          title: text,
-          url: href.startsWith('http') ? href : new URL(href, url).href,
-          location: "Részletek a linken",
-          datePosted: new Date().toISOString(),
-          description: "Kattints a hirdetésre a részletekért..."
-        });
+        pageHasJobs = extractedJobs.length > 0;
       }
-    });
 
-    return extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
-  } catch (error) {
-    console.error(`❌ Hiba:`, error.message);
-    return [];
+      // 3. HTML / Schema.org és Fallback
+      if (!pageHasJobs) {
+        const $ = cheerio.load(rawText);
+        
+        $('script[type="application/ld+json"]').each((i, el) => {
+          try {
+            const data = JSON.parse($(el).html());
+            const items = Array.isArray(data) ? data : [data];
+            items.forEach((item) => {
+              if (item["@type"] === "JobPosting") {
+                extractedJobs.push({
+                  title: item.title || "Névtelen",
+                  url: item.url || currentUrl,
+                  location: item.jobLocation?.address?.addressLocality || "Nincs",
+                  datePosted: item.datePosted || new Date().toISOString(),
+                  description: item.description ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) : "",
+                });
+              }
+            });
+          } catch (err) {}
+        });
+        
+        if (extractedJobs.length === 0) {
+          $('a').each((i, el) => {
+            const href = $(el).attr('href');
+            const text = $(el).text().trim().replace(/\s+/g, ' ');
+            if (href && (href.includes('/job/') || href.includes('/position/')) && text.length > 5) {
+              extractedJobs.push({
+                title: text,
+                url: href.startsWith('http') ? href : new URL(href, currentUrl).href,
+                location: "Részletek a linken",
+                datePosted: new Date().toISOString(),
+                description: "Kattints a hirdetésre a részletekért..."
+              });
+            }
+          });
+        }
+      }
+
+    } catch (error) {
+      console.error(`   ❌ Hiba az oldal letöltésekor:`, error.message);
+    }
+
+    // Csak a valódi találatokat tartjuk meg
+    const uniqueOnPage = extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
+    allExtractedJobs.push(...uniqueOnPage);
+
+    console.log(`   ✔️  Találat ezen az oldalon: ${uniqueOnPage.length} db`);
+
+    // Ha ezen az oldalon már csak kevés (vagy 0) új állás volt, akkor ez volt az utolsó oldal!
+    if (uniqueOnPage.length < 5) {
+      console.log(`   ⏹️  Nincs több oldal, lapozás vége.`);
+      break;
+    }
+
+    // Felkészülés a következő oldalra (25-ösével ugrunk)
+    startrow += 25;
+    
+    // 1 másodperc szünet, hogy ne tiltsanak le minket a spammelésért
+    await new Promise(resolve => setTimeout(resolve, 1000));
   }
+
+  // Végső duplikátum szűrés
+  return allExtractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
 }
+
 runScraper();

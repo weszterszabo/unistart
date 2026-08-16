@@ -1,12 +1,11 @@
 const admin = require("firebase-admin");
 const cheerio = require("cheerio");
 
-// 1. Firebase Admin hitelesítés
 let serviceAccount;
 if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
   serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 } else {
-  console.error("Hiba: A FIREBASE_SERVICE_ACCOUNT_KEY környezeti változó hiányzik!");
+  console.error("Hiba: A FIREBASE_SERVICE_ACCOUNT_KEY hiányzik!");
   process.exit(1);
 }
 
@@ -16,13 +15,10 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-// 2. Fő futtató funkció
 async function runScraper() {
   console.log("🚀 Állásgyűjtő szkript elindult...");
-
   try {
     const companiesSnapshot = await db.collection("companies").get();
-
     if (companiesSnapshot.empty) {
       console.log("⚠️ Nincsenek cégek a 'companies' gyűjteményben.");
       return;
@@ -30,17 +26,13 @@ async function runScraper() {
 
     for (const doc of companiesSnapshot.docs) {
       const company = doc.data();
-
       if (company.career_url) {
         console.log(`🔍 Feldolgozás: ${company.name || "Cég"} -> ${company.career_url}`);
         const frissAllasok = await scrapeJobsFromUrl(company.career_url);
         console.log(`✅ Talált állások: ${frissAllasok.length} db`);
 
         for (const job of frissAllasok) {
-          const jobId = (job.url || company.name + job.title)
-            .replace(/[^a-zA-Z0-9]/g, "")
-            .substring(0, 50);
-
+          const jobId = (job.url || company.name + job.title).replace(/[^a-zA-Z0-9]/g, "").substring(0, 50);
           await db.collection("jobs").doc(jobId).set({
             company_id: doc.id,
             company_name: company.name || "Névtelen cég",
@@ -56,27 +48,24 @@ async function runScraper() {
     }
     console.log("🎉 Szinkronizáció sikeresen befejeződött!");
   } catch (error) {
-    console.error("❌ Hiba történt a gyűjtés során:", error);
+    console.error("❌ Hiba történt:", error);
     process.exit(1);
   }
 }
 
-// 3. A MINDENT TÚLÉLŐ HIBRID LETÖLTŐ
 async function scrapeJobsFromUrl(url) {
   const extractedJobs = [];
-
   try {
     const response = await fetch(url, {
       headers: {
         "Accept": "application/json, application/rss+xml, text/html, */*",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
       },
     });
 
     const contentType = response.headers.get("content-type") || "";
     const rawText = await response.text();
 
-    // --- 1. ESET: JSON API ---
     if (contentType.includes("application/json") || rawText.trim().startsWith('{') || rawText.trim().startsWith('[')) {
       console.log("   📡 JSON API válasz észlelve...");
       try {
@@ -84,7 +73,7 @@ async function scrapeJobsFromUrl(url) {
         let jobArray = Array.isArray(data) ? data : data.items || data.results || data.data || data.jobs || [];
         jobArray.forEach(item => {
           extractedJobs.push({
-            title: item.title || item.name || item.jobTitle || "Névtelen pozíció",
+            title: item.title || item.name || item.jobTitle || "Névtelen",
             url: item.url || item.applyUrl || url,
             location: item.location || item.city || "Nincs megadva",
             datePosted: item.datePosted || new Date().toISOString(),
@@ -92,19 +81,17 @@ async function scrapeJobsFromUrl(url) {
           });
         });
         return extractedJobs;
-      } catch (e) { /* Ha mégsem JSON, megy tovább */ }
+      } catch (e) {}
     }
 
-    // --- 2. ESET: RSS / XML FEED (A hátsó ajtó az SAP rendszerekhez) ---
     if (rawText.includes('<?xml') || rawText.includes('<rss') || rawText.includes('<feed')) {
       console.log("   🧲 RSS/XML feed észlelve (Nagyvállalati mód)...");
       const $ = cheerio.load(rawText, { xmlMode: true });
-      
       $('item, entry').each((i, el) => {
         extractedJobs.push({
-          title: $(el).find('title').text().trim() || "Névtelen pozíció",
+          title: $(el).find('title').text().trim() || "Névtelen",
           url: $(el).find('link').text().trim() || url,
-          location: "Magyarország", // RSS-ben ritkán van külön lokáció mező
+          location: "Magyarország",
           datePosted: $(el).find('pubDate, updated').text() || new Date().toISOString(),
           description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
         });
@@ -112,11 +99,8 @@ async function scrapeJobsFromUrl(url) {
       if (extractedJobs.length > 0) return extractedJobs;
     }
 
-    // --- 3. ESET: HTML OLDAL (Schema.org vagy Okos Fallback) ---
-    console.log("   📄 HTML weboldal észlelve, állások keresése...");
+    console.log("   📄 HTML weboldal észlelve...");
     const $ = cheerio.load(rawText);
-
-    // Schema.org keresése
     $('script[type="application/ld+json"]').each((i, el) => {
       try {
         const data = JSON.parse($(el).html());
@@ -124,9 +108,9 @@ async function scrapeJobsFromUrl(url) {
         items.forEach((item) => {
           if (item["@type"] === "JobPosting") {
             extractedJobs.push({
-              title: item.title || "Névtelen pozíció",
+              title: item.title || "Névtelen",
               url: item.url || url,
-              location: item.jobLocation?.address?.addressLocality || "Nincs megadva",
+              location: item.jobLocation?.address?.addressLocality || "Nincs",
               datePosted: item.datePosted || new Date().toISOString(),
               description: item.description ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..." : "",
             });
@@ -134,11 +118,9 @@ async function scrapeJobsFromUrl(url) {
         });
       } catch (err) {}
     });
-
     if (extractedJobs.length > 0) return extractedJobs;
 
-    // Okos HTML Fallback, ha semmi más nincs
-    console.log("   ⚠️ Nincs strukturált adat, Okos HTML Fallback indítása...");
+    console.log("   ⚠️ Okos HTML Fallback indítása...");
     $('a').each((i, el) => {
       const href = $(el).attr('href');
       const text = $(el).text().trim().replace(/\s+/g, ' ');
@@ -153,13 +135,10 @@ async function scrapeJobsFromUrl(url) {
       }
     });
 
-    // Duplikátumok törlése
     return extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
-
   } catch (error) {
-    console.error(`❌ Hiba a ${url} letöltésekor:`, error.message);
+    console.error(`❌ Hiba:`, error.message);
     return [];
   }
 }
-
 runScraper();

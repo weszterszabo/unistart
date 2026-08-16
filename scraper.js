@@ -61,7 +61,7 @@ async function runScraper() {
   }
 }
 
-// 3. Hibrid letöltő: Kezeli a JSON API-kat és a HTML Schema.org-ot is
+// 3. Hibrid letöltő: API + Schema.org + Okos HTML Fallback
 async function scrapeJobsFromUrl(url) {
   const extractedJobs = [];
 
@@ -73,15 +73,12 @@ async function scrapeJobsFromUrl(url) {
       },
     });
 
-    // Megnézzük, milyen típusú választ kaptunk (JSON vagy HTML)
     const contentType = response.headers.get("content-type") || "";
 
     if (contentType.includes("application/json")) {
-      // --- 1. ESET: KÖZVETLEN JSON API VÁLASZ (pl. Intesa belső végpont) ---
-      console.log("   📡 JSON API válasz észlelve, adatok kinyerése...");
+      console.log("   📡 JSON API válasz észlelve...");
       const data = await response.json();
       
-      // Megpróbáljuk megtalálni az állásokat tartalmazó tömböt
       let jobArray = [];
       if (Array.isArray(data)) jobArray = data;
       else if (data.items && Array.isArray(data.items)) jobArray = data.items;
@@ -94,17 +91,17 @@ async function scrapeJobsFromUrl(url) {
           title: item.title || item.name || item.jobTitle || "Névtelen pozíció",
           url: item.url || item.applyUrl || item.jobUrl || url,
           location: item.location || item.city || "Nincs megadva",
-          datePosted: item.datePosted || item.createdAt || item.postedDate || new Date().toISOString(),
+          datePosted: item.datePosted || item.createdAt || new Date().toISOString(),
           description: (item.description || item.summary || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
         });
       });
 
     } else {
-      // --- 2. ESET: HAGYOMÁNYOS HTML / SCHEMA.ORG (JSON-LD) ---
-      console.log("   📄 HTML weboldal észlelve, Schema.org keresése...");
+      console.log("   📄 HTML weboldal észlelve...");
       const html = await response.text();
       const $ = cheerio.load(html);
 
+      // PRÓBA 1: Schema.org JSON-LD
       $('script[type="application/ld+json"]').each((index, element) => {
         try {
           const data = JSON.parse($(element).html());
@@ -112,26 +109,58 @@ async function scrapeJobsFromUrl(url) {
 
           items.forEach((item) => {
             if (item["@type"] === "JobPosting") {
-              const loc = (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality)
-                ? item.jobLocation.address.addressLocality
-                : "Nincs megadva";
-              const desc = item.description
-                ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
-                : "Nincs leírás";
-
               extractedJobs.push({
                 title: item.title || "Névtelen pozíció",
                 url: item.url || url,
-                location: loc,
+                location: item.jobLocation?.address?.addressLocality || "Nincs megadva",
                 datePosted: item.datePosted || new Date().toISOString(),
-                description: desc,
+                description: item.description ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..." : "Nincs leírás",
               });
             }
           });
-        } catch (err) {
-          // Hibás JSON blokk átugrása
-        }
+        } catch (err) {}
       });
+
+      // PRÓBA 2: Okos HTML Fallback (ha a Schema.org 0 találatot hozott)
+      if (extractedJobs.length === 0) {
+        console.log("   ⚠️ Nincs Schema.org adat, Okos HTML Fallback indítása...");
+        
+        $('a').each((i, el) => {
+          const href = $(el).attr('href');
+          const text = $(el).text().trim().replace(/\s+/g, ' '); // Sortörések tisztítása
+          const className = $(el).attr('class') || '';
+
+          // Keresünk gyanús álláslinkeket (pl. CIB / SAP SuccessFactors / Workday rendszerek)
+          if (href && (href.includes('/job/') || href.includes('/position/') || className.toLowerCase().includes('jobtitle'))) {
+            // Kiszűrjük a "Minden állás" típusú gombokat és a túl rövid szövegeket
+            if (text.length > 5 && !text.toLowerCase().includes('összes') && !text.toLowerCase().includes('all jobs')) {
+              
+              // Relatív linkek (pl. /job/123) átalakítása teljes (https://...) linkké
+              const fullUrl = href.startsWith('http') ? href : new URL(href, url).href;
+              
+              extractedJobs.push({
+                title: text,
+                url: fullUrl,
+                location: "Részletek a linken", // Általános listából nehéz kinyerni
+                datePosted: new Date().toISOString(),
+                description: "Kattints a hirdetésre a részletekért..."
+              });
+            }
+          }
+        });
+
+        // Duplikált linkek kiszűrése (sokszor a cím és egy "Jelentkezés" gomb is ugyanoda mutat)
+        const uniqueJobs = [];
+        const seenUrls = new Set();
+        for (const job of extractedJobs) {
+          if (!seenUrls.has(job.url)) {
+            seenUrls.add(job.url);
+            uniqueJobs.push(job);
+          }
+        }
+        extractedJobs.length = 0;
+        extractedJobs.push(...uniqueJobs);
+      }
     }
   } catch (error) {
     console.error(`❌ Hiba a ${url} letöltésekor:`, error.message);
@@ -140,5 +169,4 @@ async function scrapeJobsFromUrl(url) {
   return extractedJobs;
 }
 
-// Futtatás indítása
 runScraper();

@@ -1,0 +1,32 @@
+mkdir -p .github/workflows
+cat << 'EOF' > .github/workflows/scraper.yml
+name: Napi Allasszinkronizacio
+
+on:
+  schedule:
+    # Minden nap éjjel 02:00 UTC-kor lefut
+    - cron: '0 2 * * *'
+  # Manuális indítás gomb a GitHub felületén
+  workflow_dispatch:
+
+jobs:
+  run-scraper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Forráskód letöltése
+        uses: actions/checkout@v4
+
+      - name: Node.js 20 környezet beállítása
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Csomagok telepítése
+        run: |
+          npm install firebase-admin cheerio
+
+      - name: Adatgyűjtő szkript futtatása
+        env:
+          FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
+        run: node scraper.js
+EOF

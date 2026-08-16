@@ -14,6 +14,9 @@ admin.initializeApp({
 });
 const db = admin.firestore();
 
+// BIZTONSÁGI HÁLÓ: Ne fagyjon le a Firestore, ha hiányzik egy adat!
+db.settings({ ignoreUndefinedProperties: true }); 
+
 async function runScraper() {
   console.log("🚀 Állásgyűjtő szkript elindult...");
   try {
@@ -32,14 +35,16 @@ async function runScraper() {
 
         for (const job of frissAllasok) {
           const jobId = (job.url || company.name + job.title).replace(/[^a-zA-Z0-9]/g, "").substring(0, 50);
+          
           await db.collection("jobs").doc(jobId).set({
             company_id: doc.id,
             company_name: company.name || "Névtelen cég",
-            title: job.title,
-            description: job.description,
-            location: job.location,
+            title: job.title || "Névtelen pozíció",
+            // Alapértelmezett szöveg, ha nincs leírás:
+            description: job.description || "További információkért kattints a jelentkezés gombra.",
+            location: job.location || "Nincs megadva",
             url: job.url,
-            date_posted: job.datePosted,
+            date_posted: job.datePosted || new Date().toISOString(),
             scraped_at: admin.firestore.FieldValue.serverTimestamp(),
           }, { merge: true });
         }
@@ -57,7 +62,7 @@ async function scrapeJobsFromUrl(baseUrl) {
   const seenUrls = new Set();
   let startrow = 0;
   const maxPages = 10;
-  let lastPageCount = 0; // Itt tároljuk az előző oldal elemszámát
+  let lastPageCount = 0;
 
   for (let page = 1; page <= maxPages; page++) {
     const extractedJobs = [];
@@ -145,7 +150,8 @@ async function scrapeJobsFromUrl(baseUrl) {
                 title: text,
                 url: href.startsWith('http') ? href : new URL(href, currentUrl).href,
                 location: "Részletek a linken",
-                datePosted: new Date().toISOString()
+                datePosted: new Date().toISOString(),
+                description: "Kattints a hirdetésre a részletekért..."
               });
             }
           });
@@ -155,7 +161,6 @@ async function scrapeJobsFromUrl(baseUrl) {
       console.error(`   ❌ Hiba az oldal letöltésekor:`, error.message);
     }
 
-    // Duplikátumok szűrése az aktuális oldalon belül
     const uniqueOnPage = extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
     
     let newJobsOnPage = 0;
@@ -174,7 +179,6 @@ async function scrapeJobsFromUrl(baseUrl) {
       break;
     }
 
-    // DINAMIKUS VÉGE-ÉSZLELÉS: Ha kevesebb állás jött, mint az előző oldalon, itt a vége!
     if (page > 1 && uniqueOnPage.length < lastPageCount) {
       console.log(`   ⏹️  Kevesebb állás érkezett (${uniqueOnPage.length} < ${lastPageCount}). Elértük a lista végét!`);
       break;

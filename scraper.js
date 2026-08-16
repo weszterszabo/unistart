@@ -61,48 +61,80 @@ async function runScraper() {
   }
 }
 
-// 3. Weboldal letöltő és Schema.org (JSON-LD) értelmező
+// 3. Hibrid letöltő: Kezeli a JSON API-kat és a HTML Schema.org-ot is
 async function scrapeJobsFromUrl(url) {
   const extractedJobs = [];
 
   try {
     const response = await fetch(url, {
       headers: {
+        "Accept": "application/json, text/html, */*",
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
       },
     });
-    const html = await response.text();
-    const $ = cheerio.load(html);
 
-    $('script[type="application/ld+json"]').each((index, element) => {
-      try {
-        const data = JSON.parse($(element).html());
-        const items = Array.isArray(data) ? data : [data];
+    // Megnézzük, milyen típusú választ kaptunk (JSON vagy HTML)
+    const contentType = response.headers.get("content-type") || "";
 
-        items.forEach((item) => {
-          if (item["@type"] === "JobPosting") {
-            const loc = (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality)
-              ? item.jobLocation.address.addressLocality
-              : "Nincs megadva";
-            const desc = item.description
-              ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
-              : "Nincs leírás";
+    if (contentType.includes("application/json")) {
+      // --- 1. ESET: KÖZVETLEN JSON API VÁLASZ (pl. Intesa belső végpont) ---
+      console.log("   📡 JSON API válasz észlelve, adatok kinyerése...");
+      const data = await response.json();
+      
+      // Megpróbáljuk megtalálni az állásokat tartalmazó tömböt
+      let jobArray = [];
+      if (Array.isArray(data)) jobArray = data;
+      else if (data.items && Array.isArray(data.items)) jobArray = data.items;
+      else if (data.results && Array.isArray(data.results)) jobArray = data.results;
+      else if (data.data && Array.isArray(data.data)) jobArray = data.data;
+      else if (data.jobs && Array.isArray(data.jobs)) jobArray = data.jobs;
 
-            extractedJobs.push({
-              title: item.title || "Névtelen pozíció",
-              url: item.url || url,
-              location: loc,
-              datePosted: item.datePosted || new Date().toISOString(),
-              description: desc,
-            });
-          }
+      jobArray.forEach(item => {
+        extractedJobs.push({
+          title: item.title || item.name || item.jobTitle || "Névtelen pozíció",
+          url: item.url || item.applyUrl || item.jobUrl || url,
+          location: item.location || item.city || "Nincs megadva",
+          datePosted: item.datePosted || item.createdAt || item.postedDate || new Date().toISOString(),
+          description: (item.description || item.summary || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
         });
-      } catch (err) {
-        // Hibás JSON blokk átugrása
-      }
-    });
+      });
+
+    } else {
+      // --- 2. ESET: HAGYOMÁNYOS HTML / SCHEMA.ORG (JSON-LD) ---
+      console.log("   📄 HTML weboldal észlelve, Schema.org keresése...");
+      const html = await response.text();
+      const $ = cheerio.load(html);
+
+      $('script[type="application/ld+json"]').each((index, element) => {
+        try {
+          const data = JSON.parse($(element).html());
+          const items = Array.isArray(data) ? data : [data];
+
+          items.forEach((item) => {
+            if (item["@type"] === "JobPosting") {
+              const loc = (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality)
+                ? item.jobLocation.address.addressLocality
+                : "Nincs megadva";
+              const desc = item.description
+                ? item.description.replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
+                : "Nincs leírás";
+
+              extractedJobs.push({
+                title: item.title || "Névtelen pozíció",
+                url: item.url || url,
+                location: loc,
+                datePosted: item.datePosted || new Date().toISOString(),
+                description: desc,
+              });
+            }
+          });
+        } catch (err) {
+          // Hibás JSON blokk átugrása
+        }
+      });
+    }
   } catch (error) {
-    console.error(`Hiba a ${url} letöltésekor:`, error.message);
+    console.error(`❌ Hiba a ${url} letöltésekor:`, error.message);
   }
 
   return extractedJobs;

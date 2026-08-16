@@ -139,7 +139,7 @@ body.modal-open {
 
 .search-wrapper {
     position: relative;
-    flex: 0 1 40%; /* Letisztult arány asztali nézetben */
+    flex: 0 1 40%;
     min-width: 280px;
 }
 
@@ -752,7 +752,7 @@ body.modal-open {
     flex-direction: column; 
 }
 
-/* TÁMOGATÁS OPCIÓK CSS VISSZAÁLLÍTÁSA */
+/* TÁMOGATÁS OPCIÓK */
 .support-options { 
     display: flex; 
     flex-direction: column; 
@@ -864,30 +864,6 @@ body.modal-open {
 .modal-actions .apply-btn { 
     flex: 1; 
     min-width: 150px; 
-}
-
-#c_modal_logo { 
-    height: 60px; 
-    object-fit: contain; 
-    margin-bottom: 15px; 
-    border-radius: 6px;
-}
-
-#c_modal_name { 
-    font-size: 22px; 
-    font-weight: 800; 
-    margin-top: 0; 
-    margin-bottom: 10px; 
-    color: var(--primary-color); 
-    text-align: center; 
-}
-
-#c_modal_long_desc { 
-    color: var(--text-color); 
-    line-height: 1.5; 
-    margin-bottom: 20px; 
-    font-size: 14px; 
-    white-space: pre-wrap;
 }
 
 /* Űrlapok (Profil szerkesztés) */
@@ -1219,19 +1195,19 @@ input:focus, select:focus {
                 </div>
                 
                 <div class="section-header-row">
-                    <h2 class="section-title" style="margin: 0;">Partnerek</h2>
+                    <h2 class="section-title" style="margin: 0;">Legfrissebb Állások</h2>
                     <div class="search-wrapper">
-                        <input type="text" id="companySearchInput" class="search-input" placeholder="🔍 Keresés cég neve alapján..." oninput="filterCompanyByText()">
+                        <input type="text" id="jobSearchInput" class="search-input" placeholder="🔍 Keresés pozíció, cég vagy helyszín alapján..." oninput="filterJobsByText()">
                         <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" title="Keresés törlése">&times;</button>
                     </div>
                 </div>
 
-                <!-- ALAP MOZAIK RÁCS -->
-                <div class="company-grid" id="companyGridContainer">
+                <!-- ÁLLÁSOK MOZAIK RÁCS -->
+                <div class="company-grid" id="jobGridContainer">
                 </div>
 
                 <div class="load-more-container" id="loadMoreContainer" style="display:none;">
-                    <button class="load-more-btn" onclick="loadMoreCompanies()">Többi betöltése</button>
+                    <button class="load-more-btn" onclick="loadMoreJobs()">Többi betöltése</button>
                 </div>
                 
                 <!-- TÁMOGATÁS GOMB ALUL -->
@@ -1253,20 +1229,23 @@ input:focus, select:focus {
 </div>
 
 <!-- ==========================================================================
-   MODÁLIS ABLAKOK (CÉG, PROFIL, RÓLUNK, STB.)
+   MODÁLIS ABLAKOK (ÁLLÁS, PROFIL, RÓLUNK, STB.)
    ========================================================================== -->
 
-<!-- CÉG RÉSZLETEK -->
-<div class="big-support-overlay" id="companyModal">
+<!-- ÁLLÁS RÉSZLETEK -->
+<div class="big-support-overlay" id="jobModal">
     <div class="big-support-box" style="max-width: 650px;">
-        <button class="big-close-btn" onclick="closeModal('companyModal')" title="Bezárás">✖</button>
+        <button class="big-close-btn" onclick="closeModal('jobModal')" title="Bezárás">✖</button>
         <div class="big-support-content">
-            <div style="text-align: center;" id="modalLogoWrapper"></div>
-            <h2 id="c_modal_name" style="text-align:center; font-size: 22px; font-weight: 800; color: var(--primary-color);">Cég neve</h2>
+            <div style="text-align: center; margin-bottom: 20px;" id="modalLogoWrapper"></div>
             
-            <p id="c_modal_long_desc" style="color: var(--text-color); line-height: 1.5; margin-bottom: 20px; font-size: 14px; white-space: pre-wrap;">Ide jön a cég hosszú leírása.</p>
+            <h2 id="j_modal_title" style="text-align:center; font-size: 22px; font-weight: 800; color: var(--primary-color); margin-top: 0; margin-bottom: 8px;">Állás címe</h2>
+            <h4 id="j_modal_company" style="text-align:center; font-size: 14px; margin-top: 0; margin-bottom: 25px; color: var(--subtitle-color);">Cég neve • Helyszín</h4>
             
-            <div class="modal-actions" id="c_modal_buttons">
+            <p id="j_modal_desc" style="color: var(--text-color); line-height: 1.6; margin-bottom: 25px; font-size: 14px; white-space: pre-wrap; padding: 15px; background: var(--tag-bg); border-radius: 12px; border: 1px solid var(--tag-border);">Ide jön a leírás...</p>
+            
+            <div class="modal-actions" id="j_modal_buttons" style="display: flex; justify-content: center;">
+                <!-- Jelentkezés gomb -->
             </div>
         </div>
     </div>
@@ -1380,7 +1359,7 @@ input:focus, select:focus {
     </div>
 </div>
 
-<!-- TÁMOGATÁS MODAL (DIZÁJN VISSZAÁLLÍTVA) -->
+<!-- TÁMOGATÁS MODAL -->
 <div id="bigSupportOverlay" class="big-support-overlay">
     <div class="big-support-box" style="max-width: 750px;">
         <button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button>
@@ -1454,7 +1433,7 @@ input:focus, select:focus {
     </div>
 </div>
 
-<!-- RÓLUNK MODAL (Megcserélt sorrenddel) -->
+<!-- RÓLUNK MODAL -->
 <div id="aboutOverlay" class="big-support-overlay">
     <div class="big-support-box" style="max-width: 650px;">
         <button class="big-close-btn" onclick="closeModal('aboutOverlay')">✖</button>
@@ -1469,8 +1448,7 @@ input:focus, select:focus {
             </div>
             
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                
-                <!-- NÓRA (Most ő van elől) -->
+                <!-- NÓRA -->
                 <div class="about-card" style="padding: 15px; text-align: center;">
                     <div style="width: 50px; height: 50px; border-radius: 25px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">NJ</div>
                     <h3 style="margin: 0 0 4px 0; font-size: 16px;">József Nóra</h3>
@@ -1491,7 +1469,6 @@ input:focus, select:focus {
                         🔗 LinkedIn
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -1832,7 +1809,7 @@ input:focus, select:focus {
         });
     }
 
-    // Támogatás Fizetési Opciók Váltása (Egyéni, Kávé, Pizza)
+    // Támogatás Fizetési Opciók Váltása
     function setAmount(type, event) {
         const buttons = document.querySelectorAll('.option-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
@@ -1905,16 +1882,13 @@ input:focus, select:focus {
     function updateDashboardData(d) {
         const firstName = d.first_name || 'Profilom';
         
-        // Oldalsáv profil neve
         const profileEl = document.getElementById('sidebarProfileName');
         if (profileEl) {
             profileEl.innerText = firstName;
         }
         
-        // CÍM FRISSÍTÉSE LÁTHATATLANUL: Ha van megadott név, kiírja a szóköz után " Személyre Szabott..."
         document.getElementById('highlightedName').innerText = (d.first_name ? d.first_name + ' ' : '');
         
-        // Profil Modál adatai
         document.getElementById('dashFullName').innerText = (d.family_name ? d.family_name + ' ' : '') + (d.first_name || '');
         document.getElementById('dashUni').innerText = d.university || 'Nincs megadva';
         document.getElementById('dashFaculty').innerText = d.faculty || 'Nincs megadva';
@@ -1926,7 +1900,6 @@ input:focus, select:focus {
         closeModal('profileModal'); 
         openModal('editProfileModal');
         
-        // Űrlap kitöltése a meglévő adatokkal
         document.getElementById('e_lastName').value = currentUserData.family_name || '';
         document.getElementById('e_firstName').value = currentUserData.first_name || '';
         document.getElementById('e_linkedin').value = currentUserData.linkedin || '';
@@ -1937,7 +1910,6 @@ input:focus, select:focus {
         document.getElementById('editFacGroup').style.display = 'none';
         document.getElementById('editMajGroup').style.display = 'none';
 
-        // Intelligens mezők újraépítése a meglévő adatok alapján
         if (e_uni.value && uniDatabase[e_uni.value]) {
             const faculties = Object.keys(uniDatabase[e_uni.value]);
             if (faculties.length === 1 && faculties[0] === 'KARMENTES') {
@@ -2000,40 +1972,53 @@ input:focus, select:focus {
     });
 
     // -----------------------------------------------------
-    // CÉGES GRID, JSON FETCH, LAPOZÁS ÉS KERESÉS
+    // ÁLLÁSOK LEKÉRDEZÉSE FIRESTORE-BÓL (JSON HELYETT) ÉS MEGJELENÍTÉSE
     // -----------------------------------------------------
-    let companiesData = [];
-    let currentFilteredList = [];
+    let jobsData = [];
+    let currentFilteredJobs = [];
     let displayedCount = 30;
 
-    async function loadCompaniesData() {
+    async function loadJobsData() {
         try {
-            const response = await fetch('hun.json');
-            if (!response.ok) throw new Error("A hun.json fájl nem tölthető be!");
+            // Lekérjük az összes állást a Firestore-ból
+            const snapshot = await db.collection("jobs").get();
+            jobsData = [];
             
-            companiesData = await response.json();
-            currentFilteredList = [...companiesData];
+            snapshot.forEach(doc => {
+                jobsData.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Időrendi sorrendbe rakás (legfrissebb elől) a memóriában
+            jobsData.sort((a, b) => {
+                const dateA = a.date_posted || a.scraped_at;
+                const dateB = b.date_posted || b.scraped_at;
+                return (dateB > dateA) ? 1 : -1;
+            });
+
+            currentFilteredJobs = [...jobsData];
             renderGrid();
         } catch (error) {
             console.error(error);
-            document.getElementById('companyGridContainer').innerHTML = 
-                '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1; padding: 40px 0;">Nem sikerült betölteni a cégeket a hun.json fájlból. Kérjük ellenőrizd a fájlt!</p>';
+            document.getElementById('jobGridContainer').innerHTML = 
+                '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1; padding: 40px 0;">Nem sikerült betölteni az állásokat. Ellenőrizd a kapcsolatot!</p>';
         }
     }
 
-    function filterCompanyByText() {
-        const searchInput = document.getElementById('companySearchInput');
+    function filterJobsByText() {
+        const searchInput = document.getElementById('jobSearchInput');
         const clearBtn = document.getElementById('clearSearchBtn');
         const searchTerm = searchInput.value.trim().toLowerCase();
         
         if (searchTerm === "") {
             clearBtn.style.display = 'none';
-            currentFilteredList = [...companiesData];
+            currentFilteredJobs = [...jobsData];
         } else {
             clearBtn.style.display = 'flex'; 
-            currentFilteredList = companiesData.filter(comp => {
-                const name = comp.company_name || '';
-                return name.toLowerCase().includes(searchTerm);
+            currentFilteredJobs = jobsData.filter(job => {
+                const title = (job.title || '').toLowerCase();
+                const company = (job.company_name || '').toLowerCase();
+                const location = (job.location || '').toLowerCase();
+                return title.includes(searchTerm) || company.includes(searchTerm) || location.includes(searchTerm);
             });
         }
         
@@ -2042,9 +2027,9 @@ input:focus, select:focus {
     }
 
     function clearSearch() {
-        const searchInput = document.getElementById('companySearchInput');
+        const searchInput = document.getElementById('jobSearchInput');
         searchInput.value = '';
-        filterCompanyByText(); 
+        filterJobsByText(); 
         searchInput.focus(); 
     }
 
@@ -2059,125 +2044,101 @@ input:focus, select:focus {
             <h3 class="company-name" style="color: var(--primary-color); margin-bottom: 6px;">Tetszik az UniStart?</h3>
             <p class="company-short-desc">Támogasd a szerverköltségeket és a fejlesztést egy kávé árával!</p>
         `;
-        
         return card;
     }
 
-    // Mozaik rács kirajzolása (minden 15. elem Támogatás kártya)
+    // Mozaik rács kirajzolása (ÁLLÁSOKKAL)
     function renderGrid() {
-        const container = document.getElementById('companyGridContainer');
+        const container = document.getElementById('jobGridContainer');
         container.innerHTML = '';
         
-        if (currentFilteredList.length === 0) {
-            container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő cég a listában.</p>';
+        if (currentFilteredJobs.length === 0) {
+            container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
             document.getElementById('loadMoreContainer').style.display = 'none';
             return;
         }
 
-        let companiesUsed = 0;
+        let jobsUsed = 0;
         let totalCards = 0;
 
-        // Annyi elemet töltünk be, amennyit a displayedCount enged, VAGY amíg van cég
-        while (totalCards < displayedCount && companiesUsed < currentFilteredList.length) {
+        while (totalCards < displayedCount && jobsUsed < currentFilteredJobs.length) {
             
-            // Minden 15. csempe (index 14, 29, 44 stb.) egy Támogatói mozaik
+            // Minden 15. csempe egy Támogatói mozaik
             if ((totalCards + 1) % 15 === 0) {
                 container.appendChild(createSupportCard());
                 totalCards++;
                 if (totalCards >= displayedCount) break;
             }
             
-            const company = currentFilteredList[companiesUsed];
+            const job = currentFilteredJobs[jobsUsed];
             const card = document.createElement('div'); 
             card.className = 'company-card';
-            card.onclick = () => openCompanyModal(company);
+            
+            // Amikor rákattint, átadjuk a teljes állás objektumot
+            card.onclick = () => openJobModal(job);
 
-            const companyName = company.company_name || 'Névtelen cég';
-            const shortDesc = company.sort_company_description || '';
-            const logoUrl = company.company_logo;
-
-            let logoHTML = '';
-            if (logoUrl && logoUrl.trim() !== '') {
-                logoHTML = `<img src="${logoUrl}" alt="${companyName}" class="company-logo" onerror="this.outerHTML='<div class=\\'logo-placeholder\\'>${companyName.charAt(0)}</div>'">`;
-            } else { 
-                logoHTML = `<div class="logo-placeholder">${companyName.charAt(0)}</div>`; 
-            }
+            const jobTitle = job.title || 'Névtelen pozíció';
+            const companyName = job.company_name || 'Névtelen cég';
+            const location = job.location || 'Nincs megadva';
+            
+            // Mivel az állásoknál általában nincs egyedi logó, a cég nevének kezdőbetűjét használjuk
+            const logoHTML = `<div class="logo-placeholder" style="margin-bottom: 16px;">${companyName.charAt(0)}</div>`;
 
             card.innerHTML = `
                 ${logoHTML}
-                <h3 class="company-name">${companyName}</h3>
-                <p class="company-short-desc">${shortDesc}</p>
+                <h3 class="company-name">${jobTitle}</h3>
+                <p class="company-short-desc">${companyName} • ${location}</p>
             `;
             
             container.appendChild(card);
-            companiesUsed++;
+            jobsUsed++;
             totalCards++;
         }
 
-        // Többi betöltése gomb állapota
-        if (companiesUsed >= currentFilteredList.length) {
+        if (jobsUsed >= currentFilteredJobs.length) {
             document.getElementById('loadMoreContainer').style.display = 'none';
         } else {
             document.getElementById('loadMoreContainer').style.display = 'block';
         }
     }
 
-    function loadMoreCompanies() { 
+    function loadMoreJobs() { 
         displayedCount += 30; 
         renderGrid(); 
     }
 
-    function openCompanyModal(comp) {
+    // Állás Modál megnyitása
+    function openJobModal(job) {
         const logoWrapper = document.getElementById('modalLogoWrapper');
-        const companyName = comp.company_name || 'Névtelen cég';
-        const logoUrl = comp.company_logo;
+        const companyName = job.company_name || 'Névtelen cég';
+        const jobTitle = job.title || 'Névtelen pozíció';
+        const location = job.location || 'Nincs megadva';
 
-        if (logoUrl && logoUrl.trim() !== '') {
-            logoWrapper.innerHTML = `<img id="c_modal_logo" src="${logoUrl}" alt="${companyName}">`;
-        } else { 
-            logoWrapper.innerHTML = `<div class="logo-placeholder" style="margin: 0 auto 20px auto; width:90px; height:90px; font-size:32px;">${companyName.charAt(0)}</div>`; 
-        }
+        // Logo / Céges kezdőbetű
+        logoWrapper.innerHTML = `<div class="logo-placeholder" style="margin: 0 auto 15px auto; width:80px; height:80px; font-size:32px;">${companyName.charAt(0)}</div>`; 
 
-        document.getElementById('c_modal_name').innerText = companyName;
-        document.getElementById('c_modal_long_desc').innerText = comp.long_company_description || comp.sort_company_description || 'Nincs részletes leírás megadva.';
+        document.getElementById('j_modal_title').innerText = jobTitle;
+        document.getElementById('j_modal_company').innerText = `${companyName} • ${location}`;
+        document.getElementById('j_modal_desc').innerText = job.description || 'További részletekért kattints a jelentkezés gombra.';
 
-        const btnsContainer = document.getElementById('c_modal_buttons');
+        const btnsContainer = document.getElementById('j_modal_buttons');
         btnsContainer.innerHTML = ''; 
 
-        // Gyakornoki gomb
-        if (comp.career_page_url && comp.career_page_url['Gyakornoki pozíciók']) {
-            const btn1 = document.createElement('button');
-            btn1.className = 'apply-btn';
-            btn1.innerText = 'Gyakornoki pozíciók';
-            btn1.onclick = () => window.open(comp.career_page_url['Gyakornoki pozíciók'], '_blank');
-            btnsContainer.appendChild(btn1);
+        // Jelentkezés gomb generálása
+        if (job.url) {
+            const btnApply = document.createElement('button');
+            btnApply.className = 'apply-btn';
+            btnApply.innerText = 'Tovább a jelentkezéshez';
+            btnApply.style.maxWidth = '300px';
+            btnApply.onclick = () => window.open(job.url, '_blank');
+            btnsContainer.appendChild(btnApply);
         }
 
-        // Pályakezdő gomb
-        if (comp.career_page_url && comp.career_page_url['Pályakezdő pozíciók']) {
-            const btn2 = document.createElement('button');
-            btn2.className = 'apply-btn';
-            btn2.innerText = 'Pályakezdő pozíciók';
-            btn2.onclick = () => window.open(comp.career_page_url['Pályakezdő pozíciók'], '_blank');
-            btnsContainer.appendChild(btn2);
-        }
-
-        // LinkedIn gomb
-        if (comp.company_linkedin_url && comp.company_linkedin_url.trim() !== '') {
-            const btnLi = document.createElement('button');
-            btnLi.className = 'apply-btn secondary';
-            btnLi.style.borderColor = '#0077b5';
-            btnLi.style.color = '#0077b5';
-            btnLi.innerText = 'LinkedIn';
-            btnLi.onclick = () => window.open(comp.company_linkedin_url, '_blank');
-            btnsContainer.appendChild(btnLi);
-        }
-
-        openModal('companyModal');
+        openModal('jobModal');
     }
 
-    // Automatikus betöltés
-    window.onload = loadCompaniesData;
+    // Automatikus betöltés (Állások betöltése)
+    window.onload = loadJobsData;
 
     // Globális bezáró logika a Modális ablakokhoz
     document.querySelectorAll('.big-support-overlay, .modal-overlay').forEach(modal => {

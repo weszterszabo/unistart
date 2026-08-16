@@ -1,0 +1,30 @@
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, isSignInWithEmailLink, signInWithEmailLink } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = { /* ...ugyanaz a config, mint fent... */ };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    async function handleCallback() {
+        if (isSignInWithEmailLink(auth, window.location.href)) {
+            let email = window.localStorage.getItem('emailForSignIn');
+            
+            if (!email) {
+                email = window.prompt('Kérjük, add meg az e-mail címedet a megerősítéshez:');
+            }
+
+            if (email) {
+                try {
+                    const result = await signInWithEmailLink(auth, email, window.location.href);
+                    window.localStorage.removeItem('emailForSignIn');
+                    alert('Sikeres belépés! Üdvözlünk a UniStart-on!');
+                    window.location.href = "/dashboard.html"; // Irány a főoldal
+                } catch (error) {
+                    console.error("Hiba a belépésnél:", error);
+                }
+            }
+        }
+    }
+    handleCallback();
+</script>

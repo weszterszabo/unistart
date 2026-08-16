@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniStart - Állásportál & Platform</title>
+<style>
+/* CSS Változók - Sötét mód alapértelmezett */
+:root {
+    --bg-color: #000000; --text-color: #f5f5f7; --card-bg: #1c1c1e;
+    --card-border: rgba(255,255,255,0.1); --card-shadow: rgba(0,0,0,0.5);
+    --subtitle-color: #a1a1a6; --primary-color: #0a84ff; --primary-hover: #0071e3;
+    --danger-color: #ff453a; --success-color: #32d74b; --tag-bg: #2c2c2e; --tag-border: #3a3a3c;
+}
+
+/* Világos mód beállításai */
+[data-theme="light"] {
+    --bg-color: #f5f5f7; --text-color: #1d1d1f; --card-bg: #ffffff;
+    --card-border: rgba(0,0,0,0.1); --card-shadow: rgba(0,0,0,0.08);
+    --subtitle-color: #86868b; --primary-color: #0071e3; --primary-hover: #0077ed;
+    --tag-bg: #f5f5f7; --tag-border: #e5e5ea;
+}
+
+* { box-sizing: border-box; }
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Arial, sans-serif; 
+    margin: 0; padding: 0; 
+    background-color: var(--bg-color); color: var(--text-color); 
+    min-height: 100vh; transition: background-color 0.3s, color 0.3s; 
+    display: flex; flex-direction: column; 
+}
+
+/* KÜLSŐ FEJLÉC */
+#globalHeader { padding: 20px 40px; display: flex; justify-content: flex-end; }
+
+.theme-toggle { 
+    background: var(--card-bg); border: 1px solid var(--tag-border); 
+    color: var(--text-color); width: 44px; height: 44px; border-radius: 22px; cursor: pointer; 
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
+    box-shadow: 0 2px 10px var(--card-shadow); transition: 0.2s;
+}
+.theme-toggle:hover { transform: scale(1.05); }
+
+/* FŐ TARTALOM */
+.main-content {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 20px 40px; max-width: 1200px; margin: 0 auto; width: 100%; gap: 60px;
+}
+.center-content { flex-direction: column; text-align: center; gap: 30px; }
+
+/* BAL OLDAL - BRANDING */
+.brand-section { flex: 1; max-width: 500px; }
+.brand-title { font-size: 64px; font-weight: 800; color: var(--primary-color); margin: 0 0 16px 0; letter-spacing: -1.5px; }
+.brand-subtitle { font-size: 26px; color: var(--text-color); font-weight: 500; margin: 0; line-height: 1.3; }
+
+/* JOBB OLDAL ÉS KÁRTYÁK */
+.auth-section { width: 100%; max-width: 420px; margin: 0 auto; }
+.auth-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 30px; box-shadow: 0 8px 24px var(--card-shadow); text-align: left; }
+.auth-card.center { text-align: center; }
+
+/* ŰRLAP ELEMEK */
+.form-group { margin-bottom: 15px; text-align: left; }
+.form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; color: var(--subtitle-color); }
+.form-row { display: flex; gap: 16px; }
+.form-row .form-group { flex: 1; }
+
+input, select { 
+    width: 100%; padding: 14px 16px; margin-bottom: 12px; 
+    border-radius: 8px; border: 1px solid var(--tag-border); 
+    background: var(--tag-bg); color: var(--text-color); 
+    font-size: 16px; outline: none; transition: 0.2s; font-family: inherit;
+}
+input:focus, select:focus { border-color: var(--primary-color); }
+
+.apply-btn { 
+    width: 100%; padding: 14px; border-radius: 8px; border: none; 
+    background: var(--primary-color); color: white; font-size: 16px; 
+    font-weight: 700; cursor: pointer; transition: transform 0.1s, background 0.2s; 
+}
+.apply-btn.secondary { background: transparent; border: 1px solid var(--primary-color); color: var(--primary-color); margin-bottom: 20px; width: auto; padding: 8px 16px; font-size: 14px; }
+.apply-btn:hover:not(:disabled) { background: var(--primary-hover); }
+.apply-btn.secondary:hover { background: rgba(10, 132, 255, 0.1); }
+.apply-btn:disabled { background: var(--tag-border); color: var(--subtitle-color); cursor: not-allowed; transform: none; }
+.apply-btn:active:not(:disabled) { transform: scale(0.97); }
+
+.btn-success { background: var(--success-color); color: #000; margin-top: 15px; }
+.btn-success:hover:not(:disabled) { background: #28cd41; }
+.btn-danger { background: rgba(255, 69, 58, 0.1); color: var(--danger-color); border: 1px dashed var(--danger-color); }
+.btn-danger:hover { background: var(--danger-color); color: white; }
+
+.divider { display: flex; align-items: center; margin: 24px 0; color: var(--subtitle-color); font-size: 13px; font-weight: 600; }
+.divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: var(--card-border); margin: 0 10px; }
+
+.social-btn { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ccc; background: white; color: black; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; }
+.social-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+.social-btn:active:not(:disabled) { transform: scale(0.96); }
+
+.step-indicator { color: var(--primary-color); font-weight: 700; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; display: block; }
+
+/* SZEKCIÓK REJTÉSE */
+.app-section { display: none; width: 100%; }
+
+/* =========================================================
+   ÚJ APPLIKÁCIÓ LAYOUT (DASHBOARD)
+   ========================================================= */
+.app-layout {
+    display: none; 
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--bg-color);
+}
+
+/* Oldalsáv (Sidebar) */
+.sidebar {
+    width: 260px;
+    background-color: var(--card-bg);
+    border-right: 1px solid var(--card-border);
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.sidebar-brand { font-size: 32px; font-weight: 800; color: var(--primary-color); margin-bottom: 40px; text-align: center; letter-spacing: -1px; }
+
+.nav-btn {
+    background: transparent; color: var(--subtitle-color); border: none;
+    padding: 14px 20px; text-align: left; border-radius: 10px;
+    font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s;
+    display: flex; align-items: center; gap: 12px;
+}
+.nav-btn:hover { background: var(--tag-bg); color: var(--text-color); }
+.nav-btn.active { background: var(--primary-color); color: white; }
+
+/* Fő Terület */
+.main-area { flex: 1; display: flex; flex-direction: column; }
+
+/* Felső Sáv (Top Bar) */
+.top-bar {
+    height: 80px; border-bottom: 1px solid var(--card-border);
+    display: flex; justify-content: flex-end; align-items: center; padding: 0 40px; gap: 20px;
+    background-color: var(--bg-color);
+}
+
+.profile-btn {
+    background: var(--card-bg); border: 1px solid var(--card-border);
+    color: var(--text-color); padding: 10px 20px; border-radius: 980px;
+    font-weight: 600; font-size: 15px; cursor: pointer; transition: 0.2s;
+    display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 10px var(--card-shadow);
+}
+.profile-btn:hover { border-color: var(--primary-color); }
+.profile-btn.active { border-color: var(--primary-color); color: var(--primary-color); }
+
+/* Tartalom Terület */
+.content-area { padding: 40px; flex: 1; overflow-y: auto; }
+.tab-content { display: none; animation: fadeIn 0.3s ease-out; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Profil Kártya a Dashboardon */
+.profile-card { background: var(--card-bg); padding: 30px; border-radius: 12px; border: 1px solid var(--card-border); text-align: left; margin-bottom: 24px; box-shadow: 0 4px 16px var(--card-shadow); }
+.profile-card p { margin: 12px 0; font-size: 16px; }
+.profile-card strong { color: var(--subtitle-color); display: inline-block; width: 140px; }
+
+/* Lábléc */
+#globalFooter { padding: 20px; text-align: center; color: var(--subtitle-color); font-size: 13px; border-top: 1px solid var(--card-border); }
+
+/* MOBIL OPTIMALIZÁLÁS */
+@media (max-width: 768px) {
+    .main-content { flex-direction: column; text-align: center; gap: 40px; padding: 20px; }
+    .brand-title { font-size: 48px; }
+    .app-layout { flex-direction: column; }
+    .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--card-border); padding: 20px; }
+    .sidebar-brand { margin-bottom: 20px; }
+    .top-bar { padding: 0 20px; justify-content: space-between; }
+    .content-area { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- KÜLSŐ FEJLÉC -->
+<header id="globalHeader">
+    <button class="theme-toggle" title="Téma váltása">☀️</button>
+</header>
+
+<!-- ========================================== -->
+<!-- 0. KEZDŐKÉPERNYŐ (Belépés) -->
+<!-- ========================================== -->
+<div class="main-content app-section" id="authView" style="display: flex;">
+    <div class="brand-section">
+        <h1 class="brand-title">UniStart</h1>
+        <h2 class="brand-subtitle">Vállalati Karrierportálok és Ökoszisztémák egy helyen egyetemistáknak.</h2>
+    </div>
+    <div class="auth-section">
+        <div class="auth-card">
+            <h3 style="margin: 0 0 20px 0; font-size: 22px;">Belépés</h3>
+            
+            <input type="email" id="loginEmail" placeholder="E-mail cím">
+            <input type="password" id="loginPassword" placeholder="Jelszó">
+            
+            <button class="apply-btn" onclick="handleLogin(this)">Bejelentkezés</button>
+
+            <div class="divider">VAGY</div>
+            
+            <button class="social-btn google" onclick="loginWithGoogle(this)">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px;"> Google bejelentkezés
+            </button>
+
+            <hr style="border: 0; border-top: 1px solid var(--card-border); margin: 24px 0;">
+
+            <button class="apply-btn btn-success" style="padding: 16px; font-size: 18px;" onclick="startRegistration()">Új fiók létrehozása</button>
+            
+            <!-- ADMIN BYPASS GOMB -->
+            <button class="apply-btn btn-danger" style="margin-top: 15px;" onclick="handleAdminBypass()">🛠️ Belépés hitelesítés nélkül (Admin)</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- WIZARD LÉPÉS 1: HALLGATÓI PROFIL KITÖLTÉSE / SZERKESZTÉSE -->
+<!-- ========================================== -->
+<div class="main-content center-content app-section" id="wizardStep1">
+    <div class="auth-section" style="max-width: 700px;">
+        <div class="auth-card">
+            <button class="apply-btn secondary" id="step1CancelBtn" onclick="cancelStep1()">← Vissza a kezdőlapra</button>
+            
+            <div style="text-align: center; margin-bottom: 24px;">
+                <span class="step-indicator" id="step1Indicator">1/3 Lépés</span>
+                <h2 id="step1Title" style="margin: 0; color: var(--primary-color);">Hallgatói Profil</h2>
+            </div>
+            
+            <form id="step1Form">
+                <div class="form-row">
+                    <div class="form-group"><label>Vezetéknév</label><input type="text" id="s_lastName" required></div>
+                    <div class="form-group"><label>Keresztnév</label><input type="text" id="s_firstName" required></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Felsőoktatási Intézmény</label>
+                    <select id="s_university" required>
+                        <option value="">Válassz egyetemet...</option>
+                        <option value="Budapesti Műszaki és Gazdaságtudományi Egyetem (BME)">Budapesti Műszaki és Gazdaságtudományi Egyetem (BME)</option>
+                        <option value="Eötvös Loránd Tudományegyetem (ELTE)">Eötvös Loránd Tudományegyetem (ELTE)</option>
+                        <option value="Pécsi Tudományegyetem (PTE)">Pécsi Tudományegyetem (PTE)</option>
+                        <option value="Szegedi Tudományegyetem (SZTE)">Szegedi Tudományegyetem (SZTE)</option>
+                        <option value="Debreceni Egyetem (DE)">Debreceni Egyetem (DE)</option>
+                        <option value="Budapesti Gazdasági Egyetem (BGE)">Budapesti Gazdasági Egyetem (BGE)</option>
+                        <option value="Óbudai Egyetem (ÓE)">Óbudai Egyetem (ÓE)</option>
+                        <option value="Széchenyi István Egyetem (SZE)">Széchenyi István Egyetem (SZE)</option>
+                        <option value="Semmelweis Egyetem (SE)">Semmelweis Egyetem (SE)</option>
+                        <option value="Budapesti Corvinus Egyetem (BCE)">Budapesti Corvinus Egyetem (BCE)</option>
+                        <option value="Nemzeti Közszolgálati Egyetem (NKE)">Nemzeti Közszolgálati Egyetem (NKE)</option>
+                        <option value="Magyar Agrár- és Élettudományi Egyetem (MATE)">Magyar Agrár- és Élettudományi Egyetem (MATE)</option>
+                        <option value="Pázmány Péter Katolikus Egyetem (PPKE)">Pázmány Péter Katolikus Egyetem (PPKE)</option>
+                        <option value="Károli Gáspár Református Egyetem (KRE)">Károli Gáspár Református Egyetem (KRE)</option>
+                        <option value="Egyéb">Egyéb intézmény</option>
+                    </select>
+                </div>
+                
+                <div class="form-group" id="facultyGroup" style="display: none;">
+                    <label>Kar (Opcionális)</label>
+                    <select id="s_faculty"></select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group"><label>Szak</label><input type="text" id="s_major" placeholder="pl. Gazdálkodási és menedzsment" required></div>
+                    <div class="form-group">
+                        <label>Képzési Szint</label>
+                        <select id="s_level" required>
+                            <option value="BA/BSc">BA/BSc</option>
+                            <option value="MA/MSc">MA/MSc</option>
+                            <option value="Osztatlan">Osztatlan</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>LinkedIn Profil URL vagy Felhasználónév</label>
+                    <input type="text" id="s_linkedin" placeholder="Opcionális (később is megadható)">
+                </div>
+                
+                <button type="submit" id="step1SubmitBtn" class="apply-btn btn-success">Tovább a fiók létrehozásához →</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- WIZARD LÉPÉS 2: FIÓK LÉTREHOZÁSA -->
+<!-- ========================================== -->
+<div class="main-content center-content app-section" id="wizardStep2">
+    <div class="auth-section" style="max-width: 500px;">
+        <div class="auth-card center">
+            <button class="apply-btn secondary" onclick="showSection('wizardStep1')">← Vissza</button>
+            
+            <span class="step-indicator">2/3 Lépés</span>
+            <h2 style="margin-top: 0;">Bejelentkezési mód</h2>
+            <p style="color: var(--subtitle-color); margin-bottom: 24px;">Válaszd ki, hogyan szeretnél belépni a jövőben!</p>
+            
+            <button class="social-btn google" onclick="registerWithGoogle(this)">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px;"> Google fiók használata
+            </button>
+            
+            <div class="divider">VAGY JELSZÓ BEÁLLÍTÁSA</div>
+            
+            <input type="email" id="regEmail" placeholder="Saját e-mail cím" required>
+            <input type="password" id="regPassword" placeholder="Jelszó beállítása (min. 6 karakter)" required>
+            <button class="apply-btn" onclick="registerWithEmail(this)">Fiók regisztrálása</button>
+        </div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- WIZARD LÉPÉS 3: HITELESÍTÉS -->
+<!-- ========================================== -->
+<div class="main-content center-content app-section" id="wizardStep3">
+    <div class="auth-section" style="max-width: 500px;">
+        <div class="auth-card center">
+            <button class="apply-btn secondary" onclick="handleLogout()">Kijelentkezés (Mégse)</button>
+            
+            <span class="step-indicator">3/3 Lépés</span>
+            <h2 style="margin-top: 0;">Hitelesítés 📩</h2>
+            <p style="color: var(--subtitle-color); margin-bottom: 24px;">A regisztráció befejezéséhez igazolnod kell, hogy te hoztad létre a fiókot.</p>
+            
+            <button class="apply-btn btn-success" id="showVerifyBtn" onclick="showVerificationInput()">Hitelesítés megkezdése</button>
+
+            <div id="verificationInputArea" style="display:none; text-align:left;">
+                <label style="font-weight:600; font-size:14px; margin-bottom:8px; display:block;">Intézményi (vagy egyéb) e-mail cím:</label>
+                <input type="email" id="instEmailInput" placeholder="pelda@edu.bme.hu">
+                
+                <button class="apply-btn" style="margin-bottom: 15px;" onclick="sendVerificationLink(this)">Varázslink küldése</button>
+                <button class="apply-btn secondary" id="checkVerifyBtn" style="display: none; width:100%; border-color:var(--success-color); color:var(--success-color);" onclick="checkVerificationStatus(this)">✅ Már rákattintottam a linkre</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =========================================================
+   ÚJ APPLIKÁCIÓ LAYOUT (BELSŐ NÉZET / DASHBOARD)
+   ========================================================= -->
+<div class="app-layout app-section" id="loggedInView">
+    
+    <!-- Oldalsáv -->
+    <aside class="sidebar">
+        <div class="sidebar-brand">UniStart</div>
+        <button class="nav-btn active" id="btn-forumTab" onclick="switchTab('forumTab', this)">💬 Állásfórum</button>
+        <button class="nav-btn" id="btn-offersTab" onclick="switchTab('offersTab', this)">💼 Ajánlatok</button>
+    </aside>
+
+    <!-- Fő terület -->
+    <main class="main-area">
+        
+        <!-- Felső sáv -->
+        <header class="top-bar">
+            <button class="theme-toggle" title="Téma váltása" style="position: static; margin: 0;">☀️</button>
+            <button class="profile-btn" id="btn-profileTab" onclick="switchTab('profileTab', this)">👤 Profil</button>
+        </header>
+
+        <!-- Tartalom Terület -->
+        <div class="content-area">
+            
+            <!-- 1. Állásfórum Fül (Alapértelmezett) -->
+            <div id="forumTab" class="tab-content active">
+                <h1 style="margin-top: 0; font-size: 36px;">Állásfórum</h1>
+            </div>
+
+            <!-- 2. Ajánlatok Fül -->
+            <div id="offersTab" class="tab-content">
+                <h1 style="margin-top: 0; font-size: 36px;">Ajánlatok</h1>
+            </div>
+
+            <!-- 3. Profil Fül -->
+            <div id="profileTab" class="tab-content">
+                <h1 style="margin-top: 0; font-size: 36px;">Profil Adatok</h1>
+                
+                <div class="profile-card" style="max-width: 600px;">
+                    <p><strong>Név:</strong> <span id="dashFullName"></span></p>
+                    <p><strong>Egyetem:</strong> <span id="dashUni"></span></p>
+                    <p id="dashFacContainer" style="display: none;"><strong>Kar:</strong> <span id="dashFac"></span></p>
+                    <p><strong>Szak (Szint):</strong> <span id="dashMajor"></span></p>
+                    <p><strong>Kapcsolat:</strong> <span id="dashLinkedin"></span></p>
+                    <p><strong>Intézményi e-mail:</strong> <span id="dashInstEmail"></span></p>
+                    <p><strong>Hitelesített fiók:</strong> <span id="dashEmail"></span></p>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 24px;">
+                        <button class="apply-btn secondary" style="flex: 1; margin-bottom: 0;" onclick="editProfile()">✏️ Adatok módosítása</button>
+                        <button class="apply-btn btn-danger" style="flex: 1; margin-bottom: 0;" onclick="handleLogout()">Kijelentkezés</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+<!-- LÁBLÉC -->
+<footer id="globalFooter">
+    <p>&copy; 2026 UniStart Állásportál. Minden jog fenntartva.</p>
+</footer>
+
+<!-- FIREBASE SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+<script>
+    // 1. TÉMA VÁLTÓ LOGIKA
+    function toggleThemeLogic() {
+        const body = document.body;
+        const btns = document.querySelectorAll('.theme-toggle');
+        if (body.hasAttribute('data-theme')) {
+            body.removeAttribute('data-theme'); 
+            btns.forEach(b => b.textContent = '☀️'); 
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.setAttribute('data-theme', 'light'); 
+            btns.forEach(b => b.textContent = '🌙'); 
+            localStorage.setItem('theme', 'light');
+        }
+    }
+    const themeBtns = document.querySelectorAll('.theme-toggle');
+    if (localStorage.getItem('theme') === 'light') { 
+        document.body.setAttribute('data-theme', 'light'); 
+        themeBtns.forEach(b => b.textContent = '🌙'); 
+    }
+    themeBtns.forEach(b => b.addEventListener('click', toggleThemeLogic));
+
+    // 2. FIREBASE INICIALIZÁLÁS
+    const firebaseConfig = {
+        apiKey: "AIzaSyD2efnd7QvT-ODZb3MOG4PaDfIRuvVqAxM",
+        authDomain: "unistart-36fb6.firebaseapp.com",
+        projectId: "unistart-36fb6",
+        storageBucket: "unistart-36fb6.firebasestorage.app",
+        messagingSenderId: "116780224681",
+        appId: "1:116780224681:web:8291818f4e8c42c95f99b8"
+    };
+
+    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Szekciók vezérlése
+    function showSection(sectionId) {
+        document.querySelectorAll('.app-section').forEach(el => el.style.display = 'none');
+        
+        if (sectionId === 'loggedInView') {
+            document.getElementById('loggedInView').style.display = 'flex';
+            document.getElementById('globalHeader').style.display = 'none';
+            document.getElementById('globalFooter').style.display = 'none';
+            switchTab('forumTab', document.getElementById('btn-forumTab'));
+        } else {
+            document.getElementById(sectionId).style.display = 'flex';
+            document.getElementById('globalHeader').style.display = 'flex';
+            document.getElementById('globalFooter').style.display = 'block';
+        }
+    }
+
+    // 3. FÜLEK VÁLTÁSA (DASHBOARD)
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+        document.querySelectorAll('.nav-btn, .profile-btn').forEach(btn => btn.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        if (btnElement) btnElement.classList.add('active');
+    }
+
+    // 4. EGYETEMEK ÉS KAROK ADATBÁZISA
+    const uniFaculties = {
+        "Budapesti Műszaki és Gazdaságtudományi Egyetem (BME)": ["Építőmérnöki Kar (ÉMK)", "Gépészmérnöki Kar (GPK)", "Építészmérnöki Kar (ÉPK)", "Vegyészmérnöki és BioMérnöki Kar (VBK)", "Villamosmérnöki és Informatikai Kar (VIK)", "Közlekedésmérnöki és Járműmérnöki Kar (KJK)", "Természettudományi Kar (TTK)", "Gazdaság- és Társadalomtudományi Kar (GTK)"],
+        "Eötvös Loránd Tudományegyetem (ELTE)": ["Állam- és Jogtudományi Kar", "Bárczi Gusztáv Gyógypedagógiai Kar", "Bölcsészettudományi Kar", "Informatikai Kar", "Pedagógiai és Pszichológiai Kar", "Tanító- és Óvóképző Kar", "Társadalomtudományi Kar", "Természettudományi Kar"],
+        "Pécsi Tudományegyetem (PTE)": ["Állam- és Jogtudományi Kar", "Általános Orvostudományi Kar", "Bölcsészet- és Társadalomtudományi Kar", "Egészségtudományi Kar", "Gyógyszerésztudományi Kar", "Közgazdaságtudományi Kar", "Kultúratudományi, Pedagógusképző és Vidékfejlesztési Kar", "Művészeti Kar", "Műszaki és Informatikai Kar", "Természettudományi Kar"],
+        "Szegedi Tudományegyetem (SZTE)": ["Állam- és Jogtudományi Kar", "Általános Orvostudományi Kar", "Bölcsészet- és Társadalomtudományi Kar", "Egészségtudományi és Szociális Kar", "Fogorvostudományi Kar", "Gazdaságtudományi Kar", "Gyógyszerésztudományi Kar", "Juhász Gyula Pedagógusképző Kar", "Mérnöki Kar", "Mezőgazdasági Kar", "Természettudományi és Informatikai Kar", "Bartók Béla Művészeti Kar"],
+        "Debreceni Egyetem (DE)": ["Állam- és Jogtudományi Kar", "Általános Orvostudományi Kar", "Bölcsészettudományi Kar", "Egészségtudományi Kar", "Fogorvostudományi Kar", "Gazdaságtudományi Kar", "Gyermeknevelési és Gyógypedagógiai Kar", "Gyógyszerésztudományi Kar", "Informatikai Kar", "Mezőgazdaság-, Élelmiszertudományi és Környezetgazdálkodási Kar", "Műszaki Kar", "Természettudományi és Technológiai Kar"],
+        "Budapesti Gazdasági Egyetem (BGE)": ["Kereskedelmi, Vendéglátóipari és Idegenforgalmi Kar (KVIK)", "Külkereskedelmi Kar (KKK)", "Pénzügyi és Számviteli Kar (PSZK)"],
+        "Óbudai Egyetem (ÓE)": ["Alba Regia Műszaki Kar", "Bánki Donát Gépész és Biztonságtechnikai Mérnöki Kar", "Kandó Kálmán Villamosmérnöki Kar", "Keleti Károly Gazdasági Kar", "Neumann János Informatikai Kar", "Rejtő Sándor Könnyűipari és Környezetmérnöki Kar"],
+        "Széchenyi István Egyetem (SZE)": ["Albert Kázmér Mosonmagyaróvári Kar", "Apáczai Csere János Kar", "Audi Hungaria Járműmérnöki Kar", "Deák Ferenc Állam- és Jogtudományi Kar", "Egészség- és Sporttudományi Kar", "Építész-, Építő- és Közlekedésmérnöki Kar", "Gépészmérnöki, Informatikai és Villamosmérnöki Kar", "Kautz Gyula Gazdaságtudományi Kar", "Művészeti Kar"],
+        "Semmelweis Egyetem (SE)": ["Általános Orvostudományi Kar", "Egészségügyi Közszolgálati Kar", "Egészségtudományi Kar", "Fogorvostudományi Kar", "Gyógyszerésztudományi Kar", "Pető András Kar"],
+        "Nemzeti Közszolgálati Egyetem (NKE)": ["Államtudományi és Nemzetközi Tanulmányok Kar", "Rendészettudományi Kar", "Hadtudományi és Honvédtisztképző Kar", "Víztudományi Kar"],
+        "Pázmány Péter Katolikus Egyetem (PPKE)": ["Jog- és Államtudományi Kar", "Bölcsészet- és Társadalomtudományi Kar", "Információs Technológiai és Bionikai Kar"],
+        "Károli Gáspár Református Egyetem (KRE)": ["Állam- és Jogtudományi Kar", "Bölcsészet- és Társadalomtudományi Kar", "Gazdaságtudományi, Egészségtudományi és Szociális Kar", "Pedagógiai Kar"]
+    };
+
+    const uniSelect = document.getElementById('s_university');
+    const facGroup = document.getElementById('facultyGroup');
+    const facSelect = document.getElementById('s_faculty');
+
+    uniSelect.addEventListener('change', (e) => {
+        const uni = e.target.value;
+        const faculties = uniFaculties[uni] || [];
+        if (faculties.length > 0) {
+            facGroup.style.display = 'block';
+            facSelect.innerHTML = '<option value="">Válassz kart...</option>';
+            faculties.forEach(f => facSelect.innerHTML += `<option value="${f}">${f}</option>`);
+        } else {
+            facGroup.style.display = 'none';
+            facSelect.innerHTML = '';
+        }
+    });
+
+
+    function loadAdminDashboard() {
+        document.getElementById('dashFullName').innerText = "Rendszergazda";
+        document.getElementById('dashName').innerText = "Adminisztrátor";
+        document.getElementById('dashUni').innerText = "-";
+        document.getElementById('dashFacContainer').style.display = 'none';
+        document.getElementById('dashMajor').innerText = "- (-)";
+        document.getElementById('dashLinkedin').innerText = "-";
+        document.getElementById('dashInstEmail').innerText = "Nem szükséges";
+        document.getElementById('dashEmail').innerText = "admin@unistart.local";
+        showSection('loggedInView');
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('adminBypass');
+        if (auth.currentUser) {
+            auth.signOut().then(resetAuthUI);
+        } else {
+            resetAuthUI();
+        }
+    }
+
+    function resetAuthUI() {
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+        pendingRegistrationData = {};
+        showSection('authView');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        if (localStorage.getItem('adminBypass') === 'true') {
+            loadAdminDashboard();
+        }
+    });
+
+    // 6. KÖZVETLEN BELÉPÉSI FÜGGVÉNYEK
+    async function handleLogin(btn) {
+        const email = document.getElementById('loginEmail').value.trim();
+        const pass = document.getElementById('loginPassword').value.trim();
+        if (!email || !pass) return alert("Kérjük, add meg az e-mail címet és jelszót a belépéshez!");
+        
+        const originalText = btn.innerText; btn.innerText = "Kérjük várj..."; btn.disabled = true;
+
+        try { 
+            const cred = await auth.signInWithEmailAndPassword(email, pass); 
+            await checkUserFlow(cred.user);
+        } 
+        catch (error) { 
+            alert("Hiba a belépésnél: " + error.message); 
+            btn.innerText = originalText; btn.disabled = false;
+        }
+    }
+
+    async function loginWithGoogle(btn) {
+        const originalText = btn.innerHTML; btn.innerHTML = "Átirányítás..."; btn.disabled = true;
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            await auth.signInWithRedirect(provider);
+        } 
+        catch (error) { 
+            alert("Hiba a Google belépésnél: " + error.message); 
+            btn.innerHTML = originalText; btn.disabled = false; 
+        }
+    }
+
+    // 7. REGISZTRÁCIÓS VARÁZSLÓ LOGIKÁJA
+    let pendingRegistrationData = {};
+    let isRegistering = false;
+
+    function startRegistration() {
+        isEditingProfile = false;
+        document.getElementById('step1Indicator').style.display = 'block';
+        document.getElementById('step1Title').innerText = 'Hallgatói Profil';
+        document.getElementById('step1SubmitBtn').innerText = 'Tovább a fiók létrehozásához →';
+        document.getElementById('step1CancelBtn').innerText = '← Vissza a kezdőlapra';
+        document.getElementById('step1Form').reset();
+        document.getElementById('facultyGroup').style.display = 'none';
+        showSection('wizardStep1');
+    }
+
+    function cancelRegistration() {
+        pendingRegistrationData = {};
+        showSection('authView');
+    }
+
+    // PROFIL MÓDOSÍTÁSA
+    let isEditingProfile = false;
+    function editProfile() {
+        isEditingProfile = true;
+        document.getElementById('step1Indicator').style.display = 'none';
+        document.getElementById('step1Title').innerText = 'Profil Módosítása';
+        document.getElementById('step1SubmitBtn').innerText = 'Változtatások mentése';
+        document.getElementById('step1CancelBtn').innerText = '← Vissza (Mégse)';
+
+        document.getElementById('s_lastName').value = document.getElementById('dashFullName').innerText.replace(document.getElementById('dashName').innerText, '').trim();
+        document.getElementById('s_firstName').value = document.getElementById('dashName').innerText;
+        document.getElementById('s_university').value = document.getElementById('dashUni').innerText;
+        
+        const fac = document.getElementById('dashFac').innerText;
+        if (fac && fac !== '-') {
+            const faculties = uniFaculties[document.getElementById('dashUni').innerText] || [];
+            facSelect.innerHTML = '<option value="">Válassz kart...</option>';
+            faculties.forEach(f => facSelect.innerHTML += `<option value="${f}">${f}</option>`);
+            document.getElementById('facultyGroup').style.display = 'block';
+            facSelect.value = fac;
+        } else {
+            document.getElementById('facultyGroup').style.display = 'none';
+        }
+        
+        const majorText = document.getElementById('dashMajor').innerText; 
+        const majorMatch = majorText.match(/(.*) \((.*)\)/);
+        if (majorMatch) {
+            document.getElementById('s_major').value = majorMatch[1].trim();
+            document.getElementById('s_level').value = majorMatch[2].trim();
+        }
+
+        document.getElementById('s_linkedin').value = document.getElementById('dashLinkedin').innerText;
+        showSection('wizardStep1');
+    }
+
+    function cancelStep1() {
+        if (isEditingProfile) {
+            isEditingProfile = false;
+            checkUserFlow(auth.currentUser);
+        } else {
+            cancelRegistration();
+        }
+    }
+
+    document.getElementById('step1Form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const formData = {
+            lastName: document.getElementById('s_lastName').value,
+            firstName: document.getElementById('s_firstName').value,
+            university: document.getElementById('s_university').value,
+            faculty: document.getElementById('s_faculty').value || '',
+            major: document.getElementById('s_major').value,
+            studyLevel: document.getElementById('s_level').value,
+            linkedinUrl: document.getElementById('s_linkedin').value || 'Nincs megadva'
+        };
+
+        if (isEditingProfile) {
+            try {
+                if (localStorage.getItem('adminBypass') === 'true') {
+                    document.getElementById('dashFullName').innerText = formData.lastName + " " + formData.firstName;
+                    document.getElementById('dashName').innerText = formData.firstName;
+                    document.getElementById('dashUni').innerText = formData.university;
+                    document.getElementById('dashMajor').innerText = formData.major + " (" + formData.studyLevel + ")";
+                    if(formData.faculty) {
+                        document.getElementById('dashFac').innerText = formData.faculty;
+                        document.getElementById('dashFacContainer').style.display = 'block';
+                    }
+                    isEditingProfile = false;
+                    showSection('loggedInView');
+                    alert("Ideiglenes Profil frissítve!");
+                    return;
+                }
+                
+                await db.collection("users").doc(auth.currentUser.uid).update(formData);
+                alert("Profil sikeresen frissítve!");
+                isEditingProfile = false;
+                checkUserFlow(auth.currentUser);
+            } catch (err) { alert("Hiba a mentésnél: " + err.message); }
+        } else {
+            pendingRegistrationData = {
+                role: 'student', profileCompleted: true, status: 'needs_verification',
+                ...formData
+            };
+            showSection('wizardStep2');
+        }
+    });
+
+    async function finalizeRegistration(user) {
+        if (Object.keys(pendingRegistrationData).length > 0) {
+            await db.collection("users").doc(user.uid).set(pendingRegistrationData, { merge: true });
+            pendingRegistrationData = {}; 
+        }
+    }
+
+    async function registerWithEmail(btn) {
+        const email = document.getElementById('regEmail').value.trim();
+        const pass = document.getElementById('regPassword').value.trim();
+        if(!email || !pass) return alert("Add meg az e-mailt és jelszót!");
+        
+        isRegistering = true;
+        const originalText = btn.innerText; btn.innerText = "Kérjük várj..."; btn.disabled = true;
+        
+        try {
+            const result = await auth.createUserWithEmailAndPassword(email, pass);
+            await finalizeRegistration(result.user);
+            isRegistering = false;
+            await checkUserFlow(result.user);
+        } catch(e) { 
+            isRegistering = false; 
+            alert(e.message); 
+            btn.innerText = originalText; btn.disabled = false;
+        }
+    }
+
+    async function registerWithGoogle(btn) {
+        isRegistering = true;
+        const originalText = btn.innerHTML; btn.innerHTML = "Átirányítás..."; btn.disabled = true;
+        
+        sessionStorage.setItem('pendingRegData', JSON.stringify(pendingRegistrationData));
+        sessionStorage.setItem('isGoogleReg', 'true');
+
+        try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            await auth.signInWithRedirect(provider);
+        } catch(e) { 
+            isRegistering = false; 
+            sessionStorage.removeItem('isGoogleReg');
+            alert(e.message); 
+            btn.innerHTML = originalText; btn.disabled = false; 
+        }
+    }
+
+    auth.getRedirectResult().then(async (result) => {
+        if (result.user) {
+            if (sessionStorage.getItem('isGoogleReg') === 'true') {
+                const savedDataStr = sessionStorage.getItem('pendingRegData');
+                if (savedDataStr) {
+                    const savedData = JSON.parse(savedDataStr);
+                    await db.collection("users").doc(result.user.uid).set(savedData, { merge: true });
+                }
+                sessionStorage.removeItem('pendingRegData');
+                sessionStorage.removeItem('isGoogleReg');
+            }
+            isRegistering = false;
+            checkUserFlow(result.user);
+        }
+    }).catch((error) => {
+        if(error.code !== 'auth/redirect-cancelled-by-user') {
+            alert("Hiba a Google hitelesítés során: " + error.message);
+        }
+    });
+
+    // 8. STEP 3: BIZTONSÁGOS HITELESÍTÉS
+    function showVerificationInput() {
+        document.getElementById('showVerifyBtn').style.display = 'none';
+        document.getElementById('verificationInputArea').style.display = 'block';
+    }
+
+    async function sendVerificationLink(btn) {
+        const instEmail = document.getElementById('instEmailInput').value.trim();
+        if (!instEmail) return alert("Kérjük, add meg az intézményi e-mail címed!");
+
+        const originalText = btn.innerText; btn.innerText = "Küldés..."; btn.disabled = true;
+
+        try {
+            // CSAK elmentjük az intézményi e-mailt a profilba, de NEM cseréljük le a Google/Login e-mailt!
+            await db.collection("users").doc(auth.currentUser.uid).update({ institutionalEmail: instEmail });
+
+            if (!auth.currentUser.emailVerified) {
+                await auth.currentUser.sendEmailVerification();
+                alert(`Siker! A biztonságos bejelentkezés érdekében a megerősítő linket a regisztrált bejelentkezési e-mail címedre (${auth.currentUser.email}) küldtük el. Kérlek, kattints rá!`);
+            } else {
+                alert("A fiókod már hitelesítve van! Kattints a 'Már rákattintottam' gombra.");
+            }
+            
+            document.getElementById('checkVerifyBtn').style.display = 'block';
+        } catch (error) {
+            alert("Hiba történt: " + error.message);
+        } finally {
+            btn.innerText = originalText; btn.disabled = false;
+        }
+    }
+
+    async function checkVerificationStatus(btn) {
+        const originalText = btn.innerText; btn.innerText = "Ellenőrzés..."; btn.disabled = true;
+        
+        try {
+            await auth.currentUser.reload(); 
+
+            // Ha a felhasználó e-mailje verified lett, azonnal beengedjük. Nem szívatjuk a beírt címmel!
+            if (auth.currentUser.emailVerified) {
+                await db.collection("users").doc(auth.currentUser.uid).update({ status: 'active' });
+                alert("Sikeres hitelesítés! Üdv a fedélzeten.");
+                checkUserFlow(auth.currentUser);
+            } else {
+                alert("Még nem kattintottál a megerősítő linkre, vagy a rendszer még nem frissült. Kérlek próbáld újra pár másodperc múlva.");
+            }
+        } catch (e) { 
+            console.error(e); 
+        } finally {
+            btn.innerText = originalText; btn.disabled = false;
+        }
+    }
+
+    // 9. BOMBABIZTOS FOLYAMAT ELLENŐRZŐ
+    async function checkUserFlow(user) {
+        if (localStorage.getItem('adminBypass') === 'true') return;
+        if (!user) { showSection('authView'); return; }
+
+        try {
+            const docRef = db.collection("users").doc(user.uid);
+            const doc = await docRef.get();
+            
+            // Ha nincs profil mentve
+            if (!doc.exists) {
+                showSection('wizardStep1');
+                return;
+            }
+
+            const data = doc.data();
+
+            if (!data.profileCompleted) {
+                showSection('wizardStep1');
+                return;
+            }
+
+            // Ha hitelesítésre vár
+            if (data.status === 'needs_verification') {
+                await user.reload(); 
+                
+                if (user.emailVerified) {
+                    await docRef.update({ status: 'active' });
+                    data.status = 'active';
+                    displayDashboard(data, user.email);
+                } else {
+                    showSection('wizardStep3');
+                }
+            } else {
+                // Ha minden rendben, jöhet a Dashboard
+                displayDashboard(data, user.email);
+            }
+            
+        } catch (err) { 
+            console.error("Adatbázis hiba:", err); 
+            // FAIL-SAFE MÓD: Ha az adatbázis olvasása hiba miatt (pl. engedélyhiány) leáll, 
+            // AKKOR IS MENGYITJUK A DASHBOARDOT, hogy ne ragadj a belépésen!
+            displayDashboard({
+                firstName: "Diák",
+                lastName: "",
+                university: "Adatbázis hiba (Ellenőrizd a Firestore Rules-t!)",
+                major: "-",
+                studyLevel: "-",
+                linkedinUrl: "-",
+                institutionalEmail: "Hiba"
+            }, user.email);
+        }
+    }
+
+    // 10. APP NÉZET ADATOK BETÖLTÉSE ÉS MEGJELENÍTÉSE
+    function displayDashboard(data, currentEmail) {
+        document.getElementById('dashName').innerText = data.firstName || 'Diák';
+        document.getElementById('dashFullName').innerText = `${data.lastName || ''} ${data.firstName || ''}`;
+        document.getElementById('dashUni').innerText = data.university || '-';
+        document.getElementById('dashInstEmail').innerText = data.institutionalEmail || 'Nincs megadva';
+        document.getElementById('dashEmail').innerText = currentEmail || 'Ismeretlen';
+        
+        if (data.faculty) {
+            document.getElementById('dashFac').innerText = data.faculty;
+            document.getElementById('dashFacContainer').style.display = 'block';
+        } else {
+            document.getElementById('dashFacContainer').style.display = 'none';
+        }
+        
+        document.getElementById('dashMajor').innerText = `${data.major || '-'} (${data.studyLevel || '-'})`;
+        document.getElementById('dashLinkedin').innerText = data.linkedinUrl || '-';
+        
+        // Biztos ami biztos, rákényszerítjük a dashboard megjelenítését
+        showSection('loggedInView');
+        
+        // Alaphelyzetbe állítjuk a gombokat, hogy a Belépés gomb ne maradjon "Kérjük várj..." állapotban
+        document.querySelectorAll('.apply-btn, .social-btn').forEach(btn => {
+            btn.disabled = false;
+            if(btn.innerText.includes("Kérjük várj") || btn.innerText.includes("Átirányítás")) {
+                if(btn.classList.contains("google")) btn.innerHTML = '<img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" style="width: 18px;"> Google bejelentkezés';
+                else btn.innerText = "Bejelentkezés";
+            }
+        });
+    }
+
+    // AUTH FIGYELŐ INDÍTÁSA
+    auth.onAuthStateChanged((user) => {
+        if (localStorage.getItem('adminBypass') === 'true') return;
+        if (!isRegistering) {
+            checkUserFlow(user);
+        }
+    });
+
+</script>
+</body>
+</html>

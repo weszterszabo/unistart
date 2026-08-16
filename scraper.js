@@ -54,13 +54,13 @@ async function runScraper() {
 
 async function scrapeJobsFromUrl(baseUrl) {
   const allExtractedJobs = [];
+  const seenUrls = new Set(); // Ebbe gyűjtjük az eddig látott linkeket
   let startrow = 0;
-  const maxPages = 10; // Max 10 oldalig megy el (kb. 250 állás cégenként)
+  const maxPages = 10;
 
   for (let page = 1; page <= maxPages; page++) {
     const extractedJobs = [];
     
-    // Lapozás az SAP/Taleo rendszerekhez (startrow)
     let currentUrl = baseUrl;
     if (page > 1) {
       currentUrl = baseUrl.includes('?') 
@@ -157,27 +157,31 @@ async function scrapeJobsFromUrl(baseUrl) {
       console.error(`   ❌ Hiba az oldal letöltésekor:`, error.message);
     }
 
-    // Csak a valódi találatokat tartjuk meg
-    const uniqueOnPage = extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
-    allExtractedJobs.push(...uniqueOnPage);
+    // VIZSGÁLAT: Hány TELJESEN ÚJ állást találtunk ezen az oldalon?
+    let newJobsOnPage = 0;
+    
+    for (const job of extractedJobs) {
+      if (!seenUrls.has(job.url)) {
+        seenUrls.add(job.url); // Feljegyezzük, hogy ezt már láttuk
+        allExtractedJobs.push(job);
+        newJobsOnPage++;
+      }
+    }
 
-    console.log(`   ✔️  Találat ezen az oldalon: ${uniqueOnPage.length} db`);
+    console.log(`   ✔️  ÚJ találat ezen az oldalon: ${newJobsOnPage} db`);
 
-    // Ha ezen az oldalon már csak kevés (vagy 0) új állás volt, akkor ez volt az utolsó oldal!
-    if (uniqueOnPage.length < 5) {
-      console.log(`   ⏹️  Nincs több oldal, lapozás vége.`);
+    // Ha a szerver ismétel, vagy üres oldalt ad, az új állások száma 0 lesz!
+    if (newJobsOnPage === 0) {
+      console.log(`   ⏹️  Nincs több ÚJ állás, lapozás vége.`);
       break;
     }
 
-    // Felkészülés a következő oldalra (25-ösével ugrunk)
+    // Felkészülés a következő oldalra
     startrow += 25;
-    
-    // 1 másodperc szünet, hogy ne tiltsanak le minket a spammelésért
     await new Promise(resolve => setTimeout(resolve, 1000));
   }
 
-  // Végső duplikátum szűrés
-  return allExtractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
+  return allExtractedJobs;
 }
 
 runScraper();

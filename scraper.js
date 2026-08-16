@@ -54,9 +54,10 @@ async function runScraper() {
 
 async function scrapeJobsFromUrl(baseUrl) {
   const allExtractedJobs = [];
-  const seenUrls = new Set(); // Ebbe gyűjtjük az eddig látott linkeket
+  const seenUrls = new Set();
   let startrow = 0;
   const maxPages = 10;
+  let lastPageCount = 0; // Itt tároljuk az előző oldal elemszámát
 
   for (let page = 1; page <= maxPages; page++) {
     const extractedJobs = [];
@@ -90,9 +91,9 @@ async function scrapeJobsFromUrl(baseUrl) {
             extractedJobs.push({
               title: item.title || item.name || item.jobTitle || "Névtelen",
               url: item.url || item.applyUrl || currentUrl,
-              location: item.location || item.city || "Nincs megadva",
+              location: item.location || item.city || "Nincs",
               datePosted: item.datePosted || new Date().toISOString(),
-              description: (item.description || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
+              description: (item.description || "").replace(/(<([^>]+)>)/gi, "").substring(0, 300)
             });
           });
           pageHasJobs = extractedJobs.length > 0;
@@ -108,16 +109,15 @@ async function scrapeJobsFromUrl(baseUrl) {
             url: $(el).find('link').text().trim() || currentUrl,
             location: "Magyarország",
             datePosted: $(el).find('pubDate, updated').text() || new Date().toISOString(),
-            description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "").substring(0, 300) + "..."
+            description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "").substring(0, 300)
           });
         });
         pageHasJobs = extractedJobs.length > 0;
       }
 
-      // 3. HTML / Schema.org és Fallback
+      // 3. HTML és Schema.org
       if (!pageHasJobs) {
         const $ = cheerio.load(rawText);
-        
         $('script[type="application/ld+json"]').each((i, el) => {
           try {
             const data = JSON.parse($(el).html());
@@ -145,24 +145,23 @@ async function scrapeJobsFromUrl(baseUrl) {
                 title: text,
                 url: href.startsWith('http') ? href : new URL(href, currentUrl).href,
                 location: "Részletek a linken",
-                datePosted: new Date().toISOString(),
-                description: "Kattints a hirdetésre a részletekért..."
+                datePosted: new Date().toISOString()
               });
             }
           });
         }
       }
-
     } catch (error) {
       console.error(`   ❌ Hiba az oldal letöltésekor:`, error.message);
     }
 
-    // VIZSGÁLAT: Hány TELJESEN ÚJ állást találtunk ezen az oldalon?
-    let newJobsOnPage = 0;
+    // Duplikátumok szűrése az aktuális oldalon belül
+    const uniqueOnPage = extractedJobs.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
     
-    for (const job of extractedJobs) {
+    let newJobsOnPage = 0;
+    for (const job of uniqueOnPage) {
       if (!seenUrls.has(job.url)) {
-        seenUrls.add(job.url); // Feljegyezzük, hogy ezt már láttuk
+        seenUrls.add(job.url);
         allExtractedJobs.push(job);
         newJobsOnPage++;
       }
@@ -170,13 +169,18 @@ async function scrapeJobsFromUrl(baseUrl) {
 
     console.log(`   ✔️  ÚJ találat ezen az oldalon: ${newJobsOnPage} db`);
 
-    // Ha a szerver ismétel, vagy üres oldalt ad, az új állások száma 0 lesz!
     if (newJobsOnPage === 0) {
       console.log(`   ⏹️  Nincs több ÚJ állás, lapozás vége.`);
       break;
     }
 
-    // Felkészülés a következő oldalra
+    // DINAMIKUS VÉGE-ÉSZLELÉS: Ha kevesebb állás jött, mint az előző oldalon, itt a vége!
+    if (page > 1 && uniqueOnPage.length < lastPageCount) {
+      console.log(`   ⏹️  Kevesebb állás érkezett (${uniqueOnPage.length} < ${lastPageCount}). Elértük a lista végét!`);
+      break;
+    }
+    
+    lastPageCount = uniqueOnPage.length;
     startrow += 25;
     await new Promise(resolve => setTimeout(resolve, 1000));
   }

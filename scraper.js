@@ -16,7 +16,6 @@ admin.initializeApp({
 const db = admin.firestore();
 db.settings({ ignoreUndefinedProperties: true }); 
 
-// A tökéletes álca, hogy a banki tűzfalak (SAP, Workday) ne tiltsanak le
 const BROWSER_HEADERS = {
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -42,11 +41,9 @@ async function runScraper() {
       if (company.career_url) {
         console.log(`\n🔍 Feldolgozás: ${company.name || "Cég"} -> ${company.career_url}`);
         
-        // 1. Alap lista letöltése
         const frissAllasok = await scrapeJobsFromUrl(company.career_url);
         console.log(`✅ Alap listán talált állások: ${frissAllasok.length} db`);
 
-        // BIZTONSÁGI HÁLÓ: Ha hálózati hiba volt, nem töröljük az adatbázist!
         if (frissAllasok.length === 0) {
             console.log("⚠️ Nulla állást találtunk. Ez valószínűleg hálózati hiba, a biztonság kedvéért kihagyjuk a takarítást, hogy ne vesszenek el az adatok!");
             continue; 
@@ -54,7 +51,6 @@ async function runScraper() {
 
         const freshJobIds = new Set();
 
-        // 2. MÉLY-KAPARÁS
         console.log(`⏳ Mély-kaparás és részletes adatok letöltése folyamatban...`);
         
         for (let i = 0; i < frissAllasok.length; i++) {
@@ -79,23 +75,25 @@ async function runScraper() {
           };
 
           if (deepDetails) {
-             finalJob.short_description = deepDetails.short_description || job.description || "További információkért kattints a jelentkezés gombra.";
+             finalJob.short_description = deepDetails.short_description || job.description || "További információkért kattints a hirdetésre.";
              finalJob.long_description = deepDetails.long_description || "";
              finalJob.employment_type = deepDetails.employment_type || "";
              finalJob.experience_level = deepDetails.experience_level || "";
              finalJob.subsidiary = deepDetails.subsidiary || "";
-             finalJob.apply_url = deepDetails.apply_url || job.url;
+             
+             // A felhasználó kérésére az apply_url a hirdetés eredeti linkje marad!
+             finalJob.apply_url = job.url; 
           } else {
-             finalJob.short_description = job.description || "További információkért kattints a jelentkezésre.";
+             finalJob.short_description = job.description || "További információkért kattints a hirdetésre.";
+             finalJob.apply_url = job.url;
           }
           
           await db.collection("jobs").doc(jobId).set(finalJob, { merge: true });
           
-          // Fél másodperc pihenő, hogy ne blokkoljon a szerver
           await new Promise(r => setTimeout(r, 500));
         }
 
-        // 3. OKOS TAKARÍTÁS (Már biztonságos, mert frissAllasok > 0)
+        // 3. OKOS TAKARÍTÁS
         const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
         let deletedCount = 0;
         for (const jobDoc of existingJobsSnapshot.docs) {
@@ -126,10 +124,16 @@ async function enrichJobDetails(jobUrl) {
     const $ = cheerio.load(html);
 
     let details = {
-      apply_url: jobUrl, short_description: "", long_description: "",
+      short_description: "", long_description: "",
       employment_type: "", experience_level: "", subsidiary: "",
       datePosted: "", location: ""
     };
+
+    // FELOKOSÍTOTT HELYSZÍN KERESŐ (CIB/SAP specifikus osztályokra is)
+    let locFound = $('.jobGeoLocation, .job-location, .location, [data-automation="job-location"]').first().text().trim();
+    if (locFound && locFound.length < 80) {
+        details.location = locFound;
+    }
 
     // 1. Metaadatok kinyerése a felsorolásokból és szövegekből
     $('span, p, div, li, b, strong').each((i, el) => {
@@ -137,43 +141,28 @@ async function enrichJobDetails(jobUrl) {
       const lower = txt.toLowerCase();
 
       if (lower.includes('foglalkoztatás típusa') || lower.includes('foglalkoztatás jellege')) {
-        details.employment_type = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/foglalkoztatás (típusa|jellege):?/i, '').trim();
+        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/foglalkoztatás (típusa|jellege):?/i, '').trim();
+        if(val.length < 50) details.employment_type = val;
       }
       if (lower.includes('tapasztalati szint')) {
-        details.experience_level = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/tapasztalati szint:?/i, '').trim();
+        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/tapasztalati szint:?/i, '').trim();
+        if(val.length < 50) details.experience_level = val;
       }
       if (lower.includes('leányvállalat')) {
-        details.subsidiary = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/leányvállalat:?/i, '').trim();
+        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/leányvállalat:?/i, '').trim();
+        if(val.length < 100) details.subsidiary = val;
       }
       if (lower.includes('meghirdetés dátuma') || lower.includes('dátum')) {
-        details.datePosted = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/(meghirdetés dátuma|dátum):?/i, '').trim();
+        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/(meghirdetés dátuma|dátum):?/i, '').trim();
+        if(val.length < 50) details.datePosted = val;
       }
-      if (lower.includes('helyszín') && !lower.includes('keresés')) {
-        details.location = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/helyszín:?/i, '').trim();
+      if (!details.location && lower.includes('helyszín') && !lower.includes('keresés')) {
+        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/helyszín:?/i, '').trim();
+        if(val.length < 80) details.location = val;
       }
     });
 
-    // Ha a parser véletlenül túl hosszú szöveget szedett ki a metaadatokhoz, töröljük
-    for(let key in details) {
-        if(typeof details[key] === 'string' && details[key].length > 80 && key !== 'short_description' && key !== 'long_description' && key !== 'apply_url') {
-            details[key] = ""; 
-        }
-    }
-
-    // 2. Jelentkezés Gomb 
-    const applyBtn = $('a').filter(function() {
-      const t = $(this).text().toLowerCase();
-      const h = $(this).attr('href') || '';
-      return t.includes('jelentkezés') || t.includes('apply') || h.includes('apply');
-    }).first();
-
-    if (applyBtn.length > 0) {
-      let aUrl = applyBtn.attr('href');
-      if (aUrl.startsWith('/')) aUrl = new URL(aUrl, jobUrl).href;
-      details.apply_url = aUrl;
-    }
-
-    // 3. Leírás (Rövid és Hosszú) kinyerése okos formázással
+    // 2. Leírás (Rövid és Hosszú) kinyerése okos formázással
     let descContainer = $('.jobdescription');
     if (descContainer.length === 0) descContainer = $('.job-description');
     if (descContainer.length === 0) descContainer = $('main');
@@ -223,7 +212,6 @@ async function scrapeJobsFromUrl(baseUrl) {
       const rawText = await response.text();
       let pageHasJobs = false;
 
-      // 1. JSON API
       if (rawText.trim().startsWith('{') || rawText.trim().startsWith('[')) {
         try {
           const data = JSON.parse(rawText);
@@ -232,7 +220,7 @@ async function scrapeJobsFromUrl(baseUrl) {
             extractedJobs.push({
               title: item.title || item.name || item.jobTitle || "Névtelen",
               url: item.url || item.applyUrl || currentUrl,
-              location: item.location || item.city || "Nincs",
+              location: item.location || item.city || "",
               description: item.description || ""
             });
           });
@@ -240,21 +228,19 @@ async function scrapeJobsFromUrl(baseUrl) {
         } catch (e) {}
       }
 
-      // 2. RSS / XML feed
       if (!pageHasJobs && (rawText.includes('<?xml') || rawText.includes('<rss') || rawText.includes('<feed'))) {
         const $ = cheerio.load(rawText, { xmlMode: true });
         $('item, entry').each((i, el) => {
           extractedJobs.push({
             title: $(el).find('title').text().trim() || "Névtelen",
             url: $(el).find('link').text().trim() || currentUrl,
-            location: "Magyarország",
+            location: "",
             description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "")
           });
         });
         pageHasJobs = extractedJobs.length > 0;
       }
 
-      // 3. HTML (Schema.org / Fallback)
       if (!pageHasJobs) {
         const $ = cheerio.load(rawText);
         $('script[type="application/ld+json"]').each((i, el) => {
@@ -266,7 +252,7 @@ async function scrapeJobsFromUrl(baseUrl) {
                 extractedJobs.push({
                   title: item.title || "Névtelen",
                   url: item.url || currentUrl,
-                  location: item.jobLocation?.address?.addressLocality || "Nincs",
+                  location: item.jobLocation?.address?.addressLocality || "",
                   description: item.description || "",
                 });
               }
@@ -282,7 +268,7 @@ async function scrapeJobsFromUrl(baseUrl) {
               extractedJobs.push({
                 title: text,
                 url: href.startsWith('http') ? href : new URL(href, currentUrl).href,
-                location: "Részletek a linken"
+                location: ""
               });
             }
           });

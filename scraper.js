@@ -7,6 +7,7 @@ const engines = {
   workday: require("./scrapers/workday"),
   erste: require("./scrapers/erste"),
   otp: require("./scrapers/otp"),
+  khbank: require("./scrapers/khbank"),
   custom: require("./scrapers/custom")
 };
 

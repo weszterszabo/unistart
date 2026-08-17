@@ -1,5 +1,6 @@
 const admin = require("firebase-admin");
 const cheerio = require("cheerio");
+const crypto = require("crypto"); // ÚJ: Kriptográfiai modul az egyedi azonosítókhoz!
 
 let serviceAccount;
 if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
@@ -35,13 +36,14 @@ async function runScraper() {
         const frissAllasok = await scrapeJobsFromUrl(company.career_url);
         console.log(`✅ Összesen talált állások (minden oldal): ${frissAllasok.length} db`);
 
-        // 1. LÉPÉS: Létrehozunk egy listát a MOST talált állások azonosítóiból
         const freshJobIds = new Set();
 
-        // 2. LÉPÉS: Elmentjük / frissítjük az aktuális állásokat
         for (const job of frissAllasok) {
-          const jobId = (job.url || company.name + job.title).replace(/[^a-zA-Z0-9]/g, "").substring(0, 50);
-          freshJobIds.add(jobId); // Felírjuk a listánkra, hogy ez az állás aktív!
+          // TÖKÉLETES MEGOLDÁS: MD5 Hash generálása a linkből, így 100%-ig egyedi lesz az ID!
+          const rawString = job.url || company.name + job.title;
+          const jobId = crypto.createHash('md5').update(rawString).digest('hex');
+          
+          freshJobIds.add(jobId);
           
           await db.collection("jobs").doc(jobId).set({
             company_id: companyId,
@@ -55,14 +57,13 @@ async function runScraper() {
           }, { merge: true });
         }
 
-        // 3. LÉPÉS: "OKOS TAKARÍTÁS" - Töröljük a már nem létező állásokat ennél a cégnél!
+        // "OKOS TAKARÍTÁS"
         const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
         let deletedCount = 0;
         
         for (const jobDoc of existingJobsSnapshot.docs) {
-          // Ha az adatbázisban lévő állás ID-je nincs benne a MOST letöltött (friss) listában...
           if (!freshJobIds.has(jobDoc.id)) {
-            await db.collection("jobs").doc(jobDoc.id).delete(); // ...akkor töröljük!
+            await db.collection("jobs").doc(jobDoc.id).delete();
             deletedCount++;
           }
         }

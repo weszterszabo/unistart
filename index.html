@@ -82,6 +82,49 @@ body.modal-open {
 }
 
 /* ==========================================================================
+   VISSZA A TETEJÉRE GOMB (ÚJ)
+   ========================================================================== */
+#backToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1000;
+}
+
+#backToTopBtn.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+#backToTopBtn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5);
+}
+
+#backToTopBtn:active {
+    transform: translateY(0) scale(0.95);
+}
+
+/* ==========================================================================
    KIEMELT SZEKCIÓK (ZÖLD ÉS ARANY BLOKKOK)
    ========================================================================== */
 .highlighted-section {
@@ -302,7 +345,6 @@ body.modal-open {
     width: var(--sidebar-width-expanded); 
 }
 
-/* LOGÓ ÉS FEJLÉC A SIDEBAR-BAN */
 .sidebar-header {
     display: flex; 
     align-items: center; 
@@ -348,7 +390,6 @@ body.modal-open {
     opacity: 1; 
 }
 
-/* ASZTALI TÉMAVÁLTÓ A SIDEBAR-BAN */
 .sidebar-theme-toggle {
     background: var(--tag-bg); 
     border: 1px solid var(--tag-border); 
@@ -375,7 +416,6 @@ body.modal-open {
     transform: scale(1.05); 
 }
 
-/* FŐ MENÜPONTOK */
 .nav-menu { 
     list-style: none; 
     padding: 0; 
@@ -436,7 +476,6 @@ body.modal-open {
     opacity: 1; 
 }
 
-/* ALSÓ SZEKCIÓ (Másodlagos menü + Profil) */
 .sidebar-bottom { 
     display: flex; 
     flex-direction: column; 
@@ -516,6 +555,7 @@ body.modal-open {
     background-color: var(--bg-color); 
     overflow-y: auto; 
     position: relative; 
+    scroll-behavior: smooth; /* Gördülékeny lapozás */
 }
 
 .dashboard-header { 
@@ -574,11 +614,11 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   SÁVOS (LISTA) ELRENDEZÉS - ÚJ
+   SÁVOS (LISTA) ELRENDEZÉS
    ========================================================================== */
 .company-grid { 
     display: grid; 
-    grid-template-columns: 1fr; /* 1 oszlopos teljes szélességű sáv */
+    grid-template-columns: 1fr; 
     gap: 20px; 
     margin-bottom: 30px; 
 }
@@ -883,7 +923,6 @@ body.modal-open {
     } 
 }
 
-/* Modál gombok és formázás */
 .modal-actions { 
     display: flex; 
     gap: 12px; 
@@ -1138,6 +1177,15 @@ input:focus, select:focus {
         padding: 10px 5px;
         font-size: 13px;
     }
+
+    /* Vissza a tetejére gomb mobil pozíció */
+    #backToTopBtn {
+        bottom: 85px; 
+        right: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 20px;
+    }
 }
 </style>
 </head>
@@ -1171,7 +1219,6 @@ input:focus, select:focus {
         </div>
         
         <div class="sidebar-bottom">
-            <!-- Elegáns Másodlagos Menü (Desktop) -->
             <ul class="secondary-nav-menu">
                 <li class="secondary-nav-item" onclick="openBigSupportModal()">
                     <span class="secondary-nav-icon">☕</span> 
@@ -1203,7 +1250,7 @@ input:focus, select:focus {
         </div>
     </aside>
 
-    <main class="dashboard-main">
+    <main class="dashboard-main" id="dashboardMainScroll">
         <header class="dashboard-header">
             <h1 class="dashboard-title" id="currentViewTitle">Karrierfórum</h1>
             <div class="header-actions">
@@ -1272,6 +1319,9 @@ input:focus, select:focus {
         </div>
     </main>
 </div>
+
+<!-- Vissza a tetejére gomb -->
+<button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ==========================================================================
    MODÁLIS ABLAKOK (PROFIL, RÓLUNK, STB.)
@@ -1587,6 +1637,32 @@ input:focus, select:focus {
 
 <script>
     // -----------------------------------------------------
+    // VISSZA A TETEJÉRE GOMB LOGIKA
+    // -----------------------------------------------------
+    const dashboardMain = document.getElementById('dashboardMainScroll');
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    if (dashboardMain && backToTopBtn) {
+        dashboardMain.addEventListener('scroll', () => {
+            // Ha 300 pixelnél többet görgettek lefelé, a gomb megjelenik
+            if (dashboardMain.scrollTop > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+    }
+
+    function scrollToTop() {
+        if (dashboardMain) {
+            dashboardMain.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // -----------------------------------------------------
     // EGYETEMI ADATBÁZIS ÉS LOGIKA
     // -----------------------------------------------------
     const uniDatabase = {
@@ -1795,28 +1871,12 @@ input:focus, select:focus {
         openModal('profileModal'); 
     }
 
-    // Aliasok az információs menühöz
-    function openBigSupportModal() { 
-        openModal('bigSupportOverlay'); 
-    }
-    
-    function openAboutModal() { 
-        openModal('aboutOverlay'); 
-    }
-    
-    function openAdatvedelemModal() { 
-        openModal('adatvedelemOverlay'); 
-    }
-    
-    function openImpresszumModal() { 
-        openModal('impresszumOverlay'); 
-    }
-    
-    function openKapcsolatModal() { 
-        openModal('kapcsolatOverlay'); 
-    }
+    function openBigSupportModal() { openModal('bigSupportOverlay'); }
+    function openAboutModal() { openModal('aboutOverlay'); }
+    function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
+    function openImpresszumModal() { openModal('impresszumOverlay'); }
+    function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
 
-    // Számlaszám másolás a Támogatás panelen
     function copyIban() {
         const ibanText = document.getElementById('ibanVal').innerText.replace(/\s+/g, '');
         navigator.clipboard.writeText(ibanText).then(() => {
@@ -1835,7 +1895,6 @@ input:focus, select:focus {
         });
     }
 
-    // Támogatás Fizetési Opciók Váltása
     function setAmount(type, event) {
         const buttons = document.querySelectorAll('.option-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
@@ -2013,7 +2072,6 @@ input:focus, select:focus {
                 jobsData.push({ id: doc.id, ...doc.data() });
             });
 
-            // Időrendi sorrendbe rakás (legfrissebb elől) a memóriában
             jobsData.sort((a, b) => {
                 const dateA = a.date_posted || a.scraped_at;
                 const dateB = b.date_posted || b.scraped_at;
@@ -2107,7 +2165,6 @@ input:focus, select:focus {
             const card = document.createElement('div'); 
             card.className = 'company-card';
             
-            // Lekapcsoltuk a kattinthatóságot a kártyáról, nincs szükség rá
             card.style.cursor = 'default';
 
             const jobTitle = job.title || 'Névtelen pozíció';
@@ -2149,10 +2206,8 @@ input:focus, select:focus {
         renderGrid(); 
     }
 
-    // Automatikus betöltés
     window.onload = loadJobsData;
 
-    // Globális bezáró logika a Modális ablakokhoz
     document.querySelectorAll('.big-support-overlay, .modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) { 
             if (e.target === this) {

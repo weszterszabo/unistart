@@ -5,6 +5,7 @@ const engines = {
   sap: require("./scrapers/sap"),
   smartrecruiters: require("./scrapers/smartrecruiters"),
   workday: require("./scrapers/workday"),
+  erste: require("./scrapers/erste"),
   custom: require("./scrapers/custom")
 };
 

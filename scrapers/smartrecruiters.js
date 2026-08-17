@@ -95,6 +95,11 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [SmartRecruiters] Siker: Összesen ${allJobs.length} db állás feldolgozva.`);
-  return allJobs;
+  // SZŰRŐ: Duplikált linkek eltávolítása (ha a lapozásnál megcsúszott volna az API)
+  const uniqueJobs = allJobs.filter((job, index, self) => 
+    index === self.findIndex((t) => (t.url === job.url))
+  );
+
+  console.log(`   ✔️  [SmartRecruiters] Siker: ${allJobs.length} lekérve -> ${uniqueJobs.length} db EGYEDI állás feldolgozva.`);
+  return uniqueJobs;
 };

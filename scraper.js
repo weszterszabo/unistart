@@ -58,61 +58,9 @@ async function runScraper() {
 
       const freshJobIds = new Set();
 
-    for (const job of scrapedJobs) {
+      for (const job of scrapedJobs) {
         // ==================================================================
-        // TELJES KÖRŰ ÉS RÉSZLETES KÉTNYELVŰ SZŰRŐ RENDSZER (Nincs egyszerűsítés!)
-        // ==================================================================
-        const titleLower = (job.title || "").toLowerCase();
-        const expLower = (job.experience_level || "").toLowerCase();
-        const typeLower = (job.employment_type || "").toLowerCase();
-        const subLower = (job.subsidiary || "").toLowerCase();
-
-        const textToCheck = `${titleLower} ${expLower} ${typeLower} ${subLower}`;
-
-        // 1. SZIGORÚ NEGATÍV SZŰRŐ (Vezetői és magas szintű pozíciók kiszűrése)
-        const negativeKeywords = [
-          "szenior", "senior", "vezető", "head of", "director", 
-          "igazgató", "principal", "chief", "executive", "team lead", "group lead"
-        ];
-
-        // Kivételkezelés: Ha a címben vagy adatokban kifejezetten szerepel a "junior" vagy "gyakornok", 
-        // akkor a fenti negatív szavak ellenére is engedjük át (pl. "Junior Manager" vagy "Junior Team Lead").
-        const isExplicitlyJuniorOrIntern = 
-          textToCheck.includes("junior") || 
-          textToCheck.includes("pályakezdő") || 
-          textToCheck.includes("gyakornok") || 
-          textToCheck.includes("intern");
-
-        const isSeniorOrLeader = negativeKeywords.some(neg => textToCheck.includes(neg));
-
-        if (isSeniorOrLeader && !isExplicitlyJuniorOrIntern) {
-          continue; // Ha tiszta vezetői/senior pozíció, elutasítjuk
-        }
-
-        // 2. KÖTELEZŐ ÉS RÉSZLETES POZITÍV WHITELIST (Minden magyar és angol pályakezdő forma)
-        const targetKeywords = [
-          // --- MAGYAR GYAKORNOKI ÉS PÁLYAKEZDŐ FORMÁK ---
-          "gyakornok", "gyakornoki", "diák", "egyetemista", "főiskolás",
-          "pályakezdő", "friss diplomás", "junior", "kezdő",
-          "tapasztalat nélkül", "pályakezdőknek", "kezdő pozíció",
-          "0-1 év", "0-2 év", "0-3 év", "1-2 év", "1-3 év",
-          "0-1 év tapasztalat", "1 év tapasztalat", "2 év tapasztalat", "3 év tapasztalat",
-
-          // --- ANGOL ÉS MULTINACIONÁLIS FORMÁK (BOSCH, BANKOK, STB.) ---
-          "intern", "internship", "trainee", "student", "student job",
-          "entry level", "entry-level", "graduate", "fresh graduate",
-          "young professional", "career start", "apprentice", "apprenticeship",
-          "graduate program", "trainee program", "entry",
-          "0-1 years", "0-2 years", "0-3 years", "1-2 years", "1-3 years",
-          "0-1 yrs", "1-3 yrs", "1-2 yrs", "0-2 yrs"
-        ];
-
-        const matchesWhitelist = targetKeywords.some(keyword => textToCheck.includes(keyword));
-
-        // Ha egyik whitelist feltétel sem teljesül, akkor nem engedjük be
-        if (!matchesWhitelist) {
-          continue; 
-        }
+        // SZŰRŐ KIKAPCSOLVA: Minden állás mentésre kerül a teszteléshez
         // ==================================================================
 
         const rawString = job.url || company.name + job.title;

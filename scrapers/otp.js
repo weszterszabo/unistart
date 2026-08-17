@@ -1,89 +1,56 @@
 const crypto = require("crypto");
 
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [OTP] SAP Karrieroldal letapogatása indul...`);
+  console.log(`   ⬇️ [OTP] Browser-like Scraper elindult...`);
   const allJobs = [];
-  let startrow = 0;
-  let hasMore = true;
+  
+  // A legfontosabb: a böngésző számára "hiteles" fejlécek
+  const headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Referer": "https://karrier.otpbank.hu/",
+    "Connection": "keep-alive"
+  };
 
-  while (hasMore) {
-    // Az SAP rendszerek a "startrow" paraméterrel lapoznak (0, 25, 50, stb.)
-    const targetUrl = `https://karrier.otpbank.hu/search/?q=&sortColumn=referencedate&sortDirection=desc&startrow=${startrow}`;
-    console.log(`   ⬇️ [OTP] Lapozás: startrow=${startrow}`);
+  try {
+    // Első hívás: megpróbáljuk betölteni a fő oldalt
+    const response = await fetch("https://karrier.otpbank.hu/otp/go/OTP_Minden-allasajanlat/9753101/", { headers });
+    const html = await response.text();
     
-    try {
-      const response = await fetch(targetUrl, {
-        headers: { 
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" 
-        }
-      });
+    // Debug célból: ha a HTML-ben látjuk a pozícióneveket, akkor a Regex a rossz.
+    // Ha nem látjuk, akkor az OTP szerver nem adta ki a tartalmát.
+    console.log(`   🔍 [OTP] HTML méret: ${html.length} karakter.`);
+
+    // Az OTP/SAP SuccessFactors gyakran "jobResultItem" vagy hasonló osztályokat használ
+    // Próbálunk egy általánosabb mintát, ami minden <tr>-t kiszed, ami állásra utal
+    const rowRegex = /<tr[^>]*class="[^"]*jobResultItem[^"]*"[\s\S]*?<\/tr>/g;
+    let match;
+
+    while ((match = rowRegex.exec(html)) !== null) {
+      const rowHtml = match[0];
       
-      const html = await response.text();
+      const titleMatch = rowHtml.match(/<a[^>]+class="jobTitle-link"[^>]*>([\s\S]*?)<\/a>/);
+      if (!titleMatch) continue;
 
-      // Keresés az SAP specifikus táblázatsorokra: <tr class="data-row">
-      const rowRegex = /<tr class="data-row"[\s\S]*?<\/tr>/g;
-      let match;
-      let newJobsCount = 0;
+      const title = titleMatch[1].replace(/<[^>]+>/g, "").trim();
+      const hrefMatch = titleMatch[0].match(/href="([^"]+)"/);
+      let link = hrefMatch ? "https://karrier.otpbank.hu" + hrefMatch[1] : "";
 
-      while ((match = rowRegex.exec(html)) !== null) {
-        const rowHtml = match[0];
-
-        // 1. Cím és Link kiolvasása
-        const aTagMatch = rowHtml.match(/<a[^>]*class="jobTitle-link"[^>]*>([\s\S]*?)<\/a>/);
-        if (!aTagMatch) continue;
-
-        const title = aTagMatch[1].replace(/<[^>]+>/g, "").trim(); // Megtisztítjuk a HTML sallangoktól
-        const hrefMatch = aTagMatch[0].match(/href="([^"]+)"/);
-        if (!hrefMatch) continue;
-
-        let link = hrefMatch[1];
-        // Ha relatív a link (pl. /job/...), kiegészítjük a domainnel
-        if (!link.startsWith("http")) {
-            link = "https://karrier.otpbank.hu" + link;
-        }
-
-        // 2. Helyszín kiolvasása
-        const locMatch = rowHtml.match(/<span class="jobLocation">([\s\S]*?)<\/span>/);
-        const location = locMatch ? locMatch[1].replace(/<[^>]+>/g, "").trim().replace(/\s+/g, ' ') : "Magyarország";
-
-        // 3. Osztály/Terület kiolvasása (Ha van ilyen az OTP oldalán)
-        const deptMatch = rowHtml.match(/<span class="jobDepartment">([\s\S]*?)<\/span>/);
-        const department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
-
-        allJobs.push({
-          title: title,
-          url: link,
-          apply_url: link,
-          location: location,
-          date_posted: new Date().toISOString(), // Mivel a dátum formátuma változó, maiként mentjük
-          experience_level: "", 
-          subsidiary: department,
-          employment_type: ""
-        });
-        
-        newJobsCount++;
-      }
-
-      // Ha már nem találtunk új állást a HTML-ben, akkor elértük a végét
-      if (newJobsCount === 0) {
-        console.log(`   ⏹️ [OTP] Nincs több állás, elértük az utolsó oldalt.`);
-        hasMore = false;
-      } else {
-        startrow += 25; // Az SAP rendszerek 25 állást mutatnak egy oldalon
-        await new Promise(r => setTimeout(r, 600)); // Várunk egy picit, hogy ne tiltsanak le
-      }
-
-    } catch (err) {
-      console.error(`   ❌ [OTP] Hiba a HTML letöltésekor:`, err.message);
-      hasMore = false;
+      allJobs.push({
+        title: title,
+        url: link,
+        apply_url: link,
+        location: "Budapest (vagy lista)",
+        date_posted: new Date().toISOString()
+      });
     }
+
+    console.log(`   ✔️  [OTP] Siker: ${allJobs.length} db állás feldolgozva.`);
+    return allJobs;
+
+  } catch (err) {
+    console.error(`   ❌ [OTP] Végzetes hiba:`, err.message);
+    return [];
   }
-
-  // Duplikációk szűrése a biztonság kedvéért (URL alapján)
-  const uniqueJobs = allJobs.filter((job, index, self) => 
-    index === self.findIndex((t) => (t.url === job.url))
-  );
-
-  console.log(`   ✔️  [OTP] Siker: ${uniqueJobs.length} db egyedi állás feldolgozva.`);
-  return uniqueJobs;
 };

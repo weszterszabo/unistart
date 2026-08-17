@@ -59,7 +59,7 @@ async function runScraper() {
 
       for (const job of scrapedJobs) {
         // ==================================================================
-        // BIZALMAS & TELJES KÖRŰ KÉTNYELVŰ (MAGYAR / ANGOL) SZŰRŐ
+        // OKOS ÉS PONTOSÍTOTT KÉTNTSÉGŰ SZŰRŐ (Bosch / Bankbarát)
         // ==================================================================
         const titleLower = (job.title || "").toLowerCase();
         const expLower = (job.experience_level || "").toLowerCase();
@@ -68,35 +68,34 @@ async function runScraper() {
 
         const textToCheck = `${titleLower} ${expLower} ${typeLower} ${subLower}`;
 
-        // 1. TILTÓLISTA (Magyar és angol vezetői / senior / tapasztalt pozíciók)
+        // 1. TILTÓLISTA: Csak a szigorú vezetői / senior szintek (a "manager" elengedve, hogy a Junior Manager átmenjen!)
         const negativeKeywords = [
-          "szenior", "senior", "vezető", "head", "director", 
-          "igazgató", "principal", "chief", "manager", "lead"
+          "szenior", "senior", "vezető", "head of", "director", 
+          "igazgató", "principal", "chief", "executive"
         ];
         const isSeniorOrLeader = negativeKeywords.some(neg => textToCheck.includes(neg));
 
         if (isSeniorOrLeader) {
-          continue; // Ha vezetői vagy senior jellegű, átugorjuk
+          continue; 
         }
 
-        // 2. ENGEDÉLYEZETT KULCSSZAVAK (Magyar + Angol formák minden variációban)
+        // 2. ENGEDÉLYEZETT KULCSSZAVAK (Gyakornok + Junior + Pályakezdő + Graduate programok)
         const targetKeywords = [
           // --- MAGYAR FORMÁK ---
           "gyakornok", "gyakornoki", "diák", "egyetemista",
           "pályakezdő", "friss diplomás", "junior", "kezdő",
           "tapasztalat nélkül", "0-1 év", "0-2 év", "0-3 év", "1-2 év", "1-3 év",
           
-          // --- ANGOL FORMÁK ---
+          // --- ANGOL & MULTINACIONÁLIS FORMÁK (BOSCH, STB.) ---
           "intern", "internship", "trainee", "student", "student job",
           "entry level", "entry-level", "graduate", "fresh graduate",
-          "apprentice", "apprenticeship",
+          "young professional", "career start", "apprentice", "apprenticeship",
           "0-1 years", "0-2 years", "0-3 years", "1-2 years", "1-3 years",
           "0-1 yrs", "1-3 yrs"
         ];
 
         const isEntryLevel = targetKeywords.some(keyword => textToCheck.includes(keyword));
 
-        // Ha egyik kategóriába sem esik bele, átugorjuk
         if (!isEntryLevel) {
           continue; 
         }

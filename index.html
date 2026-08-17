@@ -5,13 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UniStart - Karrierfórum</title>
 
-<!-- HA NINCS BEJELENTKEZVE, AZONNAL ÁTIRÁNYÍT A LOGIN FÁJLRA -->
-<script>
-    if (localStorage.getItem('uniStart_loggedIn') !== 'true') {
-        window.location.replace('login.html');
-    }
-</script>
-
 <style>
 /* ==========================================================================
    CSS VÁLTOZÓK (APPLE DESIGN)
@@ -31,12 +24,10 @@
     --tag-bg: #2c2c2e; 
     --tag-border: #3a3a3c;
     
-    /* Kompakt, elegáns méretek */
     --sidebar-width-expanded: 240px; 
     --sidebar-width-collapsed: 72px; 
     --header-height: 60px;
     
-    /* Üveg effektek és Lekerekítések */
     --sidebar-bg: rgba(21, 21, 21, 0.85);
     --header-bg: rgba(0, 0, 0, 0.75);
     --radius-sm: 10px; 
@@ -55,13 +46,12 @@
     --tag-bg: #ffffff; 
     --tag-border: #e5e5ea; 
     
-    /* Üveg effektek világos módban */
     --sidebar-bg: rgba(229, 229, 234, 0.85);
     --header-bg: rgba(245, 245, 247, 0.85);
 }
 
 /* ==========================================================================
-   ALAPVETŐ STÍLUSOK (RESET ÉS BODY)
+   ALAPVETŐ STÍLUSOK
    ========================================================================== */
 * { 
     box-sizing: border-box; 
@@ -81,9 +71,7 @@ body.modal-open {
     overflow: hidden; 
 }
 
-/* ==========================================================================
-   VISSZA A TETEJÉRE GOMB (ÚJ)
-   ========================================================================== */
+/* Vissza a tetejére gomb */
 #backToTopBtn {
     position: fixed;
     bottom: 30px;
@@ -108,130 +96,94 @@ body.modal-open {
     z-index: 1000;
 }
 
-#backToTopBtn.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+#backToTopBtn.show { 
+    opacity: 1; 
+    visibility: visible; 
+    transform: translateY(0); 
 }
 
-#backToTopBtn:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5);
-}
-
-#backToTopBtn:active {
-    transform: translateY(0) scale(0.95);
+#backToTopBtn:hover { 
+    background-color: var(--primary-hover); 
+    transform: translateY(-3px) scale(1.05); 
 }
 
 /* ==========================================================================
-   KIEMELT SZEKCIÓK (ZÖLD ÉS ARANY BLOKKOK)
+   CÉG KERESŐ BLOKK (LETISZTULT)
    ========================================================================== */
-.highlighted-section {
-    margin-bottom: 35px;
-    width: 100%;
-}
-
-.section-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0;
-    margin-bottom: 12px;
-    color: var(--text-color);
-    letter-spacing: -0.3px;
-}
-
-.green-banner-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.green-banner {
-    border: 1px solid var(--success-color);
-    background: rgba(50, 215, 75, 0.05);
-    border-radius: var(--radius-lg);
-    padding: 16px;
-    text-align: center;
-    color: var(--subtitle-color);
-    font-size: 13px;
-    box-shadow: 0 2px 8px var(--card-shadow);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.gold-grid-container {
-    border: 1px solid var(--gold-color);
-    background: rgba(212, 175, 55, 0.05);
+.advanced-search-block {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-lg);
     padding: 20px;
-}
-
-/* ==========================================================================
-   KERESŐSÁV ÉS PARTNEREK FEJLÉC (EGY SORBAN)
-   ========================================================================== */
-.section-header-row {
+    margin-bottom: 30px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
     gap: 15px;
-    flex-wrap: wrap; 
+    box-shadow: 0 4px 15px var(--card-shadow);
+    align-items: center;
 }
 
-.search-wrapper {
-    position: relative;
-    flex: 0 1 40%;
-    min-width: 280px;
+.search-col {
+    flex: 1;
+    max-width: 350px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
-.search-input {
+.search-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--subtitle-color);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.input-wrapper { 
+    position: relative; 
     width: 100%; 
-    padding: 12px 40px 12px 16px; 
+}
+
+select.search-input { 
+    width: 100%; 
+    padding: 12px 40px 12px 15px; 
     border-radius: var(--radius-sm); 
     border: 1px solid var(--tag-border);
-    background: var(--tag-bg); 
+    background: var(--bg-color); 
     color: var(--text-color); 
     font-size: 14px; 
     outline: none; 
-    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); 
-    box-shadow: 0 2px 8px var(--card-shadow);
+    transition: 0.2s; 
     font-family: inherit;
+    appearance: none; 
+    cursor: pointer;
 }
 
-.search-input:focus { 
+select.search-input:focus { 
     border-color: var(--primary-color); 
-    box-shadow: 0 4px 16px rgba(10, 132, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2); 
 }
 
-.clear-search-btn {
-    position: absolute;
-    right: 10px; 
+.input-wrapper::after { 
+    content: '▼'; 
+    position: absolute; 
+    right: 15px; 
     top: 50%; 
-    transform: translateY(-50%); 
-    background: var(--tag-bg); 
-    border: 1px solid var(--tag-border); 
-    color: var(--text-color); 
-    font-size: 16px; 
-    font-weight: bold; 
-    width: 26px; 
-    height: 26px; 
-    border-radius: 50%; 
-    display: none; 
-    align-items: center; 
-    justify-content: center; 
-    cursor: pointer; 
-    transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1); 
+    transform: translateY(-50%);
+    font-size: 10px; 
+    color: var(--subtitle-color); 
+    pointer-events: none; 
 }
 
-.clear-search-btn:hover { 
-    background: var(--danger-color); 
-    color: white; 
-    border-color: var(--danger-color); 
-    transform: translateY(-50%) scale(1.1); 
+.section-title { 
+    font-size: 20px; 
+    font-weight: 700; 
+    margin: 0 0 12px 0; 
+    color: var(--text-color); 
 }
 
 /* ==========================================================================
-   ÁLTALÁNOS GOMBOK ÉS CÍMKÉK (TAGS)
+   GOMBOK ÉS TAG-EK
    ========================================================================== */
 .apply-btn { 
     width: 100%; 
@@ -244,11 +196,9 @@ body.modal-open {
     font-weight: 600; 
     cursor: pointer; 
     transition: all 0.2s; 
-    letter-spacing: 0.2px;
     display: inline-flex; 
     align-items: center; 
     justify-content: center; 
-    gap: 6px; 
     text-decoration: none;
 }
 
@@ -269,17 +219,7 @@ body.modal-open {
 
 .apply-btn.secondary:hover { 
     background: rgba(10, 132, 255, 0.1); 
-    box-shadow: none;
-}
-
-.apply-btn:active { 
-    transform: translateY(1px) scale(0.98); 
     box-shadow: none; 
-}
-
-.btn-success { 
-    background: var(--success-color); 
-    color: #000; 
 }
 
 .btn-danger { 
@@ -290,30 +230,29 @@ body.modal-open {
 
 .btn-danger:hover { 
     background: var(--danger-color); 
-    color: white;
+    color: white; 
 }
 
-/* CÍMKÉK (TAGS) CSS */
-.job-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-    justify-content: center;
+.job-tags { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 6px; 
+    margin-top: 12px; 
+    justify-content: flex-start; 
 }
 
-.job-tag {
-    background: rgba(10, 132, 255, 0.1);
-    color: var(--primary-color);
-    border: 1px solid rgba(10, 132, 255, 0.2);
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 11px;
-    font-weight: 600;
+.job-tag { 
+    background: rgba(10, 132, 255, 0.1); 
+    color: var(--primary-color); 
+    border: 1px solid rgba(10, 132, 255, 0.2); 
+    padding: 4px 8px; 
+    border-radius: 6px; 
+    font-size: 11px; 
+    font-weight: 600; 
 }
 
 /* ==========================================================================
-   FŐ LAYOUT ÉS SIDEBAR
+   LAYOUT ÉS SIDEBAR
    ========================================================================== */
 #loggedInView { 
     display: flex; 
@@ -329,13 +268,12 @@ body.modal-open {
     width: var(--sidebar-width-collapsed); 
     background-color: var(--sidebar-bg); 
     backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px); 
     border-right: 1px solid var(--card-border); 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between;
     padding: 15px 0; 
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    transition: width 0.3s; 
     white-space: nowrap; 
     overflow: hidden; 
     z-index: 40; 
@@ -345,23 +283,20 @@ body.modal-open {
     width: var(--sidebar-width-expanded); 
 }
 
-.sidebar-header {
+.sidebar-header { 
     display: flex; 
     align-items: center; 
-    justify-content: space-between;
-    padding: 0 0 20px 0;
-    box-sizing: border-box;
-    width: 100%;
+    justify-content: space-between; 
+    padding: 0 0 20px 0; 
+    width: 100%; 
 }
 
 .sidebar-logo { 
     font-size: 20px; 
     font-weight: 800; 
-    color: var(--text-color); 
-    margin: 0 12px;
+    margin: 0 12px; 
     display: flex; 
     align-items: center; 
-    cursor: default; 
     padding: 10px 12px; 
     gap: 12px; 
 }
@@ -369,28 +304,26 @@ body.modal-open {
 .logo-icon { 
     width: 32px; 
     height: 32px; 
-    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
-    color: white;
-    border-radius: 10px;
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color)); 
+    color: white; 
+    border-radius: 10px; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     font-size: 18px; 
     flex-shrink: 0; 
-    box-shadow: 0 4px 10px rgba(10, 132, 255, 0.3);
 }
 
 .logo-text { 
     opacity: 0; 
     transition: opacity 0.3s; 
-    color: var(--text-color);
 }
 
 .sidebar:hover .logo-text { 
     opacity: 1; 
 }
 
-.sidebar-theme-toggle {
+.sidebar-theme-toggle { 
     background: var(--tag-bg); 
     border: 1px solid var(--tag-border); 
     color: var(--text-color); 
@@ -404,16 +337,12 @@ body.modal-open {
     font-size: 13px; 
     opacity: 0; 
     pointer-events: none; 
-    margin-right: 24px;
+    margin-right: 24px; 
 }
 
 .sidebar:hover .sidebar-theme-toggle { 
     opacity: 1; 
     pointer-events: auto; 
-}
-
-.sidebar-theme-toggle:hover { 
-    transform: scale(1.05); 
 }
 
 .nav-menu { 
@@ -425,8 +354,7 @@ body.modal-open {
     gap: 4px; 
 }
 
-.nav-item, 
-.sidebar-profile { 
+.nav-item, .sidebar-profile { 
     margin: 0 12px; 
     padding: 10px 12px; 
     border-radius: 10px; 
@@ -440,14 +368,12 @@ body.modal-open {
     gap: 12px; 
 }
 
-.nav-item:hover, 
-.sidebar-profile:hover { 
+.nav-item:hover, .sidebar-profile:hover { 
     background-color: rgba(255, 255, 255, 0.05); 
     color: var(--text-color); 
 }
 
-[data-theme="light"] .nav-item:hover, 
-[data-theme="light"] .sidebar-profile:hover { 
+[data-theme="light"] .nav-item:hover, [data-theme="light"] .sidebar-profile:hover { 
     background-color: rgba(0, 0, 0, 0.05); 
 }
 
@@ -461,9 +387,6 @@ body.modal-open {
     font-size: 16px; 
     text-align: center; 
     flex-shrink: 0; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
 }
 
 .nav-text { 
@@ -491,7 +414,7 @@ body.modal-open {
     overflow: hidden; 
     max-height: 0; 
     opacity: 0; 
-    transition: all 0.3s ease;
+    transition: all 0.3s ease; 
 }
 
 .sidebar:hover .secondary-nav-menu { 
@@ -528,9 +451,6 @@ body.modal-open {
     font-size: 14px; 
     text-align: center; 
     flex-shrink: 0; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
 }
 
 .sidebar-divider { 
@@ -538,7 +458,7 @@ body.modal-open {
     background-color: var(--card-border); 
     margin: 0 16px 8px 16px; 
     opacity: 0; 
-    transition: opacity 0.3s; 
+    transition: 0.3s; 
 }
 
 .sidebar:hover .sidebar-divider { 
@@ -546,7 +466,7 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   DASHBOARD TARTALOM
+   DASHBOARD TARTALOM ÉS KÁRTYÁK
    ========================================================================== */
 .dashboard-main { 
     flex: 1; 
@@ -554,8 +474,7 @@ body.modal-open {
     flex-direction: column; 
     background-color: var(--bg-color); 
     overflow-y: auto; 
-    position: relative; 
-    scroll-behavior: smooth; /* Gördülékeny lapozás */
+    scroll-behavior: smooth; 
 }
 
 .dashboard-header { 
@@ -567,18 +486,15 @@ body.modal-open {
     padding: 0 30px; 
     background-color: var(--header-bg); 
     backdrop-filter: blur(20px); 
-    -webkit-backdrop-filter: blur(20px); 
-    min-height: var(--header-height); 
     position: sticky; 
     top: 0; 
-    z-index: 30;
+    z-index: 30; 
 }
 
 .dashboard-title { 
     font-size: 20px; 
     font-weight: 700; 
     margin: 0; 
-    letter-spacing: -0.5px;
 }
 
 .mobile-theme-toggle { 
@@ -603,19 +519,10 @@ body.modal-open {
 }
 
 @keyframes fadeIn { 
-    from { 
-        opacity: 0; 
-        transform: translateY(10px); 
-    } 
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    } 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
 }
 
-/* ==========================================================================
-   SÁVOS (LISTA) ELRENDEZÉS
-   ========================================================================== */
 .company-grid { 
     display: grid; 
     grid-template-columns: 1fr; 
@@ -628,12 +535,11 @@ body.modal-open {
     border: 1px solid var(--card-border); 
     border-radius: var(--radius-lg); 
     padding: 20px 25px; 
-    text-align: left; 
     transition: transform 0.2s, box-shadow 0.2s; 
     display: flex; 
     flex-direction: row; 
     align-items: center; 
-    gap: 20px;
+    gap: 20px; 
 }
 
 .company-card:hover { 
@@ -642,43 +548,19 @@ body.modal-open {
     border-color: var(--primary-color); 
 }
 
-.gold-grid-container .company-card:hover { 
-    border-color: var(--gold-color); 
+.company-card-content { 
+    flex: 1; 
+    min-width: 0; 
+    display: flex; 
+    flex-direction: column; 
 }
 
-.company-card-content {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.company-card-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    flex-shrink: 0;
-    min-width: 160px;
-}
-
-/* Támogatói Sáv */
-.support-card-mosaic { 
-    background: linear-gradient(135deg, rgba(10, 132, 255, 0.05), transparent); 
-    border: 1px solid rgba(10, 132, 255, 0.2); 
-    justify-content: flex-start; 
-    cursor: pointer;
-}
-
-.support-card-mosaic:hover { 
-    border-color: var(--primary-color); 
-}
-
-.company-logo { 
-    max-width: 100%; 
-    height: 50px; 
-    object-fit: contain; 
-    margin-bottom: 16px; 
-    border-radius: 6px; 
+.company-card-actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    flex-shrink: 0; 
+    min-width: 160px; 
 }
 
 .logo-placeholder { 
@@ -701,7 +583,6 @@ body.modal-open {
     margin: 0; 
     color: var(--text-color); 
     line-height: 1.2; 
-    letter-spacing: -0.2px;
 }
 
 .company-short-desc { 
@@ -745,14 +626,13 @@ body.modal-open {
     height: 100%; 
     background: rgba(0, 0, 0, 0.6); 
     backdrop-filter: blur(8px); 
-    -webkit-backdrop-filter: blur(8px); 
     z-index: 20000; 
     display: flex; 
     align-items: center; 
     justify-content: center; 
     opacity: 0; 
     visibility: hidden; 
-    transition: opacity 0.2s, visibility 0.2s; 
+    transition: 0.2s; 
     padding: 20px; 
 }
 
@@ -771,7 +651,7 @@ body.modal-open {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); 
     position: relative; 
     transform: scale(0.95); 
-    transition: transform 0.2s; 
+    transition: 0.2s; 
     display: flex; 
     flex-direction: column; 
     overflow: hidden; 
@@ -822,7 +702,7 @@ body.modal-open {
     flex-direction: column; 
 }
 
-/* TÁMOGATÁS OPCIÓK */
+/* Támogatás Opciók */
 .support-options { 
     display: flex; 
     flex-direction: column; 
@@ -912,140 +792,18 @@ body.modal-open {
     text-align: right; 
 }
 
-@media (max-width: 600px) { 
-    .acc-row { 
-        flex-direction: column; 
-        align-items: flex-start; 
-        gap: 4px; 
-    } 
-    .acc-val { 
-        text-align: left; 
-    } 
-}
-
-.modal-actions { 
-    display: flex; 
-    gap: 12px; 
-    margin-top: 20px; 
-    flex-wrap: wrap; 
-}
-
-.modal-actions .apply-btn { 
-    flex: 1; 
-    min-width: 150px; 
-}
-
-/* Űrlapok (Profil szerkesztés) */
-.form-group { 
-    margin-bottom: 15px; 
-    text-align: left; 
-}
-
-.form-group label { 
-    display: block; 
-    font-weight: 600; 
-    margin-bottom: 6px; 
-    font-size: 13px; 
-    color: var(--subtitle-color); 
-}
-
-.form-row { 
-    display: flex; 
-    gap: 12px; 
-}
-
-.form-row .form-group { 
-    flex: 1; 
-}
-
-input, select { 
-    width: 100%; 
-    padding: 12px; 
-    margin-bottom: 10px; 
-    border-radius: var(--radius-sm); 
-    border: 1px solid var(--tag-border); 
-    background: var(--bg-color); 
-    color: var(--text-color); 
-    font-size: 14px; 
-    outline: none; 
-    transition: 0.2s; 
-    font-family: inherit;
-}
-
-input:focus, select:focus { 
-    border-color: var(--primary-color); 
-    box-shadow: 0 0 0 2px rgba(10, 132, 255, 0.2);
-}
-
 /* ==========================================================================
-   EGYETEM / AUTOCOMPLETE CSS
-   ========================================================================== */
-.input-wrapper { position: relative; }
-.input-wrapper input { padding-right: 40px; width: 100%; }
-.input-wrapper::after { content: '▼'; position: absolute; right: 16px; top: 16px; font-size: 10px; pointer-events: none; }
-.autocomplete-list { position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-color); border: 1px solid var(--tag-border); border-radius: var(--radius-sm); max-height: 200px; overflow-y: auto; z-index: 1000; display: none; margin: 4px 0 0; padding: 0; list-style: none; box-shadow: 0 10px 30px var(--card-shadow); }
-.autocomplete-list.active { display: block; }
-.autocomplete-item { padding: 12px 16px; cursor: pointer; border-bottom: 1px solid var(--tag-border); font-size: 14px; color: var(--text-color);}
-.autocomplete-item:last-child { border-bottom: none; }
-.autocomplete-item:hover { background: rgba(10, 132, 255, 0.1); color: var(--primary-color); }
-
-/* iOS Stílusú Információs Lista (Profil Modálon belül mobilon) */
-.ios-list-group { 
-    background: var(--bg-color); 
-    border-radius: 10px; 
-    overflow: hidden; 
-    margin-top: 20px; 
-    border: 1px solid var(--tag-border); 
-}
-
-.ios-list-item { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 12px 16px; 
-    border-bottom: 1px solid var(--tag-border); 
-    cursor: pointer; 
-    font-size: 14px; 
-    font-weight: 500; 
-}
-
-.ios-list-item:last-child { 
-    border-bottom: none; 
-}
-
-.ios-list-item:hover { 
-    background: rgba(255, 255, 255, 0.05); 
-}
-
-[data-theme="light"] .ios-list-item:hover { 
-    background: rgba(0, 0, 0, 0.03); 
-}
-
-.ios-list-left { 
-    display: flex; 
-    align-items: center; 
-    gap: 10px; 
-}
-
-.ios-list-right { 
-    color: var(--subtitle-color); 
-    font-weight: bold; 
-}
-
-/* ==========================================================================
-   MEDIA QUERIES (TABLET ÉS MOBIL)
+   MOBIL NÉZET
    ========================================================================== */
 @media (max-width: 768px) {
     #loggedInView { 
         flex-direction: column; 
     }
-    
     .dashboard-header { 
         padding: 0 20px; 
         height: 60px; 
         min-height: 60px; 
     }
-    
     .mobile-theme-toggle { 
         display: flex; 
         background: var(--tag-bg); 
@@ -1059,8 +817,6 @@ input:focus, select:focus {
         justify-content: center; 
         font-size: 14px; 
     }
-
-    /* Mobilon alsó sáv (Bottom Nav) */
     .sidebar { 
         position: fixed; 
         bottom: 0; 
@@ -1075,24 +831,18 @@ input:focus, select:focus {
         justify-content: space-around; 
         align-items: center; 
         background: var(--header-bg); 
-        backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px); 
     }
-    
-    .sidebar-header, 
-    .secondary-nav-menu, 
-    .sidebar-divider { 
+    .sidebar-header, .secondary-nav-menu, .sidebar-divider { 
         display: none; 
     } 
-    
     .nav-menu { 
         flex-direction: row; 
         width: 100%; 
         justify-content: space-around; 
-        gap: 0;
+        gap: 0; 
     }
-    
-    .nav-item, 
-    .sidebar-profile { 
+    .nav-item, .sidebar-profile { 
         padding: 5px; 
         margin: 0; 
         flex: 1; 
@@ -1100,91 +850,48 @@ input:focus, select:focus {
         flex-direction: column; 
         gap: 4px; 
         height: 100%; 
-        border: none;
+        border: none; 
     }
-    
     .nav-item.active { 
         background-color: transparent; 
         color: var(--primary-color); 
     }
-    
-    .nav-item:hover, 
-    .sidebar-profile:hover { 
+    .nav-item:hover, .sidebar-profile:hover { 
         background-color: transparent; 
     }
-    
-    .nav-icon { 
-        font-size: 20px; 
-    }
-    
     .nav-text { 
         display: block; 
         font-size: 10px; 
         margin: 0; 
         opacity: 1; 
     }
-    
     .dashboard-main { 
         padding-bottom: 70px; 
     } 
-    
     .dashboard-content { 
         padding: 20px 15px; 
     }
-    
-    .section-header-row { 
+    .company-card { 
         flex-direction: column; 
         align-items: flex-start; 
-        gap: 10px;
+        padding: 15px; 
+        gap: 15px; 
     }
-    
-    .search-wrapper { 
+    .company-card-actions { 
         width: 100%; 
-        min-width: unset; 
+        flex-direction: row; 
     }
-    
-    .big-support-content { 
-        padding: 20px; 
+    .company-card-actions .apply-btn { 
+        flex: 1; 
+        padding: 10px 5px; 
+        font-size: 13px; 
     }
-    
-    .form-row { 
-        flex-direction: column; 
-        gap: 0; 
-    }
-    
-    .modal-actions { 
-        flex-direction: column; 
-        gap: 10px; 
-    }
-    
-    .modal-actions .apply-btn { 
-        width: 100%; 
-    }
-
-    /* Kártya mobil nézete */
-    .company-card {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 15px;
-        gap: 15px;
-    }
-    .company-card-actions {
-        width: 100%;
-        flex-direction: row;
-    }
-    .company-card-actions .apply-btn {
-        flex: 1;
-        padding: 10px 5px;
-        font-size: 13px;
-    }
-
-    /* Vissza a tetejére gomb mobil pozíció */
-    #backToTopBtn {
+    #backToTopBtn { 
         bottom: 85px; 
-        right: 20px;
-        width: 44px;
-        height: 44px;
-        font-size: 20px;
+        right: 20px; 
+        width: 44px; 
+        height: 44px; 
+        font-size: 20px; 
     }
 }
 </style>
@@ -1243,9 +950,9 @@ input:focus, select:focus {
             </ul>
             <div class="sidebar-divider"></div>
             
-            <div class="sidebar-profile" onclick="openModal('profileModal')">
-                <span class="nav-icon">🧑‍🎓</span>
-                <span class="nav-text" id="sidebarProfileName">Betöltés...</span>
+            <div class="sidebar-profile" onclick="openAboutModal()">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-text">Információ</span>
             </div>
         </div>
     </aside>
@@ -1263,35 +970,24 @@ input:focus, select:focus {
             <!-- 1. KARRIERFÓRUM FÜL -->
             <div id="forumTab" class="tab-content active">
 
-                <div class="highlighted-section">
-                    <h2 class="section-title">
-                        <span id="highlightedName"></span>Személyre Szabott Lehetőségek
-                    </h2>
-                    <div class="green-banner-list">
-                        <div class="green-banner">
-                            Jelenleg nincsenek számodra személyre szabott álláslehetőségek. Térj vissza később!
-                        </div>
-                    </div>
-                </div>
-
-                <div class="highlighted-section">
-                    <h2 class="section-title">Kiemelt Partnerek</h2>
-                    <div class="gold-grid-container company-grid">
-                        <div style="grid-column: 1 / -1; text-align: center; color: var(--subtitle-color); font-size: 13px;">
-                            Jelenleg nincsenek kiemelt partnerek.
+                <!-- LETISZTULT CÉG KERESŐ BLOKK -->
+                <div class="advanced-search-block">
+                    <div class="search-col">
+                        <label class="search-label">Válassz céget a listából</label>
+                        <div class="input-wrapper">
+                            <select id="companyFilter" class="search-input" onchange="applyCompanyFilter()">
+                                <option value="">Összes elérhető cég</option>
+                                <!-- A cégek listája ide fog betölteni a letöltött állások alapján -->
+                            </select>
                         </div>
                     </div>
                 </div>
                 
-                <div class="section-header-row">
+                <div class="section-header-row" style="margin-bottom: 20px;">
                     <h2 class="section-title" style="margin: 0; display: flex; align-items: center; gap: 10px;">
                         Legfrissebb Állások
                         <span id="jobCountBadge" style="font-size: 13px; background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 4px 10px; border-radius: 12px; color: var(--subtitle-color); font-weight: 600;">0 db</span>
                     </h2>
-                    <div class="search-wrapper">
-                        <input type="text" id="jobSearchInput" class="search-input" placeholder="🔍 Keresés pozíció, cég vagy helyszín alapján..." oninput="filterJobsByText()">
-                        <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" title="Keresés törlése">&times;</button>
-                    </div>
                 </div>
 
                 <!-- ÁLLÁSOK SÁVOS LISTÁJA -->
@@ -1324,116 +1020,8 @@ input:focus, select:focus {
 <button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ==========================================================================
-   MODÁLIS ABLAKOK (PROFIL, RÓLUNK, STB.)
+   MODÁLIS ABLAKOK (RÓLUNK, STB.)
    ========================================================================== -->
-
-<!-- PROFIL MEGTEKINTÉS -->
-<div class="big-support-overlay" id="profileModal">
-    <div class="big-support-box" style="max-width: 600px;">
-        <button class="big-close-btn" onclick="closeModal('profileModal')" title="Bezárás">✖</button>
-        <div class="big-support-content">
-            <h3 style="margin-top: 0; font-size: 22px; font-weight: 800; color: var(--primary-color);">Saját Profilod</h3>
-            
-            <div class="about-card" style="margin-bottom: 20px; padding: 15px;">
-                <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Név:</strong> <span id="dashFullName"></span></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Egyetem:</strong> <span id="dashUni"></span></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Kar:</strong> <span id="dashFaculty"></span></p>
-                <p style="margin: 0 0 8px 0; font-size: 14px;"><strong>Szak:</strong> <span id="dashMajor"></span></p>
-                <p style="margin: 0; font-size: 14px;"><strong>LinkedIn:</strong> <span id="dashLinkedin"></span></p>
-            </div>
-            
-            <div class="modal-actions" style="margin-top: 0;">
-                <button class="apply-btn secondary" onclick="openEditProfile()">✏️ Szerkesztés</button>
-                <button class="apply-btn btn-danger" onclick="handleLogout()">Kijelentkezés</button>
-            </div>
-
-            <!-- MOBILON: iOS stílusú infó menü a profilban -->
-            <style>
-                @media(min-width: 769px){
-                    .ios-list-group, .mobile-only-title { 
-                        display: none; 
-                    }
-                }
-            </style>
-            <h3 class="mobile-only-title" style="margin-top: 30px; font-size: 16px; font-weight: 700; color: var(--subtitle-color);">Információk</h3>
-            <div class="ios-list-group">
-                <div class="ios-list-item" onclick="openBigSupportModal()">
-                    <div class="ios-list-left"><span class="ios-icon">☕</span> Támogatás</div>
-                    <div class="ios-list-right">›</div>
-                </div>
-                <div class="ios-list-item" onclick="openAboutModal()">
-                    <div class="ios-list-left"><span class="ios-icon">🎓</span> Rólunk</div>
-                    <div class="ios-list-right">›</div>
-                </div>
-                <div class="ios-list-item" onclick="openKapcsolatModal()">
-                    <div class="ios-list-left"><span class="ios-icon">✉️</span> Kapcsolat</div>
-                    <div class="ios-list-right">›</div>
-                </div>
-                <div class="ios-list-item" onclick="openImpresszumModal()">
-                    <div class="ios-list-left"><span class="ios-icon">⚖️</span> Impresszum</div>
-                    <div class="ios-list-right">›</div>
-                </div>
-                <div class="ios-list-item" onclick="openAdatvedelemModal()">
-                    <div class="ios-list-left"><span class="ios-icon">🛡️</span> Adatvédelem</div>
-                    <div class="ios-list-right">›</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- PROFIL SZERKESZTŐ -->
-<div class="big-support-overlay" id="editProfileModal">
-    <div class="big-support-box" style="max-width: 600px;">
-        <button class="big-close-btn" onclick="closeEditModalAndOpenProfile()" title="Vissza a profilhoz">✖</button>
-        <div class="big-support-content">
-            <h3 style="margin-top: 0; font-size: 22px; font-weight: 800; color: var(--primary-color);">Profil Szerkesztése</h3>
-            <form id="editProfileForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Vezetéknév</label>
-                        <input type="text" id="e_lastName" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Keresztnév</label>
-                        <input type="text" id="e_firstName" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Felsőoktatási Intézmény</label>
-                    <div class="input-wrapper">
-                        <input type="text" id="e_university" placeholder="Gépelj vagy válassz..." autocomplete="off" required>
-                        <ul class="autocomplete-list" id="uniListEdit"></ul>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group" id="editFacGroup" style="display: none;">
-                        <label>Kar</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="e_faculty" placeholder="Válassz kart..." autocomplete="off">
-                            <ul class="autocomplete-list" id="facListEdit"></ul>
-                        </div>
-                    </div>
-                    <div class="form-group" id="editMajGroup" style="display: none;">
-                        <label>Szak</label>
-                        <div class="input-wrapper">
-                            <input type="text" id="e_major" placeholder="Válassz szakot..." autocomplete="off" required>
-                            <ul class="autocomplete-list" id="majListEdit"></ul>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>LinkedIn Profil URL</label>
-                    <input type="text" id="e_linkedin" placeholder="Opcionális">
-                </div>
-                <button type="submit" class="apply-btn btn-success" style="margin-top: 10px;">Mentés</button>
-            </form>
-        </div>
-    </div>
-</div>
 
 <!-- TÁMOGATÁS MODAL -->
 <div id="bigSupportOverlay" class="big-support-overlay">
@@ -1524,7 +1112,6 @@ input:focus, select:focus {
             </div>
             
             <div style="display: flex; flex-direction: column; gap: 15px;">
-                <!-- NÓRA -->
                 <div class="about-card" style="padding: 15px; text-align: center;">
                     <div style="width: 50px; height: 50px; border-radius: 25px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">NJ</div>
                     <h3 style="margin: 0 0 4px 0; font-size: 16px;">József Nóra</h3>
@@ -1535,7 +1122,6 @@ input:focus, select:focus {
                     </a>
                 </div>
 
-                <!-- BÁTOR -->
                 <div class="about-card" style="padding: 15px; text-align: center;">
                     <div style="width: 50px; height: 50px; border-radius: 25px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">BA</div>
                     <h3 style="margin: 0 0 4px 0; font-size: 16px;">Weszter Szabó Bátor András</h3>
@@ -1586,25 +1172,25 @@ input:focus, select:focus {
             <div class="about-card" style="margin-bottom: 15px; padding: 15px;">
                 <h2 style="margin: 0 0 8px 0; font-size: 15px;">1. Kezelt adatok és célok</h2>
                 <p style="font-size: 13px; line-height: 1.5; color: var(--text-color); margin: 0;">
-                    Kizárólag a személyre szabáshoz szükséges adatokat (név, egyetem, kar, szak, LinkedIn profil) kezeljük a fiók azonosítására és a találatok finomítására (GDPR 6. cikk 1/b). A jelszavakat titkosítva tároljuk.
+                    Kizárólag a személyre szabáshoz szükséges adatokat kezeljük a találatok finomítására. A jelszavakat titkosítva tároljuk.
                 </p>
             </div>
             <div class="about-card" style="margin-bottom: 15px; padding: 15px;">
                 <h2 style="margin: 0 0 8px 0; font-size: 15px;">2. Adatfeldolgozók</h2>
                 <p style="font-size: 13px; line-height: 1.5; color: var(--text-color); margin: 0;">
-                    Platformunk kizárólag a Google Firebase (Google Ireland Limited) felhőszolgáltatásait használja. Harmadik félnek (pl. reklámügynökségek) semmilyen adatot nem adunk át.
+                    Platformunk kizárólag a Google Firebase (Google Ireland Limited) felhőszolgáltatásait használja. Harmadik félnek semmilyen adatot nem adunk át.
                 </p>
             </div>
             <div class="about-card" style="margin-bottom: 15px; padding: 15px;">
                 <h2 style="margin: 0 0 8px 0; font-size: 15px;">3. Sütik (Cookies)</h2>
                 <p style="font-size: 13px; line-height: 1.5; color: var(--text-color); margin: 0;">
-                    Oldalunk nem használ marketing vagy analitikai sütiket. Kizárólag a böngésző belső tárhelyét (localStorage) használjuk technikai (bejelentkezés, téma) okokból.
+                    Oldalunk nem használ marketing vagy analitikai sütiket. Kizárólag a böngésző belső tárhelyét használjuk technikai okokból.
                 </p>
             </div>
             <div class="about-card" style="padding: 15px;">
                 <h2 style="margin: 0 0 8px 0; font-size: 15px;">4. A te jogaid</h2>
                 <p style="font-size: 13px; line-height: 1.5; color: var(--text-color); margin: 0;">
-                    Jogod van adataid lekéréséhez, módosításához vagy teljes törléséhez (elfeledtetés joga), melyet az e-mail címünkön vagy a profilodban kezdeményezhetsz.
+                    Jogod van adataid lekéréséhez, módosításához vagy teljes törléséhez.
                 </p>
             </div>
         </div>
@@ -1644,7 +1230,6 @@ input:focus, select:focus {
 
     if (dashboardMain && backToTopBtn) {
         dashboardMain.addEventListener('scroll', () => {
-            // Ha 300 pixelnél többet görgettek lefelé, a gomb megjelenik
             if (dashboardMain.scrollTop > 300) {
                 backToTopBtn.classList.add('show');
             } else {
@@ -1655,140 +1240,9 @@ input:focus, select:focus {
 
     function scrollToTop() {
         if (dashboardMain) {
-            dashboardMain.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            dashboardMain.scrollTo({ top: 0, behavior: 'smooth' });
         }
     }
-
-    // -----------------------------------------------------
-    // EGYETEMI ADATBÁZIS ÉS LOGIKA
-    // -----------------------------------------------------
-    const uniDatabase = {
-        "Eötvös Loránd Tudományegyetem (ELTE)": {
-            "Állam- és Jogtudományi Kar (ÁJK)": ["Jogász", "Kriminológia", "Politikatudomány"],
-            "Bárczi Gusztáv Gyógypedagógiai Kar (BGGYK)": ["Gyógypedagógia"],
-            "Gazdaságtudományi Kar (GTK)": ["Gazdálkodási és menedzsment", "Kereskedelem és marketing", "Pénzügy és számvitel"],
-            "Informatikai Kar (IK)": ["Programtervező informatikus"],
-            "Pedagógiai és Pszichológiai Kar (PPK)": ["Pszichológia", "Közösségszervezés"],
-            "Tanító- és Óvóképző Kar (TÓK)": ["Óvodapedagógus", "Tanító"],
-            "Társadalomtudományi Kar (TÁTK)": ["Szociológia", "Nemzetközi tanulmányok"]
-        },
-        "Budapesti Műszaki és Gazdaságtudományi Egyetem (BME)": {
-            "Építészmérnöki Kar (ÉPK)": ["Építészmérnöki"],
-            "Építőmérnöki Kar (ÉMK)": ["Építőmérnöki"],
-            "Gazdaság- és Társadalomtudományi Kar (GTK)": ["Műszaki menedzser", "Kommunikáció és médiatudomány"],
-            "Gépészmérnöki Kar (GPK)": ["Gépészmérnöki", "Mechatronikai mérnöki"],
-            "Közlekedésmérnöki és Járműmérnöki Kar (KJK)": ["Járműmérnöki", "Logisztikai mérnöki"],
-            "Természettudományi Kar (TTK)": ["Fizika", "Matematika"],
-            "Vegyészmérnöki és Biomérnöki Kar (VBK)": ["Vegyészmérnöki", "Biomérnöki"],
-            "Villamosmérnöki és Informatikai Kar (VIK)": ["Villamosmérnöki", "Mérnökinformatikus"]
-        },
-        "Semmelweis Egyetem (SE)": {
-            "Általános Orvostudományi Kar (ÁOK)": ["Általános orvos"],
-            "Egészségtudományi Kar (ETK)": ["Ápolás és betegellátás", "Gyógytornász"],
-            "Egészségügyi Közszolgálati Kar (EKK)": ["Egészségügyi szervező"],
-            "Fogorvostudományi Kar (FOK)": ["Fogorvos"],
-            "Gyógyszerésztudományi Kar (GYTK)": ["Gyógyszerész"],
-            "Pető András Kar (PAK)": ["Konduktor"]
-        },
-        "Óbudai Egyetem (ÓE)": {
-            "Alba Regia Műszaki Kar (AMK)": ["Mérnökinformatikus", "Gépészmérnöki"],
-            "Bánki Donát Gépész és Biztonságtechnikai Mérnöki Kar (BGK)": ["Gépészmérnöki", "Biztonságtechnikai mérnöki"],
-            "Kandó Kálmán Villamosmérnöki Kar (KVK)": ["Villamosmérnöki"],
-            "Keleti Károly Gazdasági Kar (KGK)": ["Gazdálkodási és menedzsment"],
-            "Neumann János Informatikai Kar (NIK)": ["Mérnökinformatikus", "Üzemmérnök-informatikus"],
-            "Rejtő Sándor Könnyűipari és Környezetmérnöki Kar (RKK)": ["Ipari termék- és formatervező", "Környezetmérnöki"],
-            "Ybl Miklós Építéstudományi Kar (YBL)": ["Építőmérnöki", "Építészmérnöki"]
-        },
-        "Nemzeti Közszolgálati Egyetem (NKE)": {
-            "Államtudományi és Nemzetközi Tanulmányok Kar (ÁNTK)": ["Közigazgatás-szervező", "Nemzetközi igazgatási"],
-            "Hadtudományi és Honvédtisztképző Kar (HHK)": ["Honvédtiszt"],
-            "Rendészettudományi Kar (RTK)": ["Rendészeti igazgatási", "Bűnügyi igazgatási"],
-            "Víztudományi Kar (VTK)": ["Vízügyi üzemeltetési mérnöki", "Környezetmérnöki"],
-            "Katasztrófavédelmi Intézet": ["Katasztrófavédelem"]
-        },
-        "Budapesti Gazdasági Egyetem (BGE)": {
-            "Kereskedelmi, Vendéglátóipari és Turisztikai Kar (KVTK)": ["Turizmus-vendéglátás", "Kereskedelem és marketing"],
-            "Külkereskedelmi Kar (KKK)": ["Nemzetközi gazdálkodás", "Kommunikáció és médiatudomány"],
-            "Pénzügyi és Számviteli Kar (PSZK)": ["Pénzügy és számvitel", "Gazdaságinformatikus"]
-        },
-        "Károli Gáspár Református Egyetem (KRE)": {
-            "Állam- és Jogtudományi Kar (ÁJK)": ["Jogász"],
-            "Bölcsészet- és Társadalomtudományi Kar (BTK)": ["Pszichológia", "Történelem"],
-            "Pedagógiai Kar (PK)": ["Óvodapedagógus", "Tanító"],
-            "Gazdaságtudományi, Egészségtudományi és Szociális Kar (GESZK)": ["Gazdálkodási és menedzsment", "Ápolás és betegellátás"]
-        },
-        "Pázmány Péter Katolikus Egyetem (PPKE)": {
-            "Jog- és Államtudományi Kar (JÁK)": ["Jogász"],
-            "Információs Technológiai és Bionikai Kar (ITK)": ["Mérnökinformatikus", "Bionika"],
-            "Bölcsészet- és Társadalomtudományi Kar (BTK)": ["Szabadbölcsészet", "Pszichológia"]
-        },
-        "Budapesti Corvinus Egyetem": { "KARMENTES": ["Alkalmazott közgazdaságtan", "Gazdálkodási és menedzsment", "Nemzetközi gazdálkodás", "Pénzügy és számvitel"] },
-        "Moholy-Nagy Művészeti Egyetem (MOME)": { "KARMENTES": ["Animáció", "Formatervezés", "Grafikusművész", "Építőművész"] },
-        "Magyar Testnevelési és Sporttudományi Egyetem (TF)": { "KARMENTES": ["Testnevelő tanár", "Edző", "Sportmopedagógia"] },
-        "Állatorvostudományi Egyetem (ÁTE)": { "KARMENTES": ["Állatorvos", "Biológia"] },
-        "Budapesti Metropolitan Egyetem (METU)": { "KARMENTES": ["Kereskedelem és marketing", "Kommunikáció és médiatudomány", "Tervezőgrafika"] },
-        "Milton Friedman Egyetem": { "KARMENTES": ["Gazdálkodási és menedzsment", "Emberi erőforrások", "Informatika"] }
-    };
-
-    function setupAutocomplete(inputEl, listEl, dataArray, onSelectCallback) {
-        const renderList = (items) => {
-            listEl.innerHTML = '';
-            if (items.length === 0) { listEl.innerHTML = '<li class="autocomplete-item" style="color:red;">Nincs találat</li>'; return; }
-            items.forEach(item => {
-                const li = document.createElement('li'); li.className = 'autocomplete-item'; li.textContent = item;
-                li.addEventListener('mousedown', () => {
-                    inputEl.value = item; inputEl.dataset.validValue = item; listEl.classList.remove('active');
-                    if(onSelectCallback) onSelectCallback(item);
-                });
-                listEl.appendChild(li);
-            });
-        };
-        inputEl.addEventListener('input', () => { const val = inputEl.value.toLowerCase(); renderList(dataArray.filter(i => i.toLowerCase().includes(val))); listEl.classList.add('active'); });
-        inputEl.addEventListener('focus', () => { const val = inputEl.value.toLowerCase(); renderList(val ? dataArray.filter(i => i.toLowerCase().includes(val)) : dataArray); listEl.classList.add('active'); });
-        inputEl.addEventListener('blur', () => {
-            setTimeout(() => {
-                listEl.classList.remove('active');
-                const val = inputEl.value.trim().toLowerCase();
-                const match = dataArray.find(i => i.toLowerCase() === val);
-                if (match) { 
-                    inputEl.value = match;
-                    if(inputEl.dataset.validValue !== match) { inputEl.dataset.validValue = match; if(onSelectCallback) onSelectCallback(match); }
-                } else { 
-                    inputEl.value = ''; 
-                    if(inputEl.dataset.validValue !== '') { inputEl.dataset.validValue = ''; if(onSelectCallback) onSelectCallback(''); }
-                }
-            }, 150);
-        });
-    }
-
-    const e_uni = document.getElementById('e_university');
-    const e_fac = document.getElementById('e_faculty');
-    const e_maj = document.getElementById('e_major');
-
-    setupAutocomplete(e_uni, document.getElementById('uniListEdit'), Object.keys(uniDatabase), (selectedUni) => {
-        document.getElementById('editFacGroup').style.display = 'none';
-        document.getElementById('editMajGroup').style.display = 'none';
-        
-        if (!selectedUni) return;
-        const faculties = Object.keys(uniDatabase[selectedUni]);
-        
-        if (faculties.length === 1 && faculties[0] === 'KARMENTES') {
-            e_fac.dataset.validValue = 'KARMENTES';
-            document.getElementById('editMajGroup').style.display = 'block';
-            setupAutocomplete(e_maj, document.getElementById('majListEdit'), uniDatabase[selectedUni]['KARMENTES']);
-        } else {
-            document.getElementById('editFacGroup').style.display = 'block';
-            setupAutocomplete(e_fac, document.getElementById('facListEdit'), faculties, (selectedFac) => {
-                document.getElementById('editMajGroup').style.display = 'none';
-                if (!selectedFac) return;
-                document.getElementById('editMajGroup').style.display = 'block';
-                setupAutocomplete(e_maj, document.getElementById('majListEdit'), uniDatabase[selectedUni][selectedFac]);
-            });
-        }
-    });
 
     // -----------------------------------------------------
     // TÉMA VÁLTÓ LOGIKA
@@ -1799,61 +1253,37 @@ input:focus, select:focus {
 
     if (localStorage.getItem('theme') === 'light') { 
         body.setAttribute('data-theme', 'light'); 
-        if (themeToggleDesktop) {
-            themeToggleDesktop.textContent = '🌙';
-        }
-        if (themeToggleMobile) {
-            themeToggleMobile.textContent = '🌙';
-        }
+        if (themeToggleDesktop) themeToggleDesktop.textContent = '🌙';
+        if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
     }
 
     function toggleTheme() {
         if (body.hasAttribute('data-theme')) { 
             body.removeAttribute('data-theme'); 
-            if (themeToggleDesktop) {
-                themeToggleDesktop.textContent = '☀️';
-            }
-            if (themeToggleMobile) {
-                themeToggleMobile.textContent = '☀️';
-            }
+            if (themeToggleDesktop) themeToggleDesktop.textContent = '☀️';
+            if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
             localStorage.setItem('theme', 'dark'); 
         } 
         else { 
             body.setAttribute('data-theme', 'light'); 
-            if (themeToggleDesktop) {
-                themeToggleDesktop.textContent = '🌙';
-            }
-            if (themeToggleMobile) {
-                themeToggleMobile.textContent = '🌙';
-            }
+            if (themeToggleDesktop) themeToggleDesktop.textContent = '🌙';
+            if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
             localStorage.setItem('theme', 'light'); 
         }
     }
 
-    if (themeToggleDesktop) {
-        themeToggleDesktop.addEventListener('click', toggleTheme);
-    }
-    if (themeToggleMobile) {
-        themeToggleMobile.addEventListener('click', toggleTheme);
-    }
+    if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
+    if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
 
     // -----------------------------------------------------
     // FÜLEK ÉS MODALOK KEZELÉSE
     // -----------------------------------------------------
     function switchTab(tabId, title, navItemId) {
         document.getElementById('currentViewTitle').innerText = title;
-        
-        document.querySelectorAll('.tab-content').forEach(el => {
-            el.classList.remove('active');
-        });
+        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        
-        document.querySelectorAll('.nav-item').forEach(el => {
-            el.classList.remove('active');
-        });
-        if (navItemId) {
-            document.getElementById(navItemId).classList.add('active');
-        }
+        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        if (navItemId) document.getElementById(navItemId).classList.add('active');
     }
 
     function openModal(modalId) { 
@@ -1864,11 +1294,6 @@ input:focus, select:focus {
     function closeModal(modalId) { 
         document.getElementById(modalId).classList.remove('active'); 
         document.body.classList.remove('modal-open'); 
-    }
-    
-    function closeEditModalAndOpenProfile() { 
-        closeModal('editProfileModal'); 
-        openModal('profileModal'); 
     }
 
     function openBigSupportModal() { openModal('bigSupportOverlay'); }
@@ -1898,9 +1323,7 @@ input:focus, select:focus {
     function setAmount(type, event) {
         const buttons = document.querySelectorAll('.option-btn');
         buttons.forEach(btn => btn.classList.remove('active'));
-        if(event && event.currentTarget) { 
-            event.currentTarget.classList.add('active'); 
-        }
+        if(event && event.currentTarget) event.currentTarget.classList.add('active'); 
         
         const paypalBtn = document.getElementById('paypalBtn');
         const revolutBtn = document.getElementById('revolutBtn');
@@ -1908,22 +1331,18 @@ input:focus, select:focus {
         const revolutBase = 'https://revolut.me/btoranxt2h';
         
         if (type === 'custom') { 
-            paypalBtn.href = paypalBase; 
-            revolutBtn.href = revolutBase; 
-            revolutBtn.style.display = 'flex'; 
+            paypalBtn.href = paypalBase; revolutBtn.href = revolutBase; revolutBtn.style.display = 'flex'; 
         }
         else if (type === 'coffee') { 
-            paypalBtn.href = paypalBase + '/1500HUF'; 
-            revolutBtn.style.display = 'none'; 
+            paypalBtn.href = paypalBase + '/1500HUF'; revolutBtn.style.display = 'none'; 
         }
         else if (type === 'pizza') { 
-            paypalBtn.href = paypalBase + '/5000HUF'; 
-            revolutBtn.style.display = 'none'; 
+            paypalBtn.href = paypalBase + '/5000HUF'; revolutBtn.style.display = 'none'; 
         }
     }
 
     // -----------------------------------------------------
-    // FIREBASE INICIALIZÁLÁS ÉS PROFIL ADATOK (BACKEND KAPCSOLAT)
+    // FIREBASE INICIALIZÁLÁS (EREDETI CONFIG)
     // -----------------------------------------------------
     const firebaseConfig = {
         apiKey: "AIzaSyD2efnd7QvT-ODZb3MOG4PaDfIRuvVqAxM", 
@@ -1940,124 +1359,8 @@ input:focus, select:focus {
     const auth = firebase.auth(); 
     const db = firebase.firestore();
 
-    function handleLogout() { 
-        localStorage.removeItem('uniStart_loggedIn'); 
-        auth.signOut(); 
-        window.location.replace('login.html'); 
-    }
-
-    let currentUserData = {};
-
-    auth.onAuthStateChanged(async (user) => {
-        if (!user) { 
-            handleLogout(); 
-            return; 
-        }
-        try {
-            const doc = await db.collection("users").doc(user.uid).get();
-            if (doc.exists) {
-                currentUserData = doc.data(); 
-                updateDashboardData(currentUserData);
-            }
-        } catch (e) { 
-            console.error(e); 
-        }
-    });
-
-    function updateDashboardData(d) {
-        const firstName = d.first_name || 'Profilom';
-        
-        const profileEl = document.getElementById('sidebarProfileName');
-        if (profileEl) {
-            profileEl.innerText = firstName;
-        }
-        
-        document.getElementById('highlightedName').innerText = (d.first_name ? d.first_name + ' ' : '');
-        
-        document.getElementById('dashFullName').innerText = (d.family_name ? d.family_name + ' ' : '') + (d.first_name || '');
-        document.getElementById('dashUni').innerText = d.university || 'Nincs megadva';
-        document.getElementById('dashFaculty').innerText = d.faculty || 'Nincs megadva';
-        document.getElementById('dashMajor').innerText = d.major || 'Nincs megadva';
-        document.getElementById('dashLinkedin').innerText = d.linkedin || 'Nincs megadva';
-    }
-
-    function openEditProfile() {
-        closeModal('profileModal'); 
-        openModal('editProfileModal');
-        
-        document.getElementById('e_lastName').value = currentUserData.family_name || '';
-        document.getElementById('e_firstName').value = currentUserData.first_name || '';
-        document.getElementById('e_linkedin').value = currentUserData.linkedin || '';
-        
-        e_uni.value = currentUserData.university || '';
-        e_uni.dataset.validValue = e_uni.value;
-        
-        document.getElementById('editFacGroup').style.display = 'none';
-        document.getElementById('editMajGroup').style.display = 'none';
-
-        if (e_uni.value && uniDatabase[e_uni.value]) {
-            const faculties = Object.keys(uniDatabase[e_uni.value]);
-            if (faculties.length === 1 && faculties[0] === 'KARMENTES') {
-                e_fac.dataset.validValue = 'KARMENTES';
-                document.getElementById('editMajGroup').style.display = 'block';
-                setupAutocomplete(e_maj, document.getElementById('majListEdit'), uniDatabase[e_uni.value]['KARMENTES']);
-                e_maj.value = currentUserData.major || '';
-                e_maj.dataset.validValue = e_maj.value;
-            } else {
-                document.getElementById('editFacGroup').style.display = 'block';
-                setupAutocomplete(e_fac, document.getElementById('facListEdit'), faculties, (selectedFac) => {
-                    document.getElementById('editMajGroup').style.display = 'none';
-                    if (!selectedFac) return;
-                    document.getElementById('editMajGroup').style.display = 'block';
-                    setupAutocomplete(e_maj, document.getElementById('majListEdit'), uniDatabase[e_uni.value][selectedFac]);
-                });
-                
-                e_fac.value = currentUserData.faculty || '';
-                e_fac.dataset.validValue = e_fac.value;
-                
-                if (e_fac.value && uniDatabase[e_uni.value][e_fac.value]) {
-                    document.getElementById('editMajGroup').style.display = 'block';
-                    setupAutocomplete(e_maj, document.getElementById('majListEdit'), uniDatabase[e_uni.value][e_fac.value]);
-                    e_maj.value = currentUserData.major || '';
-                    e_maj.dataset.validValue = e_maj.value;
-                }
-            }
-        }
-    }
-
-    document.getElementById('editProfileForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const uni = e_uni.dataset.validValue;
-        const fac = e_fac.dataset.validValue;
-        const maj = e_maj.dataset.validValue;
-
-        if(!uni || !maj || (fac !== 'KARMENTES' && !fac)) {
-            return alert("Kérlek a legördülő listából válaszd ki az egyetemet, kart és szakot!");
-        }
-
-        const formData = {
-            family_name: document.getElementById('e_lastName').value.trim(), 
-            first_name: document.getElementById('e_firstName').value.trim(),
-            university: uni, 
-            faculty: fac === 'KARMENTES' ? '' : fac,
-            major: maj, 
-            linkedin: document.getElementById('e_linkedin').value.trim()
-        };
-        
-        try {
-            await db.collection("users").doc(auth.currentUser.uid).update(formData);
-            alert("Profil adatok sikeresen frissítve!");
-            currentUserData = { ...currentUserData, ...formData };
-            updateDashboardData(currentUserData);
-            closeEditModalAndOpenProfile();
-        } catch (err) { 
-            alert("Mentési hiba: " + err.message); 
-        }
-    });
-
     // -----------------------------------------------------
-    // ÁLLÁSOK LEKÉRDEZÉSE FIRESTORE-BÓL ÉS MEGJELENÍTÉSE
+    // ÁLLÁSOK LEKÉRDEZÉSE FIRESTORE-BÓL (BIZTONSÁGOS)
     // -----------------------------------------------------
     let jobsData = [];
     let currentFilteredJobs = [];
@@ -2072,10 +1375,24 @@ input:focus, select:focus {
                 jobsData.push({ id: doc.id, ...doc.data() });
             });
 
+            // Biztonságos dátum alapú rendezés
             jobsData.sort((a, b) => {
-                const dateA = a.date_posted || a.scraped_at;
-                const dateB = b.date_posted || b.scraped_at;
+                let dateA = a.date_posted || a.scraped_at || 0;
+                let dateB = b.date_posted || b.scraped_at || 0;
+                // Ha Firebase Timestamp objektum, átalakítjuk számmá
+                if (dateA && typeof dateA !== 'string' && dateA.toDate) dateA = dateA.toDate().getTime();
+                if (dateB && typeof dateB !== 'string' && dateB.toDate) dateB = dateB.toDate().getTime();
                 return (dateB > dateA) ? 1 : -1;
+            });
+
+            // A Cégek legördülő listájának feltöltése (Csak azokat mutatja, amik bent vannak)
+            let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
+            const selectEl = document.getElementById('companyFilter');
+            uniqueCompanies.forEach(compName => {
+                const option = document.createElement('option');
+                option.value = compName;
+                option.textContent = compName;
+                selectEl.appendChild(option);
             });
 
             currentFilteredJobs = [...jobsData];
@@ -2083,37 +1400,23 @@ input:focus, select:focus {
         } catch (error) {
             console.error(error);
             document.getElementById('jobGridContainer').innerHTML = 
-                '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1; padding: 40px 0;">Nem sikerült betölteni az állásokat. Ellenőrizd a kapcsolatot!</p>';
+                '<p style="color:var(--danger-color); text-align:center; grid-column: 1 / -1; padding: 40px 0; font-size: 16px;">Nem sikerült betölteni az állásokat. Ellenőrizd a kapcsolatot vagy a Firebase jogosultságokat!</p>';
         }
     }
 
-    function filterJobsByText() {
-        const searchInput = document.getElementById('jobSearchInput');
-        const clearBtn = document.getElementById('clearSearchBtn');
-        const searchTerm = searchInput.value.trim().toLowerCase();
-        
-        if (searchTerm === "") {
-            clearBtn.style.display = 'none';
-            currentFilteredJobs = [...jobsData];
-        } else {
-            clearBtn.style.display = 'flex'; 
-            currentFilteredJobs = jobsData.filter(job => {
-                const title = (job.title || '').toLowerCase();
-                const company = (job.company_name || '').toLowerCase();
-                const location = (job.location || '').toLowerCase();
-                return title.includes(searchTerm) || company.includes(searchTerm) || location.includes(searchTerm);
-            });
-        }
-        
+    // A Céges legördülő menü szűrése
+    function applyCompanyFilter() {
+        const selectedCompany = document.getElementById('companyFilter').value;
+
+        currentFilteredJobs = jobsData.filter(job => {
+            if (selectedCompany && job.company_name !== selectedCompany) {
+                return false; 
+            }
+            return true; 
+        });
+
         displayedCount = 30;
         renderGrid();
-    }
-
-    function clearSearch() {
-        const searchInput = document.getElementById('jobSearchInput');
-        searchInput.value = '';
-        filterJobsByText(); 
-        searchInput.focus(); 
     }
 
     function createSupportCard() {
@@ -2139,10 +1442,7 @@ input:focus, select:focus {
         const countBadge = document.getElementById('jobCountBadge'); 
         
         container.innerHTML = '';
-        
-        if (countBadge) {
-            countBadge.innerText = currentFilteredJobs.length + ' db';
-        }
+        if (countBadge) countBadge.innerText = currentFilteredJobs.length + ' db';
         
         if (currentFilteredJobs.length === 0) {
             container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
@@ -2154,7 +1454,6 @@ input:focus, select:focus {
         let totalCards = 0;
 
         while (totalCards < displayedCount && jobsUsed < currentFilteredJobs.length) {
-            
             if ((totalCards + 1) % 15 === 0) {
                 container.appendChild(createSupportCard());
                 totalCards++;
@@ -2164,17 +1463,23 @@ input:focus, select:focus {
             const job = currentFilteredJobs[jobsUsed];
             const card = document.createElement('div'); 
             card.className = 'company-card';
-            
             card.style.cursor = 'default';
 
             const jobTitle = job.title || 'Névtelen pozíció';
             const companyName = job.company_name || 'Névtelen cég';
             
+            // Biztonságos dátumkiírás az eredeti logika alapján
+            let displayDate = "";
+            if (job.date_posted) {
+                if (typeof job.date_posted === 'string') displayDate = job.date_posted.split('T')[0];
+                else if (job.date_posted.toDate) displayDate = job.date_posted.toDate().toISOString().split('T')[0];
+                else displayDate = String(job.date_posted);
+            }
+
             const empType = job.employment_type ? `<span class="job-tag">⏱️ ${job.employment_type}</span>` : '';
             const expLevel = job.experience_level ? `<span class="job-tag">📈 ${job.experience_level}</span>` : '';
-            const dPosted = job.date_posted ? `<span class="job-tag">📅 ${job.date_posted}</span>` : '';
+            const dPosted = displayDate ? `<span class="job-tag">📅 ${displayDate}</span>` : '';
             const locTag = job.location && job.location !== "Nincs megadva" ? `<span class="job-tag">📍 ${job.location}</span>` : '';
-
             const applyLink = job.apply_url || job.url;
 
             card.innerHTML = `
@@ -2206,7 +1511,10 @@ input:focus, select:focus {
         renderGrid(); 
     }
 
-    window.onload = loadJobsData;
+    // Automatikusan lekérjük az állásokat miután a Firebase betöltött (függetlenül a bejelentkezéstől)
+    auth.onAuthStateChanged(() => {
+        loadJobsData();
+    });
 
     document.querySelectorAll('.big-support-overlay, .modal-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) { 

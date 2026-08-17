@@ -6,6 +6,7 @@ const engines = {
   smartrecruiters: require("./scrapers/smartrecruiters"),
   workday: require("./scrapers/workday"),
   erste: require("./scrapers/erste"),
+  otp: require("./scrapers/otp"),
   custom: require("./scrapers/custom")
 };
 

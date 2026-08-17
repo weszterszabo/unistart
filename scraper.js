@@ -27,26 +27,48 @@ async function runScraper() {
     }
 
     for (const doc of companiesSnapshot.docs) {
+      const companyId = doc.id;
       const company = doc.data();
+      
       if (company.career_url) {
         console.log(`\n🔍 Feldolgozás: ${company.name || "Cég"} -> ${company.career_url}`);
         const frissAllasok = await scrapeJobsFromUrl(company.career_url);
         console.log(`✅ Összesen talált állások (minden oldal): ${frissAllasok.length} db`);
 
+        // 1. LÉPÉS: Létrehozunk egy listát a MOST talált állások azonosítóiból
+        const freshJobIds = new Set();
+
+        // 2. LÉPÉS: Elmentjük / frissítjük az aktuális állásokat
         for (const job of frissAllasok) {
           const jobId = (job.url || company.name + job.title).replace(/[^a-zA-Z0-9]/g, "").substring(0, 50);
+          freshJobIds.add(jobId); // Felírjuk a listánkra, hogy ez az állás aktív!
           
           await db.collection("jobs").doc(jobId).set({
-            company_id: doc.id,
+            company_id: companyId,
             company_name: company.name || "Névtelen cég",
             title: job.title || "Névtelen pozíció",
-            // Alapértelmezett szöveg, ha nincs leírás:
             description: job.description || "További információkért kattints a jelentkezés gombra.",
             location: job.location || "Nincs megadva",
             url: job.url,
             date_posted: job.datePosted || new Date().toISOString(),
             scraped_at: admin.firestore.FieldValue.serverTimestamp(),
           }, { merge: true });
+        }
+
+        // 3. LÉPÉS: "OKOS TAKARÍTÁS" - Töröljük a már nem létező állásokat ennél a cégnél!
+        const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
+        let deletedCount = 0;
+        
+        for (const jobDoc of existingJobsSnapshot.docs) {
+          // Ha az adatbázisban lévő állás ID-je nincs benne a MOST letöltött (friss) listában...
+          if (!freshJobIds.has(jobDoc.id)) {
+            await db.collection("jobs").doc(jobDoc.id).delete(); // ...akkor töröljük!
+            deletedCount++;
+          }
+        }
+
+        if (deletedCount > 0) {
+          console.log(`   🗑️  Takarítás: ${deletedCount} db elavult állás törölve az adatbázisból.`);
         }
       }
     }
@@ -150,8 +172,7 @@ async function scrapeJobsFromUrl(baseUrl) {
                 title: text,
                 url: href.startsWith('http') ? href : new URL(href, currentUrl).href,
                 location: "Részletek a linken",
-                datePosted: new Date().toISOString(),
-                description: "Kattints a hirdetésre a részletekért..."
+                datePosted: new Date().toISOString()
               });
             }
           });

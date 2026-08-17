@@ -4,13 +4,25 @@ const HEADERS = {
 };
 
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [SmartRecruiters] JSON API letöltése...`);
+  // Okos trükk: Ha van pagesize/limit a linkben, maximalizáljuk, hogy ne kelljen lapozni!
+  let smartUrl = baseUrl;
+  if (smartUrl.includes('pagesize=')) {
+      smartUrl = smartUrl.replace(/pagesize=\d+/, 'pagesize=500');
+  } else if (smartUrl.includes('?')) {
+      smartUrl += '&limit=500';
+  } else {
+      smartUrl += '?limit=500';
+  }
+
+  console.log(`   ⬇️ [SmartRecruiters] Okos JSON API letöltése (Maximalizált limit)...`);
+  
   try {
-    const response = await fetch(baseUrl, { headers: HEADERS });
+    const response = await fetch(smartUrl, { headers: HEADERS });
     const rawText = await response.text();
     const data = JSON.parse(rawText);
     
     let jobArray = [];
+    // Minden elképzelhető kulcs végignézése, amiben állások lehetnek
     const candidateKeys = ['documents', 'content', 'elements', 'hits', 'results', 'items', 'data', 'jobs'];
     
     for (const key of candidateKeys) {
@@ -25,9 +37,12 @@ exports.scrape = async function(companyName, baseUrl) {
       
       if (!jobUrl && item.id) jobUrl = `https://jobs.smartrecruiters.com/BoschGroup/${item.id}`;
 
+      // Helyszín okos kinyerése JSON-ből
       let loc = "";
       if (typeof item.location === 'string') loc = item.location;
-      else if (item.location && typeof item.location === 'object') loc = item.location.city || item.location.name || "";
+      else if (item.location && typeof item.location === 'object') {
+        loc = item.location.city || item.location.name || item.location.addressLocality || "";
+      }
       loc = loc || item.city || "Magyarország";
 
       if (title && jobUrl) {
@@ -36,10 +51,10 @@ exports.scrape = async function(companyName, baseUrl) {
           url: jobUrl,
           apply_url: jobUrl,
           location: loc,
-          date_posted: item.releasedDate || item.postedDate || new Date().toISOString(),
-          employment_type: item.typeOfEmployment?.label || item.employment_type || "",
-          experience_level: item.experienceLevel?.label || item.experience_level || "",
-          subsidiary: item.company?.name || ""
+          date_posted: item.releasedDate || item.postedDate || item.createdAt || new Date().toISOString(),
+          employment_type: item.typeOfEmployment?.label || item.employment_type || item.contractType?.label || "",
+          experience_level: item.experienceLevel?.label || item.experience_level || item.seniority?.label || "",
+          subsidiary: item.company?.name || item.brand?.label || ""
         });
       }
     });
@@ -47,7 +62,7 @@ exports.scrape = async function(companyName, baseUrl) {
     console.log(`   ✔️  [SmartRecruiters] Siker: ${allJobs.length} db állás feldolgozva.`);
     return allJobs;
   } catch (err) {
-    console.error(`   ❌ [SmartRecruiters] Hiba:`, err.message);
+    console.error(`   ❌ [SmartRecruiters] Hiba a JSON feldolgozásakor:`, err.message);
     return [];
   }
 };

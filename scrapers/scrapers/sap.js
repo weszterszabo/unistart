@@ -9,12 +9,16 @@ exports.scrape = async function(companyName, baseUrl) {
   const allJobs = [];
   const seenUrls = new Set();
   let startrow = 0;
-  const maxPages = 10;
-  let lastPageCount = 0;
+  const step = 25; // Hány állást hoz le egyszerre (SAP alapértelmezett)
+  let hasMore = true;
+  let page = 1;
 
-  for (let page = 1; page <= maxPages; page++) {
-    const currentUrl = page > 1 ? (baseUrl.includes('?') ? `${baseUrl}&startrow=${startrow}` : `${baseUrl}?startrow=${startrow}`) : baseUrl;
-    console.log(`   ⬇️ [SAP] Oldal ${page} letöltése...`);
+  while (hasMore) {
+    const sep = baseUrl.includes('?') ? '&' : '?';
+    // Dinamikus lapozás: "Több ajánlat betöltése" szimulálása
+    const currentUrl = `${baseUrl.replace(/(&|\?)startrow=\d+/g, '')}${sep}startrow=${startrow}`;
+    
+    console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
       const response = await fetch(currentUrl, { headers: HEADERS });
@@ -36,7 +40,8 @@ exports.scrape = async function(companyName, baseUrl) {
       for (const job of uniqueOnPage) {
         if (!seenUrls.has(job.url)) {
           seenUrls.add(job.url);
-          process.stdout.write(`   🔎 [SAP] Olvasás: ${job.title.substring(0, 30)}... `);
+          process.stdout.write(`   🔎 [SAP] Részletek: ${job.title.substring(0, 30)}... `);
+          
           const details = await getDeepDetails(job.url);
           console.log(details ? "Kész!" : "Hiba.");
           
@@ -44,24 +49,29 @@ exports.scrape = async function(companyName, baseUrl) {
             title: job.title,
             url: job.url,
             apply_url: job.url,
-            location: details && details.location ? details.location : "",
+            location: details && details.location ? details.location : "Nincs megadva",
             date_posted: details && details.datePosted ? details.datePosted : new Date().toISOString(),
             employment_type: details && details.employment_type ? details.employment_type : "",
             experience_level: details && details.experience_level ? details.experience_level : "",
             subsidiary: details && details.subsidiary ? details.subsidiary : ""
           });
           newJobsCount++;
-          await new Promise(r => setTimeout(r, 400));
+          await new Promise(r => setTimeout(r, 300));
         }
       }
 
-      if (newJobsCount === 0 || (page > 1 && uniqueOnPage.length < lastPageCount)) break;
-      lastPageCount = uniqueOnPage.length;
-      startrow += 25;
+      // Ha már nem találtunk új állást ezen az oldalon, akkor vége a listának!
+      if (newJobsCount === 0) {
+        hasMore = false;
+        console.log(`   ⏹️ [SAP] Elértük az utolsó oldalt.`);
+      } else {
+        startrow += step;
+        page++;
+      }
 
     } catch (err) {
-      console.error(`   ❌ [SAP] Hiba:`, err.message);
-      break;
+      console.error(`   ❌ [SAP] Lapozási hiba:`, err.message);
+      hasMore = false;
     }
   }
   return allJobs;

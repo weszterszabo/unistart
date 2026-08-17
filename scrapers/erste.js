@@ -9,14 +9,16 @@ const HEADERS = {
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Erste] Titkos JSBQ API letöltése indul...`);
   const allJobs = [];
+  const seenUrls = new Set(); // VÉDELEM A VÉGTELEN CIKLUS ELLEN!
   let page = 1;
   let hasMore = true;
 
   while (hasMore) {
     console.log(`   ⬇️ [Erste] Oldal ${page} lekérése...`);
     try {
-      // Ez az a "titkos jelszó" (payload), amit a böngésződ is küld az Erste szerverének
-      const bodyData = `q=ds&ajax=1&page=${page}`;
+      // Megfelelő payload formátum: az 'extra' mezőben JSON formában utazik a lapozás és a limit (100)
+      const extraParam = JSON.stringify({ page: page, rowNum: "100" }); 
+      const bodyData = `q=ds&ajax=1&extra=${encodeURIComponent(extraParam)}`;
       
       const response = await fetch(baseUrl, {
         method: "POST",
@@ -28,37 +30,40 @@ exports.scrape = async function(companyName, baseUrl) {
       const rows = data.rows || [];
       
       if (rows.length === 0) {
-        console.log(`   ⏹️ [Erste] Elértük a lista végét.`);
+        console.log(`   ⏹️ [Erste] Nincs több állás a listában.`);
         hasMore = false;
         break;
       }
+
+      let newJobsThisPage = 0;
 
       rows.forEach(item => {
         const eco = item.ecommerceData || {};
         const jobUrl = item.url ? `https://karrier.erstebank.hu${item.url}` : "";
         
-        if (jobUrl) {
+        if (jobUrl && !seenUrls.has(jobUrl)) {
+          seenUrls.add(jobUrl);
+          newJobsThisPage++;
           allJobs.push({
             title: eco.item_name || "Névtelen pozíció",
             url: jobUrl,
             apply_url: jobUrl,
             location: eco.location_id || "Magyarország",
-            date_posted: new Date().toISOString(), // A rejtett API nem ad dátumot, így a mai napot kapja
-            employment_type: eco.item_category3 || "", // Pl: Teljes munkaidő
-            experience_level: eco.item_category4 || "", // Pl: Gyakornok / pályakezdő
-            subsidiary: eco.item_category || "" // Pl: Fiókhálózat
+            date_posted: new Date().toISOString(), 
+            employment_type: eco.item_category3 || "", 
+            experience_level: eco.item_category4 || "", 
+            subsidiary: eco.item_category || "" 
           });
         }
       });
 
-      // A JSON-ben a 'rowNum' mutatja, mennyi a max állás egy oldalon (általában 30)
-      const maxRows = parseInt(data.rowNum) || 30;
-      if (rows.length < maxRows) {
-         console.log(`   ⏹️ [Erste] Nincs több teli oldal.`);
+      // BIZTONSÁGI FÉK: Ha ezen az oldalon nem volt ÚJ állás (mert a szerver ismétel), azonnal álljunk meg!
+      if (newJobsThisPage === 0) {
+         console.log(`   ⏹️ [Erste] Csak ismétlődő állások érkeztek, vége a lapozásnak!`);
          hasMore = false;
       } else {
          page++;
-         await new Promise(r => setTimeout(r, 400)); // Várunk egy picit a lapozás előtt
+         await new Promise(r => setTimeout(r, 400));
       }
 
     } catch (err) {
@@ -67,11 +72,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  // Szűrő: Duplikációk kiszűrése biztonsági okokból
-  const uniqueJobs = allJobs.filter((job, index, self) => 
-    index === self.findIndex((t) => (t.url === job.url))
-  );
-
-  console.log(`   ✔️  [Erste] Siker: ${uniqueJobs.length} db egyedi állás feldolgozva.`);
-  return uniqueJobs;
+  console.log(`   ✔️  [Erste] Siker: ${allJobs.length} db egyedi állás feldolgozva.`);
+  return allJobs;
 };

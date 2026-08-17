@@ -1,10 +1,10 @@
 const HEADERS = {
   "Accept": "application/json, text/plain, */*",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36"
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
+  "Referer": "https://jobs.bosch.com/" // KÖTELEZŐ, KÜLÖNBEN AZ API BLOKKOL!
 };
 
 exports.scrape = async function(companyName, baseUrl) {
-  // Okos trükk: Ha van pagesize/limit a linkben, maximalizáljuk, hogy ne kelljen lapozni!
   let smartUrl = baseUrl;
   if (smartUrl.includes('pagesize=')) {
       smartUrl = smartUrl.replace(/pagesize=\d+/, 'pagesize=500');
@@ -19,14 +19,23 @@ exports.scrape = async function(companyName, baseUrl) {
   try {
     const response = await fetch(smartUrl, { headers: HEADERS });
     const rawText = await response.text();
-    const data = JSON.parse(rawText);
+    
+    let data;
+    try {
+        data = JSON.parse(rawText);
+    } catch (parseError) {
+        console.error(`   ❌ [SmartRecruiters] Érvénytelen JSON válasz érkezett az API-tól. Ellenőrizd a linket a Firebase-ben!`);
+        return [];
+    }
     
     let jobArray = [];
-    // Minden elképzelhető kulcs végignézése, amiben állások lehetnek
     const candidateKeys = ['documents', 'content', 'elements', 'hits', 'results', 'items', 'data', 'jobs'];
     
     for (const key of candidateKeys) {
-      if (Array.isArray(data[key]) && data[key].length > 0) { jobArray = data[key]; break; }
+      if (data && typeof data === 'object' && Array.isArray(data[key]) && data[key].length > 0) { 
+          jobArray = data[key]; 
+          break; 
+      }
     }
     if (jobArray.length === 0 && Array.isArray(data)) jobArray = data;
 
@@ -37,7 +46,6 @@ exports.scrape = async function(companyName, baseUrl) {
       
       if (!jobUrl && item.id) jobUrl = `https://jobs.smartrecruiters.com/BoschGroup/${item.id}`;
 
-      // Helyszín okos kinyerése JSON-ből
       let loc = "";
       if (typeof item.location === 'string') loc = item.location;
       else if (item.location && typeof item.location === 'object') {
@@ -62,7 +70,7 @@ exports.scrape = async function(companyName, baseUrl) {
     console.log(`   ✔️  [SmartRecruiters] Siker: ${allJobs.length} db állás feldolgozva.`);
     return allJobs;
   } catch (err) {
-    console.error(`   ❌ [SmartRecruiters] Hiba a JSON feldolgozásakor:`, err.message);
+    console.error(`   ❌ [SmartRecruiters] Hálózat vagy JSON hiba:`, err.message);
     return [];
   }
 };

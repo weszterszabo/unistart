@@ -45,7 +45,7 @@ async function runScraper() {
         console.log(`✅ Alap listán talált állások: ${frissAllasok.length} db`);
 
         if (frissAllasok.length === 0) {
-            console.log("⚠️ Nulla állást találtunk. Ez valószínűleg hálózati hiba, a biztonság kedvéért kihagyjuk a takarítást, hogy ne vesszenek el az adatok!");
+            console.log("⚠️ Nulla állást találtunk. Biztonsági okokból kihagyjuk a takarítást!");
             continue; 
         }
 
@@ -70,26 +70,20 @@ async function runScraper() {
             title: job.title || "Névtelen pozíció",
             location: (deepDetails && deepDetails.location) ? deepDetails.location : (job.location || "Nincs megadva"),
             url: job.url, 
+            apply_url: job.url, // Eredeti link a gombhoz
             date_posted: (deepDetails && deepDetails.datePosted) ? deepDetails.datePosted : (job.datePosted || new Date().toISOString()),
             scraped_at: admin.firestore.FieldValue.serverTimestamp(),
+            employment_type: deepDetails ? deepDetails.employment_type || "" : "",
+            experience_level: deepDetails ? deepDetails.experience_level || "" : "",
+            subsidiary: deepDetails ? deepDetails.subsidiary || "" : "",
+            
+            // TÖRÖLJÜK A FELESLEGES ADATOKAT AZ ADATBÁZISBÓL IS!
+            short_description: admin.firestore.FieldValue.delete(),
+            long_description: admin.firestore.FieldValue.delete(),
+            description: admin.firestore.FieldValue.delete()
           };
-
-          if (deepDetails) {
-             finalJob.short_description = deepDetails.short_description || job.description || "További információkért kattints a hirdetésre.";
-             finalJob.long_description = deepDetails.long_description || "";
-             finalJob.employment_type = deepDetails.employment_type || "";
-             finalJob.experience_level = deepDetails.experience_level || "";
-             finalJob.subsidiary = deepDetails.subsidiary || "";
-             
-             // A felhasználó kérésére az apply_url a hirdetés eredeti linkje marad!
-             finalJob.apply_url = job.url; 
-          } else {
-             finalJob.short_description = job.description || "További információkért kattints a hirdetésre.";
-             finalJob.apply_url = job.url;
-          }
           
           await db.collection("jobs").doc(jobId).set(finalJob, { merge: true });
-          
           await new Promise(r => setTimeout(r, 500));
         }
 
@@ -115,7 +109,7 @@ async function runScraper() {
 }
 
 // ============================================================================
-// 2. MÉLY-KAPARÓ (DEEP SCRAPER)
+// 2. MÉLY-KAPARÓ (CSAK A SZÜKSÉGES ADATOKRA)
 // ============================================================================
 async function enrichJobDetails(jobUrl) {
   try {
@@ -124,18 +118,15 @@ async function enrichJobDetails(jobUrl) {
     const $ = cheerio.load(html);
 
     let details = {
-      short_description: "", long_description: "",
       employment_type: "", experience_level: "", subsidiary: "",
       datePosted: "", location: ""
     };
 
-    // FELOKOSÍTOTT HELYSZÍN KERESŐ (CIB/SAP specifikus osztályokra is)
     let locFound = $('.jobGeoLocation, .job-location, .location, [data-automation="job-location"]').first().text().trim();
     if (locFound && locFound.length < 80) {
         details.location = locFound;
     }
 
-    // 1. Metaadatok kinyerése a felsorolásokból és szövegekből
     $('span, p, div, li, b, strong').each((i, el) => {
       const txt = $(el).text().replace(/\s+/g, ' ').trim();
       const lower = txt.toLowerCase();
@@ -162,27 +153,6 @@ async function enrichJobDetails(jobUrl) {
       }
     });
 
-    // 2. Leírás (Rövid és Hosszú) kinyerése okos formázással
-    let descContainer = $('.jobdescription');
-    if (descContainer.length === 0) descContainer = $('.job-description');
-    if (descContainer.length === 0) descContainer = $('main');
-
-    if (descContainer.length > 0) {
-      descContainer.find('br').replaceWith('\n');
-      descContainer.find('li').prepend('• ').append('\n');
-      descContainer.find('p, div, h1, h2, h3').append('\n\n');
-
-      let plainText = descContainer.text().trim();
-      plainText = plainText.replace(/\n{3,}/g, '\n\n'); // Dupla sortörések normalizálása
-
-      const paragraphs = plainText.split('\n\n').filter(p => p.trim().length > 40);
-
-      if (paragraphs.length > 0) {
-        details.short_description = paragraphs[0].trim();
-        details.long_description = paragraphs.slice(1).join('\n\n').trim();
-      }
-    }
-
     return details;
   } catch (e) {
     return null;
@@ -190,7 +160,7 @@ async function enrichJobDetails(jobUrl) {
 }
 
 // ============================================================================
-// 3. ALAP LISTA LETÖLTŐ (LAPOZÁSSAL)
+// 3. ALAP LISTA LETÖLTŐ
 // ============================================================================
 async function scrapeJobsFromUrl(baseUrl) {
   const allExtractedJobs = [];
@@ -220,8 +190,7 @@ async function scrapeJobsFromUrl(baseUrl) {
             extractedJobs.push({
               title: item.title || item.name || item.jobTitle || "Névtelen",
               url: item.url || item.applyUrl || currentUrl,
-              location: item.location || item.city || "",
-              description: item.description || ""
+              location: item.location || item.city || ""
             });
           });
           pageHasJobs = extractedJobs.length > 0;
@@ -234,8 +203,7 @@ async function scrapeJobsFromUrl(baseUrl) {
           extractedJobs.push({
             title: $(el).find('title').text().trim() || "Névtelen",
             url: $(el).find('link').text().trim() || currentUrl,
-            location: "",
-            description: $(el).find('description, summary').text().replace(/(<([^>]+)>)/gi, "")
+            location: ""
           });
         });
         pageHasJobs = extractedJobs.length > 0;
@@ -252,8 +220,7 @@ async function scrapeJobsFromUrl(baseUrl) {
                 extractedJobs.push({
                   title: item.title || "Névtelen",
                   url: item.url || currentUrl,
-                  location: item.jobLocation?.address?.addressLocality || "",
-                  description: item.description || "",
+                  location: item.jobLocation?.address?.addressLocality || ""
                 });
               }
             });

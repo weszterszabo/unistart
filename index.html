@@ -98,7 +98,6 @@ body.modal-open {
     letter-spacing: -0.3px;
 }
 
-/* Zöld szalaghirdetés (Személyre Szabott Lehetőségek) */
 .green-banner-list {
     display: flex;
     flex-direction: column;
@@ -117,7 +116,6 @@ body.modal-open {
     transition: transform 0.2s, box-shadow 0.2s;
 }
 
-/* Arany Mozaik Rács (Kiemelt Partnerek) */
 .gold-grid-container {
     border: 1px solid var(--gold-color);
     background: rgba(212, 175, 55, 0.05);
@@ -190,7 +188,7 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   ÁLTALÁNOS GOMBOK
+   ÁLTALÁNOS GOMBOK ÉS CÍMKÉK (TAGS)
    ========================================================================== */
 .apply-btn { 
     width: 100%; 
@@ -250,6 +248,25 @@ body.modal-open {
 .btn-danger:hover { 
     background: var(--danger-color); 
     color: white;
+}
+
+/* CÍMKÉK (TAGS) CSS */
+.job-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+    justify-content: center;
+}
+
+.job-tag {
+    background: rgba(10, 132, 255, 0.1);
+    color: var(--primary-color);
+    border: 1px solid rgba(10, 132, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
 }
 
 /* ==========================================================================
@@ -557,11 +574,11 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   MOZAIK (GRID) KOMPAKT
+   SÁVOS (LISTA) ELRENDEZÉS - ÚJ
    ========================================================================== */
 .company-grid { 
     display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: 1fr; /* 1 oszlopos teljes szélességű sáv */
     gap: 20px; 
     margin-bottom: 30px; 
 }
@@ -570,18 +587,17 @@ body.modal-open {
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
     border-radius: var(--radius-lg); 
-    padding: 20px; 
-    text-align: center; 
-    cursor: pointer; 
+    padding: 20px 25px; 
+    text-align: left; 
     transition: transform 0.2s, box-shadow 0.2s; 
     display: flex; 
-    flex-direction: column; 
+    flex-direction: row; 
     align-items: center; 
-    justify-content: flex-start;
+    gap: 20px;
 }
 
 .company-card:hover { 
-    transform: scale(1.02); 
+    transform: translateY(-2px); 
     box-shadow: 0 10px 20px var(--card-shadow); 
     border-color: var(--primary-color); 
 }
@@ -590,11 +606,27 @@ body.modal-open {
     border-color: var(--gold-color); 
 }
 
-/* Támogatói Mozaik */
+.company-card-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.company-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex-shrink: 0;
+    min-width: 160px;
+}
+
+/* Támogatói Sáv */
 .support-card-mosaic { 
     background: linear-gradient(135deg, rgba(10, 132, 255, 0.05), transparent); 
     border: 1px solid rgba(10, 132, 255, 0.2); 
-    justify-content: center; 
+    justify-content: flex-start; 
+    cursor: pointer;
 }
 
 .support-card-mosaic:hover { 
@@ -621,14 +653,12 @@ body.modal-open {
     font-size: 20px; 
     font-weight: 800; 
     color: var(--primary-color); 
-    margin-bottom: 16px; 
 }
 
 .company-name { 
     font-size: 16px; 
     font-weight: 700; 
     margin: 0; 
-    margin-bottom: 8px; 
     color: var(--text-color); 
     line-height: 1.2; 
     letter-spacing: -0.2px;
@@ -967,11 +997,6 @@ input:focus, select:focus {
    MEDIA QUERIES (TABLET ÉS MOBIL)
    ========================================================================== */
 @media (max-width: 768px) {
-    .company-grid { 
-        grid-template-columns: 1fr; 
-        gap: 15px; 
-    }
-    
     #loggedInView { 
         flex-direction: column; 
     }
@@ -1096,6 +1121,23 @@ input:focus, select:focus {
     .modal-actions .apply-btn { 
         width: 100%; 
     }
+
+    /* Kártya mobil nézete */
+    .company-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+        gap: 15px;
+    }
+    .company-card-actions {
+        width: 100%;
+        flex-direction: row;
+    }
+    .company-card-actions .apply-btn {
+        flex: 1;
+        padding: 10px 5px;
+        font-size: 13px;
+    }
 }
 </style>
 </head>
@@ -1195,14 +1237,17 @@ input:focus, select:focus {
                 </div>
                 
                 <div class="section-header-row">
-                    <h2 class="section-title" style="margin: 0;">Legfrissebb Állások</h2>
+                    <h2 class="section-title" style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                        Legfrissebb Állások
+                        <span id="jobCountBadge" style="font-size: 13px; background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 4px 10px; border-radius: 12px; color: var(--subtitle-color); font-weight: 600;">0 db</span>
+                    </h2>
                     <div class="search-wrapper">
                         <input type="text" id="jobSearchInput" class="search-input" placeholder="🔍 Keresés pozíció, cég vagy helyszín alapján..." oninput="filterJobsByText()">
                         <button class="clear-search-btn" id="clearSearchBtn" onclick="clearSearch()" title="Keresés törlése">&times;</button>
                     </div>
                 </div>
 
-                <!-- ÁLLÁSOK MOZAIK RÁCS -->
+                <!-- ÁLLÁSOK SÁVOS LISTÁJA -->
                 <div class="company-grid" id="jobGridContainer">
                 </div>
 
@@ -1229,27 +1274,8 @@ input:focus, select:focus {
 </div>
 
 <!-- ==========================================================================
-   MODÁLIS ABLAKOK (ÁLLÁS, PROFIL, RÓLUNK, STB.)
+   MODÁLIS ABLAKOK (PROFIL, RÓLUNK, STB.)
    ========================================================================== -->
-
-<!-- ÁLLÁS RÉSZLETEK -->
-<div class="big-support-overlay" id="jobModal">
-    <div class="big-support-box" style="max-width: 650px;">
-        <button class="big-close-btn" onclick="closeModal('jobModal')" title="Bezárás">✖</button>
-        <div class="big-support-content">
-            <div style="text-align: center; margin-bottom: 20px;" id="modalLogoWrapper"></div>
-            
-            <h2 id="j_modal_title" style="text-align:center; font-size: 22px; font-weight: 800; color: var(--primary-color); margin-top: 0; margin-bottom: 8px;">Állás címe</h2>
-            <h4 id="j_modal_company" style="text-align:center; font-size: 14px; margin-top: 0; margin-bottom: 25px; color: var(--subtitle-color);">Cég neve • Helyszín</h4>
-            
-            <p id="j_modal_desc" style="color: var(--text-color); line-height: 1.6; margin-bottom: 25px; font-size: 14px; white-space: pre-wrap; padding: 15px; background: var(--tag-bg); border-radius: 12px; border: 1px solid var(--tag-border);">Ide jön a leírás...</p>
-            
-            <div class="modal-actions" id="j_modal_buttons" style="display: flex; justify-content: center;">
-                <!-- Jelentkezés gomb -->
-            </div>
-        </div>
-    </div>
-</div>
 
 <!-- PROFIL MEGTEKINTÉS -->
 <div class="big-support-overlay" id="profileModal">
@@ -1972,7 +1998,7 @@ input:focus, select:focus {
     });
 
     // -----------------------------------------------------
-    // ÁLLÁSOK LEKÉRDEZÉSE FIRESTORE-BÓL (JSON HELYETT) ÉS MEGJELENÍTÉSE
+    // ÁLLÁSOK LEKÉRDEZÉSE FIRESTORE-BÓL ÉS MEGJELENÍTÉSE
     // -----------------------------------------------------
     let jobsData = [];
     let currentFilteredJobs = [];
@@ -1980,7 +2006,6 @@ input:focus, select:focus {
 
     async function loadJobsData() {
         try {
-            // Lekérjük az összes állást a Firestore-ból
             const snapshot = await db.collection("jobs").get();
             jobsData = [];
             
@@ -2033,24 +2058,33 @@ input:focus, select:focus {
         searchInput.focus(); 
     }
 
-    // Támogatói mozaik generálása
     function createSupportCard() {
         const card = document.createElement('div');
         card.className = 'company-card support-card-mosaic';
         card.onclick = () => openBigSupportModal();
         
         card.innerHTML = `
-            <div style="font-size: 38px; margin-bottom: 10px;">☕</div>
-            <h3 class="company-name" style="color: var(--primary-color); margin-bottom: 6px;">Tetszik az UniStart?</h3>
-            <p class="company-short-desc">Támogasd a szerverköltségeket és a fejlesztést egy kávé árával!</p>
+            <div style="font-size: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 60px;">☕</div>
+            <div class="company-card-content">
+                <h3 class="company-name" style="color: var(--primary-color); margin-bottom: 6px; font-size: 18px;">Tetszik az UniStart?</h3>
+                <p class="company-short-desc">Támogasd a szerverköltségeket és a fejlesztést egy kávé árával, hogy még több funkciót építhessünk be!</p>
+            </div>
+            <div class="company-card-actions">
+                <button class="apply-btn">Támogatom</button>
+            </div>
         `;
         return card;
     }
 
-    // Mozaik rács kirajzolása (ÁLLÁSOKKAL)
     function renderGrid() {
         const container = document.getElementById('jobGridContainer');
+        const countBadge = document.getElementById('jobCountBadge'); 
+        
         container.innerHTML = '';
+        
+        if (countBadge) {
+            countBadge.innerText = currentFilteredJobs.length + ' db';
+        }
         
         if (currentFilteredJobs.length === 0) {
             container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
@@ -2063,7 +2097,6 @@ input:focus, select:focus {
 
         while (totalCards < displayedCount && jobsUsed < currentFilteredJobs.length) {
             
-            // Minden 15. csempe egy Támogatói mozaik
             if ((totalCards + 1) % 15 === 0) {
                 container.appendChild(createSupportCard());
                 totalCards++;
@@ -2074,20 +2107,29 @@ input:focus, select:focus {
             const card = document.createElement('div'); 
             card.className = 'company-card';
             
-            // Amikor rákattint, átadjuk a teljes állás objektumot
-            card.onclick = () => openJobModal(job);
+            // Lekapcsoltuk a kattinthatóságot a kártyáról, nincs szükség rá
+            card.style.cursor = 'default';
 
             const jobTitle = job.title || 'Névtelen pozíció';
             const companyName = job.company_name || 'Névtelen cég';
-            const location = job.location || 'Nincs megadva';
             
-            // Mivel az állásoknál általában nincs egyedi logó, a cég nevének kezdőbetűjét használjuk
-            const logoHTML = `<div class="logo-placeholder" style="margin-bottom: 16px;">${companyName.charAt(0)}</div>`;
+            const empType = job.employment_type ? `<span class="job-tag">⏱️ ${job.employment_type}</span>` : '';
+            const expLevel = job.experience_level ? `<span class="job-tag">📈 ${job.experience_level}</span>` : '';
+            const dPosted = job.date_posted ? `<span class="job-tag">📅 ${job.date_posted}</span>` : '';
+            const locTag = job.location && job.location !== "Nincs megadva" ? `<span class="job-tag">📍 ${job.location}</span>` : '';
+
+            const applyLink = job.apply_url || job.url;
 
             card.innerHTML = `
-                ${logoHTML}
-                <h3 class="company-name">${jobTitle}</h3>
-                <p class="company-short-desc">${companyName} • ${location}</p>
+                <div class="logo-placeholder" style="margin-bottom: 0; flex-shrink: 0; width: 60px; height: 60px; font-size: 24px;">${companyName.charAt(0)}</div>
+                <div class="company-card-content">
+                    <h3 class="company-name" style="margin-bottom: 4px; font-size: 18px;">${jobTitle}</h3>
+                    <p class="company-short-desc" style="margin-bottom: 10px; font-weight: 600;">${companyName}</p>
+                    <div class="job-tags" style="justify-content: flex-start; margin-bottom: 0; margin-top: 0;">${locTag}${dPosted}${empType}${expLevel}</div>
+                </div>
+                <div class="company-card-actions">
+                    <a href="${applyLink}" target="_blank" class="apply-btn">Jelentkezés</a>
+                </div>
             `;
             
             container.appendChild(card);
@@ -2107,37 +2149,7 @@ input:focus, select:focus {
         renderGrid(); 
     }
 
-    // Állás Modál megnyitása
-    function openJobModal(job) {
-        const logoWrapper = document.getElementById('modalLogoWrapper');
-        const companyName = job.company_name || 'Névtelen cég';
-        const jobTitle = job.title || 'Névtelen pozíció';
-        const location = job.location || 'Nincs megadva';
-
-        // Logo / Céges kezdőbetű
-        logoWrapper.innerHTML = `<div class="logo-placeholder" style="margin: 0 auto 15px auto; width:80px; height:80px; font-size:32px;">${companyName.charAt(0)}</div>`; 
-
-        document.getElementById('j_modal_title').innerText = jobTitle;
-        document.getElementById('j_modal_company').innerText = `${companyName} • ${location}`;
-        document.getElementById('j_modal_desc').innerText = job.description || 'További részletekért kattints a jelentkezés gombra.';
-
-        const btnsContainer = document.getElementById('j_modal_buttons');
-        btnsContainer.innerHTML = ''; 
-
-        // Jelentkezés gomb generálása
-        if (job.url) {
-            const btnApply = document.createElement('button');
-            btnApply.className = 'apply-btn';
-            btnApply.innerText = 'Tovább a jelentkezéshez';
-            btnApply.style.maxWidth = '300px';
-            btnApply.onclick = () => window.open(job.url, '_blank');
-            btnsContainer.appendChild(btnApply);
-        }
-
-        openModal('jobModal');
-    }
-
-    // Automatikus betöltés (Állások betöltése)
+    // Automatikus betöltés
     window.onload = loadJobsData;
 
     // Globális bezáró logika a Modális ablakokhoz

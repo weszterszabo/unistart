@@ -59,25 +59,45 @@ async function runScraper() {
 
       for (const job of scrapedJobs) {
         // ==================================================================
-        // ÚJ: GYAKORNOKI ÉS PÁLYAKEZDŐ SZŰRÉS (CSAK EZEKET ENGEDJÜK BE)
+        // BIZALMAS & TELJES KÖRŰ KÉTNYELVŰ (MAGYAR / ANGOL) SZŰRŐ
         // ==================================================================
         const titleLower = (job.title || "").toLowerCase();
         const expLower = (job.experience_level || "").toLowerCase();
         const typeLower = (job.employment_type || "").toLowerCase();
         const subLower = (job.subsidiary || "").toLowerCase();
 
-        // Kulcsszavak, amikre szűrünk
+        const textToCheck = `${titleLower} ${expLower} ${typeLower} ${subLower}`;
+
+        // 1. TILTÓLISTA (Magyar és angol vezetői / senior / tapasztalt pozíciók)
+        const negativeKeywords = [
+          "szenior", "senior", "vezető", "head", "director", 
+          "igazgató", "principal", "chief", "manager", "lead"
+        ];
+        const isSeniorOrLeader = negativeKeywords.some(neg => textToCheck.includes(neg));
+
+        if (isSeniorOrLeader) {
+          continue; // Ha vezetői vagy senior jellegű, átugorjuk
+        }
+
+        // 2. ENGEDÉLYEZETT KULCSSZAVAK (Magyar + Angol formák minden variációban)
         const targetKeywords = [
-          "gyakornok", "intern", "pályakezdő", "junior", 
-          "trainee", "student", "friss diplomás", "egyetemista"
+          // --- MAGYAR FORMÁK ---
+          "gyakornok", "gyakornoki", "diák", "egyetemista",
+          "pályakezdő", "friss diplomás", "junior", "kezdő",
+          "tapasztalat nélkül", "0-1 év", "0-2 év", "0-3 év", "1-2 év", "1-3 év",
+          
+          // --- ANGOL FORMÁK ---
+          "intern", "internship", "trainee", "student", "student job",
+          "entry level", "entry-level", "graduate", "fresh graduate",
+          "apprentice", "apprenticeship",
+          "0-1 years", "0-2 years", "0-3 years", "1-2 years", "1-3 years",
+          "0-1 yrs", "1-3 yrs"
         ];
 
-        // Ellenőrizzük, hogy bármelyik mező tartalmazza-e a kulcsszavakat
-        const textToCheck = `${titleLower} ${expLower} ${typeLower} ${subLower}`;
-        const isEntryLevelOrIntern = targetKeywords.some(keyword => textToCheck.includes(keyword));
+        const isEntryLevel = targetKeywords.some(keyword => textToCheck.includes(keyword));
 
-        // HA NEM GYAKORNOK VAGY PÁLYAKEZDŐ, AKKOR ÁTUGRJUK (NEM MENTJÜK EL)
-        if (!isEntryLevelOrIntern) {
+        // Ha egyik kategóriába sem esik bele, átugorjuk
+        if (!isEntryLevel) {
           continue; 
         }
         // ==================================================================

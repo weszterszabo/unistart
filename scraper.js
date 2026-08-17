@@ -58,6 +58,30 @@ async function runScraper() {
       const freshJobIds = new Set();
 
       for (const job of scrapedJobs) {
+        // ==================================================================
+        // ÚJ: GYAKORNOKI ÉS PÁLYAKEZDŐ SZŰRÉS (CSAK EZEKET ENGEDJÜK BE)
+        // ==================================================================
+        const titleLower = (job.title || "").toLowerCase();
+        const expLower = (job.experience_level || "").toLowerCase();
+        const typeLower = (job.employment_type || "").toLowerCase();
+        const subLower = (job.subsidiary || "").toLowerCase();
+
+        // Kulcsszavak, amikre szűrünk
+        const targetKeywords = [
+          "gyakornok", "intern", "pályakezdő", "junior", 
+          "trainee", "student", "friss diplomás", "egyetemista"
+        ];
+
+        // Ellenőrizzük, hogy bármelyik mező tartalmazza-e a kulcsszavakat
+        const textToCheck = `${titleLower} ${expLower} ${typeLower} ${subLower}`;
+        const isEntryLevelOrIntern = targetKeywords.some(keyword => textToCheck.includes(keyword));
+
+        // HA NEM GYAKORNOK VAGY PÁLYAKEZDŐ, AKKOR ÁTUGRJUK (NEM MENTJÜK EL)
+        if (!isEntryLevelOrIntern) {
+          continue; 
+        }
+        // ==================================================================
+
         const rawString = job.url || company.name + job.title;
         const jobId = crypto.createHash('md5').update(rawString).digest('hex');
         freshJobIds.add(jobId);

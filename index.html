@@ -482,6 +482,7 @@ body.modal-open {
 
 .dashboard-header { 
     height: var(--header-height); 
+    flex-shrink: 0; /* <--- EZ A MEGOLDÁS KULCSA! Tilos összenyomni! */
     border-bottom: 1px solid var(--card-border); 
     display: flex; 
     align-items: center; 
@@ -806,6 +807,7 @@ body.modal-open {
         padding: 0 20px; 
         height: 60px; 
         min-height: 60px; 
+        flex-shrink: 0; /* <--- MOBILON SE NYOMJA ÖSSZE */
     }
     .mobile-theme-toggle { 
         display: flex; 

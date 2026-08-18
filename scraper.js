@@ -66,21 +66,33 @@ async function runScraper() {
         continue;
       }
 
+      // ==================================================================
+      // 1. DUPLIKÁCIÓ SZŰRÉS (Lidl és Aldi védelem)
+      // ==================================================================
       const freshJobIds = new Set();
+      const uniqueJobs = [];
+
+      for (const job of scrapedJobs) {
+        const rawString = job.url || company.name + job.title;
+        const jobId = crypto.createHash('md5').update(rawString).digest('hex');
+        
+        // Ha ezt az ID-t már hozzáadtuk a listához, átugorjuk!
+        if (!freshJobIds.has(jobId)) {
+          freshJobIds.add(jobId);
+          uniqueJobs.push({ job, jobId });
+        }
+      }
 
       // ==================================================================
-      // BATCH (CSOPORTOS) MENTÉS - 500-ASÁVAL
+      // 2. BATCH (CSOPORTOS) MENTÉS - 500-ASÁVAL
       // ==================================================================
       let writeBatch = db.batch();
       let writeCount = 0;
       let totalWritten = 0;
 
-      for (const job of scrapedJobs) {
-        // SZŰRŐ KIKAPCSOLVA: Minden állás mentésre kerül a teszteléshez
-
-        const rawString = job.url || company.name + job.title;
-        const jobId = crypto.createHash('md5').update(rawString).digest('hex');
-        freshJobIds.add(jobId);
+      for (const item of uniqueJobs) {
+        const job = item.job;
+        const jobId = item.jobId;
 
         let finalJob = {
           company_id: companyId,
@@ -109,20 +121,20 @@ async function runScraper() {
         // Ha elértük az 500-at, elküldjük a csomagot a Firebase-nek
         if (writeCount === 500) {
           await writeBatch.commit();
-          writeBatch = db.batch(); // Új csomag kezdése
+          writeBatch = db.batch(); 
           writeCount = 0;
         }
       }
 
-      // Maradék állások mentése, amik nem érték el az 500-at
+      // Maradék állások mentése
       if (writeCount > 0) {
         await writeBatch.commit();
       }
       
-      console.log(`💾 Gyorsmentés kész: ${totalWritten} db állás feltöltve/frissítve.`);
+      console.log(`💾 Gyorsmentés kész: ${totalWritten} db EGYEDI állás feltöltve/frissítve.`);
 
       // ==================================================================
-      // BATCH (CSOPORTOS) TÖRLÉS - 500-ASÁVAL
+      // 3. BATCH (CSOPORTOS) TÖRLÉS - 500-ASÁVAL
       // ==================================================================
       const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
       
@@ -138,7 +150,7 @@ async function runScraper() {
 
           if (deleteCount === 500) {
             await deleteBatch.commit();
-            deleteBatch = db.batch(); // Új csomag kezdése
+            deleteBatch = db.batch(); 
             deleteCount = 0;
           }
         }
@@ -151,6 +163,8 @@ async function runScraper() {
 
       if (totalDeleted > 0) {
         console.log(`🗑️ Takarítás: ${totalDeleted} db lejárt állás törölve.`);
+      } else {
+        console.log(`✔️ Nincs törlendő lejárt állás.`);
       }
     }
     

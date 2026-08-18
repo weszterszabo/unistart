@@ -68,10 +68,15 @@ async function runScraper() {
 
       const freshJobIds = new Set();
 
+      // ==================================================================
+      // BATCH (CSOPORTOS) MENTÉS - 500-ASÁVAL
+      // ==================================================================
+      let writeBatch = db.batch();
+      let writeCount = 0;
+      let totalWritten = 0;
+
       for (const job of scrapedJobs) {
-        // ==================================================================
         // SZŰRŐ KIKAPCSOLVA: Minden állás mentésre kerül a teszteléshez
-        // ==================================================================
 
         const rawString = job.url || company.name + job.title;
         const jobId = crypto.createHash('md5').update(rawString).digest('hex');
@@ -95,19 +100,57 @@ async function runScraper() {
           description: admin.firestore.FieldValue.delete()
         };
 
-        await db.collection("jobs").doc(jobId).set(finalJob, { merge: true });
-      }
+        const docRef = db.collection("jobs").doc(jobId);
+        writeBatch.set(docRef, finalJob, { merge: true });
+        
+        writeCount++;
+        totalWritten++;
 
-      const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
-      let deletedCount = 0;
-      for (const jobDoc of existingJobsSnapshot.docs) {
-        if (!freshJobIds.has(jobDoc.id)) {
-          await db.collection("jobs").doc(jobDoc.id).delete();
-          deletedCount++;
+        // Ha elértük az 500-at, elküldjük a csomagot a Firebase-nek
+        if (writeCount === 500) {
+          await writeBatch.commit();
+          writeBatch = db.batch(); // Új csomag kezdése
+          writeCount = 0;
         }
       }
-      if (deletedCount > 0) {
-        console.log(`🗑️ Takarítás: ${deletedCount} db lejárt állás törölve.`);
+
+      // Maradék állások mentése, amik nem érték el az 500-at
+      if (writeCount > 0) {
+        await writeBatch.commit();
+      }
+      
+      console.log(`💾 Gyorsmentés kész: ${totalWritten} db állás feltöltve/frissítve.`);
+
+      // ==================================================================
+      // BATCH (CSOPORTOS) TÖRLÉS - 500-ASÁVAL
+      // ==================================================================
+      const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
+      
+      let deleteBatch = db.batch();
+      let deleteCount = 0;
+      let totalDeleted = 0;
+
+      for (const jobDoc of existingJobsSnapshot.docs) {
+        if (!freshJobIds.has(jobDoc.id)) {
+          deleteBatch.delete(jobDoc.ref);
+          deleteCount++;
+          totalDeleted++;
+
+          if (deleteCount === 500) {
+            await deleteBatch.commit();
+            deleteBatch = db.batch(); // Új csomag kezdése
+            deleteCount = 0;
+          }
+        }
+      }
+      
+      // Maradék törlések végrehajtása
+      if (deleteCount > 0) {
+        await deleteBatch.commit();
+      }
+
+      if (totalDeleted > 0) {
+        console.log(`🗑️ Takarítás: ${totalDeleted} db lejárt állás törölve.`);
       }
     }
     

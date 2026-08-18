@@ -10,15 +10,14 @@ exports.scrape = async function(companyName, baseUrl) {
   while (hasMore) {
     console.log(`   ⬇️ [LIDL] Lapozás: ${page}. oldal...`);
     
-    // Itt van a varázslat: összeállítjuk a Lidl saját API nyelvén a paramétert
+    // A Lidl API query JSON stringként küldve az URL-ben
     const queryObj = {
         page: page,
-        resultsPerPage: 100, // Nem vacakolunk 10-esével, egyből 100-at kérünk!
+        resultsPerPage: 100,
         sortField: "",
         sortOrder: "asc"
     };
     
-    // Ezt átkódoljuk olyan formátumra, amit az URL megért (%7B%22page%22...)
     const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
@@ -38,45 +37,44 @@ exports.scrape = async function(companyName, baseUrl) {
 
       const json = await response.json();
       
-      // Az eredmények (Lidl API általában a "results" kulcs alatt küldi)
-      const jobsList = json.results || json.data || json.items || [];
+      // A nyomozásod alapján az állások a 'jobs' kulcs alatt vannak a Lidl-nél!
+      const jobsList = json.jobs || [];
 
-      if (jobsList.length === 0) {
+      if (!jobsList || jobsList.length === 0) {
         hasMore = false;
         break;
       }
 
       jobsList.forEach(job => {
-        // Cím
-        const title = job.title || job.jobTitle || "Névtelen pozíció";
+        // Cím kinyerése
+        const title = job.title || "Névtelen pozíció";
         
-        // Link összerakása
-        let jobUrl = job.url || job.jobUrl || "";
-        if (!jobUrl && job.id) jobUrl = `/jobs/${job.id}`; // Fallback, ha csak ID jönne
+        // Link összerakása (A nyomozás alapján a 'jobDetailUrl' a legtökéletesebb!)
+        let jobUrl = job.jobDetailUrl || job.url || "";
+        if (!jobUrl && job.id) jobUrl = `/jobs/${job.id}`; 
         
         if (jobUrl && !jobUrl.startsWith("http")) {
-            // Biztosítjuk, hogy ne legyen dupla perjel
             jobUrl = "https://jobs.lidl.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
         }
 
-        // Helyszín (a Lidl általában pontos várost ad meg)
+        // Helyszín kinyerése (A location objektumból)
         let location = "Magyarország";
-        if (job.city) location = job.city;
-        else if (job.location) {
-            if (typeof job.location === 'string') location = job.location;
-            else if (job.location.city) location = job.location.city;
+        if (job.location && typeof job.location === 'object') {
+            location = job.location.city || job.location.name || location;
+        } else if (job.city) {
+            location = job.city;
         }
 
         // Tapasztalat, részleg, munkaidő
-        const experience = job.entryLevel || job.experienceLevel || "";
-        const department = job.department || job.jobCategory || "";
-        const type = job.employmentType || job.workingHours || "Teljes munkaidő";
-        const datePosted = job.datePosted || job.creationDate || new Date().toISOString();
+        const experience = job.entryLevel || "";
+        const department = job.employmentArea || job.jobCategory || "";
+        const type = job.contractType || job.workingHours || "Teljes munkaidő";
+        const datePosted = job.onlineFrom || job.modifiedTime || new Date().toISOString();
 
         allJobs.push({
           title: title,
           url: jobUrl,
-          apply_url: jobUrl,
+          apply_url: jobUrl, // Vagy használhatnád a job.recruitingUrlEasyApply mezőt is, ha egyenesen a formhoz akarod vinni
           location: location,
           date_posted: datePosted,
           experience_level: experience, 

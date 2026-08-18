@@ -3,15 +3,12 @@ const crypto = require("crypto");
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [ALDI] REST API letöltése indul...`);
   const allJobs = [];
-  
-  // Általában a REST API-k a 0. oldaltól kezdenek
-  let page = 0; 
+  let page = 1; // Az Aldi API általában 1-től indul
   let hasMore = true;
+  const seenUrls = new Set(); // Végtelen ciklus védelem!
 
   while (hasMore) {
     console.log(`   ⬇️ [ALDI] Lapozás: ${page}. oldal...`);
-    
-    // A linkhez hozzáfűzzük a lapozást (oldal és 100 állás/oldal)
     const apiUrl = `https://karrier.aldi.hu/rest/jobs/search?page=${page}&size=100`;
 
     try {
@@ -19,7 +16,7 @@ exports.scrape = async function(companyName, baseUrl) {
         method: "GET",
         headers: {
           "Accept": "application/json",
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
         }
       });
 
@@ -30,60 +27,54 @@ exports.scrape = async function(companyName, baseUrl) {
 
       const json = await response.json();
       
-      // Az állások listája a JSON-ben (különböző rendszerek máshogy hívják a tömböt)
-      const jobsList = json.content || json.results || json.jobs || (Array.isArray(json) ? json : []);
+      // A TE JSON MINTÁD ALAPJÁN a lista a "jobs" kulcsban van!
+      const jobsList = json.jobs || [];
 
-      if (!jobsList || jobsList.length === 0) {
+      if (jobsList.length === 0) {
         hasMore = false;
         break;
       }
 
+      let newJobsCount = 0;
+
       jobsList.forEach(job => {
-        // Cím kinyerése
-        const title = job.title || job.name || "Névtelen pozíció";
+        const title = job.title || "Névtelen pozíció";
         
-        // Link összerakása (ha nincs megadva teljes URL, generálunk egyet az ID alapján)
-        let jobUrl = job.url || job.applyUrl || "";
-        if (!jobUrl && job.id) {
-            jobUrl = `https://karrier.aldi.hu/jobs/${job.id}`;
-        }
-        if (jobUrl && !jobUrl.startsWith("http")) {
-            jobUrl = "https://karrier.aldi.hu" + jobUrl;
-        }
+        let jobUrl = job.url || "";
+        if (!jobUrl && job.job_id) jobUrl = `job/${job.job_id}`;
+        if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.aldi.hu/" + jobUrl;
 
-        // Helyszín (néha sima szöveg, néha objektum)
-        let location = "Magyarország";
-        if (job.location) {
-            if (typeof job.location === 'string') location = job.location;
-            else if (job.location.city) location = job.location.city;
-            else if (job.location.name) location = job.location.name;
-        } else if (job.city) {
-            location = job.city;
+        // Csak az új állásokat dolgozzuk fel!
+        if (!seenUrls.has(jobUrl)) {
+            seenUrls.add(jobUrl);
+            newJobsCount++;
+
+            // A te mintád alapján a város a "city" mezőben van
+            let location = job.city || "Magyarország";
+
+            const department = job.area_of_activity_title || "";
+            const careerLevel = job.career_level_title || "";
+
+            allJobs.push({
+              title: title,
+              url: jobUrl,
+              apply_url: jobUrl,
+              location: location,
+              date_posted: new Date().toISOString(), // Az API nem adott normális dátumot, így a mai napot kapja
+              experience_level: careerLevel, 
+              subsidiary: department,
+              employment_type: job.shift || "Teljes munkaidő"
+            });
         }
-
-        // Kategória/Részleg
-        const department = job.department || job.category || "";
-
-        allJobs.push({
-          title: title,
-          url: jobUrl,
-          apply_url: jobUrl,
-          location: location,
-          date_posted: job.datePosted || job.createdDate || new Date().toISOString(),
-          experience_level: job.experienceLevel || "", 
-          subsidiary: department,
-          employment_type: job.employmentType || "Teljes munkaidő"
-        });
       });
 
-      // Ellenőrizzük, kell-e még lapoznunk
-      if (json.totalPages !== undefined && page >= (json.totalPages - 1)) {
-          hasMore = false; // Elértük az utolsó oldalt
-      } else if (jobsList.length < 100) {
-          hasMore = false; // Kevesebb állás jött, mint a limit, tehát vége
+      // Ha nem találtunk ÚJ állást az oldalon, leállítjuk a lapozást!
+      if (newJobsCount === 0) {
+        console.log(`   ⏹️ [ALDI] Csak ismétlődő állások jöttek, vége a lapozásnak!`);
+        hasMore = false;
       } else {
-          page++;
-          await new Promise(r => setTimeout(r, 400));
+        page++;
+        await new Promise(r => setTimeout(r, 400));
       }
 
     } catch (err) {

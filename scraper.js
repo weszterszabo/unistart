@@ -8,6 +8,10 @@ const engines = {
   erste: require("./scrapers/erste"),
   otp: require("./scrapers/otp"),
   khbank: require("./scrapers/khbank"),
+  aldi: require("./scrapers/aldi"),
+  lidl: require("./scrapers/lidl"),
+  telekom: require("./scrapers/telekom"),
+  fourig: require("./scrapers/fourig"),
   custom: require("./scrapers/custom")
 };
 

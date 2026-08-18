@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul (Payload varázslat)...`);
+  console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul (Mindenevő adatszűrővel)...`);
   const allJobs = [];
   let page = 1;
   let hasMore = true;
@@ -12,13 +12,12 @@ exports.scrape = async function(companyName, baseUrl) {
   while (hasMore) {
     console.log(`   ⬇️ [K&H Bank] Lapozás: ${page}. oldal...`);
     
-    // A te Payloadod alapján felépített TÖKÉLETES kérés!
     const bodyParams = new URLSearchParams();
     bodyParams.append("init", "1");
     bodyParams.append("ds", "q");
     bodyParams.append("ajax", "1");
     bodyParams.append("isCart", "0");
-    // Itt a nagy trükk: a K&H a 'routeQuery' paraméterbe várja a lapozást!
+    // Lapozás paraméter
     bodyParams.append("routeQuery", `page=${page}`); 
 
     try {
@@ -41,7 +40,6 @@ exports.scrape = async function(companyName, baseUrl) {
 
       const json = await response.json();
       
-      // Ha nincs több sor a válaszban, elértük a legutolsó oldalt
       if (!json.rows || json.rows.length === 0) {
         hasMore = false;
         break;
@@ -50,24 +48,56 @@ exports.scrape = async function(companyName, baseUrl) {
       let newJobsOnPage = 0;
 
       json.rows.forEach(jobRow => {
-        const htmlSnippet = jobRow.highlightedRow || "";
         
-        const titleMatch = htmlSnippet.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i);
-        const title = titleMatch ? titleMatch[1].replace(/<[^>]+>/g, "").trim() : "Névtelen pozíció";
+        // 1. MINDEN HTML KÓD ÖSSZEGYŰJTÉSE (Bármilyen néven is jön)
+        let htmlSnippet = "";
+        for (const key in jobRow) {
+            if (typeof jobRow[key] === 'string' && jobRow[key].includes('<')) {
+                htmlSnippet += jobRow[key] + " ";
+            }
+        }
 
-        const locMatch = htmlSnippet.match(/<span itemprop="address"[^>]*>([\s\S]*?)<\/span>/i);
-        const location = locMatch ? locMatch[1].replace(/<[^>]+>/g, "").trim() : "Magyarország";
-
-        const expMatch = htmlSnippet.match(/<div[^>]*data-cy="experiences"[^>]*>([\s\S]*?)<\/div>/i);
-        const experience = expMatch ? expMatch[1].replace(/<[^>]+>/g, "").trim() : "";
-
-        const deptMatch = htmlSnippet.match(/<div[^>]*data-cy="area"[^>]*>([\s\S]*?)<\/div>/i);
-        const department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
-
+        // 2. LINK KINYERÉSE
         let jobUrl = jobRow.url || "";
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.kh.hu" + jobUrl;
 
-        // Csak akkor mentjük, ha tényleg új állás!
+        // 3. CÍM KINYERÉSE (3 lépcsős védelem)
+        let titleMatch = htmlSnippet.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i) || 
+                         htmlSnippet.match(/class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\//i);
+        
+        let title = "Névtelen pozíció";
+        
+        if (titleMatch && titleMatch[1]) {
+            // Ha megtalálta a HTML-ben
+            title = titleMatch[1].replace(/<[^>]+>/g, "").trim();
+        } else if (jobRow.title || jobRow.name) {
+            // Ha nyersen benne van a JSON-ben
+            title = jobRow.title || jobRow.name;
+        } else if (jobUrl) {
+            // Védőháló: Kinyerjük az URL-ből (pl. /allas/junior-elemzo-123 -> Junior elemzo)
+            const slug = jobUrl.split('/').filter(Boolean).pop();
+            if (slug) {
+                title = slug.replace(/-\d+$/, '').replace(/-/g, ' '); // Számok és kötőjelek levágása
+                title = title.charAt(0).toUpperCase() + title.slice(1); // Kezdőbetű nagybetűsítése
+            }
+        }
+
+        // 4. HELYSZÍN KINYERÉSE
+        let locMatch = htmlSnippet.match(/itemprop="address"[^>]*>([\s\S]*?)<\/span>/i) || 
+                       htmlSnippet.match(/data-cy="address"[^>]*>([\s\S]*?)<\//i);
+        let location = jobRow.city || "Magyarország";
+        if (locMatch && locMatch[1]) {
+            location = locMatch[1].replace(/<[^>]+>/g, "").trim();
+        }
+
+        // 5. TAPASZTALATI SZINT ÉS SZAKTERÜLET
+        let expMatch = htmlSnippet.match(/data-cy="experiences"[^>]*>([\s\S]*?)<\/div>/i);
+        let experience = expMatch ? expMatch[1].replace(/<[^>]+>/g, "").trim() : "";
+
+        let deptMatch = htmlSnippet.match(/data-cy="area"[^>]*>([\s\S]*?)<\/div>/i);
+        let department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
+
+        // MENTÉS
         if (!seenUrls.has(jobUrl)) {
             seenUrls.add(jobUrl);
             newJobsOnPage++;
@@ -85,14 +115,12 @@ exports.scrape = async function(companyName, baseUrl) {
         }
       });
 
-      // Végtelen ciklus védelem (most már reméljük nem fog beindulni, mert lapozunk rendesen!)
       if (newJobsOnPage === 0) {
         console.log(`   ⏹️ [K&H Bank] Csak ismétlődő állások érkeztek az API-ból! Vége a lapozásnak.`);
         hasMore = false;
         break;
       }
 
-      // Ellenőrizzük a JSON alapján, hogy van-e még lap
       const totalPages = parseInt(json.total) || 1;
       if (page >= totalPages) {
         hasMore = false;

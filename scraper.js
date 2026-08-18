@@ -15,6 +15,8 @@ const engines = {
   siemens: require("./scrapers/siemens"),
   mol: require("./scrapers/mol"),
   posta: require("./scrapers/posta"),
+  mvm: require("./scrapers/mvm"),
+  kozszolgallas: require("./scrapers/kozszolgallas"),
   custom: require("./scrapers/custom")
 };
 

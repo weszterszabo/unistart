@@ -4,7 +4,6 @@ exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Telekom] REST API letöltése indul...`);
   const allJobs = [];
   
-  // A Telekom API végpontja, amit megtaláltál
   const apiUrl = "https://www.telekom.hu/karrier/api/jobs?keyword=&areas=";
 
   try {
@@ -23,58 +22,43 @@ exports.scrape = async function(companyName, baseUrl) {
 
     const json = await response.json();
     
-    // A legtöbb ilyen API közvetlenül egy tömböt ad vissza, vagy egy "jobs", "data" kulcsban van
-    const jobsList = Array.isArray(json) ? json : (json.jobs || json.data || json.results || json.content || []);
+    // A te mintád alapján a tiszta lista a 'jobList' kulcs alatt van!
+    const jobsList = json.jobList || [];
 
     if (jobsList.length === 0) {
-      console.log(`   ⏹️ [Telekom] Jelenleg nincs egyetlen nyitott pozíció sem, vagy üres a JSON.`);
+      console.log(`   ⏹️ [Telekom] Jelenleg nincs egyetlen nyitott pozíció sem.`);
       return [];
     }
 
     jobsList.forEach(job => {
-      // 1. Cím
-      const title = job.title || job.name || job.jobTitle || "Névtelen pozíció";
+      const title = job.title || "Névtelen pozíció";
       
-      // 2. Link kinyerése és formázása
-      let jobUrl = job.url || job.link || job.applyUrl || "";
-      // Ha nincs link, de van ID, megpróbáljuk összerakni (tipikus Telekom struktúra alapján)
-      if (!jobUrl && job.id) {
+      // Link összerakása a Telekom egyedi ID-ja alapján
+      let jobUrl = "";
+      if (job.id) {
           jobUrl = `https://www.telekom.hu/karrier/allasok/${job.id}`;
-      }
-      // Relatív URL kiegészítése
-      if (jobUrl && !jobUrl.startsWith("http")) {
-          jobUrl = "https://www.telekom.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
+      } else {
+          jobUrl = "https://www.telekom.hu/karrier/allasok";
       }
 
-      // 3. Helyszín
-      let location = "Magyarország";
-      if (job.location) {
-          if (typeof job.location === 'string') location = job.location;
-          else if (job.location.city) location = job.location.city;
-      } else if (job.city) {
-          location = job.city;
-      }
-      
-      // Ha a helyszín egy tömb (több város is meg van adva)
-      if (Array.isArray(job.location)) {
-          location = job.location.join(", ");
-      }
+      // Helyszín (pl. Budapest, Eger, stb.)
+      let location = job.location || "Magyarország";
 
-      // 4. Egyéb adatok (ha az API biztosítja)
-      const experience = job.experienceLevel || job.level || "";
-      const department = job.area || job.department || job.category || "";
-      const type = job.employmentType || job.workType || "Teljes munkaidő";
-      const datePosted = job.date || job.createdAt || job.publishedAt || new Date().toISOString();
+      // Labels (címkék) tömbjéből csinálunk egy szép vesszővel elválasztott listát a részleghez (subsidiary)
+      let department = "";
+      if (job.labels && Array.isArray(job.labels)) {
+          department = job.labels.join(", ");
+      }
 
       allJobs.push({
         title: title,
         url: jobUrl,
         apply_url: jobUrl,
         location: location,
-        date_posted: datePosted,
-        experience_level: experience, 
+        date_posted: new Date().toISOString(), // A mai napot mentjük, mert az API nem ad dátumot
+        experience_level: "", 
         subsidiary: department,
-        employment_type: type
+        employment_type: "Teljes munkaidő"
       });
     });
 

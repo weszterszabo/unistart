@@ -1,12 +1,10 @@
 const crypto = require("crypto");
 
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul...`);
+  console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul (Payload varázslat)...`);
   const allJobs = [];
   let page = 1;
   let hasMore = true;
-  
-  // A végtelen ciklus elleni védelem (memória)
   const seenUrls = new Set(); 
 
   const apiUrl = "https://karrier.kh.hu/jsbq";
@@ -14,9 +12,14 @@ exports.scrape = async function(companyName, baseUrl) {
   while (hasMore) {
     console.log(`   ⬇️ [K&H Bank] Lapozás: ${page}. oldal...`);
     
+    // A te Payloadod alapján felépített TÖKÉLETES kérés!
     const bodyParams = new URLSearchParams();
-    bodyParams.append("page", page.toString());
-    bodyParams.append("rowNum", "100"); 
+    bodyParams.append("init", "1");
+    bodyParams.append("ds", "q");
+    bodyParams.append("ajax", "1");
+    bodyParams.append("isCart", "0");
+    // Itt a nagy trükk: a K&H a 'routeQuery' paraméterbe várja a lapozást!
+    bodyParams.append("routeQuery", `page=${page}`); 
 
     try {
       const response = await fetch(apiUrl, {
@@ -38,6 +41,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
       const json = await response.json();
       
+      // Ha nincs több sor a válaszban, elértük a legutolsó oldalt
       if (!json.rows || json.rows.length === 0) {
         hasMore = false;
         break;
@@ -61,11 +65,9 @@ exports.scrape = async function(companyName, baseUrl) {
         const department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
 
         let jobUrl = jobRow.url || "";
-        if (jobUrl && !jobUrl.startsWith("http")) {
-            jobUrl = "https://karrier.kh.hu" + jobUrl;
-        }
+        if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.kh.hu" + jobUrl;
 
-        // CSAK AKKOR MENTJÜK EL, HA MÉG NEM LÁTTUK EZT AZ ÁLLÁST!
+        // Csak akkor mentjük, ha tényleg új állás!
         if (!seenUrls.has(jobUrl)) {
             seenUrls.add(jobUrl);
             newJobsOnPage++;
@@ -83,13 +85,14 @@ exports.scrape = async function(companyName, baseUrl) {
         }
       });
 
-      // BIZTONSÁGI VÉDŐHÁLÓ a végtelen ciklus ellen
+      // Végtelen ciklus védelem (most már reméljük nem fog beindulni, mert lapozunk rendesen!)
       if (newJobsOnPage === 0) {
-        console.log(`   ⏹️ [K&H Bank] Csak ismétlődő állások érkeztek az API-ból! Vége az API lapozásnak.`);
+        console.log(`   ⏹️ [K&H Bank] Csak ismétlődő állások érkeztek az API-ból! Vége a lapozásnak.`);
         hasMore = false;
         break;
       }
 
+      // Ellenőrizzük a JSON alapján, hogy van-e még lap
       const totalPages = parseInt(json.total) || 1;
       if (page >= totalPages) {
         hasMore = false;
@@ -102,53 +105,6 @@ exports.scrape = async function(companyName, baseUrl) {
       console.error(`   ❌ [K&H Bank] Hálózat hiba:`, err.message);
       hasMore = false;
     }
-  }
-
-  // ========================================================================
-  // VÉDŐHÁLÓ: Ha gyanúsan kevés állás jött (pl. az API beragadt 20-nál)
-  // ========================================================================
-  if (allJobs.length <= 30) {
-      console.log(`   ⚠️ [K&H Bank] GYANÚS! Csak ${allJobs.length} állás jött le. Megpróbáljuk a HTML-t is kinyerni a további oldalakról...`);
-      
-      // Megnézzük a 2., 3., 4., 5. oldalt nyersen a weboldalon
-      for (let backupPage = 2; backupPage <= 5; backupPage++) {
-          try {
-              const res = await fetch(`https://karrier.kh.hu/allasok?page=${backupPage}`);
-              const html = await res.text();
-              
-              const linkRegex = /<a[^>]+href="(\/allas\/[^"]+)"[^>]*>([\s\S]*?)<\/a>/gi;
-              let match;
-              let foundNew = 0;
-
-              while ((match = linkRegex.exec(html)) !== null) {
-                  let link = "https://karrier.kh.hu" + match[1];
-                  let title = match[2].replace(/<[^>]+>/g, "").trim();
-
-                  if (title && !seenUrls.has(link) && !title.includes("<img")) {
-                      seenUrls.add(link);
-                      foundNew++;
-                      allJobs.push({
-                          title: title,
-                          url: link,
-                          apply_url: link,
-                          location: "Magyarország", 
-                          date_posted: new Date().toISOString(),
-                          experience_level: "", 
-                          subsidiary: "",
-                          employment_type: ""
-                      });
-                  }
-              }
-              if (foundNew === 0) {
-                  console.log(`   ⏹️ [K&H Bank HTML] A ${backupPage}. oldalon már nincs új állás.`);
-                  break; 
-              } else {
-                  console.log(`   ✔️  [K&H Bank HTML] Találtunk +${foundNew} új állást a(z) ${backupPage}. oldalon!`);
-              }
-          } catch (e) { 
-              break; 
-          }
-      }
   }
 
   console.log(`   ✔️  [K&H Bank] Siker: ${allJobs.length} db egyedi állás feldolgozva.`);

@@ -1,42 +1,46 @@
-// EZZEL A SORRAL KIKAPCSOLJUK AZ SSL/TLS BLOKKOLÁST EBBEN A FÁJLBAN!
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+const https = require('https');
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Közszolgállás] Állások letöltése indul...`);
   const allJobs = [];
 
-  // A szűrési végpont, ami visszaadja a nyitott pozíciókat
-  const apiUrl = "https://kozszolgallas.ksz.gov.hu/JobAd/GetJobAdCountFilteredByCities";
-
   try {
-    // Visszatértünk a fetch-hez, mert ő tudja kicsomagolni a GZIP választ!
-    const response = await fetch(apiUrl, {
-      method: "POST", // POST kérést indítunk
-      headers: {
-        "Content-Type": "application/json; charset=UTF-8",
-        "Accept": "application/json, text/javascript, */*; q=0.01",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko)",
-        "X-Requested-With": "XMLHttpRequest"
-      },
-      // Üres JSON objektumot küldünk, azaz: "Kérem az összes állást, szűrés nélkül!"
-      body: JSON.stringify({})
+    const postData = JSON.stringify({});
+
+    // A beépített HTTPS modullal küldjük a kérést, így csak erre az egyre vonatkozik az SSL feloldás
+    const jsonStr = await new Promise((resolve, reject) => {
+        const options = {
+            hostname: 'kozszolgallas.ksz.gov.hu',
+            path: '/JobAd/GetJobAdCountFilteredByCities',
+            method: 'POST',
+            rejectUnauthorized: false, // <-- CSAK LOKÁLISAN KAPCSOLJUK KI A VÉDELMET!
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                'Accept': 'application/json, text/javascript, */*; q=0.01',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
+                'Content-Length': Buffer.byteLength(postData)
+            }
+        };
+
+        const req = https.request(options, (res) => {
+            let data = '';
+            res.on('data', chunk => data += chunk);
+            res.on('end', () => resolve(data));
+        });
+
+        req.on('error', e => reject(e));
+        req.write(postData);
+        req.end();
     });
 
-    if (!response.ok) {
-      console.error(`   ❌ [Közszolgállás] HTTP hiba: ${response.status}`);
-      return [];
-    }
-
-    const json = await response.json();
+    const json = JSON.parse(jsonStr);
     
     if (!json.Success || !json.Data || json.Data.length === 0) {
       console.log(`   ⏹️ [Közszolgállás] Nincs adat vagy üres válasz érkezett.`);
       return [];
     }
 
-    // Végigmegyünk az összes álláson
     json.Data.forEach(job => {
-      // Ha hiányzik az azonosító vagy a név, kihagyjuk
       if (!job.Speciality || !job.Id) return;
 
       const title = job.Speciality.trim();
@@ -66,7 +70,7 @@ exports.scrape = async function(companyName, baseUrl) {
     });
 
   } catch (err) {
-    console.error(`   ❌ [Közszolgállás] Hálózat hiba:`, err.message);
+    console.error(`   ❌ [Közszolgállás] Hiba:`, err.message);
   }
 
   console.log(`   ✔️  [Közszolgállás] Siker: ${allJobs.length} db állás feldolgozva.`);

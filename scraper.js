@@ -12,6 +12,9 @@ const engines = {
   lidl: require("./scrapers/lidl"),
   telekom: require("./scrapers/telekom"),
   fourig: require("./scrapers/fourig"),
+  siemens: require("./scrapers/siemens"),
+  mol: require("./scrapers/mol"),
+  posta: require("./scrapers/posta"),
   custom: require("./scrapers/custom")
 };
 

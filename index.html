@@ -97,7 +97,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .location-search { flex: 3; } 
 .search-box-container { position: relative; width: 100%; }
 
-.search-box-input { width: 100%; padding: 18px 20px 18px 50px; border-radius: 20px; background: var(--tag-bg); border: 1.5px solid transparent; color: var(--text-color); font-size: 16px; font-weight: 500; transition: all 0.3s ease; font-family: inherit; }
+.search-box-input { width: 100%; padding: 16px 20px 16px 45px; border-radius: 20px; background: var(--tag-bg); border: 1.5px solid transparent; color: var(--text-color); font-size: 16px; font-weight: 500; transition: all 0.3s ease; font-family: inherit; }
 .search-box-input:focus { outline: none; border-color: var(--primary-color); background: var(--card-bg); box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15); }
 .search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.8; font-weight: 400; }
 .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; opacity: 0.7; }
@@ -152,6 +152,9 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 
 .job-tags { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; }
 .job-tag { background: var(--tag-bg); color: var(--text-color); border: 1px solid transparent; padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 500; }
+/* 🚨 ÚJ: Határidő címke */
+.tag-deadline { background: rgba(255, 69, 58, 0.1); color: var(--danger-color); border: 1px solid rgba(255, 69, 58, 0.2); font-weight: 600;}
+
 .clickable-tag { cursor: pointer; transition: all 0.2s; }
 .clickable-tag:hover { background: var(--card-border); transform: translateY(-1px); }
 .tag-faculty { background: rgba(191, 90, 242, 0.1); color: var(--faculty-color); font-weight: 600; }
@@ -206,12 +209,13 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: fadeIn 0.4s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 .empty-state { text-align: center; padding: 80px 20px; color: var(--subtitle-color); }
 .empty-state-icon { font-size: 64px; margin-bottom: 24px; display: block; opacity: 0.6; }
 
 /* ==========================================================================
-   JOB QUICK VIEW MODAL (APPLE PREMIUM)
+   JOB QUICK VIEW MODAL
    ========================================================================== */
 .job-preview-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
 .job-preview-overlay.active { opacity: 1; visibility: visible; }
@@ -245,7 +249,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .filter-section { display: flex; flex-direction: column; }
 .filter-section h3 { margin: 0 0 20px 0; font-size: 16px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 12px; }
 .filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
-.filter-modal-footer { padding: 24px 40px; border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.2); display: flex; justify-content: flex-end; align-items: center; gap: 20px; flex-shrink: 0;}
+.filter-modal-footer { padding: 24px 40px; border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.2); display: flex; justify-content: flex-end; align-items: center; gap: 20px; flex-shrink: 0; position: sticky; bottom: 0; z-index: 10;}
 [data-theme="light"] .filter-modal-footer { background: rgba(255,255,255,0.5); }
 .filter-modal-footer .apply-btn { width: auto; padding: 16px 40px; font-size: 16px; }
 
@@ -255,7 +259,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); font-weight: 600; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3); }
 
 /* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (RÓLUNK, TÁMOGATÁS)
+   STATIKUS MODÁLIS ABLAKOK (TISZTA HTML STRUKTÚRA)
    ========================================================================== */
 .big-support-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); border: 1px solid var(--card-border); border-radius: 32px; width: 100%; max-width: 600px; max-height: 90dvh; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .big-support-overlay.active .big-support-box { transform: scale(1); }
@@ -278,25 +282,24 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .acc-val { font-weight: 600; font-family: monospace; font-size: 15px; text-align: right; letter-spacing: 0.5px; }
 
 /* ==========================================================================
-   📱 TÖKÉLETESÍTETT MOBIL NÉZET ÉS MENÜ ALULRÓL (APP-LIKE UX)
+   📱 TÖKÉLETESÍTETT MOBIL NÉZET ÉS MENÜ ALULRÓL
    ========================================================================== */
 @media (max-width: 768px) {
     #loggedInView { flex-direction: column; }
     
     .dashboard-header { padding: 0 20px; height: 64px; min-height: 64px; flex-shrink: 0; }
     
-    /* Alsó navigációs sáv - FIXÁLT MAGASSÁG HELYETT AUTO + PADDING */
     .sidebar { 
         position: fixed; 
         bottom: 0; 
         left: 0; 
-        right: 0; /* Jobbra is kihúzzuk */
+        right: 0; 
         width: 100% !important; 
-        height: auto; /* Fix 80px helyett auto */
-        min-height: 70px; /* Ne legyen túl vékony */
+        height: auto; 
+        min-height: 70px; 
         flex-direction: row; 
         padding: 0; 
-        padding-bottom: env(safe-area-inset-bottom); /* iOS Home Indicator helye */
+        padding-bottom: env(safe-area-inset-bottom); 
         border-right: none; 
         border-top: 1px solid var(--card-border); 
         z-index: 50; 
@@ -304,19 +307,18 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         align-items: center; 
         background: rgba(28, 28, 30, 0.9); 
         backdrop-filter: saturate(180%) blur(20px); 
-        -webkit-backdrop-filter: saturate(180%) blur(20px); /* Kiemelten fontos iOS-en! */
+        -webkit-backdrop-filter: saturate(180%) blur(20px); 
     }
     [data-theme="light"] .sidebar { background: rgba(245, 245, 247, 0.9); }
     
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile { display: none; } 
-    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; height: 70px; /* Belső ikonok magassága fix */ }
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; height: 70px; }
     .nav-item { padding: 6px; margin: 0; flex: 1; justify-content: center; flex-direction: column; gap: 6px; height: 100%; border: none; border-radius: 0; }
     .nav-item.active { background-color: transparent; color: var(--primary-color); box-shadow: none; }
     .nav-item:hover { background-color: transparent; }
     .nav-text { display: block; font-size: 11px; margin: 0; opacity: 1; font-weight: 500;}
     .nav-icon { font-size: 22px; }
     
-    /* 🌟 Csak mobilon megjelenő Menü gomb */
     .mobile-only-nav { display: flex; }
 
     /* Terület optimalizálás, kisebb margók */
@@ -324,8 +326,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     .dashboard-content { padding: 15px 12px; }
     .omnibar-wrapper { padding: 16px; margin-bottom: 16px; border-radius: 16px; gap: 12px;}
     
-    .search-inputs-row { flex-direction: column; gap: 10px; }
+    /* Keresőmezők kisebbek mobilon */
+    .search-inputs-row { flex-direction: column; gap: 8px; margin-bottom: 0; }
     .keyword-search, .location-search { flex: 1; width: 100%; }
+    .search-box-input { padding: 14px 16px 14px 44px; font-size: 16px; border-radius: 14px; }
+    .search-icon { left: 14px; font-size: 16px; }
     
     .company-grid { gap: 12px; }
     .company-card { flex-direction: column; align-items: flex-start; padding: 20px; gap: 16px; border-radius: 16px; }
@@ -338,14 +343,16 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     .sort-select { margin-left: 0 !important; width: 100%; padding: 12px 16px; }
     #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: calc(90px + env(safe-area-inset-bottom)); }
     
-    /* 🌟 Mobil filter modal (Kisebb belső margók, dinamikus viewport) */
+    /* 🌟 Mobil filter modal */
     .filter-modal-box { width: 100%; max-height: 100dvh; height: 100dvh; border-radius: 0; }
     .filter-modal-header { padding: 15px 20px; }
     .filter-modal-header h2 { font-size: 20px; }
     .filter-modal-body { grid-template-columns: 1fr; gap: 24px; padding: 20px 15px; }
     .filter-section h3 { font-size: 14px; margin: 0 0 12px 0; }
     .f-btn { padding: 8px 14px; font-size: 13px; }
-    .filter-modal-footer { flex-direction: row; padding: 15px; padding-bottom: calc(15px + env(safe-area-inset-bottom)); gap: 10px; }
+    
+    /* Sticky filter modal footer mobilon is! */
+    .filter-modal-footer { flex-direction: row; padding: 15px; padding-bottom: calc(15px + env(safe-area-inset-bottom)); gap: 10px; position: sticky; bottom: 0; }
     .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 12px; font-size: 14px; }
     
     .job-preview-footer { flex-direction: column-reverse; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
@@ -356,7 +363,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     .job-preview-body { padding: 24px 20px; }
     
     /* Alsó mobil menü (Bottom Sheet) */
-    .mobile-menu-box { transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); margin-top: auto; border-radius: 24px 24px 0 0; max-height: 85dvh; height: auto; padding-bottom: env(safe-area-inset-bottom); }
+    .mobile-menu-box { transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); margin-top: auto; border-radius: 32px 32px 0 0; max-height: 85dvh; height: auto; padding-bottom: env(safe-area-inset-bottom); }
     #mobileMenuOverlay.active .mobile-menu-box { transform: translateY(0); }
 }
 @media (min-width: 769px) { .mobile-only-nav { display: none; } #mobileMenuOverlay { display: none !important; } }
@@ -367,22 +374,22 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 <div id="toastContainer"><span id="toastIcon">✓</span><span id="toastMessage">Értesítés</span></div>
 
 <!-- 📱 ÚJ: MOBIL MENÜ ALULRÓL (Bottom Sheet) -->
-<div id="mobileMenuOverlay" class="filter-modal-overlay" onclick="closeMobileMenu(event)">
+<div id="mobileMenuOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box mobile-menu-box">
         <div class="filter-modal-header" style="border-bottom: none; padding-bottom: 5px;">
             <h2>Menü</h2>
-            <button class="big-close-btn" style="position: static;" onclick="closeMobileMenu()">✖</button>
+            <button class="big-close-btn" style="position: static;" onclick="closeModal('mobileMenuOverlay')">✖</button>
         </div>
         <div class="filter-modal-body" style="padding-top: 0; gap: 10px;">
-            <button class="f-btn" style="width:100%; text-align:left; font-size:16px; padding: 16px; border-radius: 16px;" onclick="closeMobileMenu(); openBigSupportModal()">☕ Támogasd a projektet!</button>
-            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 14px;" onclick="closeMobileMenu(); openAboutModal()">🎓 Rólunk</button>
-            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 14px;" onclick="closeMobileMenu(); openKapcsolatModal()">✉️ Kapcsolat</button>
-            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 14px;" onclick="closeMobileMenu(); openImpresszumModal()">⚖️ Impresszum</button>
-            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 14px;" onclick="closeMobileMenu(); openAdatvedelemModal()">🛡️ Adatvédelem</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:16px; padding: 18px; border-radius: 20px;" onclick="closeModal('mobileMenuOverlay'); openModal('bigSupportOverlay')">☕ Támogasd a projektet!</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 16px; border-radius: 16px;" onclick="closeModal('mobileMenuOverlay'); openModal('aboutOverlay')">🎓 Rólunk</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 16px; border-radius: 16px;" onclick="closeModal('mobileMenuOverlay'); openModal('kapcsolatOverlay')">✉️ Kapcsolat</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 16px; border-radius: 16px;" onclick="closeModal('mobileMenuOverlay'); openModal('impresszumOverlay')">⚖️ Impresszum</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 16px; border-radius: 16px;" onclick="closeModal('mobileMenuOverlay'); openModal('adatvedelemOverlay')">🛡️ Adatvédelem</button>
             
-            <div style="display:flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;">
-                <span style="font-weight: 600; font-size: 15px;">Sötét mód</span>
-                <button class="sidebar-theme-toggle" id="themeToggleMobileBtn" style="opacity:1; pointer-events:auto; margin:0; width: 36px; height: 36px; font-size: 16px;" onclick="toggleTheme()">☀️</button>
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 16px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px;">
+                <span style="font-weight: 600; font-size: 16px;">Sötét mód</span>
+                <button class="sidebar-theme-toggle" id="themeToggleMobileBtn" style="opacity:1; pointer-events:auto; margin:0; width: 40px; height: 40px; font-size: 18px;" onclick="toggleTheme()">☀️</button>
             </div>
         </div>
     </div>
@@ -391,7 +398,10 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 <!-- 🌟 MEGA SZŰRŐ ABLAK -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
-        <div class="filter-modal-header"><h2>🎛️ Részletes szűrők</h2><button class="big-close-btn" style="position: static;" onclick="closeFilterModal()">✖</button></div>
+        <div class="filter-modal-header">
+            <h2>🎛️ Részletes szűrők</h2>
+            <button class="big-close-btn" style="position: static;" onclick="closeModal('filterModalOverlay')">✖</button>
+        </div>
         <div class="filter-modal-body">
             <div class="filter-section"><h3>Képzési területek</h3><div class="filter-group" id="modalFacultyButtons"></div></div>
             <div class="filter-section"><h3>Vállalatok</h3><div class="filter-group" id="modalCompanyButtons"></div></div>
@@ -406,9 +416,9 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 </div>
 
 <!-- 🌟 ÁLLÁS GYORSNÉZET -->
-<div id="jobPreviewOverlay" class="job-preview-overlay" onclick="closeJobPreview(event)">
+<div id="jobPreviewOverlay" class="job-preview-overlay">
     <div class="job-preview-box" id="jobPreviewBox">
-        <button class="job-preview-close" onclick="closeJobPreview()">✖</button>
+        <button class="job-preview-close" onclick="closeModal('jobPreviewOverlay')">✖</button>
         <div class="job-preview-header">
             <div>
                 <h2 class="job-preview-title" id="jpTitle">Betöltés...</h2>
@@ -454,56 +464,49 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                     <span class="nav-icon">🤍</span> <span class="nav-text">Kedvencek</span>
                 </li>
                 <!-- 📱 Csak mobilon jelenik meg a Menü gomb -->
-                <li class="nav-item mobile-only-nav" onclick="openMobileMenu()">
+                <li class="nav-item mobile-only-nav" onclick="openModal('mobileMenuOverlay')">
                     <span class="nav-icon">☰</span> <span class="nav-text">Menü</span>
                 </li>
             </ul>
         </div>
         <div class="sidebar-bottom">
             <ul class="secondary-nav-menu">
-                <li class="secondary-nav-item" onclick="openBigSupportModal()"><span class="secondary-nav-icon">☕</span> <span class="nav-text">Támogatás</span></li>
-                <li class="secondary-nav-item" onclick="openAboutModal()"><span class="secondary-nav-icon">🎓</span> <span class="nav-text">Rólunk</span></li>
-                <li class="secondary-nav-item" onclick="openKapcsolatModal()"><span class="secondary-nav-icon">✉️</span> <span class="nav-text">Kapcsolat</span></li>
-                <li class="secondary-nav-item" onclick="openImpresszumModal()"><span class="secondary-nav-icon">⚖️</span> <span class="nav-text">Impresszum</span></li>
-                <li class="secondary-nav-item" onclick="openAdatvedelemModal()"><span class="secondary-nav-icon">🛡️</span> <span class="nav-text">Adatvédelem</span></li>
+                <li class="secondary-nav-item" onclick="openModal('bigSupportOverlay')"><span class="secondary-nav-icon">☕</span> <span class="nav-text">Támogatás</span></li>
+                <li class="secondary-nav-item" onclick="openModal('aboutOverlay')"><span class="secondary-nav-icon">🎓</span> <span class="nav-text">Rólunk</span></li>
+                <li class="secondary-nav-item" onclick="openModal('kapcsolatOverlay')"><span class="secondary-nav-icon">✉️</span> <span class="nav-text">Kapcsolat</span></li>
+                <li class="secondary-nav-item" onclick="openModal('impresszumOverlay')"><span class="secondary-nav-icon">⚖️</span> <span class="nav-text">Impresszum</span></li>
+                <li class="secondary-nav-item" onclick="openModal('adatvedelemOverlay')"><span class="secondary-nav-icon">🛡️</span> <span class="nav-text">Adatvédelem</span></li>
             </ul>
             <div class="sidebar-divider"></div>
-            <div class="sidebar-profile" onclick="openAboutModal()"><span class="nav-icon">ℹ️</span><span class="nav-text">Információ</span></div>
+            <div class="sidebar-profile" onclick="openModal('aboutOverlay')"><span class="nav-icon">ℹ️</span><span class="nav-text">Információ</span></div>
         </div>
     </aside>
 
     <main class="dashboard-main" id="dashboardMainScroll">
         <header class="dashboard-header">
             <h1 class="dashboard-title" id="currentViewTitle">Karrierfórum</h1>
-            <!-- A mobil headerben lévő váltót elrejtjük, mert lekerült a menübe -->
         </header>
 
         <div class="dashboard-content">
-            
             <div id="forumTab" class="tab-content active">
 
                 <div class="omnibar-wrapper">
                     <div style="display: flex; flex-direction: column; gap: 10px;">
-                        
                         <div class="search-inputs-row">
                             <div class="search-box-container keyword-search" style="margin-bottom: 0;">
                                 <span class="search-icon">🔍</span>
-                                <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Pozíció, cég, címke (pl. Python) -> Üss Enter-t...">
+                                <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Pozíció, cég, címke (pl. Python)...">
                             </div>
                             <div class="search-box-container location-search" style="margin-bottom: 0;">
                                 <span class="search-icon">📍</span>
-                                <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín (pl. Budapest)...">
+                                <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín...">
                             </div>
                         </div>
-                        
-                        <!-- 🏷️ Kereső Címkék -->
                         <div class="search-tags-row" id="searchTagsRow"></div>
-                        
                     </div>
 
-                    <!-- Filter Carousel -->
                     <div class="filter-carousel-row">
-                        <button class="main-filter-btn" onclick="openFilterModal()">
+                        <button class="main-filter-btn" onclick="openModal('filterModalOverlay')">
                             🎛️ Szűrők <span class="filter-badge" id="activeFilterBadge">0</span>
                         </button>
                         <div class="filter-divider"></div>
@@ -537,7 +540,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 <div id="infiniteScrollAnchor" class="infinite-loader">Görgetés a továbbiakhoz...</div>
                 
                 <div style="text-align: center; margin: 20px 0 40px 0;" id="bottomSupportContainer">
-                    <button class="apply-btn secondary" onclick="openBigSupportModal()" style="border-radius: 100px; padding: 14px 32px; font-weight: 600;">☕ Támogatom a projektet</button>
+                    <button class="apply-btn secondary" onclick="openModal('bigSupportOverlay')" style="border-radius: 100px; padding: 14px 32px; font-weight: 600;">☕ Támogatom a projektet</button>
                 </div>
             </div>
 
@@ -551,13 +554,95 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 <button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás, Impresszum stb.)
+   STATIKUS MODÁLIS ABLAKOK (Javított HTML struktúra!)
    ========================================================================== -->
-<div id="bigSupportOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 750px;"><button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button><div class="big-support-content"><div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 50px; margin-bottom: 12px;">🚀</div><h1 style="font-size: 28px; font-weight: 800; margin: 0 0 10px 0;">Támogasd az UniStartot!</h1></div><div class="about-card" style="margin-bottom: 20px;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2><p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;">Az UniStart egy teljesen új, független projekt.</p></div><div class="about-card" style="margin-bottom: 0;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Légy a kezdetek részese!</h2><div class="support-options"><button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button><button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button><button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button></div><div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; justify-content: flex-start;"><a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #003087;"><span>🅿️</span> PayPal</a><a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #0075ff;"><span>💳</span> Revolut</a></div><div class="transfer-box" style="margin-top: 0;"><div class="account-details"><div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div><div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div><button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Másolás</button></div></div></div></div></div></div>
-<div id="aboutOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 650px;"><button class="big-close-btn" onclick="closeModal('aboutOverlay')">✖</button><div class="big-support-content"><div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 48px; margin-bottom: 12px;">🎓</div><h1 style="font-size: 26px; font-weight: 800; margin: 0;">Rólunk - UniStart</h1></div><div class="about-card" style="margin-bottom: 20px; padding: 24px;"><p style="color: var(--subtitle-color); font-size: 15px; margin: 0; line-height: 1.5;">Célunk a leggyorsabb álláskereső felület biztosítása.</p></div><div style="display: flex; flex-direction: column; gap: 16px;"><div class="about-card" style="padding: 24px; text-align: center;"><div style="width: 64px; height: 64px; border-radius: 32px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">NJ</div><h3 style="margin: 0 0 6px 0; font-size: 18px;">József Nóra</h3><span style="color: #e056fd; font-size: 13px; font-weight: 600;">Társalapító</span></div><div class="about-card" style="padding: 24px; text-align: center;"><div style="width: 64px; height: 64px; border-radius: 32px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">BA</div><h3 style="margin: 0 0 6px 0; font-size: 18px;">Weszter Szabó Bátor András</h3><span style="color: var(--primary-color); font-size: 13px; font-weight: 600;">Társalapító</span></div></div></div></div></div>
-<div id="impresszumOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 550px;"><button class="big-close-btn" onclick="closeModal('impresszumOverlay')">✖</button><div class="big-support-content"><h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">⚖️ Impresszum</h1><div class="about-card" style="margin-bottom: 15px; padding: 24px;"><p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;"><strong>Név:</strong> Weszter Szabó Bátor András<br><strong>E-mail:</strong> bator.szabo@gmail.com</p></div></div></div></div>
-<div id="adatvedelemOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 550px;"><button class="big-close-btn" onclick="closeModal('adatvedelemOverlay')">✖</button><div class="big-support-content"><h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">🛡️ Adatvédelmi Tájékoztató</h1><div class="about-card" style="margin-bottom: 15px; padding: 24px;"><p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;">Kizárólag a személyre szabáshoz szükséges adatokat kezeljük a találatok finomítására.</p></div></div></div></div>
-<div id="kapcsolatOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 450px;"><button class="big-close-btn" onclick="closeModal('kapcsolatOverlay')">✖</button><div class="big-support-content"><div class="about-card" style="text-align: center; padding: 40px 24px;"><div style="font-size: 48px; margin-bottom: 16px;">✉️</div><h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800;">Írj nekünk!</h2><a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: auto; display: inline-block; padding: 14px 32px;">bator.szabo@gmail.com</a></div></div></div></div>
+
+<!-- TÁMOGATÁS MODAL -->
+<div id="bigSupportOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 750px;">
+        <button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button>
+        <div class="big-support-content">
+            <div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 50px; margin-bottom: 12px;">🚀</div><h1 style="font-size: 28px; font-weight: 800; margin: 0 0 10px 0;">Támogasd az UniStartot!</h1></div>
+            <div class="about-card" style="margin-bottom: 20px;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2><p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;">Az UniStart egy teljesen új, független projekt.</p></div>
+            <div class="about-card" style="margin-bottom: 0;">
+                <h2 style="margin: 0 0 12px 0; font-size: 18px;">Légy a kezdetek részese!</h2>
+                <div class="support-options">
+                    <button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button>
+                    <button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button>
+                    <button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button>
+                </div>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; justify-content: flex-start;">
+                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #003087;"><span>🅿️</span> PayPal</a>
+                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #0075ff;"><span>💳</span> Revolut</a>
+                </div>
+                <div class="transfer-box" style="margin-top: 0;">
+                    <div class="account-details">
+                        <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
+                        <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
+                        <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Másolás</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- RÓLUNK MODAL -->
+<div id="aboutOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 650px;">
+        <button class="big-close-btn" onclick="closeModal('aboutOverlay')">✖</button>
+        <div class="big-support-content">
+            <div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 48px; margin-bottom: 12px;">🎓</div><h1 style="font-size: 26px; font-weight: 800; margin: 0;">Rólunk - UniStart</h1></div>
+            <div class="about-card" style="margin-bottom: 20px; padding: 24px;"><p style="color: var(--subtitle-color); font-size: 15px; margin: 0; line-height: 1.5;">Célunk a leggyorsabb álláskereső felület biztosítása.</p></div>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+                <div class="about-card" style="padding: 24px; text-align: center;">
+                    <div style="width: 64px; height: 64px; border-radius: 32px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">NJ</div>
+                    <h3 style="margin: 0 0 6px 0; font-size: 18px;">József Nóra</h3><span style="color: #e056fd; font-size: 13px; font-weight: 600;">Társalapító</span>
+                </div>
+                <div class="about-card" style="padding: 24px; text-align: center;">
+                    <div style="width: 64px; height: 64px; border-radius: 32px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">BA</div>
+                    <h3 style="margin: 0 0 6px 0; font-size: 18px;">Weszter Szabó Bátor András</h3><span style="color: var(--primary-color); font-size: 13px; font-weight: 600;">Társalapító</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- IMPRESSZUM MODAL -->
+<div id="impresszumOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 550px;">
+        <button class="big-close-btn" onclick="closeModal('impresszumOverlay')">✖</button>
+        <div class="big-support-content">
+            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">⚖️ Impresszum</h1>
+            <div class="about-card" style="margin-bottom: 15px; padding: 24px;"><p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;"><strong>Név:</strong> Weszter Szabó Bátor András<br><strong>E-mail:</strong> bator.szabo@gmail.com</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- ADATVÉDELEM MODAL -->
+<div id="adatvedelemOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 550px;">
+        <button class="big-close-btn" onclick="closeModal('adatvedelemOverlay')">✖</button>
+        <div class="big-support-content">
+            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">🛡️ Adatvédelmi Tájékoztató</h1>
+            <div class="about-card" style="margin-bottom: 15px; padding: 24px;"><p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;">Kizárólag a személyre szabáshoz szükséges adatokat kezeljük a találatok finomítására.</p></div>
+        </div>
+    </div>
+</div>
+
+<!-- KAPCSOLAT MODAL -->
+<div id="kapcsolatOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 450px;">
+        <button class="big-close-btn" onclick="closeModal('kapcsolatOverlay')">✖</button>
+        <div class="big-support-content">
+            <div class="about-card" style="text-align: center; padding: 40px 24px;">
+                <div style="font-size: 48px; margin-bottom: 16px;">✉️</div>
+                <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800;">Írj nekünk!</h2>
+                <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: auto; display: inline-block; padding: 14px 32px;">bator.szabo@gmail.com</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ==========================================================================
    JAVASCRIPT ÉS FIREBASE LOGIKA
@@ -608,20 +693,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 
     function openModal(modalId) { document.getElementById(modalId).classList.add('active'); body.classList.add('modal-open'); }
     function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); body.classList.remove('modal-open'); }
-    function openBigSupportModal() { openModal('bigSupportOverlay'); }
-    function openAboutModal() { openModal('aboutOverlay'); }
-    function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
-    function openImpresszumModal() { openModal('impresszumOverlay'); }
-    function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
-    function openFilterModal() { openModal('filterModalOverlay'); }
-    function closeFilterModal() { closeModal('filterModalOverlay'); }
     
-    // 📱 MOBIL MENÜ LOGIKA
-    function openMobileMenu() { openModal('mobileMenuOverlay'); }
-    function closeMobileMenu(event) { 
-        if (event && event.target !== document.getElementById('mobileMenuOverlay')) return;
-        closeModal('mobileMenuOverlay'); 
-    }
+    // Általános klikk a modálok hátterénél bezáráshoz
+    document.querySelectorAll('.filter-modal-overlay, .big-support-overlay, .job-preview-overlay').forEach(modal => {
+        modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+    });
 
     function copyIban() {
         navigator.clipboard.writeText('HU14107000247196995851100005').then(() => {
@@ -641,12 +717,6 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         else if (type === 'coffee') { paypalBtn.href = paypalBase + '/1500HUF'; }
         else if (type === 'pizza') { paypalBtn.href = paypalBase + '/5000HUF'; }
     }
-
-    document.querySelectorAll('.big-support-overlay, .filter-modal-overlay').forEach(modal => {
-        if (modal.id !== 'mobileMenuOverlay') {
-            modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
-        }
-    });
 
     let toastTimeout;
     function showToast(message, type = "info") {
@@ -755,12 +825,25 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         
         document.getElementById('jpLocation').innerText = `📍 ${job.location || 'Nincs megadva'}`;
         
+        // DÁTUM MEGJELENÍTÉSE (HATÁRIDŐ VS PUBLIKÁLÁS)
         let displayDate = "";
+        let isDeadline = false;
         if (job.date_posted) {
-            if (typeof job.date_posted === 'string') displayDate = job.date_posted.split('T')[0];
-            else if (job.date_posted.toDate) displayDate = job.date_posted.toDate().toISOString().split('T')[0];
+            let jobDateObj;
+            if (typeof job.date_posted === 'string') jobDateObj = new Date(job.date_posted);
+            else if (job.date_posted.toDate) jobDateObj = job.date_posted.toDate();
+
+            if (jobDateObj) {
+                displayDate = jobDateObj.toISOString().split('T')[0];
+                if (jobDateObj.getTime() > Date.now() + 86400000) { 
+                    isDeadline = true; 
+                }
+            }
         }
-        document.getElementById('jpDate').innerText = `📅 ${displayDate || 'Friss'}`;
+        const dateTag = document.getElementById('jpDate');
+        dateTag.innerText = displayDate ? (isDeadline ? `⏳ Határidő: ${displayDate}` : `📅 Publikálva: ${displayDate}`) : 'Friss';
+        if (isDeadline) dateTag.classList.add('tag-deadline');
+        else dateTag.classList.remove('tag-deadline');
         
         const tagsContainer = document.getElementById('jpTags');
         const tagsSection = document.getElementById('jpTagsSection');
@@ -780,14 +863,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         const shareBtn = document.getElementById('jpShareBtn');
         shareBtn.onclick = (e) => shareJob(job.id, job.title, job.company_name, e);
         
-        document.getElementById('jobPreviewOverlay').classList.add('active');
-        body.classList.add('modal-open');
-    }
-
-    function closeJobPreview(event) {
-        if (event && event.target !== document.getElementById('jobPreviewOverlay')) return; 
-        document.getElementById('jobPreviewOverlay').classList.remove('active');
-        body.classList.remove('modal-open');
+        openModal('jobPreviewOverlay');
     }
 
     function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
@@ -923,7 +999,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         updateModalButtonsVisuals(); 
     }
     
-    function applyFiltersFromModal() { closeFilterModal(); applyFilters(); }
+    function applyFiltersFromModal() { closeModal('filterModalOverlay'); applyFilters(); }
 
     function removeFilterTag(type, value) {
         if (type === 'faculty') activeFaculties = activeFaculties.filter(v => v !== value);
@@ -1122,14 +1198,23 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 });
             }
             
+            // 🚀 JAVÍTÁS: MAI FRISS LOGIKA (Scraped_at alapú)
             let matchMagic = true;
             if (activeMagicFilter === 'today') {
                 let jobDate = 0;
-                if (job.date_posted) {
-                    if (typeof job.date_posted === 'string') jobDate = new Date(job.date_posted).getTime();
-                    else if (job.date_posted.toDate) jobDate = job.date_posted.toDate().getTime();
+                let scrapeBase = job.scraped_at || job.updated_at;
+                
+                if (scrapeBase) {
+                    jobDate = scrapeBase.toDate ? scrapeBase.toDate().getTime() : new Date(scrapeBase).getTime();
+                } else if (job.date_posted) {
+                    let postBase = job.date_posted.toDate ? job.date_posted.toDate().getTime() : new Date(job.date_posted).getTime();
+                    if (postBase <= now) jobDate = postBase; 
+                    else jobDate = now; // Ha jövőbeli (határidő) és nincs scraped_at, átengedjük
+                } else {
+                    jobDate = now;
                 }
-                if (now - jobDate > 86400000) matchMagic = false;
+                
+                if (now - jobDate > 86400000) matchMagic = false; // Ha régebbi, mint 24 óra
             }
             else if (activeMagicFilter === 'remote') {
                 const locStr = (job.location || "").toLowerCase();
@@ -1175,11 +1260,9 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     function createSupportCard() {
         const card = document.createElement('div');
         card.className = 'company-card support-card-mosaic';
-        card.onclick = () => openBigSupportModal();
+        card.onclick = () => openModal('bigSupportOverlay');
         card.style.cursor = 'pointer';
         card.style.animationDelay = '0s'; 
-        
-        // Asztali verzióhoz adaptáltuk a kártyát logó nélkül
         card.innerHTML = `
             <div class="company-card-content" style="display:flex; flex-direction:row; align-items:center; gap: 20px;">
                 <div style="font-size: 42px; flex-shrink: 0;">☕</div>
@@ -1243,22 +1326,33 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
             const jobTitle = highlightText(job.title || 'Névtelen pozíció');
             const companyName = highlightText(job.company_name || 'Névtelen cég');
             
+            // DÁTUM MEGJELENÍTÉSE (HATÁRIDŐ VS PUBLIKÁLÁS)
             let displayDate = "";
+            let isDeadline = false;
             if (job.date_posted) {
-                if (typeof job.date_posted === 'string') displayDate = job.date_posted.split('T')[0];
-                else if (job.date_posted.toDate) displayDate = job.date_posted.toDate().toISOString().split('T')[0];
-                else displayDate = String(job.date_posted);
+                let jobDateObj;
+                if (typeof job.date_posted === 'string') jobDateObj = new Date(job.date_posted);
+                else if (job.date_posted.toDate) jobDateObj = job.date_posted.toDate();
+
+                if (jobDateObj) {
+                    displayDate = jobDateObj.toISOString().split('T')[0];
+                    if (jobDateObj.getTime() > Date.now() + 86400000) { 
+                        isDeadline = true; 
+                    }
+                }
             }
 
             const locTag = job.location && job.location !== "Nincs megadva" ? `<span class="job-tag clickable-tag" onclick="addLocationToSearch('${job.location}', event)" title="Keresés erre a helyszínre">📍 ${job.location}</span>` : '';
-            const dPosted = displayDate ? `<span class="job-tag">📅 ${displayDate}</span>` : '';
+            
+            // Ha jövőben van, piros. Ha múltban, normál.
+            const dPosted = displayDate ? `<span class="job-tag ${isDeadline ? 'tag-deadline' : ''}">${isDeadline ? '⏳ Határidő:' : '📅'} ${displayDate}</span>` : '';
+            
             const facultyTag = job.faculty && job.faculty !== "🔍 Egyéb / Általános" ? `<span class="job-tag tag-faculty clickable-tag" onclick="addTagToSearch('${job.faculty}', event)" title="Keresés erre a kategóriára">${job.faculty}</span>` : '';
             const vibeTag = job.work_style ? `<span class="job-tag tag-vibe clickable-tag" onclick="addTagToSearch('${job.work_style.split(' ')[1]}', event)" title="Keresés erre a stílusra">${job.work_style}</span>` : '';
             const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightText(tag)}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
 
-            // KÁRTYA TEMPLATE LOGÓ NÉLKÜL
             card.innerHTML = `
                 <div class="company-card-content">
                     <h3 class="company-name">${jobTitle}</h3>

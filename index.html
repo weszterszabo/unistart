@@ -87,7 +87,7 @@ body.modal-open { overflow: hidden; }
    TÉRKÉP STÍLUSOK ÉS MARKER-EK (V10)
    ========================================================================== */
 #mapContainerWrapper {
-    display: none; /* Alapból rejtett */
+    display: none; 
     width: 100%;
     height: 600px;
     border-radius: var(--radius-lg);
@@ -104,7 +104,6 @@ body.modal-open { overflow: hidden; }
     background-color: var(--card-bg);
 }
 
-/* Custom Klaszter / Marker gombostű */
 .custom-map-pin-cluster {
     background-color: var(--primary-color);
     width: 36px;
@@ -125,7 +124,6 @@ body.modal-open { overflow: hidden; }
     box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
 }
 
-/* Leaflet Popup felülírások (Glassmorphism) */
 .leaflet-popup-content-wrapper {
     background: var(--modal-bg) !important;
     backdrop-filter: blur(20px) !important;
@@ -150,30 +148,11 @@ body.modal-open { overflow: hidden; }
 }
 .leaflet-container a.leaflet-popup-close-button:hover { color: var(--text-color) !important; }
 
-/* Térképes mini-kártya (Popup belső) */
-.map-popup-header {
-    border-bottom: 1px solid var(--card-border);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 16px;
-}
-.map-job-list {
-    max-height: 220px;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-.map-job-item {
-    padding: 12px;
-    border-bottom: 1px solid var(--card-border);
-    cursor: pointer;
-    transition: background 0.2s, border-radius 0.2s;
-}
+.map-popup-header { border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 10px; font-weight: 700; font-size: 16px; }
+.map-job-list { max-height: 220px; overflow-y: auto; padding-right: 5px; }
+.map-job-item { padding: 12px; border-bottom: 1px solid var(--card-border); cursor: pointer; transition: background 0.2s, border-radius 0.2s; }
 .map-job-item:last-child { border-bottom: none; }
-.map-job-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 8px;
-}
+.map-job-item:hover { background: rgba(255, 255, 255, 0.08); border-radius: 8px; }
 [data-theme="light"] .map-job-item:hover { background: rgba(0, 0, 0, 0.05); }
 
 .map-job-title { font-weight: 700; font-size: 14px; margin: 0 0 4px 0; color: var(--primary-color); line-height: 1.2;}
@@ -290,7 +269,7 @@ body.modal-open { overflow: hidden; }
 .empty-state-icon { font-size: 60px; margin-bottom: 20px; display: block; opacity: 0.5; }
 
 /* ==========================================================================
-   JOB QUICK VIEW MODAL (Gyorsnézet Ablak)
+   JOB QUICK VIEW MODAL (Gyorsnézet Ablak) 🚨 Z-INDEX FIXÁLVA
    ========================================================================== */
 .job-preview-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
 .job-preview-overlay.active { opacity: 1; visibility: visible; }
@@ -301,8 +280,11 @@ body.modal-open { overflow: hidden; }
 .job-preview-logo { width: 80px; height: 80px; background: var(--tag-bg); border: 1px solid var(--card-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800; color: var(--primary-color); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .job-preview-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; color: var(--text-color); line-height: 1.2; padding-right: 30px;}
 .job-preview-company { font-size: 16px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
-.job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+
+/* 🚨 JAVÍTOTT Z-INDEX 🚨 */
+.job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 .job-preview-close:hover { background: var(--card-border); color: var(--text-color); }
+
 .job-preview-body { padding: 30px; overflow-y: auto; flex: 1; }
 .job-preview-section { margin-bottom: 25px; }
 .job-preview-section h4 { font-size: 14px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; margin: 0 0 10px 0; }
@@ -331,15 +313,18 @@ body.modal-open { overflow: hidden; }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); }
 
 /* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás)
+   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás) 🚨 Z-INDEX FIXÁLVA
    ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
 .big-support-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 20px; width: 100%; max-width: 550px; max-height: 90vh; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .big-support-overlay.active .big-support-box { transform: scale(1); }
 .big-support-content { padding: 30px; overflow-y: auto; flex: 1; }
-.big-close-btn { position: absolute; top: 15px; right: 15px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 100; }
+
+/* 🚨 JAVÍTOTT Z-INDEX 🚨 */
+.big-close-btn { position: absolute; top: 15px; right: 15px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 .big-close-btn:hover { background: var(--danger-color); color: white; border-color: var(--danger-color); }
+
 .about-card { background: var(--tag-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--tag-border); display: flex; flex-direction: column; }
 .support-options { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; margin-bottom: 24px; }
 @media (min-width: 600px) { .support-options { flex-direction: row; } }
@@ -1025,7 +1010,6 @@ body.modal-open { overflow: hidden; }
 
         displayedCount = 15; 
         
-        // 🌟 V10: Frissítjük a nézetet attól függően, hol vagyunk!
         if (isMapViewActive) {
             renderMapMarkers();
             document.getElementById('jobCountBadge').innerText = currentFilteredJobs.length + ' db';
@@ -1167,7 +1151,6 @@ body.modal-open { overflow: hidden; }
     function setupInfiniteScroll() {
         const anchor = document.getElementById('infiniteScrollAnchor');
         const observer = new IntersectionObserver((entries) => {
-            // V10: Ha a térkép nézet van bekapcsolva, ne görgessünk a végtelenbe
             if (entries[0].isIntersecting && displayedCount < currentFilteredJobs.length && !isMapViewActive) {
                 displayedCount += 15; 
                 renderGrid(); 
@@ -1184,7 +1167,6 @@ body.modal-open { overflow: hidden; }
     let mapTileLayer = null;
     let markersLayerGroup = null;
 
-    // Magyar városok koordinátái a pontos elhelyezéshez
     const cityCoordinates = {
         "budapest": [47.4979, 19.0402],
         "debrecen": [47.5316, 21.6273],
@@ -1215,13 +1197,12 @@ body.modal-open { overflow: hidden; }
         if (!locationStr || locationStr.toLowerCase() === "nincs megadva") return null;
         const loc = locationStr.toLowerCase();
         
-        // A Home Office állásokhoz nem teszünk fizikai tűt
         if (loc.includes("home office") || loc.includes("remote") || loc.includes("távmunka")) return null;
         
         for (const [city, coords] of Object.entries(cityCoordinates)) {
             if (loc.includes(city)) return coords;
         }
-        return null; // Ha nem ismerjük a várost
+        return null; 
     }
 
     function toggleMapView() {
@@ -1243,7 +1224,7 @@ body.modal-open { overflow: hidden; }
         } else {
             btn.classList.remove('active');
             btn.innerText = "🗺️ Térkép";
-            grid.style.display = 'grid'; // A kártyás grid vissza
+            grid.style.display = 'grid'; 
             scrollAnchor.style.display = 'flex';
             mapContainer.style.display = 'none';
         }
@@ -1251,15 +1232,14 @@ body.modal-open { overflow: hidden; }
 
     function initMap() {
         if (jobMap !== null) {
-            jobMap.invalidateSize(); // Ha már él, csak frissítjük a méretet
+            jobMap.invalidateSize(); 
             return;
         }
 
-        // Térkép létrehozása, központja Magyarország közepe
         jobMap = L.map('jobMap').setView([47.1625, 19.5033], 7);
         markersLayerGroup = L.layerGroup().addTo(jobMap);
 
-        updateMapTheme(); // Csempe beállítása
+        updateMapTheme(); 
     }
 
     function updateMapTheme() {
@@ -1267,8 +1247,8 @@ body.modal-open { overflow: hidden; }
         
         const isLight = document.body.getAttribute('data-theme') === 'light';
         const tileUrl = isLight 
-            ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png' // Világos tejüveg
-            : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';  // Sötét mód
+            ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png' 
+            : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'; 
 
         if (mapTileLayer) {
             jobMap.removeLayer(mapTileLayer);
@@ -1284,9 +1264,8 @@ body.modal-open { overflow: hidden; }
     function renderMapMarkers() {
         if (jobMap === null || !markersLayerGroup) return;
 
-        markersLayerGroup.clearLayers(); // Töröljük a régi tűket
+        markersLayerGroup.clearLayers(); 
 
-        // 1. Csoportosítjuk az aktuálisan szűrt állásokat koordináták szerint
         const groupedJobs = {};
         
         currentFilteredJobs.forEach(job => {
@@ -1298,12 +1277,10 @@ body.modal-open { overflow: hidden; }
             }
         });
 
-        // 2. Tűk létrehozása
         for (const key in groupedJobs) {
             const group = groupedJobs[key];
             const jobCount = group.jobs.length;
 
-            // Okos ikon a számmal
             const clusterIcon = L.divIcon({
                 className: 'custom-cluster-wrapper',
                 html: `<div class="custom-map-pin-cluster">${jobCount}</div>`,
@@ -1314,7 +1291,6 @@ body.modal-open { overflow: hidden; }
 
             const marker = L.marker(group.coords, { icon: clusterIcon }).addTo(markersLayerGroup);
 
-            // Város nevének kitalálása az első állásból (pl. "Budapest")
             let cityName = "Helyszín";
             for (const [city, crd] of Object.entries(cityCoordinates)) {
                 if (crd[0] === group.coords[0] && crd[1] === group.coords[1]) {
@@ -1323,7 +1299,6 @@ body.modal-open { overflow: hidden; }
                 }
             }
 
-            // HTML generálása a kis popup listához
             let jobsHtmlList = group.jobs.map(job => {
                 const isSaved = savedJobIds.includes(job.id);
                 return `

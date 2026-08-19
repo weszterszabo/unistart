@@ -9,6 +9,9 @@ exports.scrape = async function(companyName, baseUrl) {
   
   let page = 1;
   let hasMore = true;
+  
+  // 🛑 EZ A VÉDŐVONAL A VÉGTELEN CIKLUS ELLEN!
+  const seenUrls = new Set(); 
 
   try {
     // 🔁 GOLYÓÁLLÓ LAPOZÁS: Addig megyünk, amíg van új állás az oldalon
@@ -61,23 +64,24 @@ exports.scrape = async function(companyName, baseUrl) {
         
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://mvm.karrierportal.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
 
-        // Helyszín
-        const cityMatch = htmlRow.match(/class="[^"]*job_list_place[^"]*"[^>]*>.*?<\/span>([\s\S]*?)<\/div>/i);
-        let location = cityMatch ? cityMatch[1].replace(/<[^>]+>/g, "").trim() : "Magyarország";
+        // 🛑 DUPLIKÁCIÓ ELLENŐRZÉS: Csak az új állásokkal foglalkozunk!
+        if (title && jobUrl && !seenUrls.has(jobUrl)) {
+            seenUrls.add(jobUrl);
+            newJobsOnThisPage++; // Ezt csak akkor növeljük, ha tényleg új a link!
 
-        // Dátum
-        const dateMatch = htmlRow.match(/class="[^"]*job_list_application_deadline[^"]*"[^>]*>.*?<\/span>([\s\S]*?)<\/div>/i);
-        let deadline = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, "").trim() : new Date().toISOString();
-        if (deadline.includes(".")) {
-            const parts = deadline.split(".").map(p => p.trim()).filter(Boolean);
-            if (parts.length === 3) deadline = `${parts[0]}-${parts[1]}-${parts[2]}`;
-        }
+            // Helyszín
+            const cityMatch = htmlRow.match(/class="[^"]*job_list_place[^"]*"[^>]*>.*?<\/span>([\s\S]*?)<\/div>/i);
+            let location = cityMatch ? cityMatch[1].replace(/<[^>]+>/g, "").trim() : "Magyarország";
 
-        if (title && jobUrl) {
-            newJobsOnThisPage++; // Ezt mindenképp növeljük a lapozáshoz!
+            // Dátum
+            const dateMatch = htmlRow.match(/class="[^"]*job_list_application_deadline[^"]*"[^>]*>.*?<\/span>([\s\S]*?)<\/div>/i);
+            let deadline = dateMatch ? dateMatch[1].replace(/<[^>]+>/g, "").trim() : new Date().toISOString();
+            if (deadline.includes(".")) {
+                const parts = deadline.split(".").map(p => p.trim()).filter(Boolean);
+                if (parts.length === 3) deadline = `${parts[0]}-${parts[1]}-${parts[2]}`;
+            }
 
             // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-            // Megtisztítjuk a HTML blokkot a tagektől, így egy szép tiszta szöveget kapunk
             const rawDescription = htmlRow.replace(/<[^>]+>/g, " ");
             const analysis = analyzer.analyzeJob(title, rawDescription);
 
@@ -103,13 +107,10 @@ exports.scrape = async function(companyName, baseUrl) {
             }
         }
       });
-
-      // Pagináció (Lapozás) ellenőrzése
-      const totalJobs = json.total || 0;
       
-      // MVM trükk: Az allJobs.length-et itt most nem használhatjuk a teljes számoláshoz, 
-      // mert kidobáljuk az állásokat. Helyette a newJobsOnThisPage véd minket!
+      // MVM trükk: Ha nem volt egyetlen ÚJ link sem az oldalon, megállítjuk a lapozást!
       if (newJobsOnThisPage === 0) {
+          console.log(`   ⏹️ [MVM Csoport] Nincs több ÚJ állás, vége a lapozásnak.`);
           hasMore = false;
       } else {
           page++;
@@ -121,6 +122,7 @@ exports.scrape = async function(companyName, baseUrl) {
     console.error(`   ❌ [MVM Csoport] Hálózat hiba:`, err.message);
   }
 
-  console.log(`   ✔️  [MVM Csoport] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
+  // Frissített konzol üzenet, ami jobban tükrözi a valóságot
+  console.log(`   ✔️  [MVM Csoport] Siker: A szűrőn fennmaradt ${allJobs.length} db PÁLYAKEZDŐ/JUNIOR/GYAKORNOK állás!`);
   return allJobs;
 };

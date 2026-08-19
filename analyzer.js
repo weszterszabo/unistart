@@ -53,15 +53,45 @@ const acceptWords = [
 // ============================================================================
 // 4. KÉPZÉSI TERÜLETEK (A karokhoz)
 // ============================================================================
+// ============================================================================
+// 4. KÉPZÉSI TERÜLETEK (Hivatalos akadémiai és vállalati szaknyelv szerint)
+// ============================================================================
 const categories = {
-    "💻 IT & Fejlesztés": ["fejlesztő", "developer", "szoftver", "software", "it ", "üzemeltető", "devops", "tesztelő", "frontend", "backend", "rendszergazda", "programozó", "cyber", "security", "data scientist", "cloud", "hálózat"],
-    "💼 Gazdasági & Üzleti": ["pénzügy", "finance", "számvitel", "accounting", "könyvelő", "audit", "kontroller", "controller", "üzleti", "business", "sales", "értékesítés", "tanácsadó", "kereskedelem", "b2b", "key account"],
-    "⚙️ Mérnöki & Műszaki": ["mérnök", "engineer", "gépész", "villamos", "mechatronika", "minőségügy", "quality", "karbantartó", "építő", "gyártás", "termelés", "üzemmérnök", "tervező", "cad"],
-    "🤝 HR & Toborzás": ["hr ", "toborz", "recruitment", "human resources", "személyügy", "kiválasztás", "onboarding", "bérszámfejtés", "payroll"],
-    "⚖️ Jogi & Államigazgatás": ["jog", "legal", "ügyvéd", "compliance", "közigazgatás", "referens", "hatóság", "szerződés", "közszolgálat", "jogász"],
-    "📣 Marketing & PR": ["marketing", "kommunikáció", "pr ", "social media", "tartalom", "content", "rendezvény", "event", "grafikus", "design", "copywriter", "seo", "ppc", "kampány"],
-    "📦 Logisztika & Beszerzés": ["logisztika", "logistics", "beszerzés", "procurement", "raktár", "supply chain", "szállítmányozás", "fuvarszervező", "ellátási lánc", "vám"],
-    "🧠 Társadalom & Bölcsész": ["oktatás", "kutatás", "pszichológia", "fordító", "szerkesztő", "újságíró", "szociológia", "ügyfélszolgálat", "nyelv", "tanár"]
+    // --- INFORMATIKA ÉS ADATTUDOMÁNY ---
+    "Informatika és Számítástudomány": ["it ", "cyber", "security", "hálózat", "üzemeltető", "rendszergazda", "cloud", "infrastruktúra", "sysadmin", "fejlesztő", "developer", "szoftver", "software", "devops", "tesztelő", "frontend", "backend", "programozó", "fullstack", "architect"],
+    "Adattudomány és Mesterséges Intelligencia": ["data analyst", "data scientist", "adatelemző", "adattudós", "bi ", "business intelligence", "machine learning", "mesterséges intelligencia", "big data"],
+
+    // --- GAZDASÁGTUDOMÁNYOK ---
+    "Pénzügy, Számvitel és Gazdaságelemzés": ["pénzügy", "finance", "számvitel", "accounting", "könyvelő", "audit", "kontroller", "controller", "bérszámfejtő", "adó", "tax", "gazdaságelemző"],
+    "Vállalatirányítás és Menedzsment": ["üzleti", "business", "sales", "értékesítés", "tanácsadó", "b2b", "key account", "kereskedelem", "üzletfejlesztő", "menedzsment", "management", "projektmenedzser"],
+    "Marketing, PR és Médiatudomány": ["marketing", "social media", "tartalom", "content", "seo", "ppc", "kampány", "pr ", "kommunikáció", "rendezvény", "média", "public relations"],
+    "Emberi Erőforrás Menedzsment (HR)": ["hr ", "human resources", "személyügy", "toborz", "recruitment", "kiválasztás", "onboarding", "munkaügy", "szervezetfejlesztés"],
+    "Logisztika és Ellátásilánc-menedzsment": ["logisztika", "logistics", "raktár", "szállítmányozás", "fuvarszervező", "supply chain", "ellátási lánc", "beszerzés", "procurement", "vám"],
+
+    // --- MŰSZAKI TUDOMÁNYOK ÉS MÉRNÖKI KÉPZÉS ---
+    "Gépészmérnöki és Mechatronikai Tudományok": ["gépész", "mechanical", "mechatronika", "cad", "tervezőmérnök"],
+    "Villamosmérnöki és Elektronikai Tudományok": ["villamos", "electrical", "elektronika", "hardware"],
+    "Építőmérnöki és Építészmérnöki Tudományok": ["építőmérnök", "civil engineer", "építész", "architecture", "kivitelező", "létesítmény", "facility"],
+    "Vegyészmérnöki és Biomérnöki Tudományok": ["vegyész", "kémiaimérnök", "chemical", "biomérnök", "folyamatmérnök"],
+    "Gyártástechnológia és Minőségbiztosítás": ["gyártás", "termelés", "operátor", "technikus", "művezető", "karbantartó", "minőség", "quality", "qa ", "minőségellenőr", "minőségbiztosítás"],
+
+    // --- ORVOS- ÉS EGÉSZSÉGTUDOMÁNY ---
+    "Orvos- és Egészségtudomány": ["orvos", "ápoló", "egészség", "klinika", "nővér", "terapeuta", "dietetikus", "mentő", "healthcare", "medikus"],
+    "Gyógyszerésztudomány és Klinikai Kutatás": ["gyógyszerész", "pharma", "clinical", "törzskönyvező", "cra", "gyógyszeripar"],
+
+    // --- TERMÉSZETTUDOMÁNY ÉS KUTATÁS ---
+    "Természettudomány és Kutatás (K+F)": ["kutató", "labor", "biológus", "fizikus", "research", "r&d", "tudományos", "science"],
+    "Agrártudomány és Környezetgazdálkodás": ["mezőgazdaság", "agrármérnök", "környezetvédelem", "erdészet", "fenntarthatóság", "agrárium", "ehs", "környezetmérnök", "agronómus"],
+
+    // --- TÁRSADALOMTUDOMÁNY, JOG ÉS BÖLCSÉSZET ---
+    "Állam- és Jogtudomány": ["jog", "legal", "ügyvéd", "szerződés", "jogász", "compliance", "bojtár", "jogtanácsos"],
+    "Közigazgatás és Közszolgálat": ["közigazgatás", "referens", "hatóság", "közszolgálat", "önkormányzat", "tisztviselő", "ügyintéző"],
+    "Társadalomtudomány és Nemzetközi Tanulmányok": ["pszichológ", "szociológ", "társadalom", "esélyegyenlőség", "nemzetközi", "international relations"],
+    "Bölcsészettudomány és Pedagógia": ["tanár", "oktató", "pedagógus", "tréner", "docens", "tanító", "óvoda", "nevelő", "education", "fordító", "nyelv", "andragógia"],
+
+    // --- MŰVÉSZET ÉS EGYÉB OPERATÍV TERÜLETEK ---
+    "Művészet és Design": ["grafikus", "ux", "ui", "dizájn", "design", "kreatív", "videó", "fotó", "szerkesztő", "animátor", "művészet"],
+    "Adminisztráció és Ügyfélszolgálati Operáció": ["adminisztráció", "asszisztens", "titkár", "recepció", "iroda", "office", "adminisztrátor", "ügyfélszolgálat", "customer", "helpdesk", "support", "call center"]
 };
 
 // ============================================================================

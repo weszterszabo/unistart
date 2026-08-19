@@ -1,5 +1,5 @@
 // ============================================================================
-// 🚀 V12 QUANTUM ENGINE: MESTERSÉGES INTELLIGENCIA ALAPÚ NLP FORDÍTÓ
+// 🚀 V12.1 QUANTUM ENGINE: MESTERSÉGES INTELLIGENCIA ALAPÚ NLP FORDÍTÓ
 // ============================================================================
 
 // Magyar specifikus Regex Lookaround határok (A tökéletes szófelismeréshez)
@@ -28,6 +28,12 @@ function buildRegex(wordArray) {
 // 1. KÉTNYELVŰ MÉREGTELENÍTÉS ÉS ZAJSZŰRÉS (Detox)
 // ============================================================================
 const detoxRules = [
+    // 🚨 ÚJ VÉDŐSZABÁLYOK TÖBBJELENTÉSŰ SZAVAKRA
+    { regex: /fejlesztő\s*pedagóg/gi, replacement: "gyógypedagóg" }, // Kimenti a pedagógusokat az IT alól
+    { regex: /szervezetfejleszt/gi, replacement: "szervezetépítő" }, // Kimenti a HR-eseket az IT alól
+    { regex: /üzletfejleszt/gi, replacement: "üzletépítő" }, // Kimenti a Sales-eseket az IT alól
+    
+    // Alapvető detox
     { regex: /vezetői engedély/gi, replacement: "jogosítvány" },
     { regex: /piacvezető|világvezető/gi, replacement: "piacelső" },
     { regex: /(senior|szenior) (kollég|munkatárs)/gi, replacement: "mentor" },
@@ -77,15 +83,15 @@ const categoriesDict = {
     "Adattudomány és Mesterséges Intelligencia": ["data analyst", "data scientist", "*adatelemző*", "*adattudós*", "|bi|", "business intelligence", "machine learning", "mesterséges intelligencia", "big data", "data engineer", "|ai|", "|nlp|", "deep learning", "*adatmérnök*", "artificial intelligence"],
     "Pénzügy, Számvitel és Gazdaságelemzés": ["pénzügy", "finance", "számvitel", "accounting", "*könyvelő*", "|audit|", "*kontroller*", "controller", "bérszámfejt", "|adó|", "|tax|", "*gazdaságelemző*", "bank", "hitelezés", "kockázat", "risk", "financial", "treasury", "*könyvvizsgáló*", "kintlévőség", "payroll"],
     "Kereskedelem és Értékesítés": ["|sales|", "*értékesítő*", "|b2b|", "|b2c|", "key account", "kereskedelem", "*üzletkötő*", "account manager", "telemarketing", "sales representative"],
-    "Vállalatirányítás és Menedzsment": ["üzleti", "business", "*tanácsadó*", "üzletfejleszt", "menedzsment", "management", "*projektmenedzser*", "stratégia", "consultant", "project manager", "scrum", "agile", "product owner"],
+    "Vállalatirányítás és Menedzsment": ["üzleti", "business", "*tanácsadó*", "üzletépítő", "menedzsment", "management", "*projektmenedzser*", "stratégia", "consultant", "project manager", "scrum", "agile", "product owner"],
     "Marketing, PR és Médiatudomány": ["marketing", "social media", "tartalom", "content", "seo", "ppc", "kampány", "|pr|", "kommunikáció", "rendezvény", "média", "public relations", "brand", "márka", "kommunikációs", "copywriter", "újságíró", "szövegíró", "campaign", "*rendezvényszervező*"],
-    "Emberi Erőforrás Menedzsment (HR)": ["|hr|", "human resources", "személyügy", "toborz", "recruitment", "kiválasztás", "onboarding", "munkaügy", "szervezetfejlesztés", "talent", "employer branding", "bérügy", "sourcing", "sourcer", "talent acquisition"],
+    "Emberi Erőforrás Menedzsment (HR)": ["|hr|", "human resources", "személyügy", "toborz", "recruitment", "kiválasztás", "onboarding", "munkaügy", "szervezetépítő", "talent", "employer branding", "bérügy", "sourcing", "sourcer", "talent acquisition"],
     "Logisztika és Ellátásilánc-menedzsment": ["logisztika", "logistics", "ellátási lánc", "beszerzés", "procurement", "vám", "purchasing", "supply chain", "|raktár|", "warehouse", "szállítmányozás", "fuvarszervező"],
     "Gépészmérnöki és Mechatronikai Tudományok": ["*gépész*", "mechanical", "mechatronika", "cad", "*tervezőmérnök*", "*járműmérnök*", "célgép", "*konstruktőr*", "cam", "design engineer"],
     "Villamosmérnöki és Elektronikai Tudományok": ["*villamos*", "electrical", "elektronika", "hardware", "beágyazott", "embedded", "|plc|", "áramkör", "erősáram", "gyengeáram"],
     "Építőmérnöki és Építészmérnöki Tudományok": ["*építőmérnök*", "civil engineer", "*építész*", "architecture", "kivitelező", "létesítmény", "facility", "műszaki ellenőr", "építésvezető", "statikus", "geodéta", "építésirányító", "construction"],
     "Vegyészmérnöki és Biomérnöki Tudományok": ["*vegyész*", "*kémiaimérnök*", "chemical", "*biomérnök*", "*folyamatmérnök*", "process engineer", "vegyipar", "polimer", "bioengineer"],
-    "Gyártástechnológia és Minőségbiztosítás": ["minőség", "quality", "*minőségellenőr*", "minőségbiztosítás", "lean", "six sigma", "*termelésirányító*", "*folyamatfejlesztő*", "gyártás", "production"],
+    "Gyártástechnológia és Minőségbiztosítás": ["minőség", "quality", "*minőségellenőr*", "minőségbiztosítás", "lean", "six sigma", "*termelésirányító*", "gyártás", "production"],
     "Orvos- és Egészségtudomány": ["*orvos*", "*ápoló*", "egészség", "klinika", "*nővér*", "*terapeuta*", "*dietetikus*", "mentő", "healthcare", "medikus", "*fogorvos*", "*szülésznő*", "*gyógytornász*", "szanitéc", "orvosi", "dentál", "asszisztencia", "műtős", "doctor", "nurse", "medical"],
     "Gyógyszerésztudomány és Klinikai Kutatás": ["*gyógyszerész*", "pharma", "clinical", "törzskönyvező", "|cra|", "gyógyszeripar", "patika", "*laboráns*", "*farmakológ*", "pharmacist"],
     "Természettudomány és Kutatás (K+F)": ["*kutató*", "labor", "*biológus*", "*fizikus*", "research", "r&d", "tudományos", "science", "*matematikus*", "*geológus*", "*csillagász*", "*meteorológus*", "scientist"],
@@ -93,22 +99,22 @@ const categoriesDict = {
     "Állam- és Jogtudomány": ["|jog|", "|legal|", "*ügyvéd*", "szerződés", "*jogász*", "compliance", "bojtár", "jogtanácsos", "*közjegyző*", "jogi", "lawyer", "jurist", "contract"],
     "Közigazgatás és Közszolgálat": ["közigazgatás", "*referens*", "hatóság", "közszolgálat", "önkormányzat", "*tisztviselő*", "államkincstár", "*hivatalnok*", "kormányablak", "public administration", "municipality"],
     "Társadalomtudomány és Nemzetközi Tanulmányok": ["*pszichológus*", "*szociológus*", "társadalom", "esélyegyenlőség", "nemzetközi", "international relations", "politológia", "szociális", "psychology", "equality"],
-    "Bölcsészettudomány és Pedagógia": ["*tanár*", "*oktató*", "*pedagógus*", "*tréner*", "*docens*", "*tanító*", "óvoda", "*nevelő*", "education", "*fordító*", "nyelv", "andragógia", "*történész*", "*tolmács*", "*bölcsész*", "teacher", "educator", "tutor", "interpreter", "pedagógia"],
+    "Bölcsészettudomány és Pedagógia": ["*tanár*", "*oktató*", "*pedagógus*", "*gyógypedagógus*", "*tréner*", "*docens*", "*tanító*", "óvoda", "*nevelő*", "education", "*fordító*", "nyelv", "andragógia", "*történész*", "*tolmács*", "*bölcsész*", "teacher", "educator", "tutor", "interpreter", "pedagógia"],
     "Művészet és Design": ["*grafikus*", "|ux|", "|ui|", "dizájn", "kreatív", "videó", "fotó", "*szerkesztő*", "*animátor*", "művészet", "illustrator", "|3d|", "*vágó*", "*rendező*", "designer", "art director", "graphic"],
     "Ügyfélszolgálat és Támogatás": ["ügyfélszolgálat", "customer", "helpdesk", "|support|", "call center", "ügyfélkapcsolat", "panaszkezel", "client service", "ügyfél"],
     "Adminisztráció és Irodai Munka": ["adminisztráció", "adminisztr", "*asszisztens*", "*titkár*", "recepció", "iroda", "|office|", "*adminisztrátor*", "data entry", "operáció", "operations", "secretary", "receptionist"]
 };
 
-// Keresztszennyeződés Gátló Szótár (Ezek -50 büntetőpontot adnak!)
+// 🛡️ BÜNTETŐPONTOK (-50 pont, ha ezek a szavak benne vannak)
 const antiCategoriesDict = {
-    "Informatika és Számítástudomány": ["toborzó", "recruiter", "értékesítő", "sales", "jogász", "lawyer"],
+    "Informatika és Számítástudomány": ["toborzó", "recruiter", "értékesítő", "sales", "jogász", "lawyer", "*pedagógus*", "*tanár*", "*oktató*"],
     "Művészet és Design": ["design engineer", "tervezőmérnök", "cad", "cam"], 
     "Kereskedelem és Értékesítés": ["műszaki értékesítő", "sales engineer", "mérnök", "engineer"],
     "Pénzügy, Számvitel és Gazdaságelemzés": ["informatikus", "developer", "fejlesztő", "programmer"] 
 };
 
 // ============================================================================
-// 4. PRE-COMPILATION (Egyszer fut le, betölti a memóriába a Regexeket)
+// 4. PRE-COMPILATION (Memória optimalizálás)
 // ============================================================================
 const compiledFatalSenior = buildRegex(fatalSeniorWords);
 const compiledFatalPhysical = buildRegex(fatalPhysicalWords);
@@ -163,16 +169,15 @@ exports.analyzeJob = function(title, description = "") {
         safeDesc = safeDesc.replace(rule.regex, rule.replacement);
     }
 
-    // 🧹 CÍM ZAJSZŰRÉSE: Levágjuk a zárójeleket a pontos címelemzéshez (pl. "IT szektor" kiszűrése)
+    // Cím zajszűrése
     const cleanTitle = safeTitle.replace(/\([^()]*\)/g, '').replace(/\[[^\[\]]*\]/g, '').trim();
     
-    // 🧠 3-SZINTŰ SZÖVEGBONTÁS (Cím / Bevezető / Törzs)
     const leadDesc = safeDesc.substring(0, 300); 
     const bodyDesc = safeDesc.substring(300);
 
-    // --- GATEKEEPER RENDSZER (Villámgyors Regex) ---
+    // --- GATEKEEPER RENDSZER ---
     if (compiledFatalSenior.test(cleanTitle)) return null; 
-    if (compiledFatalPhysical.test(safeTitle)) return null; // Itt a nyers címet nézzük, zárójellel is!
+    if (compiledFatalPhysical.test(safeTitle)) return null; 
     
     if (compiledDubiousPhysical.test(safeTitle)) {
         if (!compiledSaviors.test(safeTitle)) return null;
@@ -190,7 +195,7 @@ exports.analyzeJob = function(title, description = "") {
     if (isTooSenior || !isEntryLevel) return null; 
 
     // ------------------------------------------------------------------------
-    // 🚀 TF-IDF SÚLYOZOTT PONTOZÁS (Term Frequency - Denzitás mérés)
+    // 🚀 TF-IDF SÚLYOZOTT PONTOZÁS
     // ------------------------------------------------------------------------
     let categoryScores = {};
     for (const catName of Object.keys(categoriesDict)) { categoryScores[catName] = 0; }
@@ -198,19 +203,15 @@ exports.analyzeJob = function(title, description = "") {
     for (const [catName, regex] of Object.entries(compiledCategories)) {
         let score = 0;
         
-        // 1. Szint: Egyezés a Zajszűrt CÍMBEN (Súly: 20 pont / db)
         const titleMatches = (cleanTitle.match(regex) || []).length;
         score += titleMatches * 20;
 
-        // 2. Szint: Egyezés a Bevezetőben (Súly: 5 pont / db)
         const leadMatches = (leadDesc.match(regex) || []).length;
         score += leadMatches * 5;
 
-        // 3. Szint: Egyezés a maradék szövegben (Súly: 1 pont / db)
         const bodyMatches = (bodyDesc.match(regex) || []).length;
         score += bodyMatches * 1;
 
-        // 🛡️ ANTI-BLEED BÜNTETÉS (Súly: -50 pont / db)
         if (compiledAntiCategories[catName]) {
             const antiMatches = (fullText.match(compiledAntiCategories[catName]) || []).length;
             score -= antiMatches * 50;
@@ -219,7 +220,6 @@ exports.analyzeJob = function(title, description = "") {
         categoryScores[catName] = score;
     }
 
-    // 🥇 DÖNTETLEN TÖRŐ (Tie-Breaker) és Eredményhirdetés
     let assignedCategory = "🔍 Egyéb / Általános";
     let maxScore = 0;
     
@@ -228,7 +228,6 @@ exports.analyzeJob = function(title, description = "") {
             maxScore = score;
             assignedCategory = catName;
         } else if (score === maxScore && score > 0) {
-            // HA DÖNTETLEN VAN: Az a kategória nyer, amelyik a szótárban feljebb van (szakmaibb)
             const currentCatIndex = Object.keys(categoriesDict).indexOf(assignedCategory);
             const newCatIndex = Object.keys(categoriesDict).indexOf(catName);
             if (newCatIndex < currentCatIndex) {
@@ -240,7 +239,7 @@ exports.analyzeJob = function(title, description = "") {
     if (maxScore <= 0) assignedCategory = "🔍 Egyéb / Általános";
 
     // ------------------------------------------------------------------------
-    // 5. MUNKASTÍLUS ÉS 6. CÍMKÉK (Precompiled Regex)
+    // MUNKASTÍLUS ÉS CÍMKÉK
     // ------------------------------------------------------------------------
     let assignedVibe = "";
     for (const [vibeName, regex] of Object.entries(compiledVibes)) {
@@ -255,9 +254,6 @@ exports.analyzeJob = function(title, description = "") {
     }
     foundTags = [...new Set(foundTags)];
 
-    // ------------------------------------------------------------------------
-    // 7. MUNKAIDŐ TÍPUS
-    // ------------------------------------------------------------------------
     let jobNature = "Pályakezdő (Teljes munkaidő)";
     const internRegex = buildRegex(["*junior*", "*gyakornok*", "intern", "trainee", "diák", "student", "részmunkaidő", "part-time", "part time", "iskolaszövetkezet", "|diákmunka|", "|nappali|"]);
     

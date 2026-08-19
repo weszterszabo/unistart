@@ -80,22 +80,29 @@ body.modal-open { overflow: hidden; }
 #toastContainer.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
 /* ==========================================================================
-   UNIFIED OMNIBAR ÉS SZŰRŐ CAROUSEL
+   UNIFIED OMNIBAR, KERESŐK ÉS SZŰRŐ CAROUSEL
    ========================================================================== */
 .omnibar-wrapper { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 20px var(--card-shadow); display: flex; flex-direction: column; gap: 15px; }
+
+/* 🌟 ÚJ: EGYMÁS MELLETTI KERESŐK */
+.search-inputs-row { display: flex; gap: 15px; width: 100%; margin-bottom: 5px; }
+.keyword-search { flex: 7; } /* Szélesebb kulcsszó kereső */
+.location-search { flex: 3; } /* Keskenyebb helyszín kereső */
+
 .search-box-container { position: relative; width: 100%; }
 .search-box-input { width: 100%; padding: 16px 20px 16px 45px; border-radius: 16px; background: var(--tag-bg); border: 2px solid var(--card-border); color: var(--text-color); font-size: 15px; font-weight: 500; transition: all 0.3s; font-family: inherit; }
 .search-box-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15); background: var(--card-bg); }
 .search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.7; }
 .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
-.search-clear-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: var(--card-border); color: var(--text-color); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; opacity: 0; pointer-events: none; transition: 0.2s; border: none; }
-.search-box-input:valid ~ .search-clear-icon, .search-box-input.has-value ~ .search-clear-icon { opacity: 1; pointer-events: auto; }
 
 /* 🏷️ Dinamikus Kereső Címkék (Pills) */
 .search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
 .search-tag-chip { background: var(--primary-color); color: white; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; animation: fadeIn 0.2s ease; }
+.search-tag-chip.loc-tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); }
 .search-tag-close { background: rgba(0,0,0,0.2); border: none; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-.search-tag-close:hover { background: var(--danger-color); }
+.search-tag-chip.loc-tag .search-tag-close { background: rgba(255, 255, 255, 0.1); color: var(--text-color); }
+[data-theme="light"] .search-tag-chip.loc-tag .search-tag-close { background: rgba(0, 0, 0, 0.1); }
+.search-tag-close:hover { background: var(--danger-color) !important; color: white !important; }
 
 .filter-carousel-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; align-items: center; }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
@@ -233,7 +240,7 @@ body.modal-open { overflow: hidden; }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); }
 
 /* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK
+   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás)
    ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
@@ -274,6 +281,9 @@ body.modal-open { overflow: hidden; }
     .dashboard-content { padding: 20px 15px; }
     
     .omnibar-wrapper { padding: 15px; }
+    .search-inputs-row { flex-direction: column; gap: 10px; }
+    .keyword-search, .location-search { flex: 1; width: 100%; }
+    
     .company-card { flex-direction: column; align-items: flex-start; padding: 15px; gap: 15px; }
     .company-card-actions { width: 100%; flex-direction: column; }
     .action-icons-row { width: 100%; }
@@ -381,21 +391,23 @@ body.modal-open { overflow: hidden; }
                     
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         
-                        <!-- 🏷️ Kulcsszó Kereső (Tag alapú) -->
-                        <div class="search-box-container" style="margin-bottom: 0;">
-                            <span class="search-icon">🔍</span>
-                            <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Kulcsszó (pl. Python) -> Üss Enter-t...">
+                        <!-- 🌟 KÉTVONALAS KERESŐ MEZŐK -->
+                        <div class="search-inputs-row">
+                            <!-- 🏷️ Kulcsszó Kereső (70%) -->
+                            <div class="search-box-container keyword-search" style="margin-bottom: 0;">
+                                <span class="search-icon">🔍</span>
+                                <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Pozíció, cég, címke (pl. Python) -> Üss Enter-t...">
+                            </div>
+
+                            <!-- 📍 Helyszín Kereső (30%) -->
+                            <div class="search-box-container location-search" style="margin-bottom: 0;">
+                                <span class="search-icon">📍</span>
+                                <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín (pl. Budapest)...">
+                            </div>
                         </div>
                         
-                        <!-- 🏷️ Kereső Címkék Helye (Alapból rejtett) -->
+                        <!-- 🏷️ Kereső Címkék Helye (Közös terület a tageknek) -->
                         <div class="search-tags-row" id="searchTagsRow"></div>
-
-                        <!-- 📍 Dedikált Helyszín Kereső -->
-                        <div class="search-box-container" style="margin-bottom: 0;">
-                            <span class="search-icon">📍</span>
-                            <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín (pl. Budapest, Home office)..." oninput="handleLocationSearch(this.value)">
-                            <button class="search-clear-icon" id="locClearBtn" onclick="clearLocationSearch()" type="button">✖</button>
-                        </div>
                         
                     </div>
 
@@ -605,7 +617,7 @@ body.modal-open { overflow: hidden; }
     let filterMode = 'all'; 
 
     let activeSearchTags = []; 
-    let activeLocationText = ""; 
+    let activeLocationTags = []; 
     let currentSortMode = "date_desc"; 
     let activeMagicFilter = "";
     
@@ -722,7 +734,8 @@ body.modal-open { overflow: hidden; }
         const tagsParam = urlParams.get('tags');
         if (tagsParam) activeSearchTags = tagsParam.split('|');
         
-        activeLocationText = urlParams.get('loc') || "";
+        const locParam = urlParams.get('loc');
+        if (locParam) activeLocationTags = locParam.split('|');
         
         const comps = urlParams.get('companies');
         activeCompanies = comps ? comps.split(',') : [];
@@ -734,17 +747,13 @@ body.modal-open { overflow: hidden; }
         
         document.getElementById('sortSelect').value = currentSortMode;
         
-        if (activeLocationText) {
-            document.getElementById('locationSearchInput').value = activeLocationText;
-            document.getElementById('locationSearchInput').classList.add('has-value');
-        }
         renderSearchTags();
     }
 
     function updateURLState() {
         const urlParams = new URLSearchParams();
         if (activeSearchTags.length > 0) urlParams.set('tags', activeSearchTags.join('|'));
-        if (activeLocationText) urlParams.set('loc', activeLocationText);
+        if (activeLocationTags.length > 0) urlParams.set('loc', activeLocationTags.join('|'));
         if (activeCompanies.length > 0) urlParams.set('companies', activeCompanies.join(','));
         if (activeFaculties.length > 0) urlParams.set('faculties', activeFaculties.join(','));
         if (currentSortMode !== "date_desc") urlParams.set('sort', currentSortMode);
@@ -876,26 +885,40 @@ body.modal-open { overflow: hidden; }
     function renderSearchTags() {
         const row = document.getElementById('searchTagsRow');
         row.innerHTML = '';
-        if (activeSearchTags.length === 0) {
+        if (activeSearchTags.length === 0 && activeLocationTags.length === 0) {
             row.style.display = 'none';
         } else {
             row.style.display = 'flex';
+            
+            // Kulcsszó címkék
             activeSearchTags.forEach(tag => {
                 const chip = document.createElement('div');
                 chip.className = 'search-tag-chip';
-                chip.innerHTML = `${tag} <button class="search-tag-close" onclick="removeSearchTag('${tag}')">✖</button>`;
+                chip.innerHTML = `${tag} <button class="search-tag-close" onclick="removeSearchTag('${tag}', 'keyword')">✖</button>`;
+                row.appendChild(chip);
+            });
+            
+            // Helyszín címkék (Vizálisan elkülönítve)
+            activeLocationTags.forEach(tag => {
+                const chip = document.createElement('div');
+                chip.className = 'search-tag-chip loc-tag';
+                chip.innerHTML = `📍 ${tag} <button class="search-tag-close" onclick="removeSearchTag('${tag}', 'location')">✖</button>`;
                 row.appendChild(chip);
             });
         }
     }
 
-    function removeSearchTag(tag) {
-        activeSearchTags = activeSearchTags.filter(t => t !== tag);
+    function removeSearchTag(tag, type) {
+        if (type === 'keyword') {
+            activeSearchTags = activeSearchTags.filter(t => t !== tag);
+        } else {
+            activeLocationTags = activeLocationTags.filter(t => t !== tag);
+        }
         renderSearchTags();
         applyFilters();
     }
 
-    // Fő Kereső (Tag konvertálás)
+    // Fő Kereső (Kulcsszó) - Enter vagy kikattintás (blur)
     document.getElementById('mainSearchInput').addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
@@ -921,6 +944,32 @@ body.modal-open { overflow: hidden; }
         }
     });
 
+    // Helyszín Kereső - Enter vagy kikattintás (blur)
+    document.getElementById('locationSearchInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            const val = this.value.trim().replace(/,/g, '');
+            if (val && !activeLocationTags.includes(val)) {
+                activeLocationTags.push(val);
+                this.value = '';
+                renderSearchTags();
+                applyFilters();
+            } else if (val) {
+                this.value = ''; 
+            }
+        }
+    });
+
+    document.getElementById('locationSearchInput').addEventListener('blur', function(e) {
+        const val = this.value.trim().replace(/,/g, '');
+        if (val && !activeLocationTags.includes(val)) {
+            activeLocationTags.push(val);
+            this.value = '';
+            renderSearchTags();
+            applyFilters();
+        }
+    });
+
     function addTagToSearch(tagText, event) {
         if(event) event.stopPropagation(); 
         const cleanTag = tagText.replace('#', '').trim();
@@ -931,37 +980,17 @@ body.modal-open { overflow: hidden; }
             scrollToTop();
         }
     }
-
-    // Helyszín Kereső (Szöveges, Élő)
-    let locTimeout;
-    function handleLocationSearch(val) {
-        const inputEl = document.getElementById('locationSearchInput');
-        if(val.trim() !== "") inputEl.classList.add('has-value');
-        else inputEl.classList.remove('has-value');
-
-        clearTimeout(locTimeout);
-        locTimeout = setTimeout(() => {
-            activeLocationText = val.trim();
-            applyFilters();
-        }, 350); 
-    }
-
-    function clearLocationSearch() {
-        const inputEl = document.getElementById('locationSearchInput');
-        inputEl.value = "";
-        inputEl.classList.remove('has-value');
-        activeLocationText = "";
-        applyFilters();
-    }
-
+    
+    // Gombnyomásra Helyszín tag hozzáadása (pl. kártyáról)
     function addLocationToSearch(locText, event) {
-        if (event) event.stopPropagation();
-        const inputEl = document.getElementById('locationSearchInput');
-        inputEl.value = locText;
-        inputEl.classList.add('has-value');
-        activeLocationText = locText;
-        applyFilters();
-        scrollToTop();
+        if(event) event.stopPropagation(); 
+        const cleanLoc = locText.trim();
+        if (!activeLocationTags.includes(cleanLoc)) {
+            activeLocationTags.push(cleanLoc);
+            renderSearchTags();
+            applyFilters();
+            scrollToTop();
+        }
     }
 
     // -----------------------------------------------------
@@ -973,7 +1002,6 @@ body.modal-open { overflow: hidden; }
         updateURLState(); 
         renderActiveFilterChips();
 
-        const locWords = activeLocationText ? removeAccents(activeLocationText.toLowerCase()).split(/\s+/) : [];
         const now = Date.now();
 
         currentFilteredJobs = jobsData.filter(job => {
@@ -982,7 +1010,7 @@ body.modal-open { overflow: hidden; }
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
             
-            // Címke szűrés (Minden aktív tagnak szerepelnie kell az állásban)
+            // Kulcsszó szűrés (Minden aktív tagnak szerepelnie kell - ÉS kapcsolat)
             let matchTags = true;
             if (activeSearchTags.length > 0) {
                 const tagsString = (job.tags || []).join(" ");
@@ -993,11 +1021,13 @@ body.modal-open { overflow: hidden; }
                 });
             }
 
-            // Helyszín szűrés
+            // Helyszín szűrés (Bármelyik lokációnak egyeznie kell - VAGY kapcsolat)
             let matchLoc = true;
-            if (locWords.length > 0) {
+            if (activeLocationTags.length > 0) {
                 const jobLocClean = removeAccents((job.location || '').toLowerCase());
-                matchLoc = locWords.every(w => jobLocClean.includes(w));
+                matchLoc = activeLocationTags.some(locTag => {
+                    return jobLocClean.includes(removeAccents(locTag.toLowerCase()));
+                });
             }
             
             let matchMagic = true;

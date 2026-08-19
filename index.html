@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>UniStart - Karrierfórum</title>
 
 <style>
@@ -56,7 +56,7 @@
 }
 
 /* ==========================================================================
-   ALAPVETŐ STÍLUSOK, CSONTVÁZ ÉS 🌟 OKOS GÖRGŐK
+   ALAPVETŐ STÍLUSOK, CSONTVÁZ ÉS OKOS GÖRGŐK
    ========================================================================== */
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
@@ -69,7 +69,6 @@ body.modal-open { overflow: hidden; }
 .skeleton-text.short { width: 40%; }
 .skeleton-avatar { width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0; }
 
-/* 🌟 ÚJ: Dinamikus Sötét/Világos Görgetősáv (Webkit CSS) */
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: var(--bg-color); }
 ::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 8px; border: 3px solid var(--bg-color); }
@@ -78,7 +77,6 @@ body.modal-open { overflow: hidden; }
 [data-theme="light"] ::-webkit-scrollbar-thumb { background: #c7c7cc; border: 3px solid var(--bg-color); }
 [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #aeaeb2; }
 
-/* Scrollbar a modálokban (hogy a tejüvegen jól mutasson) */
 .filter-modal-body::-webkit-scrollbar-track, .job-preview-body::-webkit-scrollbar-track, .big-support-content::-webkit-scrollbar-track { background: transparent; }
 .filter-modal-body::-webkit-scrollbar-thumb, .job-preview-body::-webkit-scrollbar-thumb, .big-support-content::-webkit-scrollbar-thumb { border: 3px solid transparent; background-clip: padding-box; }
 
@@ -100,7 +98,9 @@ body.modal-open { overflow: hidden; }
 .keyword-search { flex: 7; } 
 .location-search { flex: 3; } 
 .search-box-container { position: relative; width: 100%; }
-.search-box-input { width: 100%; padding: 16px 20px 16px 45px; border-radius: 16px; background: var(--tag-bg); border: 2px solid var(--card-border); color: var(--text-color); font-size: 15px; font-weight: 500; transition: all 0.3s; font-family: inherit; }
+
+/* 🚨 JAVÍTÁS: font-size: 16px; MEGGÁTOLJA AZ IPHONE AUTO-ZOOMOT */
+.search-box-input { width: 100%; padding: 16px 20px 16px 45px; border-radius: 16px; background: var(--tag-bg); border: 2px solid var(--card-border); color: var(--text-color); font-size: 16px; font-weight: 500; transition: all 0.3s; font-family: inherit; }
 .search-box-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15); background: var(--card-bg); }
 .search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.7; }
 .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
@@ -108,7 +108,7 @@ body.modal-open { overflow: hidden; }
 .search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
 .search-tag-chip { background: var(--primary-color); color: white; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; animation: fadeIn 0.2s ease; }
 .search-tag-chip.loc-tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); }
-.search-tag-close { background: rgba(0,0,0,0.2); border: none; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+.search-tag-close { background: rgba(0,0,0,0.2); border: none; color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
 .search-tag-chip.loc-tag .search-tag-close { background: rgba(255, 255, 255, 0.1); color: var(--text-color); }
 [data-theme="light"] .search-tag-chip.loc-tag .search-tag-close { background: rgba(0, 0, 0, 0.1); }
 .search-tag-close:hover { background: var(--danger-color) !important; color: white !important; }
@@ -125,6 +125,15 @@ body.modal-open { overflow: hidden; }
 .magic-chip { flex-shrink: 0; background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); border: 1px solid var(--card-border); color: var(--text-color); padding: 9px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
 .magic-chip:hover { border-color: var(--primary-color); }
 .magic-chip.active { background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); color: var(--primary-color); border-color: var(--primary-color); box-shadow: 0 0 0 1px var(--primary-color); }
+
+.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.active-filter-chip { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
+.active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
+.active-filter-close { background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-color); width: 22px; height: 22px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+[data-theme="light"] .active-filter-close { background: rgba(0, 0, 0, 0.1); }
+.active-filter-close:hover { background: var(--danger-color); color: white; }
+.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 10px; }
+.clear-all-filters-btn:hover { text-decoration: underline; }
 
 .sort-select { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; outline: none; font-family: inherit; }
 .sort-select:focus { border-color: var(--primary-color); }
@@ -151,7 +160,7 @@ body.modal-open { overflow: hidden; }
 .icon-action-btn.fav-active { color: #ff453a; background: rgba(255, 69, 58, 0.1); border-color: rgba(255, 69, 58, 0.3); animation: pop 0.3s ease; }
 
 /* ==========================================================================
-   LAYOUT ÉS KÁRTYÁK
+   LAYOUT ÉS OLDALSÁV (DESKTOP)
    ========================================================================== */
 #loggedInView { display: flex; flex-direction: row; padding: 0; max-width: 100%; height: 100vh; gap: 0; align-items: stretch; }
 .sidebar { width: var(--sidebar-width-collapsed); background-color: var(--sidebar-bg); backdrop-filter: blur(20px); border-right: 1px solid var(--card-border); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 0; transition: width 0.3s; white-space: nowrap; overflow: hidden; z-index: 40; }
@@ -171,6 +180,10 @@ body.modal-open { overflow: hidden; }
 .nav-icon, .secondary-nav-icon { width: 24px; font-size: 16px; text-align: center; flex-shrink: 0; }
 .nav-text { opacity: 0; transition: opacity 0.2s; white-space: nowrap; }
 .sidebar:hover .nav-text { opacity: 1; }
+
+/* 🌟 ÚJ: Csak mobilon látható Menü gomb */
+.mobile-only-nav { display: none; }
+
 .secondary-nav-menu { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; overflow: hidden; max-height: 0; opacity: 0; transition: all 0.3s ease; }
 .sidebar:hover .secondary-nav-menu { max-height: 300px; opacity: 1; margin-bottom: 10px; }
 .sidebar-divider { height: 1px; background-color: var(--card-border); margin: 0 16px 8px 16px; opacity: 0; transition: 0.3s; }
@@ -179,7 +192,6 @@ body.modal-open { overflow: hidden; }
 .dashboard-main { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-color); overflow-y: auto; scroll-behavior: smooth; }
 .dashboard-header { height: var(--header-height); flex-shrink: 0; border-bottom: 1px solid var(--card-border); display: flex; align-items: center; justify-content: space-between; padding: 0 30px; background-color: var(--header-bg); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 30; }
 .dashboard-title { font-size: 20px; font-weight: 700; margin: 0; }
-.mobile-theme-toggle { display: none; }
 .dashboard-content { padding: 30px; flex: 1; max-width: 1050px; margin: 0 auto; width: 100%; }
 
 .tab-content { display: none; }
@@ -210,8 +222,8 @@ body.modal-open { overflow: hidden; }
 .job-preview-logo { width: 80px; height: 80px; background: var(--tag-bg); border: 1px solid var(--card-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800; color: var(--primary-color); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .job-preview-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; color: var(--text-color); line-height: 1.2; padding-right: 30px;}
 .job-preview-company { font-size: 16px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
-.job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
-.job-preview-close:hover { background: var(--danger-color); color: white; }
+.job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 36px; height: 36px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
+.job-preview-close:hover { background: var(--card-border); color: var(--text-color); }
 .job-preview-body { padding: 30px; overflow-y: auto; flex: 1; }
 .job-preview-section { margin-bottom: 25px; }
 .job-preview-section h4 { font-size: 14px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; margin: 0 0 10px 0; }
@@ -221,19 +233,19 @@ body.modal-open { overflow: hidden; }
 .job-preview-footer .apply-btn { padding: 16px; font-size: 16px; }
 
 /* ==========================================================================
-   🌟 ÚJ: TELJES SZÉLESSÉGŰ MEGA-SZŰRŐ (GRID)
+   TELJES SZÉLESSÉGŰ MEGA-SZŰRŐ (GRID) ÉS MODÁLOK
    ========================================================================== */
 .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .filter-modal-overlay.active { opacity: 1; visibility: visible; }
 .filter-modal-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 24px; width: 95%; max-width: 1200px; max-height: 90vh; height: 90vh; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .filter-modal-overlay.active .filter-modal-box { transform: scale(1); }
-.filter-modal-header { padding: 25px 30px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); }
+.filter-modal-header { padding: 25px 30px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); flex-shrink: 0;}
 .filter-modal-header h2 { margin: 0; font-size: 22px; font-weight: 800; }
 .filter-modal-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; align-content: start; }
 .filter-section { display: flex; flex-direction: column; }
 .filter-section h3 { margin: 0 0 20px 0; font-size: 15px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 1px; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
 .filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
-.filter-modal-footer { padding: 20px 30px; border-top: 1px solid var(--card-border); background: var(--card-bg); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.filter-modal-footer { padding: 20px 30px; border-top: 1px solid var(--card-border); background: var(--card-bg); display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-shrink: 0;}
 .filter-modal-footer .apply-btn { flex: 2; padding: 15px; font-size: 16px; }
 
 .f-btn { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
@@ -241,26 +253,14 @@ body.modal-open { overflow: hidden; }
 .f-btn.active-fac { background: var(--faculty-color); color: white; border-color: var(--faculty-color); box-shadow: 0 4px 12px rgba(191, 90, 242, 0.25); }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); }
 
-/* Aktív Szűrők a főképernyőn a carousel alatt */
-.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
-.active-filter-chip { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
-.active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
-.active-filter-close { background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-color); width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-[data-theme="light"] .active-filter-close { background: rgba(0, 0, 0, 0.1); }
-.active-filter-close:hover { background: var(--danger-color); color: white; }
-.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 10px; }
-.clear-all-filters-btn:hover { text-decoration: underline; }
-
-/* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK
-   ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
 .big-support-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 20px; width: 100%; max-width: 550px; max-height: 90vh; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .big-support-overlay.active .big-support-box { transform: scale(1); }
 .big-support-content { padding: 30px; overflow-y: auto; flex: 1; }
-.big-close-btn { position: absolute; top: 15px; right: 15px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
+.big-close-btn { position: absolute; top: 15px; right: 15px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 .big-close-btn:hover { background: var(--danger-color); color: white; border-color: var(--danger-color); }
+
 .about-card { background: var(--tag-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--tag-border); display: flex; flex-direction: column; }
 .support-options { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; margin-bottom: 24px; }
 @media (min-width: 600px) { .support-options { flex-direction: row; } }
@@ -269,52 +269,85 @@ body.modal-open { overflow: hidden; }
 .option-btn .emoji { font-size: 32px; margin-bottom: 12px; display: block; }
 .option-btn .title { font-size: 16px; font-weight: 600; margin-bottom: 4px; display: block; }
 .option-btn .price { font-size: 14px; color: var(--subtitle-color); }
-.transfer-box { background: var(--tag-bg); border: 1px solid var(--tag-border); border-radius: 20px; padding: 24px; margin-top: 24px; text-align: center; }
-.account-details { background: var(--card-bg); border: 1px solid var(--card-border); padding: 16px; border-radius: 12px; margin-top: 16px; display: flex; flex-direction: column; gap: 10px; text-align: left; }
-.acc-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; }
-.acc-label { color: var(--subtitle-color); }
-.acc-val { font-weight: 600; font-family: monospace; font-size: 14px; text-align: right; }
 
 /* ==========================================================================
-   MOBIL NÉZET
+   📱 MOBIL NÉZET ÉS MENÜ ALULRÓL (APP-LIKE UX)
    ========================================================================== */
 @media (max-width: 768px) {
     #loggedInView { flex-direction: column; }
-    .dashboard-header { padding: 0 20px; height: 60px; min-height: 60px; flex-shrink: 0; }
-    .mobile-theme-toggle { display: flex; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; font-size: 14px; }
-    .sidebar { position: fixed; bottom: 0; left: 0; width: 100% !important; height: 65px; flex-direction: row; padding: 0; border-right: none; border-top: 1px solid var(--card-border); z-index: 50; justify-content: space-around; align-items: center; background: var(--header-bg); backdrop-filter: blur(20px); }
-    .sidebar-header, .secondary-nav-menu, .sidebar-divider { display: none; } 
-    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; }
-    .nav-item, .sidebar-profile { padding: 5px; margin: 0; flex: 1; justify-content: center; flex-direction: column; gap: 4px; height: 100%; border: none; }
-    .nav-item.active { background-color: transparent; color: var(--primary-color); }
-    .nav-item:hover, .sidebar-profile:hover { background-color: transparent; }
-    .nav-text { display: block; font-size: 10px; margin: 0; opacity: 1; }
-    .dashboard-main { padding-bottom: 70px; } 
-    .dashboard-content { padding: 20px 15px; }
     
-    .omnibar-wrapper { padding: 15px; }
+    .dashboard-header { padding: 0 20px; height: 60px; min-height: 60px; flex-shrink: 0; }
+    
+    /* Alsó navigációs sáv */
+    .sidebar { position: fixed; bottom: 0; left: 0; width: 100% !important; height: 70px; flex-direction: row; padding: 0; border-right: none; border-top: 1px solid var(--card-border); z-index: 50; justify-content: space-around; align-items: center; background: var(--header-bg); backdrop-filter: blur(20px); }
+    .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile { display: none; } 
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; }
+    .nav-item { padding: 5px; margin: 0; flex: 1; justify-content: center; flex-direction: column; gap: 4px; height: 100%; border: none; }
+    .nav-item.active { background-color: transparent; color: var(--primary-color); }
+    .nav-item:hover { background-color: transparent; }
+    .nav-text { display: block; font-size: 11px; margin: 0; opacity: 1; }
+    .nav-icon { font-size: 20px; }
+    
+    /* 🌟 Csak mobilon megjelenő Menü gomb */
+    .mobile-only-nav { display: flex; }
+
+    /* Terület optimalizálás */
+    .dashboard-main { padding-bottom: 80px; } 
+    .dashboard-content { padding: 15px 12px; }
+    .omnibar-wrapper { padding: 15px; margin-bottom: 15px; border-radius: 16px; }
+    
     .search-inputs-row { flex-direction: column; gap: 10px; }
     .keyword-search, .location-search { flex: 1; width: 100%; }
     
-    .company-card { flex-direction: column; align-items: flex-start; padding: 15px; gap: 15px; }
-    .company-card-actions { width: 100%; flex-direction: column; }
+    .company-grid { gap: 15px; }
+    .company-card { flex-direction: column; align-items: flex-start; padding: 16px; gap: 12px; border-radius: 16px; }
+    .company-card-actions { width: 100%; flex-direction: column; gap: 12px; }
     .action-icons-row { width: 100%; }
-    .company-card-actions .apply-btn { width: 100%; padding: 12px; font-size: 14px; }
-    #backToTopBtn { bottom: 85px; right: 20px; width: 44px; height: 44px; font-size: 20px; }
+    .company-card-actions .apply-btn { width: 100%; padding: 14px; font-size: 15px; }
+    
+    #backToTopBtn { bottom: 90px; right: 20px; width: 44px; height: 44px; font-size: 20px; }
     .search-header-row { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .sort-select { margin-left: 0 !important; width: 100%; }
-    #toastContainer { width: 90%; justify-content: center; text-align: center; }
+    .sort-select { margin-left: 0 !important; width: 100%; padding: 10px; }
+    #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: 85px; }
     .job-preview-footer { flex-direction: column-reverse; }
     
-    /* Mobil filter modal formázás (hogy ne lógjon ki) */
+    /* Szűrő modal kitölti a képernyőt */
     .filter-modal-box { width: 100%; max-height: 100vh; height: 100vh; border-radius: 0; }
-    .filter-modal-body { grid-template-columns: 1fr; gap: 25px; }
+    .filter-modal-body { grid-template-columns: 1fr; gap: 25px; padding: 20px; }
+    .filter-modal-header, .filter-modal-footer { padding: 15px 20px; }
+    
+    /* Alsó mobil menü (Bottom Sheet) */
+    .mobile-menu-box { transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1); margin-top: auto; border-radius: 24px 24px 0 0; max-height: 85vh; height: auto; }
+    #mobileMenuOverlay.active .mobile-menu-box { transform: translateY(0); }
 }
+@media (min-width: 769px) { .mobile-only-nav { display: none; } #mobileMenuOverlay { display: none !important; } }
 </style>
 </head>
 <body>
 
 <div id="toastContainer"><span id="toastIcon">✓</span><span id="toastMessage">Értesítés</span></div>
+
+<!-- 📱 ÚJ: MOBIL MENÜ ALULRÓL (Bottom Sheet) -->
+<div id="mobileMenuOverlay" class="filter-modal-overlay" onclick="closeMobileMenu(event)">
+    <div class="filter-modal-box mobile-menu-box">
+        <div class="filter-modal-header" style="border-bottom: none; padding-bottom: 10px;">
+            <h2>Menü</h2>
+            <button class="big-close-btn" style="position: static;" onclick="closeMobileMenu()">✖</button>
+        </div>
+        <div class="filter-modal-body" style="padding-top: 0; gap: 12px;">
+            <button class="f-btn" style="width:100%; text-align:left; font-size:16px; padding: 16px; border-radius: 16px;" onclick="closeMobileMenu(); openBigSupportModal()">☕ Támogasd a projektet!</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 12px;" onclick="closeMobileMenu(); openAboutModal()">🎓 Rólunk</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 12px;" onclick="closeMobileMenu(); openKapcsolatModal()">✉️ Kapcsolat</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 12px;" onclick="closeMobileMenu(); openImpresszumModal()">⚖️ Impresszum</button>
+            <button class="f-btn" style="width:100%; text-align:left; font-size:15px; padding: 14px; border-radius: 12px;" onclick="closeMobileMenu(); openAdatvedelemModal()">🛡️ Adatvédelem</button>
+            
+            <div style="display:flex; justify-content: space-between; align-items: center; margin-top: 15px; padding: 15px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px;">
+                <span style="font-weight: 600; font-size: 15px;">Sötét mód</span>
+                <button class="sidebar-theme-toggle" id="themeToggleMobileBtn" style="opacity:1; pointer-events:auto; margin:0; width: 36px; height: 36px; font-size: 16px;" onclick="toggleTheme()">☀️</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- 🌟 MEGA SZŰRŐ ABLAK -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
@@ -381,6 +414,10 @@ body.modal-open { overflow: hidden; }
                 <li class="nav-item" id="nav-saved" onclick="setFilterMode('saved'); switchTab('forumTab', 'Mentett Állások', 'nav-saved')">
                     <span class="nav-icon">🤍</span> <span class="nav-text">Kedvencek</span>
                 </li>
+                <!-- 📱 Csak mobilon jelenik meg a Menü gomb -->
+                <li class="nav-item mobile-only-nav" onclick="openMobileMenu()">
+                    <span class="nav-icon">☰</span> <span class="nav-text">Menü</span>
+                </li>
             </ul>
         </div>
         <div class="sidebar-bottom">
@@ -399,7 +436,7 @@ body.modal-open { overflow: hidden; }
     <main class="dashboard-main" id="dashboardMainScroll">
         <header class="dashboard-header">
             <h1 class="dashboard-title" id="currentViewTitle">Karrierfórum</h1>
-            <div class="header-actions"><button class="mobile-theme-toggle" id="themeToggleMobile" title="Téma váltása">☀️</button></div>
+            <!-- A mobil headerben lévő váltót elrejtjük, mert lekerült a menübe -->
         </header>
 
         <div class="dashboard-content">
@@ -493,19 +530,19 @@ body.modal-open { overflow: hidden; }
 <script>
     const body = document.body;
     const themeToggleDesktop = document.getElementById('themeToggleDesktop');
-    const themeToggleMobile = document.getElementById('themeToggleMobile');
+    const themeToggleMobileBtn = document.getElementById('themeToggleMobileBtn');
     const prefersLightScheme = window.matchMedia("(prefers-color-scheme: light)");
 
     function applyTheme(isLight) {
         if (isLight) {
             body.setAttribute('data-theme', 'light');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '🌙';
-            if (themeToggleMobile) themeToggleMobile.textContent = '🌙';
+            if (themeToggleMobileBtn) themeToggleMobileBtn.textContent = '🌙';
             localStorage.setItem('theme', 'light');
         } else {
             body.removeAttribute('data-theme');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '☀️';
-            if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
+            if (themeToggleMobileBtn) themeToggleMobileBtn.textContent = '☀️';
             localStorage.setItem('theme', 'dark');
         }
     }
@@ -513,7 +550,6 @@ body.modal-open { overflow: hidden; }
     if (savedTheme === 'light' || (!savedTheme && prefersLightScheme.matches)) applyTheme(true);
     function toggleTheme() { applyTheme(!body.hasAttribute('data-theme')); }
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
-    if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
 
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
@@ -540,6 +576,13 @@ body.modal-open { overflow: hidden; }
     function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
     function openFilterModal() { openModal('filterModalOverlay'); }
     function closeFilterModal() { closeModal('filterModalOverlay'); }
+    
+    // 📱 MOBIL MENÜ LOGIKA
+    function openMobileMenu() { openModal('mobileMenuOverlay'); }
+    function closeMobileMenu(event) { 
+        if (event && event.target !== document.getElementById('mobileMenuOverlay')) return;
+        closeModal('mobileMenuOverlay'); 
+    }
 
     function copyIban() {
         navigator.clipboard.writeText('HU14107000247196995851100005').then(() => {
@@ -561,7 +604,9 @@ body.modal-open { overflow: hidden; }
     }
 
     document.querySelectorAll('.big-support-overlay, .filter-modal-overlay').forEach(modal => {
-        modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+        if (modal.id !== 'mobileMenuOverlay') {
+            modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+        }
     });
 
     let toastTimeout;
@@ -701,11 +746,6 @@ body.modal-open { overflow: hidden; }
         body.classList.add('modal-open');
     }
 
-    function closeJobPreview(event) {
-        if (event && event.target !== document.getElementById('jobPreviewOverlay')) return; 
-        document.getElementById('jobPreviewOverlay').classList.remove('active');
-        body.classList.remove('modal-open');
-    }
     function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
 
     // -----------------------------------------------------
@@ -748,7 +788,6 @@ body.modal-open { overflow: hidden; }
             jobsData = [];
             snapshot.forEach(doc => jobsData.push({ id: doc.id, ...doc.data() }));
 
-            // 1. Képzési területek (Faculty)
             const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
             const facContainer = document.getElementById('modalFacultyButtons');
             facContainer.innerHTML = '';
@@ -760,7 +799,6 @@ body.modal-open { overflow: hidden; }
                 facContainer.appendChild(btn);
             });
 
-            // 2. Vállalatok (Companies)
             let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
             const compContainer = document.getElementById('modalCompanyButtons');
             compContainer.innerHTML = '';
@@ -772,7 +810,6 @@ body.modal-open { overflow: hidden; }
                 compContainer.appendChild(btn);
             });
 
-            // 3. 🌟 Munkakörnyezet (Vibes)
             const uniqueVibes = Array.from(new Set(jobsData.map(j => j.work_style))).filter(v => v).sort();
             const vibeContainer = document.getElementById('modalVibeButtons');
             vibeContainer.innerHTML = '';
@@ -784,7 +821,6 @@ body.modal-open { overflow: hidden; }
                 vibeContainer.appendChild(btn);
             });
 
-            // 4. 🌟 Technológiák / Címkék (Top 20 leggyakoribb)
             let tagCount = {};
             jobsData.forEach(j => { if (j.tags) j.tags.forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; }); });
             const topTags = Object.keys(tagCount).sort((a,b) => tagCount[b] - tagCount[a]).slice(0, 20);
@@ -840,8 +876,6 @@ body.modal-open { overflow: hidden; }
         activeFaculties = []; 
         activeCompanies = []; 
         activeVibes = [];
-        // A teljes törlés gomb eltávolítja a manuális tageket is (opcionális UX döntés)
-        // activeSearchTags = []; 
         updateModalButtonsVisuals(); 
     }
     
@@ -926,7 +960,7 @@ body.modal-open { overflow: hidden; }
                 row.appendChild(chip);
             });
         }
-        updateModalButtonsVisuals(); // Hogy a Mega Modál is szinkronban legyen a buborékokkal
+        updateModalButtonsVisuals(); 
     }
 
     function removeSearchTag(tag, type) {

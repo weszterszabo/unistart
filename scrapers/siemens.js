@@ -9,22 +9,38 @@ exports.scrape = async function(companyName, baseUrl) {
   const num = 100;
   let hasMore = true;
 
+  // 🛡️ OKOS HOST-KERESŐ: Hozzáadtuk a közvetlen 'eightfold.ai' backend szervert is!
+  const hosts = ["jobs.siemens.com", "careers.siemens.com", "siemens.eightfold.ai"];
+  let activeHost = hosts[0];
+  let hostIndex = 0;
+
   while (hasMore) {
-    // Az API-tól 100-asával kérjük az állásokat (ez nem fogyaszt Firebase kvótát!)
-    const apiUrl = `https://jobs.siemens.com/api/apply/v2/jobs?domain=siemens.com&start=${start}&num=${num}`;
+    const apiUrl = `https://${activeHost}/api/apply/v2/jobs?domain=siemens.com&start=${start}&num=${num}`;
     
     try {
+      // Teljes értékű Chrome böngészőnek álcázzuk magunkat
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "Accept": "application/json",
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
+          "Accept": "application/json, text/plain, */*",
+          "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
+          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+          "Referer": `https://${activeHost}/`,
+          "Origin": `https://${activeHost}`
         }
       });
 
       if (!response.ok) {
-        console.error(`   ❌ [Siemens] Hiba (HTTP ${response.status})`);
-        break;
+        // Ha bármilyen HTTP hibát kapunk (404, 403 Tiltva, stb.), ugrunk a következő szerverre!
+        if (hostIndex < hosts.length - 1) {
+            console.log(`   ⚠️ [Siemens] HTTP ${response.status} a ${activeHost} címen. Próbálkozás a következővel...`);
+            hostIndex++;
+            activeHost = hosts[hostIndex];
+            continue; 
+        } else {
+            console.error(`   ❌ [Siemens] Hiba (HTTP ${response.status}) az összes elérhető szerveren.`);
+            break;
+        }
       }
 
       const json = await response.json();
@@ -40,14 +56,12 @@ exports.scrape = async function(companyName, baseUrl) {
         let isHungarian = false;
         let finalLocation = "Magyarország";
 
-        // 1. Vizsgáljuk a fő lokációt
         const mainLoc = (job.location || "").toLowerCase();
         if (mainLoc.includes("hungar") || mainLoc.includes("budapest") || mainLoc.includes("magyar")) {
             isHungarian = true;
             finalLocation = job.location;
         }
 
-        // 2. Vizsgáljuk a többes lokációkat (mert a multinacionális cégek ide rejtik el az országokat)
         if (!isHungarian && Array.isArray(job.locations)) {
             for (const loc of job.locations) {
                 const locStr = (loc || "").toLowerCase();
@@ -59,18 +73,15 @@ exports.scrape = async function(companyName, baseUrl) {
             }
         }
 
-        // 1. KAPUŐR: CSAK A MAGYAROKAT VIZSGÁLJUK TOVÁBB!
         if (isHungarian) {
             let title = job.name || "Névtelen pozíció";
+            // A jelentkezési linknél mindig a hivatalos domaint adjuk meg a diákoknak
             let jobUrl = job.url || `https://jobs.siemens.com/careers/job/${job.id}`;
             let department = job.department || "Siemens";
             
-            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-            // Itt a részleget fűzzük hozzá, hogy jobban tudjon kategorizálni
             const rawDescription = `${department}`;
             const analysis = analyzer.analyzeJob(title, rawDescription);
 
-            // 🧠 3. MÁSODIK KAPUŐR: CSAK AKKOR MENTJÜK, HA PÁLYAKEZDŐ/GYAKORNOK
             if (analysis !== null) {
                 allJobs.push({
                   title: title,
@@ -79,12 +90,10 @@ exports.scrape = async function(companyName, baseUrl) {
                   location: finalLocation,
                   date_posted: new Date().toISOString(), 
                   
-                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
                   experience_level: analysis.job_nature,
                   subsidiary: department,
                   employment_type: "Teljes munkaidő",
 
-                  // 🌟 A SZUPERERŐK:
                   faculty: analysis.faculty,
                   work_style: analysis.work_style,
                   tags: analysis.tags
@@ -93,22 +102,27 @@ exports.scrape = async function(companyName, baseUrl) {
         }
       });
 
-      // Lapozás logika (Itt a letöltött állások számát nézzük, nem a szűrteket, így golyóálló marad!)
       if (positions.length < num) {
           hasMore = false;
       } else {
           start += num;
-          // Pici szünet, hogy a Siemens szervere ne tiltson le minket
-          await new Promise(r => setTimeout(r, 100)); 
+          await new Promise(r => setTimeout(r, 200)); 
       }
 
     } catch (err) {
-      console.error(`   ❌ [Siemens] Hálózat hiba:`, err.message);
-      hasMore = false;
+      // 🛡️ HA HÁLÓZATI HIBA VAN (fetch failed), itt kapjuk el, és váltunk a következő szerverre!
+      if (hostIndex < hosts.length - 1) {
+          console.log(`   ⚠️ [Siemens] Hálózati blokkolás a ${activeHost} címen. Ugrás a következőre...`);
+          hostIndex++;
+          activeHost = hosts[hostIndex];
+          continue;
+      } else {
+          console.error(`   ❌ [Siemens] Végzetes hálózat hiba:`, err.message, err.cause || "");
+          hasMore = false;
+      }
     }
   }
 
-  // Itt már csak az a pár zseniális, diákoknak szóló magyar állás fog kiíródni!
-  console.log(`   ✔️  [Siemens] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
+  console.log(`   ✔️  [Siemens] Siker: A szűrőn fennmaradt ${allJobs.length} db PÁLYAKEZDŐ/JUNIOR állás!`);
   return allJobs;
 };

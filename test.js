@@ -20,9 +20,9 @@ const engines = {
 
 // Változók a teszteléshez
 // ÍRD ÁT EZT A KÉT VÁLTOZÓT, HA MÁS CÉGET AKARSZ TESZTELNI!
-const TEST_ENGINE = "aldi"; 
-const TEST_COMPANY_NAME = "Aldi"; 
-const TEST_URL = "https://karrier.aldi.hu/";
+const TEST_ENGINE = "siemens"; 
+const TEST_COMPANY_NAME = "siemens"; 
+const TEST_URL = ["careers.siemens.com", "jobs.siemens.com"];
 
 async function runTest() {
     console.log(`\n🧪 LOKÁLIS TESZT INDUL...`);

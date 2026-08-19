@@ -40,17 +40,28 @@ const detoxRules = [
 ];
 
 // ============================================================================
-// 2. KIZÁRÓ SZAVAK (Feketesereg - Magyar és Angol)
+// 2. KIZÁRÓ SZAVAK (Feketesereg - BŐVÍTETT FEHÉRGALLÉROS VÉDŐPAJZS)
 // ============================================================================
 const fatalTitleWords = [
-    // Magyar
+    // --- 1. Vezetői és Senior tiltások (Magyar és Angol) ---
     "senior", "szenior", "|manager|", "menedzser", "igazgató", "szakértő", 
     "medior", "műszakvezető", "csoportvezető", "projektvezető", "üzletvezető", 
-    "főorvos", "főnővér", "tulajdonos", "osztályvezető", "|vezető|",
-    // Angol
-    "|sr|", "head of", "lead", "expert", "supervisor", "director", "architect", 
+    "főorvos", "főnővér", "tulajdonos", "osztályvezető", "|vezető|", "|sr|", 
+    "head of", "lead", "expert", "supervisor", "director", "architect", 
     "coordinator", "|vp|", "president", "chief", "principal", "founder", "partner",
-    "cfo", "ceo", "cto", "coo", "cmo", "manager"
+    "cfo", "ceo", "cto", "coo", "cmo", 
+    
+    // --- 2. FIZIKAI ÉS SZAKMUNKÁK (Egyetemhez nem köthető állások) ---
+    "takarító", "karbantartó", "operátor", "szerelő", "hegesztő", "forgácsoló", 
+    "|cnc|", "kőműves", "festő", "árufeltöltő", "pénztáros", "bolti eladó", "eladó",
+    "raktáros", "targoncás", "sofőr", "futár", "diszpécser", "vagyonőr", "kiszállító",
+    "biztonsági őr", "fizikai", "gépkezelő", "csomagoló", "szakács", "pincér", 
+    "felszolgáló", "pultos", "takarítás", "portás", "gépkocsivezető", "rakodó", 
+    "technikus", "művezető", "lakatos", "villanyszerelő", "asztalos", "ács",
+    // Angol fizikai tiltások
+    "cleaner", "operator", "driver", "warehouse", "cashier", "worker", "mechanic",
+    "courier", "security guard", "waiter", "waitress", "bartender", "chef", "cook",
+    "packager", "technician", "assembler", "laborer"
 ];
 
 const experienceRejectWords = [
@@ -82,8 +93,7 @@ const acceptWords = [
 ];
 
 // ============================================================================
-// 4. KÉPZÉSI TERÜLETEK (Kétnyelvű kategória-motor)
-// Az angol hirdetések is tökéletesen besorolódnak a magyar kategóriákba.
+// 4. KÉPZÉSI TERÜLETEK (Kétnyelvű kategória-motor, fizikai munkák kiszűrve)
 // ============================================================================
 const categories = {
     "Informatika és Számítástudomány": [
@@ -119,9 +129,8 @@ const categories = {
         "sourcing", "sourcer", "talent acquisition"
     ],
     "Logisztika és Ellátásilánc-menedzsment": [
-        "logisztika", "logistics", "raktár", "szállítmányozás", "fuvarszervező", "supply chain", 
-        "ellátási lánc", "beszerzés", "procurement", "vám", "purchasing", "flotta", "buyer",
-        "szállító", "spedőr", "freight", "warehouse"
+        "logisztika", "logistics", "ellátási lánc", "beszerzés", "procurement", "vám", 
+        "purchasing", "buyer", "supply chain" // Szakmunkák (raktár, sofőr, targoncás) kigyomlálva
     ],
     "Gépészmérnöki és Mechatronikai Tudományok": [
         "gépész", "mechanical", "mechatronika", "cad", "tervezőmérnök", "járműmérnök", "célgép",
@@ -140,9 +149,8 @@ const categories = {
         "vegyipar", "polimer", "bioengineer"
     ],
     "Gyártástechnológia és Minőségbiztosítás": [
-        "gyártás", "termelés", "operátor", "technikus", "művezető", "karbantartó", "minőség", 
-        "quality", "qa", "minőségellenőr", "minőségbiztosítás", "lean", "six sigma", "production",
-        "szerelő", "hegesztő", "forgácsoló", "cnc", "maintenance"
+        "minőség", "quality", "qa", "minőségellenőr", "minőségbiztosítás", "lean", "six sigma", 
+        "termelésirányító", "folyamatfejlesztő" // Operátorok, hegesztők, szerelők eltávolítva
     ],
     "Orvos- és Egészségtudomány": [
         "orvos", "ápoló", "egészség", "klinika", "nővér", "terapeuta", "dietetikus", "mentő", 
@@ -183,8 +191,8 @@ const categories = {
     ],
     "Adminisztráció és Ügyfélszolgálati Operáció": [
         "adminisztráció", "asszisztens", "titkár", "recepció", "iroda", "office", "adminisztrátor", 
-        "ügyfélszolgálat", "customer", "helpdesk", "support", "call center", "adatokmány", "data entry", 
-        "diszpécser", "ügyfél", "operáció", "operations", "vásárló", "secretary", "receptionist"
+        "ügyfélszolgálat", "customer", "helpdesk", "support", "call center", "data entry", 
+        "ügyfél", "operáció", "operations", "secretary", "receptionist"
     ]
 };
 
@@ -196,24 +204,8 @@ const vibes = {
     "📊 Elemző / Adatvezérelt": ["elemzés", "riport", "statisztika", "kutatás", "adat", "data", "optimalizálás", "analytics", "reporting", "kimutatás", "modellezés", "excel", "makró", "dashboard", "analytical", "data driven"],
     "🔍 Precíz / Szabálykövető": ["ellenőrzés", "adminisztráció", "dokumentáció", "precíz", "pontos", "jogszabály", "szerződés", "nyilvántartás", "compliance", "iktatás", "audit", "szabvány", "szabályzat", "attention to detail", "accuracy", "regulatory"],
     "📝 Kreatív / Alkotó": ["kreatív", "tervezés", "ötletelés", "design", "grafika", "cikk", "tartalomgyártás", "videó", "kreativitás", "innováció", "vizuális", "szövegírás", "kampány", "creative", "brainstorming", "visual"],
-    "🏃‍♂️ Pörgős / Terepmunka": ["terepmunka", "utazás", "rendezvény", "rugalmas", "dinamikus", "helyszíni", "gyártósor", "raktár", "változatos", "agilis", "fizikai", "műszak", "vezetés", "kiszállás", "fast-paced", "travel required", "hands-on", "field work"]
+    "🏃‍♂️ Pörgős / Terepmunka": ["utazás", "rendezvény", "rugalmas", "dinamikus", "helyszíni", "változatos", "agilis", "vezetés", "kiszállás", "fast-paced", "travel required", "field work"] // "fizikai", "műszak", "gyártósor" törölve
 };
-
-// ============================================================================
-// 6. MIKRO-CÍMKÉK (Global Enterprise Tech Stack)
-// ============================================================================
-const microTagsDict = [
-    // Nyelvek
-    "angol", "english", "német", "german", "francia", "french", "spanyol", "spanish", "olasz", "holland", "lengyel", "kínai",
-    // Vállalatirányítás és Eszközök
-    "excel", "powerpoint", "word", "|sap|", "|erp|", "salesforce", "hubspot", "power bi", "tableau", "jira", "confluence", "trello", "slack", "google analytics",
-    // Tech & Fejlesztés
-    "python", "|sql|", "|java|", "javascript", "typescript", "c++", "c#", "|c|", "ruby", "php", "swift", "kotlin", "rust", "|go|", "golang", "react", "angular", "vue", "spring", "dotnet", "laravel", "django", "express", "nodejs", "|aws|", "|gcp|", "azure", "docker", "kubernetes", "terraform", "ansible", "jenkins", "gitlab", "github", "git", "linux", "html", "css", "mongodb", "postgresql", "mysql", "redis",
-    // Mérnöki, Tervező és Design Szoftverek
-    "autocad", "solidworks", "creo", "catia", "revit", "archicad", "figma", "canva", "photoshop", "illustrator", "premiere", "after effects", "indesign",
-    // Munkavégzés módja
-    "home office", "remote", "hibrid", "hybrid", "távmunka", "rugalmas", "flexible", "részmunkaidő", "part-time", "diákmunka", "teljes munkaidő", "full-time", "on-site", "onsite"
-];
 
 // ============================================================================
 // FŐ FÜGGVÉNY: Az elemző agya
@@ -231,8 +223,9 @@ exports.analyzeJob = function(title, description = "") {
     let isEntryLevel = false;
 
     // --- 1. LÉPÉS: SZIGORÚ CÍM ELLENŐRZÉS ---
+    // Ha a címben egy Feketesereg szó van (Senior, Manager, Takarító, Operátor, stb.) -> KUKA
     for (const word of fatalTitleWords) {
-        if (smartMatch(lowerTitle, `|${word}|`)) {
+        if (smartMatch(lowerTitle, `|${word}|`) || lowerTitle.includes(word)) {
             return null; 
         }
     }
@@ -293,10 +286,18 @@ exports.analyzeJob = function(title, description = "") {
     }
 
     // --- 6. MIKRO-CÍMKÉK ---
+    // Ide bedrótozzuk ugyanazokat a tech-címkéket, amik eddig is voltak
+    const microTagsDict = [
+        "angol", "english", "német", "german", "francia", "french", "spanyol", "spanish", "olasz", "holland", "lengyel", "kínai",
+        "excel", "powerpoint", "word", "|sap|", "|erp|", "salesforce", "hubspot", "power bi", "tableau", "jira", "confluence", "trello", "slack", "google analytics",
+        "python", "|sql|", "|java|", "javascript", "typescript", "c++", "c#", "|c|", "ruby", "php", "swift", "kotlin", "rust", "|go|", "golang", "react", "angular", "vue", "spring", "dotnet", "laravel", "django", "express", "nodejs", "|aws|", "|gcp|", "azure", "docker", "kubernetes", "terraform", "ansible", "jenkins", "gitlab", "github", "git", "linux", "html", "css", "mongodb", "postgresql", "mysql", "redis",
+        "autocad", "solidworks", "creo", "catia", "revit", "archicad", "figma", "canva", "photoshop", "illustrator", "premiere", "after effects", "indesign",
+        "home office", "remote", "hibrid", "hybrid", "távmunka", "rugalmas", "flexible", "részmunkaidő", "part-time", "diákmunka", "teljes munkaidő", "full-time", "on-site", "onsite"
+    ];
+
     let foundTags = [];
     for (const tag of microTagsDict) {
         if (smartMatch(textToSearch, tag)) {
-            // Megtisztítjuk a tageket a csövektől és formázzuk őket
             const cleanTag = tag.replace(/\|/g, '').trim();
             foundTags.push("#" + cleanTag.charAt(0).toUpperCase() + cleanTag.slice(1));
         }
@@ -304,7 +305,7 @@ exports.analyzeJob = function(title, description = "") {
     
     foundTags = [...new Set(foundTags)];
 
-    // --- 7. MUNKAIDŐ TÍPUS MEGHATÁROZÁSA (Kétnyelvű) ---
+    // --- 7. MUNKAIDŐ TÍPUS MEGHATÁROZÁSA ---
     let jobNature = "Pályakezdő (Teljes munkaidő)";
     if (
         lowerTitle.includes("gyakornok") || lowerTitle.includes("intern") || 
@@ -317,7 +318,6 @@ exports.analyzeJob = function(title, description = "") {
         jobNature = "Gyakornok / Részmunkaidő";
     }
 
-    // EREDMÉNY VISSZAADÁSA
     return {
         is_junior: true,
         job_nature: jobNature,

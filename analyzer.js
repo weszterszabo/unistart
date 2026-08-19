@@ -1,39 +1,31 @@
 // ============================================================================
-// 🚀 V12.1 QUANTUM ENGINE: MESTERSÉGES INTELLIGENCIA ALAPÚ NLP FORDÍTÓ
+// 🚀 V12.2 QUANTUM ENGINE: MESTERSÉGES INTELLIGENCIA ALAPÚ NLP FORDÍTÓ
 // ============================================================================
 
-// Magyar specifikus Regex Lookaround határok (A tökéletes szófelismeréshez)
 const H_BOUND_START = `(?<=[^a-záéíóöőúüűA-ZÁÉÍÓÖŐÚÜŰ0-9_]|^)`;
 const H_BOUND_END = `(?=[^a-záéíóöőúüűA-ZÁÉÍÓÖŐÚÜŰ0-9_]|$)`;
 
-// A "Fordító": Ciklusok helyett egyetlen masszív, memóriába égetett Regex-et csinál a listákból
 function buildRegex(wordArray) {
     const parts = wordArray.map(w => {
         const clean = w.toLowerCase().trim();
         if (clean.startsWith('|') && clean.endsWith('|')) {
-            // Szigorú egyezés (pl. "|it|")
             return `${H_BOUND_START}${clean.slice(1, -1)}${H_BOUND_END}`;
         } else if (clean.startsWith('*') && clean.endsWith('*')) {
-            // Ragozástűrő egyezés (pl. "*mérnök*" -> mérnököt, mérnöknek)
             return `${H_BOUND_START}${clean.slice(1, -1)}[a-záéíóöőúüű]{0,5}${H_BOUND_END}`;
         } else {
-            // Sima szórészlet (escapelve a biztonságért)
             return clean.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
         }
     });
-    return new RegExp(`(${parts.join('|')})`, 'gi'); // 'g' = Globális keresés (megszámolja a találatokat!)
+    return new RegExp(`(${parts.join('|')})`, 'gi'); 
 }
 
 // ============================================================================
 // 1. KÉTNYELVŰ MÉREGTELENÍTÉS ÉS ZAJSZŰRÉS (Detox)
 // ============================================================================
 const detoxRules = [
-    // 🚨 ÚJ VÉDŐSZABÁLYOK TÖBBJELENTÉSŰ SZAVAKRA
-    { regex: /fejlesztő\s*pedagóg/gi, replacement: "gyógypedagóg" }, // Kimenti a pedagógusokat az IT alól
-    { regex: /szervezetfejleszt/gi, replacement: "szervezetépítő" }, // Kimenti a HR-eseket az IT alól
-    { regex: /üzletfejleszt/gi, replacement: "üzletépítő" }, // Kimenti a Sales-eseket az IT alól
-    
-    // Alapvető detox
+    { regex: /fejlesztő\s*pedagóg/gi, replacement: "gyógypedagóg" }, 
+    { regex: /szervezetfejleszt/gi, replacement: "szervezetépítő" }, 
+    { regex: /üzletfejleszt/gi, replacement: "üzletépítő" }, 
     { regex: /vezetői engedély/gi, replacement: "jogosítvány" },
     { regex: /piacvezető|világvezető/gi, replacement: "piacelső" },
     { regex: /(senior|szenior) (kollég|munkatárs)/gi, replacement: "mentor" },
@@ -47,7 +39,7 @@ const detoxRules = [
 ];
 
 // ============================================================================
-// 2. SZIGORÚ VÉDŐPAJZS SZÓTÁRAK (Ezekből generáljuk a regexeket)
+// 2. SZIGORÚ VÉDŐPAJZS SZÓTÁRAK
 // ============================================================================
 const fatalSeniorWords = [
     "*senior*", "*szenior*", "|manager|", "*menedzser*", "*igazgató*", "*szakértő*", 
@@ -58,20 +50,27 @@ const fatalSeniorWords = [
     "|cfo|", "|ceo|", "|cto|", "|coo|", "|cmo|"
 ];
 
+// 🚨 ALDI/LIDL SPECIFIKUS BLOKKOLÁS: Hozzáadva a bolti, áruházi, árufeltöltő szavak!
 const fatalPhysicalWords = [
     "takarító", "kőműves", "festő", "pénztáros", "bolti eladó", "|eladó|", "kassza",
     "targoncás", "sofőr", "futár", "vagyonőr", "kiszállító", "biztonsági őr", 
     "csomagoló", "szakács", "pincér", "felszolgáló", "pultos", "portás", 
     "gépkocsivezető", "rakodó", "lakatos", "villanyszerelő", "asztalos", "|ács|",
     "szobalány", "gondnok", "költöztető", "vízvezeték", "fűtésszerelő", "burkoló", 
-    "áruházi", "áruház", "eladótér", "|cnc|", "esztergályos",
+    "|cnc|", "esztergályos",
+    "*bolti*", "boltvezető", "*áruházi*", "áruház", "eladótér", "*árufeltöltő*", "*áruösszekészítő*", 
+    "*komissiózó*", "*kasszás*", "*pénztáros*", "üzletvezető-helyettes",
     "cleaner", "driver", "cashier", "courier", "security guard", "waiter", "waitress", 
     "bartender", "chef", "cook", "packager", "assembler", "laborer", "dishwasher", 
     "janitor", "maid", "loader", "mason", "painter", "carpenter", "plumber"
 ];
 
-const dubiousPhysicalWords = ["raktár", "gyártás", "üzem", "szerelő", "karbantartó", "operátor", "technikus", "művezető", "betanított", "árufeltöltő", "komissiózó", "warehouse", "operator", "technician", "factory", "production", "maintenance", "mechanic"];
-const saviorWords = ["mérnök", "engineer", "elemző", "analyst", "gyakornok", "intern", "trainee", "diák", "vezető", "manager", "koordinátor", "coordinator", "tervező", "specialista", "asszisztens", "assistant", "fejlesztő", "developer", "projekt", "project"];
+// 🚨 MVM JAVÍTÁS: Az "üzem" szigorú lett (|üzem|), hogy ne blokkolja az üzemeltetőt!
+const dubiousPhysicalWords = ["raktár", "*gyártás*", "|üzem|", "*szerelő*", "karbantartó", "operátor", "technikus", "művezető", "betanított", "warehouse", "operator", "technician", "factory", "production", "maintenance", "mechanic"];
+
+// 🚨 MVM JAVÍTÁS: Felmentő szavak bővítve (üzemeltető, referens, tanácsadó)
+const saviorWords = ["mérnök", "engineer", "elemző", "analyst", "gyakornok", "intern", "trainee", "diák", "vezető", "manager", "koordinátor", "coordinator", "tervező", "specialista", "asszisztens", "assistant", "fejlesztő", "developer", "projekt", "project", "üzemeltető", "referens", "szakértő", "tanácsadó", "mérnökség"];
+
 const experienceRejectWords = ["min. 3", "legalább 3", "minimum 3", "min. 4", "min. 5", "legalább 5", "3 év tapasztalat", "3+ év", "4+ év", "minimum 3-5 év", "min. 3 years", "at least 3 years", "3+ years", "3 years of experience"];
 const acceptWords = ["gyakornok", "diákmunka", "diák", "pályakezdő", "junior", "frissdiplomás", "asszisztens", "iskolaszövetkezet", "hallgatói jogviszony", "részmunkaidő", "tapasztalat nélkül", "pályaindító", "0 év", "kezdő", "gyakorlat", "szövetkezet", "nappali tagozat", "intern", "internship", "trainee", "student", "entry level", "entry-level", "assistant", "recent graduate", "new graduate", "fresh graduate", "no experience", "0-1 year", "part-time", "scholar"];
 
@@ -105,7 +104,7 @@ const categoriesDict = {
     "Adminisztráció és Irodai Munka": ["adminisztráció", "adminisztr", "*asszisztens*", "*titkár*", "recepció", "iroda", "|office|", "*adminisztrátor*", "data entry", "operáció", "operations", "secretary", "receptionist"]
 };
 
-// 🛡️ BÜNTETŐPONTOK (-50 pont, ha ezek a szavak benne vannak)
+// 🛡️ BÜNTETŐPONTOK (-50 pont)
 const antiCategoriesDict = {
     "Informatika és Számítástudomány": ["toborzó", "recruiter", "értékesítő", "sales", "jogász", "lawyer", "*pedagógus*", "*tanár*", "*oktató*"],
     "Művészet és Design": ["design engineer", "tervezőmérnök", "cad", "cam"], 
@@ -130,7 +129,6 @@ for (const [cat, words] of Object.entries(categoriesDict)) { compiledCategories[
 const compiledAntiCategories = {};
 for (const [cat, words] of Object.entries(antiCategoriesDict)) { compiledAntiCategories[cat] = buildRegex(words); }
 
-// Vibes és Címkék compilation
 const vibesDict = {
     "🗣️ Emberközpontú": ["kapcsolattartás", "ügyfél", "csapatmunka", "kommunikáció", "prezentáció", "customer", "ügyfélszolgálat", "támogatás", "support", "interjú", "tárgyalás", "vendég", "kiszolgálás", "csapat", "teamwork", "collaboration", "client", "interpersonal"],
     "📊 Elemző / Adatvezérelt": ["elemzés", "riport", "statisztika", "kutatás", "adat", "data", "optimalizálás", "analytics", "reporting", "kimutatás", "modellezés", "excel", "makró", "dashboard", "analytical", "data driven"],
@@ -161,7 +159,6 @@ exports.analyzeJob = function(title, description = "") {
     let safeTitle = title ? String(title).toLowerCase() : "";
     let safeDesc = description ? String(description).toLowerCase() : "";
     
-    // Detoxifikáció
     let fullText = `${safeTitle} ${safeDesc}`;
     for (const rule of detoxRules) {
         fullText = fullText.replace(rule.regex, rule.replacement);
@@ -169,14 +166,14 @@ exports.analyzeJob = function(title, description = "") {
         safeDesc = safeDesc.replace(rule.regex, rule.replacement);
     }
 
-    // Cím zajszűrése
     const cleanTitle = safeTitle.replace(/\([^()]*\)/g, '').replace(/\[[^\[\]]*\]/g, '').trim();
-    
     const leadDesc = safeDesc.substring(0, 300); 
     const bodyDesc = safeDesc.substring(300);
 
     // --- GATEKEEPER RENDSZER ---
     if (compiledFatalSenior.test(cleanTitle)) return null; 
+    
+    // Itt vizsgáljuk a címben a fizikai szavakat (pl. bolti dolgozó)
     if (compiledFatalPhysical.test(safeTitle)) return null; 
     
     if (compiledDubiousPhysical.test(safeTitle)) {

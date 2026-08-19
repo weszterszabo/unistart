@@ -211,7 +211,8 @@ async function runScraper() {
           let skipDeletion = false;
           let skipProcessing = false;
 
-          if (existingJobsSnapshot.size > 15 && scrapedJobs.length < (existingJobsSnapshot.size * 0.3)) {
+          // ⚠️ ITT VAN KIKAPCSOLVA AZ ANOMÁLIA 1 A NAGY TAKARÍTÁSHOZ (false && ...)
+          if (false && existingJobsSnapshot.size > 15 && scrapedJobs.length < (existingJobsSnapshot.size * 0.3)) {
             const msg = `${logPrefix} 🚨 ANOMÁLIA: Gyanús állás-csökkenés! Tömeges archiválás blokkolva.`;
             console.log(msg);
             await sendAlert(msg, true);

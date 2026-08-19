@@ -23,7 +23,7 @@
     --gold-color: #d4af37;
     --tag-bg: #2c2c2e; 
     --tag-border: #3a3a3c;
-    --faculty-color: #bf5af2; /* Új szín a kategóriáknak */
+    --faculty-color: #bf5af2; 
     
     --sidebar-width-expanded: 240px; 
     --sidebar-width-collapsed: 72px; 
@@ -46,7 +46,7 @@
     --primary-hover: #0077ed;
     --tag-bg: #ffffff; 
     --tag-border: #e5e5ea; 
-    --faculty-color: #af52de; /* Új szín a kategóriáknak (világos téma) */
+    --faculty-color: #af52de; 
     
     --sidebar-bg: rgba(229, 229, 234, 0.85);
     --header-bg: rgba(245, 245, 247, 0.85);
@@ -110,7 +110,76 @@ body.modal-open {
 }
 
 /* ==========================================================================
-   CÉG KERESŐ BLOKK (KIBŐVÍTETT)
+   SZÖVEGES OKOSKERESŐ STÍLUSOK
+   ========================================================================== */
+.search-box-container {
+    position: relative;
+    margin-bottom: 25px;
+    width: 100%;
+}
+
+.search-box-input {
+    width: 100%;
+    padding: 16px 20px 16px 45px;
+    border-radius: 16px;
+    background: var(--tag-bg);
+    border: 2px solid var(--card-border);
+    color: var(--text-color);
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.search-box-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15);
+    background: var(--card-bg);
+}
+
+.search-box-input::placeholder {
+    color: var(--subtitle-color);
+    opacity: 0.7;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    pointer-events: none;
+}
+
+.search-clear-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--card-border);
+    color: var(--text-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.2s;
+    border: none;
+}
+
+.search-box-input:valid ~ .search-clear-icon {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ==========================================================================
+   CÉG KERESŐ BLOKK
    ========================================================================== */
 .advanced-search-block {
     background: var(--card-bg);
@@ -147,7 +216,6 @@ body.modal-open {
     gap: 10px;
 }
 
-/* Kategória Gombok (Lila) */
 .faculty-btn {
     background: rgba(191, 90, 242, 0.05);
     border: 1px solid rgba(191, 90, 242, 0.2);
@@ -173,7 +241,6 @@ body.modal-open {
     box-shadow: 0 4px 12px rgba(191, 90, 242, 0.25);
 }
 
-/* Cég Gombok (Kék) */
 .company-btn {
     background: var(--tag-bg);
     border: 1px solid var(--tag-border);
@@ -199,7 +266,6 @@ body.modal-open {
     box-shadow: 0 4px 12px rgba(10, 132, 255, 0.2);
 }
 
-/* Törlés Gomb */
 .clear-btn {
     background: transparent;
     border: 1px solid var(--danger-color);
@@ -292,7 +358,6 @@ body.modal-open {
     font-weight: 600; 
 }
 
-/* Speciális színes címkék az okos adatoknak */
 .tag-faculty { background: rgba(191, 90, 242, 0.1); color: var(--faculty-color); border-color: rgba(191, 90, 242, 0.2); }
 .tag-vibe { background: rgba(255, 159, 10, 0.1); color: #ff9f0a; border-color: rgba(255, 159, 10, 0.2); }
 .tag-micro { background: rgba(10, 132, 255, 0.1); color: var(--primary-color); border-color: rgba(10, 132, 255, 0.2); }
@@ -1018,10 +1083,19 @@ body.modal-open {
             <!-- 1. KARRIERFÓRUM FÜL -->
             <div id="forumTab" class="tab-content active">
 
-                <!-- 🌟 ÚJ KIBŐVÍTETT KERESŐ BLOKK -->
+                <!-- 🌟 ÚJ KIBŐVÍTETT ÉS OKOS KERESŐ BLOKK -->
                 <div class="advanced-search-block">
                     <div class="search-col">
                         
+                        <!-- 🌟 SZÖVEGES OKOSKERESŐ MEZŐ -->
+                        <div class="search-box-container">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Keress pozícióra, cégre, címkére (pl. Python, Home office)..." oninput="handleTextSearch(this.value)" required>
+                            <button class="search-clear-icon" onclick="clearTextSearch()" type="button" title="Keresés törlése">✖</button>
+                        </div>
+                        
+                        <hr style="border: 0; border-top: 1px solid var(--card-border); margin: 0 0 20px 0;">
+
                         <!-- KATEGÓRIA GOMBOK (MULTI-SELECT) -->
                         <div class="search-section" style="margin-bottom: 20px;">
                             <div class="search-header-row">
@@ -1450,6 +1524,9 @@ body.modal-open {
     // A Kategória MOST MÁR TÖMB (többet is lehet választani egyszerre)
     let activeFaculties = JSON.parse(localStorage.getItem('unistart_selected_faculties') || "[]");
 
+    // ÚJ VÁLTOZÓ A SZÖVEGES KERESŐHÖZ:
+    let activeSearchText = ""; 
+
     async function loadJobsData() {
         try {
             const snapshot = await db.collection("jobs").get();
@@ -1469,7 +1546,6 @@ body.modal-open {
             });
 
             // 1. Kategória Gombok (Multi-select) generálása az adatbázis alapján
-            // Kihagyjuk a nem létezőket vagy a "Nincs megadva" típusokat
             const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
             const facContainer = document.getElementById('facultyFilterButtons');
             facContainer.innerHTML = '';
@@ -1520,7 +1596,7 @@ body.modal-open {
         }
     }
 
-    // Összevont szűrő funkció
+    // Összevont szűrő funkció (Cég + Kategória + Okoskereső)
     function applyFilters() {
         // Mentés a böngésző memóriájába
         localStorage.setItem('unistart_selected_company', activeCompany);
@@ -1546,17 +1622,41 @@ body.modal-open {
         });
         document.getElementById('clearFacultyBtn').style.display = activeFaculties.length > 0 ? 'inline-flex' : 'none';
 
-        // Tényleges szűrés a logikában
+        // 🌟 TÉNYLEGES SZŰRÉS LOGIKA
         currentFilteredJobs = jobsData.filter(job => {
             const matchCompany = (activeCompany === "" || job.company_name === activeCompany);
-            // Ha a tömb üres, minden kategóriát átenged. Ha nem üres, benne kell lennie a munkának.
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
             
-            return matchCompany && matchFaculty;
+            // SZÖVEGES OKOSKERESŐ LOGIKA (AND működés)
+            let matchText = true;
+            if (activeSearchText !== "") {
+                const searchWords = activeSearchText.split(/\s+/); // Szóközök mentén szavakra bontjuk
+                
+                // Létrehozunk egy hatalmas, kisbetűs szövegtömböt az állás összes látható adatából
+                const tagsString = (job.tags || []).join(" ");
+                const jobCorpus = `${job.title || ''} ${job.company_name || ''} ${job.location || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
+                
+                // A beírt szavak MINDEGYIKÉNEK szerepelnie kell valahol az állás adataiban
+                matchText = searchWords.every(word => jobCorpus.includes(word));
+            }
+            
+            return matchCompany && matchFaculty && matchText;
         });
 
         displayedCount = 30; // Lapozó számláló visszaállítása
         renderGrid();
+    }
+
+    // Szöveges kereső eseménykezelői
+    function handleTextSearch(value) {
+        activeSearchText = value.toLowerCase().trim();
+        applyFilters();
+    }
+
+    function clearTextSearch() {
+        document.getElementById('mainSearchInput').value = "";
+        activeSearchText = "";
+        applyFilters();
     }
 
     // Külön törlő funkciók

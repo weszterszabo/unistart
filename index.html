@@ -996,10 +996,17 @@ body.modal-open { overflow: hidden; }
         currentFilteredJobs.sort((a, b) => {
             let dateA = a.date_posted || a.scraped_at || 0;
             let dateB = b.date_posted || b.scraped_at || 0;
+            
+            // Biztonságos Dátum konverzió (Safari NaN védelem)
             if (dateA && dateA.toDate) dateA = dateA.toDate().getTime();
+            else if (typeof dateA === 'string') dateA = new Date(dateA).getTime() || 0;
+            
             if (dateB && dateB.toDate) dateB = dateB.toDate().getTime();
-            if (currentSortMode === "date_desc") return (dateB > dateA) ? 1 : -1;
-            if (currentSortMode === "date_asc") return (dateA > dateB) ? 1 : -1;
+            else if (typeof dateB === 'string') dateB = new Date(dateB).getTime() || 0;
+
+            // SZIGORÚ MATEMATIKAI RENDEZÉS (Apple/Safari barát kivonás)
+            if (currentSortMode === "date_desc") return dateB - dateA;
+            if (currentSortMode === "date_asc") return dateA - dateB;
             if (currentSortMode === "company_az") {
                 const nameA = (a.company_name || "").toLowerCase();
                 const nameB = (b.company_name || "").toLowerCase();

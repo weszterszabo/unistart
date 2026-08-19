@@ -11,16 +11,14 @@ function smartMatch(text, keyword) {
         return regex.test(text);
     }
     
-    // Ha nincs ||, akkor sima szórészlet keresés (pl. "fejleszt" megtalálja a "fejlesztő"-t)
+    // Ha nincs ||, akkor sima szórészlet keresés
     return text.includes(keyword);
 }
 
 // ============================================================================
 // 1. KÉTNYELVŰ MÉREGTELENÍTÉS (Detox)
-// Kiszűri a hamis pozitív riasztásokat mindkét nyelven.
 // ============================================================================
 const detoxRules = [
-    // Magyar detox
     { regex: /vezetői engedély/gi, replacement: "jogosítvány" },
     { regex: /piacvezető/gi, replacement: "piacelső" },
     { regex: /világvezető/gi, replacement: "világelső" },
@@ -29,8 +27,6 @@ const detoxRules = [
     { regex: /vezetői támogatás/gi, replacement: "felettesi támogatás" },
     { regex: /tapasztalat (előny|nem elvárás|nem feltétel)/gi, replacement: "pályakezdő" },
     { regex: /0-3 év|1-3 év|1-2 év|max(imum|\.)? 2 év/gi, replacement: "pályakezdő" },
-    
-    // Angol detox (Kritikus a multiknál!)
     { regex: /driver'?s? license/gi, replacement: "jogosítvány" },
     { regex: /market leader|industry leader/gi, replacement: "piacelső" },
     { regex: /senior colleagues?|senior team members?/gi, replacement: "mentor" },
@@ -41,10 +37,8 @@ const detoxRules = [
 ];
 
 // ============================================================================
-// 2. KIZÁRÓ SZAVAK ÉS FIZIKAI MUNKÁK (White-Collar Shield)
+// 2. KIZÁRÓ SZAVAK (Feketesereg - BŐVÍTETT FEHÉRGALLÉROS VÉDŐPAJZS)
 // ============================================================================
-
-// A: Menedzsment és Senior tiltások (Szigorú határok)
 const fatalSeniorWords = [
     "senior", "szenior", "|manager|", "menedzser", "igazgató", "szakértő", 
     "medior", "műszakvezető", "csoportvezető", "projektvezető", "üzletvezető", 
@@ -54,7 +48,6 @@ const fatalSeniorWords = [
     "cfo", "ceo", "cto", "coo", "cmo"
 ];
 
-// B: Egzakt, javíthatatlan fizikai munkák (Ezek garantáltan nem egyetemistáknak valók)
 const fatalPhysicalWords = [
     "takarító", "kőműves", "festő", "pénztáros", "bolti eladó", "|eladó|", "kassza",
     "targoncás", "sofőr", "futár", "vagyonőr", "kiszállító", "biztonsági őr", 
@@ -62,21 +55,17 @@ const fatalPhysicalWords = [
     "gépkocsivezető", "rakodó", "lakatos", "villanyszerelő", "asztalos", "|ács|",
     "szobalány", "gondnok", "költöztető", "vízvezeték", "fűtésszerelő", "burkoló", 
     "áruházi", "áruház", "eladótér", "cnc",
-    // Angolul
     "cleaner", "driver", "cashier", "courier", "security guard", "waiter", "waitress", 
     "bartender", "chef", "cook", "packager", "assembler", "laborer", "dishwasher", 
     "janitor", "maid", "loader", "mason", "painter", "carpenter", "plumber"
 ];
 
-// C: Kétesélyes szavak (Lehet fizikai munka, DE lehet mérnök/gyakornok is)
-// Ezeket a szavakat akkor tiltjuk le, HA nincs mellettük "felmentő" szellemi szó.
 const dubiousPhysicalWords = [
     "raktár", "gyártás", "üzem", "szerelő", "karbantartó", "operátor", "technikus", 
     "művezető", "betanított", "árufeltöltő", "komissiózó",
     "warehouse", "operator", "technician", "factory", "production", "maintenance", "mechanic"
 ];
 
-// Felmentő szavak (White-Collar Saviors): Ha ezek szerepelnek egy "raktár" vagy "gyártás" mellett, akkor átengedjük.
 const saviorWords = [
     "mérnök", "engineer", "elemző", "analyst", "gyakornok", "intern", "trainee", "diák", 
     "vezető", "manager", "koordinátor", "coordinator", "tervező", "specialista", 
@@ -97,12 +86,10 @@ const experienceRejectWords = [
 // 3. BEENGEDŐ SZAVAK (VIP Lista - Multikra optimalizálva)
 // ============================================================================
 const acceptWords = [
-    // Magyar
     "gyakornok", "diákmunka", "diák", "pályakezdő", "junior", "frissdiplomás", 
     "asszisztens", "iskolaszövetkezet", "hallgatói jogviszony", 
     "részmunkaidő", "tapasztalat nélkül", "pályaindító", "0 év", "kezdő",
     "gyakorlat", "szövetkezet", "nappali tagozat", 
-    // Angol
     "intern", "internship", "trainee", "student", "entry level", "entry-level", 
     "assistant", "apprentice", "apprenticeship", "recent graduate", "new graduate",
     "fresh graduate", "fresh grad", "no experience", "0-1 year", "part-time", 
@@ -110,15 +97,19 @@ const acceptWords = [
 ];
 
 // ============================================================================
-// 4. KÉPZÉSI TERÜLETEK (Kétnyelvű kategória-motor, fizikai munkák kiszűrve)
+// 4. KÉPZÉSI TERÜLETEK (Tisztított, Szigorított Szóhatárokkal)
 // ============================================================================
 const categories = {
+    "Bölcsészettudomány és Pedagógia": [ // ELŐRE VETTÜK, hogy ne essen be IT-ba!
+        "tanár", "oktató", "pedagógus", "tréner", "docens", "tanító", "óvoda", "nevelő", "education", 
+        "fordító", "nyelv", "andragógia", "történész", "tolmács", "bölcsész", "teacher", "educator", "tutor", "interpreter", "pedagógia"
+    ],
     "Informatika és Számítástudomány": [
         "|it|", "cyber", "security", "hálózat", "üzemeltető", "rendszergazda", "cloud", 
         "infrastruktúra", "sysadmin", "fejleszt", "developer", "szoftver", "software", 
         "devops", "tesztel", "frontend", "backend", "programozó", "fullstack", "architect", 
         "kiberbiztonság", "webfejleszt", "|ios|", "android", "mobile", "|qa|", "tester", 
-        "scrum master", "network engineer", "software engineer"
+        "scrum master", "network engineer", "software engineer", "informatika"
     ],
     "Adattudomány és Mesterséges Intelligencia": [
         "data analyst", "data scientist", "adatelemző", "adattudós", "|bi|", "business intelligence", 
@@ -147,7 +138,7 @@ const categories = {
     ],
     "Logisztika és Ellátásilánc-menedzsment": [
         "logisztika", "logistics", "ellátási lánc", "beszerzés", "procurement", "vám", 
-        "purchasing", "buyer", "supply chain", "raktár", "warehouse" // Raktár visszaállítva ide (mivel a pajzs megvéd minket a targoncásoktól)
+        "purchasing", "buyer", "supply chain", "|raktár|", "warehouse" 
     ],
     "Gépészmérnöki és Mechatronikai Tudományok": [
         "gépész", "mechanical", "mechatronika", "cad", "tervezőmérnök", "járműmérnök", "célgép",
@@ -166,7 +157,7 @@ const categories = {
         "vegyipar", "polimer", "bioengineer"
     ],
     "Gyártástechnológia és Minőségbiztosítás": [
-        "minőség", "quality", "qa", "minőségellenőr", "minőségbiztosítás", "lean", "six sigma", 
+        "minőség", "quality", "|qa|", "minőségellenőr", "minőségbiztosítás", "lean", "six sigma", 
         "termelésirányító", "folyamatfejlesztő", "gyártás", "production"
     ],
     "Orvos- és Egészségtudomány": [
@@ -198,12 +189,8 @@ const categories = {
         "pszichológ", "szociológ", "társadalom", "esélyegyenlőség", "nemzetközi", "international relations", 
         "politológia", "szociális", "psychology", "equality"
     ],
-    "Bölcsészettudomány és Pedagógia": [
-        "tanár", "oktató", "pedagógus", "tréner", "docens", "tanító", "óvoda", "nevelő", "education", 
-        "fordító", "nyelv", "andragógia", "történész", "tolmács", "bölcsész", "teacher", "educator", "tutor", "interpreter"
-    ],
     "Művészet és Design": [
-        "grafikus", "|ux|", "|ui|", "dizájn", "design", "kreatív", "videó", "fotó", "szerkesztő", 
+        "grafikus", "|ux|", "|ui|", "dizájn", "kreatív", "videó", "fotó", "szerkesztő", 
         "animátor", "művészet", "illustrator", "|3d|", "vágó", "rendező", "designer", "art director", "graphic"
     ],
     "Adminisztráció és Ügyfélszolgálati Operáció": [
@@ -260,26 +247,20 @@ exports.analyzeJob = function(title, description = "") {
 
     // --- 1/B. LÉPÉS: FIZIKAI MUNKA VÉDŐPAJZS (Biztos kidobós) ---
     for (const word of fatalPhysicalWords) {
-        // Itt direkt nincs szóhatár, pl. a "kőműves" és a "kőművest" is kivágja
         if (safeTitle.includes(word)) return null; 
     }
 
     // --- 1/C. LÉPÉS: KÉTÉTÉLYES FIZIKAI MUNKÁK (A Sebészkés) ---
-    // Ha szerepel benne pl. "raktár" vagy "gyártás"...
     for (const word of dubiousPhysicalWords) {
         if (safeTitle.includes(word)) {
             let isSavedBySaviour = false;
-            // ...megnézzük, hogy van-e mellette "mérnök" vagy "gyakornok" a címben!
             for (const savior of saviorWords) {
                 if (safeTitle.includes(savior)) {
                     isSavedBySaviour = true;
                     break;
                 }
             }
-            // Ha fizikai gyanús, és nincs mellette "felmentő" szó, kidobjuk!
-            if (!isSavedBySaviour) {
-                return null;
-            }
+            if (!isSavedBySaviour) return null;
         }
     }
 
@@ -299,7 +280,7 @@ exports.analyzeJob = function(title, description = "") {
         }
     }
 
-    // JUNIOR VÉDŐPAJZS (Ha senior a leírás, de a cím "Gyakornok")
+    // JUNIOR VÉDŐPAJZS
     if (isTooSenior && isEntryLevel) {
         const strongJuniorWords = ["junior", "gyakornok", "intern", "trainee", "diák", "student", "pályakezdő", "frissdiplomás", "asszisztens", "pályaindító", "kezdő", "entry level", "graduate"];
         for (const word of strongJuniorWords) {
@@ -310,20 +291,33 @@ exports.analyzeJob = function(title, description = "") {
         }
     }
 
-    if (isTooSenior || !isEntryLevel) {
-        return null; 
-    }
+    if (isTooSenior || !isEntryLevel) return null; 
 
-    // --- 4. KATEGORIZÁLÁS (Képzési terület) ---
+    // --- 4. KATEGORIZÁLÁS SÚLYOZVA (Először a Cím, utána a Leírás) ---
     let assignedCategory = "🔍 Egyéb / Általános"; 
+    
+    // 4/A: Keresés a CÍMBEN (erősebb jelzés)
     for (const [catName, keywords] of Object.entries(categories)) {
         for (const keyword of keywords) {
-            if (smartMatch(textToSearch, keyword)) {
+            if (smartMatch(safeTitle, keyword)) {
                 assignedCategory = catName;
                 break; 
             }
         }
         if (assignedCategory !== "🔍 Egyéb / Általános") break; 
+    }
+
+    // 4/B: Ha a címből nem derült ki, keresés a LEÍRÁSBAN
+    if (assignedCategory === "🔍 Egyéb / Általános") {
+        for (const [catName, keywords] of Object.entries(categories)) {
+            for (const keyword of keywords) {
+                if (smartMatch(safeDesc, keyword)) {
+                    assignedCategory = catName;
+                    break; 
+                }
+            }
+            if (assignedCategory !== "🔍 Egyéb / Általános") break; 
+        }
     }
 
     // --- 5. MUNKASTÍLUS (Vibe-check) ---
@@ -346,7 +340,6 @@ exports.analyzeJob = function(title, description = "") {
             foundTags.push("#" + cleanTag.charAt(0).toUpperCase() + cleanTag.slice(1));
         }
     }
-    
     foundTags = [...new Set(foundTags)];
 
     // --- 7. MUNKAIDŐ TÍPUS MEGHATÁROZÁSA ---

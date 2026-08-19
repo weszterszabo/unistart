@@ -29,7 +29,6 @@ if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
   process.exit(1);
 }
 
-// 🌟 MODULÁRIS FIREBASE INICIALIZÁLÁS
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true }); 
@@ -60,7 +59,6 @@ async function runScraper() {
         continue;
       }
 
-      // 🛡️ BELSŐ TRY-CATCH: Ha egy cég motorja elszáll, a folyamat NEM áll le, csak ugrik a következőre!
       try {
         const scrapedJobs = await engine.scrape(company.name, company.career_url);
         console.log(`✅ Kapott állások a motortól: ${scrapedJobs.length} db`);
@@ -95,14 +93,11 @@ async function runScraper() {
               experience_level: job.experience_level || "",
               subsidiary: job.subsidiary || "",
               
-              // 🌟 AZ ÚJ "OKOS" CÍMKÉK BEKÖTÉSE
               faculty: job.faculty || "Egyéb",
               work_style: job.work_style || "",
               tags: job.tags || [],
               
-              // 🌟 ÚJ FIRESTORE FIELDVALUE HÍVÁSOK
               scraped_at: FieldValue.serverTimestamp(),
-              
               short_description: FieldValue.delete(),
               long_description: FieldValue.delete(),
               description: FieldValue.delete()
@@ -115,20 +110,25 @@ async function runScraper() {
         console.log(`   ⏳ Mentés indul: ${uniqueJobs.length} db egyedi állás...`);
 
         // ==================================================================
-        // 2. VILLÁMGYORS PÁRHUZAMOS MENTÉS
+        // 2. HIVATALOS FIREBASE BATCH MENTÉS (Itt volt a hiba!)
         // ==================================================================
-        const chunkSize = 250; 
+        const batchSize = 400; // A Firebase maximum 500-at enged egyszerre
         
-        for (let i = 0; i < uniqueJobs.length; i += chunkSize) {
-          const chunk = uniqueJobs.slice(i, i + chunkSize);
-          await Promise.all(chunk.map(item => 
-              db.collection("jobs").doc(item.jobId).set(item.finalJob, { merge: true })
-          ));
+        for (let i = 0; i < uniqueJobs.length; i += batchSize) {
+          const batch = db.batch(); // Új doboz nyitása
+          const chunk = uniqueJobs.slice(i, i + batchSize);
+          
+          chunk.forEach(item => {
+            const docRef = db.collection("jobs").doc(item.jobId);
+            batch.set(docRef, item.finalJob, { merge: true }); // Belerakjuk a dobozba
+          });
+          
+          await batch.commit(); // Egyetlen hálózati kéréssel elküldjük a dobozt!
         }
-        console.log(`   💾 Gyorsmentés kész!`);
+        console.log(`   💾 Gyorsmentés (Batch) kész!`);
 
         // ==================================================================
-        // 3. LEJÁRT ÁLLÁSOK TÖRLÉSE
+        // 3. LEJÁRT ÁLLÁSOK TÖRLÉSE BATCH SEGÍTSÉGÉVEL
         // ==================================================================
         const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
         
@@ -140,9 +140,15 @@ async function runScraper() {
         }
 
         if (docsToDelete.length > 0) {
-          for (let i = 0; i < docsToDelete.length; i += chunkSize) {
-            const deleteChunk = docsToDelete.slice(i, i + chunkSize);
-            await Promise.all(deleteChunk.map(ref => ref.delete()));
+          for (let i = 0; i < docsToDelete.length; i += batchSize) {
+            const batch = db.batch();
+            const deleteChunk = docsToDelete.slice(i, i + batchSize);
+            
+            deleteChunk.forEach(ref => {
+              batch.delete(ref);
+            });
+            
+            await batch.commit();
           }
           console.log(`   🗑️ Takarítás: ${docsToDelete.length} db lejárt állás törölve.`);
         } else {
@@ -156,8 +162,6 @@ async function runScraper() {
     }
     
     console.log("\n🎉 Szinkronizáció sikeresen befejeződött!");
-    
-    // 🛑 KÖTELEZŐ: Ezzel zárjuk le a folyamatot, hogy a GitHub Action ne ragadjon be!
     process.exit(0);
 
   } catch (error) {

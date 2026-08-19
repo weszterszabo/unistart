@@ -56,7 +56,7 @@
 }
 
 /* ==========================================================================
-   ALAPVETŐ STÍLUSOK ÉS ANIMÁCIÓK
+   ALAPVETŐ STÍLUSOK, CSONTVÁZ ÉS 🌟 OKOS GÖRGŐK
    ========================================================================== */
 * { box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; transition: background-color 0.3s, color 0.3s; }
@@ -69,6 +69,19 @@ body.modal-open { overflow: hidden; }
 .skeleton-text.short { width: 40%; }
 .skeleton-avatar { width: 50px; height: 50px; border-radius: 12px; flex-shrink: 0; }
 
+/* 🌟 ÚJ: Dinamikus Sötét/Világos Görgetősáv (Webkit CSS) */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: var(--bg-color); }
+::-webkit-scrollbar-thumb { background: #3a3a3c; border-radius: 8px; border: 3px solid var(--bg-color); }
+::-webkit-scrollbar-thumb:hover { background: #48484a; }
+[data-theme="light"] ::-webkit-scrollbar-track { background: var(--bg-color); }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: #c7c7cc; border: 3px solid var(--bg-color); }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: #aeaeb2; }
+
+/* Scrollbar a modálokban (hogy a tejüvegen jól mutasson) */
+.filter-modal-body::-webkit-scrollbar-track, .job-preview-body::-webkit-scrollbar-track, .big-support-content::-webkit-scrollbar-track { background: transparent; }
+.filter-modal-body::-webkit-scrollbar-thumb, .job-preview-body::-webkit-scrollbar-thumb, .big-support-content::-webkit-scrollbar-thumb { border: 3px solid transparent; background-clip: padding-box; }
+
 #backToTopBtn { position: fixed; bottom: 30px; right: 30px; width: 48px; height: 48px; border-radius: 50%; background-color: var(--primary-color); color: white; border: none; font-size: 24px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1); z-index: 1000; }
 #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0); }
 #backToTopBtn:hover { background-color: var(--primary-hover); transform: translateY(-3px) scale(1.05); }
@@ -80,22 +93,18 @@ body.modal-open { overflow: hidden; }
 #toastContainer.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
 /* ==========================================================================
-   UNIFIED OMNIBAR, KERESŐK ÉS SZŰRŐ CAROUSEL
+   UNIFIED OMNIBAR ÉS KERESŐK
    ========================================================================== */
 .omnibar-wrapper { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 20px var(--card-shadow); display: flex; flex-direction: column; gap: 15px; }
-
-/* 🌟 ÚJ: EGYMÁS MELLETTI KERESŐK */
 .search-inputs-row { display: flex; gap: 15px; width: 100%; margin-bottom: 5px; }
-.keyword-search { flex: 7; } /* Szélesebb kulcsszó kereső */
-.location-search { flex: 3; } /* Keskenyebb helyszín kereső */
-
+.keyword-search { flex: 7; } 
+.location-search { flex: 3; } 
 .search-box-container { position: relative; width: 100%; }
 .search-box-input { width: 100%; padding: 16px 20px 16px 45px; border-radius: 16px; background: var(--tag-bg); border: 2px solid var(--card-border); color: var(--text-color); font-size: 15px; font-weight: 500; transition: all 0.3s; font-family: inherit; }
 .search-box-input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15); background: var(--card-bg); }
 .search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.7; }
 .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
 
-/* 🏷️ Dinamikus Kereső Címkék (Pills) */
 .search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
 .search-tag-chip { background: var(--primary-color); color: white; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; animation: fadeIn 0.2s ease; }
 .search-tag-chip.loc-tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); }
@@ -116,15 +125,6 @@ body.modal-open { overflow: hidden; }
 .magic-chip { flex-shrink: 0; background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); border: 1px solid var(--card-border); color: var(--text-color); padding: 9px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
 .magic-chip:hover { border-color: var(--primary-color); }
 .magic-chip.active { background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); color: var(--primary-color); border-color: var(--primary-color); box-shadow: 0 0 0 1px var(--primary-color); }
-
-.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
-.active-filter-chip { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
-.active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
-.active-filter-close { background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-color); width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
-[data-theme="light"] .active-filter-close { background: rgba(0, 0, 0, 0.1); }
-.active-filter-close:hover { background: var(--danger-color); color: white; }
-.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 10px; }
-.clear-all-filters-btn:hover { text-decoration: underline; }
 
 .sort-select { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; outline: none; font-family: inherit; }
 .sort-select:focus { border-color: var(--primary-color); }
@@ -151,7 +151,7 @@ body.modal-open { overflow: hidden; }
 .icon-action-btn.fav-active { color: #ff453a; background: rgba(255, 69, 58, 0.1); border-color: rgba(255, 69, 58, 0.3); animation: pop 0.3s ease; }
 
 /* ==========================================================================
-   LAYOUT, OLDALSÁV, FEJLÉC
+   LAYOUT ÉS KÁRTYÁK
    ========================================================================== */
 #loggedInView { display: flex; flex-direction: row; padding: 0; max-width: 100%; height: 100vh; gap: 0; align-items: stretch; }
 .sidebar { width: var(--sidebar-width-collapsed); background-color: var(--sidebar-bg); backdrop-filter: blur(20px); border-right: 1px solid var(--card-border); display: flex; flex-direction: column; justify-content: space-between; padding: 15px 0; transition: width 0.3s; white-space: nowrap; overflow: hidden; z-index: 40; }
@@ -211,7 +211,7 @@ body.modal-open { overflow: hidden; }
 .job-preview-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; color: var(--text-color); line-height: 1.2; padding-right: 30px;}
 .job-preview-company { font-size: 16px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
 .job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
-.job-preview-close:hover { background: var(--card-border); color: var(--text-color); }
+.job-preview-close:hover { background: var(--danger-color); color: white; }
 .job-preview-body { padding: 30px; overflow-y: auto; flex: 1; }
 .job-preview-section { margin-bottom: 25px; }
 .job-preview-section h4 { font-size: 14px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; margin: 0 0 10px 0; }
@@ -221,26 +221,38 @@ body.modal-open { overflow: hidden; }
 .job-preview-footer .apply-btn { padding: 16px; font-size: 16px; }
 
 /* ==========================================================================
-   RÉSZLETES SZŰRŐ MODÁL
+   🌟 ÚJ: TELJES SZÉLESSÉGŰ MEGA-SZŰRŐ (GRID)
    ========================================================================== */
 .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .filter-modal-overlay.active { opacity: 1; visibility: visible; }
-.filter-modal-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 20px; width: 100%; max-width: 600px; max-height: 85vh; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
+.filter-modal-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 24px; width: 95%; max-width: 1200px; max-height: 90vh; height: 90vh; box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .filter-modal-overlay.active .filter-modal-box { transform: scale(1); }
-.filter-modal-header { padding: 20px 25px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); }
-.filter-modal-header h2 { margin: 0; font-size: 18px; font-weight: 700; }
-.filter-modal-body { padding: 25px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 30px; }
-.filter-section h3 { margin: 0 0 15px 0; font-size: 14px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; }
+.filter-modal-header { padding: 25px 30px; border-bottom: 1px solid var(--card-border); display: flex; justify-content: space-between; align-items: center; background: var(--card-bg); }
+.filter-modal-header h2 { margin: 0; font-size: 22px; font-weight: 800; }
+.filter-modal-body { padding: 30px; overflow-y: auto; flex: 1; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; align-content: start; }
+.filter-section { display: flex; flex-direction: column; }
+.filter-section h3 { margin: 0 0 20px 0; font-size: 15px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 1px; font-weight: 700; border-bottom: 1px solid var(--card-border); padding-bottom: 10px; }
 .filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
-.filter-modal-footer { padding: 20px 25px; border-top: 1px solid var(--card-border); background: var(--card-bg); display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-.filter-modal-footer .apply-btn { flex: 2; }
+.filter-modal-footer { padding: 20px 30px; border-top: 1px solid var(--card-border); background: var(--card-bg); display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.filter-modal-footer .apply-btn { flex: 2; padding: 15px; font-size: 16px; }
+
 .f-btn { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 10px 18px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
 .f-btn:hover { border-color: var(--primary-color); }
 .f-btn.active-fac { background: var(--faculty-color); color: white; border-color: var(--faculty-color); box-shadow: 0 4px 12px rgba(191, 90, 242, 0.25); }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); }
 
+/* Aktív Szűrők a főképernyőn a carousel alatt */
+.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.active-filter-chip { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
+.active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
+.active-filter-close { background: rgba(255, 255, 255, 0.1); border: none; color: var(--text-color); width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+[data-theme="light"] .active-filter-close { background: rgba(0, 0, 0, 0.1); }
+.active-filter-close:hover { background: var(--danger-color); color: white; }
+.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 12px; font-weight: 600; cursor: pointer; padding: 6px 10px; }
+.clear-all-filters-btn:hover { text-decoration: underline; }
+
 /* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás)
+   STATIKUS MODÁLIS ABLAKOK
    ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
@@ -293,6 +305,10 @@ body.modal-open { overflow: hidden; }
     .sort-select { margin-left: 0 !important; width: 100%; }
     #toastContainer { width: 90%; justify-content: center; text-align: center; }
     .job-preview-footer { flex-direction: column-reverse; }
+    
+    /* Mobil filter modal formázás (hogy ne lógjon ki) */
+    .filter-modal-box { width: 100%; max-height: 100vh; height: 100vh; border-radius: 0; }
+    .filter-modal-body { grid-template-columns: 1fr; gap: 25px; }
 }
 </style>
 </head>
@@ -300,12 +316,15 @@ body.modal-open { overflow: hidden; }
 
 <div id="toastContainer"><span id="toastIcon">✓</span><span id="toastMessage">Értesítés</span></div>
 
+<!-- 🌟 MEGA SZŰRŐ ABLAK -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
         <div class="filter-modal-header"><h2>🎛️ Részletes szűrők</h2><button class="big-close-btn" style="position: static;" onclick="closeFilterModal()">✖</button></div>
         <div class="filter-modal-body">
             <div class="filter-section"><h3>Képzési területek</h3><div class="filter-group" id="modalFacultyButtons"></div></div>
-            <div class="filter-section"><h3>Vállalatok (Többet is választhatsz!)</h3><div class="filter-group" id="modalCompanyButtons"></div></div>
+            <div class="filter-section"><h3>Vállalatok</h3><div class="filter-group" id="modalCompanyButtons"></div></div>
+            <div class="filter-section"><h3>Munkakörnyezet (Vibe)</h3><div class="filter-group" id="modalVibeButtons"></div></div>
+            <div class="filter-section"><h3>Technológiák & Nyelvek (Top 20)</h3><div class="filter-group" id="modalTagButtons"></div></div>
         </div>
         <div class="filter-modal-footer">
             <button class="clear-all-filters-btn" onclick="clearAllModalFilters()">Összes törlése</button>
@@ -388,25 +407,20 @@ body.modal-open { overflow: hidden; }
             <div id="forumTab" class="tab-content active">
 
                 <div class="omnibar-wrapper">
-                    
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         
-                        <!-- 🌟 KÉTVONALAS KERESŐ MEZŐK -->
                         <div class="search-inputs-row">
-                            <!-- 🏷️ Kulcsszó Kereső (70%) -->
                             <div class="search-box-container keyword-search" style="margin-bottom: 0;">
                                 <span class="search-icon">🔍</span>
                                 <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Pozíció, cég, címke (pl. Python) -> Üss Enter-t...">
                             </div>
-
-                            <!-- 📍 Helyszín Kereső (30%) -->
                             <div class="search-box-container location-search" style="margin-bottom: 0;">
                                 <span class="search-icon">📍</span>
                                 <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín (pl. Budapest)...">
                             </div>
                         </div>
                         
-                        <!-- 🏷️ Kereső Címkék Helye (Közös terület a tageknek) -->
+                        <!-- 🏷️ Kereső Címkék -->
                         <div class="search-tags-row" id="searchTagsRow"></div>
                         
                     </div>
@@ -423,7 +437,6 @@ body.modal-open { overflow: hidden; }
                         <button class="magic-chip" id="magicChipBusiness" onclick="toggleMagicFilter('business')">💼 Gazdaság</button>
                     </div>
 
-                    <!-- Aktív Szűrők Buborékok (Modálból) -->
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
                 </div>
                 
@@ -462,37 +475,9 @@ body.modal-open { overflow: hidden; }
 <button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás, Impresszum stb.)
+   STATIKUS MODÁLIS ABLAKOK
    ========================================================================== -->
-<div id="bigSupportOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 750px;">
-        <button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button>
-        <div class="big-support-content">
-            <div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 50px; margin-bottom: 12px;">🚀</div><h1 style="font-size: 28px; font-weight: 700; margin: 0 0 10px 0;">Támogasd az UniStartot!</h1></div>
-            <div class="about-card" style="margin-bottom: 20px;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2><p style="color: var(--subtitle-color); font-size: 14px; line-height: 1.6; margin: 0 0 10px 0;">Az UniStart egy teljesen új, független projekt.</p></div>
-            <div class="about-card" style="margin-bottom: 0;">
-                <h2 style="margin: 0 0 12px 0; font-size: 18px;">Légy a kezdetek részese!</h2>
-                <div class="support-options">
-                    <button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button>
-                    <button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button>
-                    <button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button>
-                </div>
-                <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; justify-content: flex-start;">
-                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #003087;"><span>🅿️</span> PayPal</a>
-                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #0075ff;"><span>💳</span> Revolut</a>
-                </div>
-                <div class="transfer-box" style="margin-top: 0;">
-                    <div class="account-details">
-                        <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
-                        <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
-                        <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 10px;">📋 Másolás</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div id="bigSupportOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 750px;"><button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button><div class="big-support-content"><div style="text-align: center; margin-bottom: 30px;"><div style="font-size: 50px; margin-bottom: 12px;">🚀</div><h1 style="font-size: 28px; font-weight: 700; margin: 0 0 10px 0;">Támogasd az UniStartot!</h1></div><div class="about-card" style="margin-bottom: 20px;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2><p style="color: var(--subtitle-color); font-size: 14px; line-height: 1.6; margin: 0 0 10px 0;">Az UniStart egy teljesen új, független projekt.</p></div><div class="about-card" style="margin-bottom: 0;"><h2 style="margin: 0 0 12px 0; font-size: 18px;">Légy a kezdetek részese!</h2><div class="support-options"><button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button><button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button><button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button></div><div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; justify-content: flex-start;"><a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #003087;"><span>🅿️</span> PayPal</a><a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #0075ff;"><span>💳</span> Revolut</a></div><div class="transfer-box" style="margin-top: 0;"><div class="account-details"><div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div><div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div><button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 10px;">📋 Másolás</button></div></div></div></div></div></div>
 <div id="aboutOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 650px;"><button class="big-close-btn" onclick="closeModal('aboutOverlay')">✖</button><div class="big-support-content"><div style="text-align: center; margin-bottom: 20px;"><div style="font-size: 40px; margin-bottom: 10px;">🎓</div><h1 style="font-size: 22px; font-weight: 700; margin: 0;">Rólunk - UniStart</h1></div><div class="about-card" style="margin-bottom: 15px; padding: 15px;"><p style="color: var(--subtitle-color); font-size: 13px; margin: 0;">Célunk a leggyorsabb álláskereső felület biztosítása.</p></div><div style="display: flex; flex-direction: column; gap: 15px;"><div class="about-card" style="padding: 15px; text-align: center;"><div style="width: 50px; height: 50px; border-radius: 25px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">NJ</div><h3 style="margin: 0 0 4px 0; font-size: 16px;">József Nóra</h3><span style="color: #e056fd; font-size: 12px; font-weight: 600;">Társalapító</span></div><div class="about-card" style="padding: 15px; text-align: center;"><div style="width: 50px; height: 50px; border-radius: 25px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">BA</div><h3 style="margin: 0 0 4px 0; font-size: 16px;">Weszter Szabó Bátor András</h3><span style="color: var(--primary-color); font-size: 12px; font-weight: 600;">Társalapító</span></div></div></div></div></div>
 <div id="impresszumOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 550px;"><button class="big-close-btn" onclick="closeModal('impresszumOverlay')">✖</button><div class="big-support-content"><h1 style="font-size: 20px; font-weight: 700; margin: 0 0 20px 0; text-align: center;">⚖️ Impresszum</h1><div class="about-card" style="margin-bottom: 15px; padding: 15px;"><p style="font-size: 13px; color: var(--text-color); margin: 0;"><strong>Név:</strong> Weszter Szabó Bátor András<br><strong>E-mail:</strong> bator.szabo@gmail.com</p></div></div></div></div>
 <div id="adatvedelemOverlay" class="big-support-overlay"><div class="big-support-box" style="max-width: 550px;"><button class="big-close-btn" onclick="closeModal('adatvedelemOverlay')">✖</button><div class="big-support-content"><h1 style="font-size: 20px; font-weight: 700; margin: 0 0 20px 0; text-align: center;">🛡️ Adatvédelmi Tájékoztató</h1><div class="about-card" style="margin-bottom: 15px; padding: 15px;"><p style="font-size: 13px; color: var(--text-color); margin: 0;">Kizárólag a személyre szabáshoz szükséges adatokat kezeljük a találatok finomítására.</p></div></div></div></div>
@@ -553,7 +538,6 @@ body.modal-open { overflow: hidden; }
     function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
     function openImpresszumModal() { openModal('impresszumOverlay'); }
     function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
-
     function openFilterModal() { openModal('filterModalOverlay'); }
     function closeFilterModal() { closeModal('filterModalOverlay'); }
 
@@ -590,7 +574,6 @@ body.modal-open { overflow: hidden; }
         else if (type === "heart") { icon.innerText = "❤️"; toast.style.borderColor = "#ff453a"; }
         else if (type === "share") { icon.innerText = "📤"; toast.style.borderColor = "var(--primary-color)"; }
         else { icon.innerText = "ℹ️"; toast.style.borderColor = "var(--card-border)"; }
-
         toast.classList.add('show');
         clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000);
@@ -623,6 +606,7 @@ body.modal-open { overflow: hidden; }
     
     let activeCompanies = JSON.parse(localStorage.getItem('unistart_active_companies') || "[]");
     let activeFaculties = JSON.parse(localStorage.getItem('unistart_active_faculties') || "[]");
+    let activeVibes = JSON.parse(localStorage.getItem('unistart_active_vibes') || "[]");
     let savedJobIds = JSON.parse(localStorage.getItem('unistart_saved_jobs') || "[]");
 
     function setFilterMode(mode) {
@@ -722,31 +706,24 @@ body.modal-open { overflow: hidden; }
         document.getElementById('jobPreviewOverlay').classList.remove('active');
         body.classList.remove('modal-open');
     }
-    
     function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
 
     // -----------------------------------------------------
-    // ADATOK BETÖLTÉSE, SZŰRÉS ÉS MODÁL LOGIKA
+    // ADATOK BETÖLTÉSE ÉS MEGA-SZŰRŐ MODÁL GENERÁLÁS
     // -----------------------------------------------------
     function readStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
-        
         const tagsParam = urlParams.get('tags');
         if (tagsParam) activeSearchTags = tagsParam.split('|');
-        
         const locParam = urlParams.get('loc');
         if (locParam) activeLocationTags = locParam.split('|');
-        
         const comps = urlParams.get('companies');
         activeCompanies = comps ? comps.split(',') : [];
-        
         const facs = urlParams.get('faculties');
         activeFaculties = facs ? facs.split(',') : [];
-        
         currentSortMode = urlParams.get('sort') || "date_desc";
         
         document.getElementById('sortSelect').value = currentSortMode;
-        
         renderSearchTags();
     }
 
@@ -771,6 +748,7 @@ body.modal-open { overflow: hidden; }
             jobsData = [];
             snapshot.forEach(doc => jobsData.push({ id: doc.id, ...doc.data() }));
 
+            // 1. Képzési területek (Faculty)
             const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
             const facContainer = document.getElementById('modalFacultyButtons');
             facContainer.innerHTML = '';
@@ -782,6 +760,7 @@ body.modal-open { overflow: hidden; }
                 facContainer.appendChild(btn);
             });
 
+            // 2. Vállalatok (Companies)
             let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
             const compContainer = document.getElementById('modalCompanyButtons');
             compContainer.innerHTML = '';
@@ -791,6 +770,32 @@ body.modal-open { overflow: hidden; }
                 btn.textContent = compName;
                 btn.onclick = () => { toggleModalFilter('company', compName, btn); };
                 compContainer.appendChild(btn);
+            });
+
+            // 3. 🌟 Munkakörnyezet (Vibes)
+            const uniqueVibes = Array.from(new Set(jobsData.map(j => j.work_style))).filter(v => v).sort();
+            const vibeContainer = document.getElementById('modalVibeButtons');
+            vibeContainer.innerHTML = '';
+            uniqueVibes.forEach(vibe => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = vibe;
+                btn.onclick = () => { toggleModalFilter('vibe', vibe, btn); };
+                vibeContainer.appendChild(btn);
+            });
+
+            // 4. 🌟 Technológiák / Címkék (Top 20 leggyakoribb)
+            let tagCount = {};
+            jobsData.forEach(j => { if (j.tags) j.tags.forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; }); });
+            const topTags = Object.keys(tagCount).sort((a,b) => tagCount[b] - tagCount[a]).slice(0, 20);
+            const tagContainer = document.getElementById('modalTagButtons');
+            tagContainer.innerHTML = '';
+            topTags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = tag;
+                btn.onclick = () => { toggleModalFilter('tag', tag, btn); };
+                tagContainer.appendChild(btn);
             });
 
             updateModalButtonsVisuals();
@@ -805,37 +810,47 @@ body.modal-open { overflow: hidden; }
 
     function toggleModalFilter(type, value, btnEl) {
         if (type === 'faculty') {
-            if (activeFaculties.includes(value)) {
-                activeFaculties = activeFaculties.filter(v => v !== value);
-                btnEl.classList.remove('active-fac');
-            } else {
-                activeFaculties.push(value);
-                btnEl.classList.add('active-fac');
-            }
+            if (activeFaculties.includes(value)) activeFaculties = activeFaculties.filter(v => v !== value);
+            else activeFaculties.push(value);
         } else if (type === 'company') {
-            if (activeCompanies.includes(value)) {
-                activeCompanies = activeCompanies.filter(v => v !== value);
-                btnEl.classList.remove('active-comp');
-            } else {
-                activeCompanies.push(value);
-                btnEl.classList.add('active-comp');
-            }
+            if (activeCompanies.includes(value)) activeCompanies = activeCompanies.filter(v => v !== value);
+            else activeCompanies.push(value);
+        } else if (type === 'vibe') {
+            if (activeVibes.includes(value)) activeVibes = activeVibes.filter(v => v !== value);
+            else activeVibes.push(value);
+        } else if (type === 'tag') {
+            const cleanTag = value.replace('#', '').trim();
+            if (activeSearchTags.includes(cleanTag)) activeSearchTags = activeSearchTags.filter(v => v !== cleanTag);
+            else activeSearchTags.push(cleanTag);
         }
+        updateModalButtonsVisuals();
     }
 
     function updateModalButtonsVisuals() {
-        const facBtns = document.getElementById('modalFacultyButtons').children;
-        for (let btn of facBtns) { btn.classList.toggle('active-fac', activeFaculties.includes(btn.textContent)); }
-        const compBtns = document.getElementById('modalCompanyButtons').children;
-        for (let btn of compBtns) { btn.classList.toggle('active-comp', activeCompanies.includes(btn.textContent)); }
+        Array.from(document.getElementById('modalFacultyButtons').children).forEach(btn => btn.classList.toggle('active-fac', activeFaculties.includes(btn.textContent)));
+        Array.from(document.getElementById('modalCompanyButtons').children).forEach(btn => btn.classList.toggle('active-comp', activeCompanies.includes(btn.textContent)));
+        Array.from(document.getElementById('modalVibeButtons').children).forEach(btn => btn.classList.toggle('active-comp', activeVibes.includes(btn.textContent)));
+        Array.from(document.getElementById('modalTagButtons').children).forEach(btn => {
+            const clean = btn.textContent.replace('#','').trim();
+            btn.classList.toggle('active-comp', activeSearchTags.includes(clean));
+        });
     }
 
-    function clearAllModalFilters() { activeFaculties = []; activeCompanies = []; updateModalButtonsVisuals(); }
+    function clearAllModalFilters() { 
+        activeFaculties = []; 
+        activeCompanies = []; 
+        activeVibes = [];
+        // A teljes törlés gomb eltávolítja a manuális tageket is (opcionális UX döntés)
+        // activeSearchTags = []; 
+        updateModalButtonsVisuals(); 
+    }
+    
     function applyFiltersFromModal() { closeFilterModal(); applyFilters(); }
 
     function removeFilterTag(type, value) {
         if (type === 'faculty') activeFaculties = activeFaculties.filter(v => v !== value);
         else if (type === 'company') activeCompanies = activeCompanies.filter(v => v !== value);
+        else if (type === 'vibe') activeVibes = activeVibes.filter(v => v !== value);
         updateModalButtonsVisuals();
         applyFilters();
     }
@@ -845,7 +860,7 @@ body.modal-open { overflow: hidden; }
         const badge = document.getElementById('activeFilterBadge');
         container.innerHTML = '';
         
-        const totalFilters = activeFaculties.length + activeCompanies.length;
+        const totalFilters = activeFaculties.length + activeCompanies.length + activeVibes.length;
         if (totalFilters === 0) {
             container.style.display = 'none';
             badge.classList.remove('active');
@@ -869,6 +884,13 @@ body.modal-open { overflow: hidden; }
             chip.innerHTML = `<span>Cég:</span> ${comp} <button class="active-filter-close" onclick="removeFilterTag('company', '${comp}')">✖</button>`;
             container.appendChild(chip);
         });
+        
+        activeVibes.forEach(vibe => {
+            const chip = document.createElement('div');
+            chip.className = 'active-filter-chip';
+            chip.innerHTML = `<span>Vibe:</span> ${vibe} <button class="active-filter-close" onclick="removeFilterTag('vibe', '${vibe}')">✖</button>`;
+            container.appendChild(chip);
+        });
 
         if (totalFilters > 1) {
             const clearBtn = document.createElement('button');
@@ -880,7 +902,7 @@ body.modal-open { overflow: hidden; }
     }
 
     // -----------------------------------------------------
-    // 🏷️ ÚJ: CÍMKÉS ÉS HELYSZÍN KERESŐ LOGIKA
+    // 🏷️ CÍMKÉS ÉS HELYSZÍN KERESŐ LOGIKA
     // -----------------------------------------------------
     function renderSearchTags() {
         const row = document.getElementById('searchTagsRow');
@@ -890,7 +912,6 @@ body.modal-open { overflow: hidden; }
         } else {
             row.style.display = 'flex';
             
-            // Kulcsszó címkék
             activeSearchTags.forEach(tag => {
                 const chip = document.createElement('div');
                 chip.className = 'search-tag-chip';
@@ -898,7 +919,6 @@ body.modal-open { overflow: hidden; }
                 row.appendChild(chip);
             });
             
-            // Helyszín címkék (Vizálisan elkülönítve)
             activeLocationTags.forEach(tag => {
                 const chip = document.createElement('div');
                 chip.className = 'search-tag-chip loc-tag';
@@ -906,6 +926,7 @@ body.modal-open { overflow: hidden; }
                 row.appendChild(chip);
             });
         }
+        updateModalButtonsVisuals(); // Hogy a Mega Modál is szinkronban legyen a buborékokkal
     }
 
     function removeSearchTag(tag, type) {
@@ -918,7 +939,6 @@ body.modal-open { overflow: hidden; }
         applyFilters();
     }
 
-    // Fő Kereső (Kulcsszó) - Enter vagy kikattintás (blur)
     document.getElementById('mainSearchInput').addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
@@ -928,9 +948,7 @@ body.modal-open { overflow: hidden; }
                 this.value = '';
                 renderSearchTags();
                 applyFilters();
-            } else if (val) {
-                this.value = ''; 
-            }
+            } else if (val) { this.value = ''; }
         }
     });
 
@@ -944,7 +962,6 @@ body.modal-open { overflow: hidden; }
         }
     });
 
-    // Helyszín Kereső - Enter vagy kikattintás (blur)
     document.getElementById('locationSearchInput').addEventListener('keydown', function(e) {
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
@@ -954,9 +971,7 @@ body.modal-open { overflow: hidden; }
                 this.value = '';
                 renderSearchTags();
                 applyFilters();
-            } else if (val) {
-                this.value = ''; 
-            }
+            } else if (val) { this.value = ''; }
         }
     });
 
@@ -981,7 +996,6 @@ body.modal-open { overflow: hidden; }
         }
     }
     
-    // Gombnyomásra Helyszín tag hozzáadása (pl. kártyáról)
     function addLocationToSearch(locText, event) {
         if(event) event.stopPropagation(); 
         const cleanLoc = locText.trim();
@@ -999,6 +1013,7 @@ body.modal-open { overflow: hidden; }
     function applyFilters() {
         localStorage.setItem('unistart_active_companies', JSON.stringify(activeCompanies));
         localStorage.setItem('unistart_active_faculties', JSON.stringify(activeFaculties));
+        localStorage.setItem('unistart_active_vibes', JSON.stringify(activeVibes));
         updateURLState(); 
         renderActiveFilterChips();
 
@@ -1009,8 +1024,8 @@ body.modal-open { overflow: hidden; }
 
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
+            const matchVibe = (activeVibes.length === 0 || activeVibes.includes(job.work_style));
             
-            // Kulcsszó szűrés (Minden aktív tagnak szerepelnie kell - ÉS kapcsolat)
             let matchTags = true;
             if (activeSearchTags.length > 0) {
                 const tagsString = (job.tags || []).join(" ");
@@ -1021,7 +1036,6 @@ body.modal-open { overflow: hidden; }
                 });
             }
 
-            // Helyszín szűrés (Bármelyik lokációnak egyeznie kell - VAGY kapcsolat)
             let matchLoc = true;
             if (activeLocationTags.length > 0) {
                 const jobLocClean = removeAccents((job.location || '').toLowerCase());
@@ -1051,7 +1065,7 @@ body.modal-open { overflow: hidden; }
                 if (!(job.faculty || "").includes("Gazdaság") && !(job.faculty || "").includes("Pénzügy") && !(job.faculty || "").includes("Menedzsment")) matchMagic = false;
             }
 
-            return matchCompany && matchFaculty && matchTags && matchLoc && matchMagic;
+            return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc && matchMagic;
         });
 
         currentFilteredJobs.sort((a, b) => {
@@ -1090,6 +1104,17 @@ body.modal-open { overflow: hidden; }
         return card;
     }
 
+    function highlightText(text) {
+        if (!activeSearchTags || activeSearchTags.length === 0) return text;
+        const searchWords = activeSearchTags.filter(w => w.length > 1);
+        let highlightedText = text;
+        searchWords.forEach(word => {
+            const regex = new RegExp(`(${word})`, 'gi');
+            highlightedText = highlightedText.replace(regex, `<span class="highlight">$1</span>`);
+        });
+        return highlightedText;
+    }
+
     function renderGrid() {
         const container = document.getElementById('jobGridContainer');
         const countBadge = document.getElementById('jobCountBadge'); 
@@ -1124,8 +1149,8 @@ body.modal-open { overflow: hidden; }
             card.onclick = () => openJobPreview(job.id);
             card.style.animationDelay = `${(i - startIndex) * 0.05}s`;
 
-            const jobTitle = job.title || 'Névtelen pozíció';
-            const companyName = job.company_name || 'Névtelen cég';
+            const jobTitle = highlightText(job.title || 'Névtelen pozíció');
+            const companyName = highlightText(job.company_name || 'Névtelen cég');
             
             let displayDate = "";
             if (job.date_posted) {
@@ -1138,7 +1163,7 @@ body.modal-open { overflow: hidden; }
             const dPosted = displayDate ? `<span class="job-tag">📅 ${displayDate}</span>` : '';
             const facultyTag = job.faculty && job.faculty !== "🔍 Egyéb / Általános" ? `<span class="job-tag tag-faculty clickable-tag" onclick="addTagToSearch('${job.faculty}', event)" title="Keresés erre a kategóriára">${job.faculty}</span>` : '';
             const vibeTag = job.work_style ? `<span class="job-tag tag-vibe clickable-tag" onclick="addTagToSearch('${job.work_style.split(' ')[1]}', event)" title="Keresés erre a stílusra">${job.work_style}</span>` : '';
-            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${tag}</span>`).join('');
+            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightText(tag)}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
 

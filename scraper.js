@@ -90,6 +90,12 @@ async function runScraper() {
             employment_type: job.employment_type || "",
             experience_level: job.experience_level || "",
             subsidiary: job.subsidiary || "",
+            
+            // 🌟 AZ ÚJ "OKOS" CÍMKÉK BEKÖTÉSE 🌟
+            faculty: job.faculty || "Egyéb",
+            work_style: job.work_style || "",
+            tags: job.tags || [],
+            
             scraped_at: admin.firestore.FieldValue.serverTimestamp(),
             
             // Felesleges régi mezők törlése
@@ -107,7 +113,7 @@ async function runScraper() {
       // ==================================================================
       // 2. VILLÁMGYORS PÁRHUZAMOS MENTÉS (CHUNKOLVA)
       // ==================================================================
-      const chunkSize = 250; // 250-esével küldjük, hogy a Firebase ne fulladjon le
+      const chunkSize = 250; 
       
       for (let i = 0; i < uniqueJobs.length; i += chunkSize) {
         const chunk = uniqueJobs.slice(i, i + chunkSize);

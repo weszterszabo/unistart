@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [4iG / ONE] SAP Scraper elindult...`);
@@ -15,7 +17,6 @@ exports.scrape = async function(companyName, baseUrl) {
   };
 
   while (hasMore) {
-    // Ugyanaz a lapozási logika, mint az OTP-nél, de a 4iG domainjével!
     const targetUrl = `https://karrier.4iggroup.hu/search/?q=&sortColumn=referencedate&sortDirection=desc&startrow=${startrow}`;
     console.log(`   ⬇️ [4iG / ONE] Oldal letöltése: startrow=${startrow}`);
     
@@ -45,9 +46,10 @@ exports.scrape = async function(companyName, baseUrl) {
         
         let title = linkMatch[2].replace(/<[^>]+>/g, "").trim();
 
-        // Duplikáció szűrés (végtelen lapozás elleni védelem)
+        // Duplikáció szűrés (A lapozás miatt fontos, hogy minden új linket számoljunk)
         if (seenUrls.has(link)) continue;
         seenUrls.add(link);
+        newJobsCount++;
 
         // Helyszín
         const locMatch = rowHtml.match(/class="[^"]*(jobLocation|jobFacility)[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
@@ -57,18 +59,30 @@ exports.scrape = async function(companyName, baseUrl) {
         const deptMatch = rowHtml.match(/class="[^"]*jobDepartment[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
         let department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
 
-        allJobs.push({
-          title: title,
-          url: link,
-          apply_url: link,
-          location: location,
-          date_posted: new Date().toISOString(),
-          experience_level: "", 
-          subsidiary: department,
-          employment_type: "Teljes munkaidő"
-        });
-        
-        newJobsCount++;
+        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        const rawDescription = `${department}`; // Részleget adjuk oda extra információként
+        const analysis = analyzer.analyzeJob(title, rawDescription);
+
+        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Nem senior)
+        if (analysis !== null) {
+            allJobs.push({
+              title: title,
+              url: link,
+              apply_url: link,
+              location: location,
+              date_posted: new Date().toISOString(),
+              
+              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+              experience_level: analysis.job_nature, // "Gyakornok" vagy "Pályakezdő"
+              subsidiary: department,
+              employment_type: "Teljes munkaidő",
+
+              // 🌟 A SZUPERERŐK:
+              faculty: analysis.faculty,
+              work_style: analysis.work_style,
+              tags: analysis.tags
+            });
+        }
       }
 
       // 2. STRATÉGIA (Védőháló): Nyers link tépés, ha a fenti nem találna semmit
@@ -83,21 +97,32 @@ exports.scrape = async function(companyName, baseUrl) {
             if (title && !seenUrls.has(link) && !title.includes("<img")) {
                 seenUrls.add(link);
                 newJobsCount++;
-                allJobs.push({
-                    title: title,
-                    url: link,
-                    apply_url: link,
-                    location: "Magyarország", 
-                    date_posted: new Date().toISOString(),
-                    experience_level: "", 
-                    subsidiary: "",
-                    employment_type: ""
-                });
+                
+                // 🧠 VÉDŐHÁLÓ KÓDJA IS BEKÖTVE AZ AGYHOZ
+                const fallbackAnalysis = analyzer.analyzeJob(title, "");
+
+                if (fallbackAnalysis !== null) {
+                    allJobs.push({
+                        title: title,
+                        url: link,
+                        apply_url: link,
+                        location: "Magyarország", 
+                        date_posted: new Date().toISOString(),
+                        
+                        experience_level: fallbackAnalysis.job_nature, 
+                        subsidiary: "",
+                        employment_type: "Teljes munkaidő",
+
+                        faculty: fallbackAnalysis.faculty,
+                        work_style: fallbackAnalysis.work_style,
+                        tags: fallbackAnalysis.tags
+                    });
+                }
             }
         }
       }
 
-      // Végtelen ciklus elleni védelem: Ha ezen az oldalon nem volt ÚJ állás, befejezzük a lapozást!
+      // Végtelen ciklus elleni védelem: Ha ezen az oldalon nem volt ÚJ link, befejezzük a lapozást!
       if (newJobsCount === 0) {
         console.log(`   ⏹️ [4iG / ONE] Nincs több új állás, elértük a végét.`);
         hasMore = false;
@@ -112,6 +137,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [4iG / ONE] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [4iG / ONE] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

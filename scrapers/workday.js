@@ -1,3 +1,6 @@
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
+
 const HEADERS = {
   "Accept": "application/json,application/xml",
   "Content-Type": "application/json",
@@ -38,6 +41,7 @@ exports.scrape = async function(companyName, baseUrl) {
       const data = await response.json();
       const jobs = data.jobPostings || [];
       
+      // Ha üres oldalt kapunk, végeztünk! (Ez biztosítja, hogy a szűrés ellenére is végiglapozzon)
       if (jobs.length === 0) {
         hasMore = false;
         console.log("   ⏹️ [Workday] Nincs több állás a listán.");
@@ -45,18 +49,35 @@ exports.scrape = async function(companyName, baseUrl) {
       }
 
       jobs.forEach(job => {
+        const title = job.title || "Névtelen";
         let jobUrl = job.externalPath ? `https://${new URL(baseUrl).hostname}${job.externalPath}` : baseUrl;
-        
-        allJobs.push({
-          title: job.title || "Névtelen",
-          url: jobUrl,
-          apply_url: jobUrl,
-          location: job.locationsText || "Nincs megadva",
-          date_posted: job.postedOn || new Date().toISOString(),
-          employment_type: job.timeType || "",
-          experience_level: "", 
-          subsidiary: ""
-        });
+        const timeType = job.timeType || "Teljes munkaidő";
+        const location = job.locationsText || "Magyarország";
+
+        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        const rawDescription = `${timeType}`;
+        const analysis = analyzer.analyzeJob(title, rawDescription);
+
+        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Gyakornok vagy Pályakezdő)
+        if (analysis !== null) {
+            allJobs.push({
+              title: title,
+              url: jobUrl,
+              apply_url: jobUrl,
+              location: location,
+              date_posted: job.postedOn || new Date().toISOString(),
+              
+              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+              experience_level: analysis.job_nature, 
+              subsidiary: "", // A Workday alap API lista nézetben ritkán ad részleget
+              employment_type: timeType,
+              
+              // 🌟 A SZUPERERŐK:
+              faculty: analysis.faculty,
+              work_style: analysis.work_style,
+              tags: analysis.tags
+            });
+        }
       });
 
       offset += limit;
@@ -67,5 +88,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
+  console.log(`   ✔️  [Workday] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

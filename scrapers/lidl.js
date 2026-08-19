@@ -1,3 +1,6 @@
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
+
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [LIDL] REST API letöltése indul...`);
   const allJobs = [];
@@ -42,23 +45,41 @@ exports.scrape = async function(companyName, baseUrl) {
 
       jobsList.forEach(job => {
         const title = job.title || "Névtelen pozíció";
+        
         let jobUrl = job.jobDetailUrl || job.url || "";
         if (!jobUrl && job.id) jobUrl = `/jobs/${job.id}`; 
-        
         if (jobUrl && !jobUrl.startsWith("http")) {
             jobUrl = "https://jobs.lidl.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
         }
 
-        allJobs.push({
-          title: title,
-          url: jobUrl,
-          apply_url: jobUrl,
-          location: (job.location && (job.location.city || job.location.name)) ? (job.location.city || job.location.name) : (job.city || "Magyarország"),
-          date_posted: job.onlineFrom || job.modifiedTime || new Date().toISOString(),
-          experience_level: job.entryLevel || "", 
-          subsidiary: job.employmentArea || job.jobCategory || "",
-          employment_type: job.contractType || job.workingHours || "Teljes munkaidő"
-        });
+        const experience = job.entryLevel || ""; 
+        const department = job.employmentArea || job.jobCategory || "";
+        const type = job.contractType || job.workingHours || "Teljes munkaidő";
+
+        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        const rawDescription = `${experience} ${department} ${type}`;
+        const analysis = analyzer.analyzeJob(title, rawDescription);
+
+        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+        if (analysis !== null) {
+            allJobs.push({
+              title: title,
+              url: jobUrl,
+              apply_url: jobUrl,
+              location: (job.location && (job.location.city || job.location.name)) ? (job.location.city || job.location.name) : (job.city || "Magyarország"),
+              date_posted: job.onlineFrom || job.modifiedTime || new Date().toISOString(),
+              
+              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+              experience_level: analysis.job_nature, 
+              subsidiary: department,
+              employment_type: type,
+              
+              // 🌟 A SZUPERERŐK:
+              faculty: analysis.faculty,
+              work_style: analysis.work_style,
+              tags: analysis.tags
+            });
+        }
       });
 
       if (jobsList.length < 100) {
@@ -74,6 +95,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [LIDL] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [LIDL] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

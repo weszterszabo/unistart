@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [OTP] Ultimate SAP Scraper elindult...`);
@@ -48,6 +50,7 @@ exports.scrape = async function(companyName, baseUrl) {
         // Duplikáció szűrés (végtelen lapozás elleni védelem)
         if (seenUrls.has(link)) continue;
         seenUrls.add(link);
+        newJobsCount++; // A lapozáshoz jelezzük, hogy találtunk új URL-t!
 
         // Helyszín (általában jobLocation vagy facility class)
         const locMatch = rowHtml.match(/class="[^"]*(jobLocation|jobFacility)[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
@@ -57,18 +60,31 @@ exports.scrape = async function(companyName, baseUrl) {
         const deptMatch = rowHtml.match(/class="[^"]*jobDepartment[^"]*"[^>]*>([\s\S]*?)<\/span>/i);
         let department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
 
-        allJobs.push({
-          title: title,
-          url: link,
-          apply_url: link,
-          location: location,
-          date_posted: new Date().toISOString(),
-          experience_level: "", 
-          subsidiary: department,
-          employment_type: "Teljes munkaidő"
-        });
-        
-        newJobsCount++;
+        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        // Itt a részleget fűzzük hozzá a címhez, mint "leírás"
+        const rawDescription = `${department}`;
+        const analysis = analyzer.analyzeJob(title, rawDescription);
+
+        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+        if (analysis !== null) {
+            allJobs.push({
+              title: title,
+              url: link,
+              apply_url: link,
+              location: location,
+              date_posted: new Date().toISOString(),
+              
+              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+              experience_level: analysis.job_nature, 
+              subsidiary: department,
+              employment_type: "Teljes munkaidő",
+
+              // 🌟 A SZUPERERŐK:
+              faculty: analysis.faculty,
+              work_style: analysis.work_style,
+              tags: analysis.tags
+            });
+        }
       }
 
       // 2. STRATÉGIA (Védőháló): Ha az 1. stratégia nem talált semmit, kitépjük az összes /job/ linket a HTML-ből!
@@ -83,16 +99,27 @@ exports.scrape = async function(companyName, baseUrl) {
             if (title && !seenUrls.has(link) && !title.includes("<img")) {
                 seenUrls.add(link);
                 newJobsCount++;
-                allJobs.push({
-                    title: title,
-                    url: link,
-                    apply_url: link,
-                    location: "Budapest", // Alapértelmezett, ha a nyers linkből szedjük
-                    date_posted: new Date().toISOString(),
-                    experience_level: "", 
-                    subsidiary: "",
-                    employment_type: ""
-                });
+                
+                // 🧠 VÉDŐHÁLÓ KÓDJA IS BEKÖTVE AZ AGYHOZ
+                const fallbackAnalysis = analyzer.analyzeJob(title, "");
+                
+                if (fallbackAnalysis !== null) {
+                    allJobs.push({
+                        title: title,
+                        url: link,
+                        apply_url: link,
+                        location: "Budapest", // Alapértelmezett
+                        date_posted: new Date().toISOString(),
+                        
+                        experience_level: fallbackAnalysis.job_nature, 
+                        subsidiary: "",
+                        employment_type: "Teljes munkaidő",
+
+                        faculty: fallbackAnalysis.faculty,
+                        work_style: fallbackAnalysis.work_style,
+                        tags: fallbackAnalysis.tags
+                    });
+                }
             }
         }
       }
@@ -112,6 +139,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [OTP] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [OTP] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Magyar Posta] API letöltése indul...`);
@@ -42,7 +44,6 @@ exports.scrape = async function(companyName, baseUrl) {
       if (!htmlRow) return;
 
       // 1. Link és Cím kinyerése Regex segítségével a HTML-ből
-      // <a class="jobList__item__title" href="/allas/valami" >Állás neve</a>
       const titleLinkMatch = htmlRow.match(/class="[^"]*jobList__item__title[^"]*"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i);
       let jobUrl = jobItem.url || "";
       let title = "Névtelen pozíció";
@@ -57,14 +58,12 @@ exports.scrape = async function(companyName, baseUrl) {
       }
 
       // 2. Város kinyerése
-      // <div class="iconInfo--address job_list_city">Budapest</div>
       const cityMatch = htmlRow.match(/class="[^"]*job_list_city[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
       let location = cityMatch ? cityMatch[1].replace(/<[^>]+>/g, "").trim() : "Magyarország";
-      // Sokszor benne van a pontos utca is, azt levágjuk (pl. "1114 Budapest, Fehérvári út 9." -> "Budapest")
+      // Sokszor benne van a pontos utca is, azt levágjuk
       if (location.includes(",")) location = location.split(",")[0].replace(/\d{4}/, "").trim();
 
       // 3. Részleg/Kategória kinyerése
-      // <div class="iconInfo--area job_list_specialities">Logisztika</div>
       const catMatch = htmlRow.match(/class="[^"]*job_list_specialities[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
       const department = catMatch ? catMatch[1].replace(/<[^>]+>/g, "").trim() : "Posta";
 
@@ -78,16 +77,33 @@ exports.scrape = async function(companyName, baseUrl) {
 
       // Csak az érvényeseket mentjük
       if (title && jobUrl) {
-          allJobs.push({
-            title: title,
-            url: jobUrl,
-            apply_url: jobUrl,
-            location: location,
-            date_posted: new Date().toISOString(),
-            experience_level: experience, 
-            subsidiary: department,
-            employment_type: employmentType
-          });
+          
+          // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+          // Megtisztítjuk a html-t, és hozzácsapjuk a részleget meg a tapasztalatot, hogy az Agy 100%-os biztonsággal döntsön
+          const cleanText = htmlRow.replace(/<[^>]+>/g, " ");
+          const rawDescription = `${cleanText} ${department} ${experience} ${employmentType}`;
+          const analysis = analyzer.analyzeJob(title, rawDescription);
+
+          // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Nem null)
+          if (analysis !== null) {
+              allJobs.push({
+                title: title,
+                url: jobUrl,
+                apply_url: jobUrl,
+                location: location,
+                date_posted: new Date().toISOString(),
+                
+                // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                experience_level: analysis.job_nature, 
+                subsidiary: department,
+                employment_type: employmentType,
+
+                // 🌟 A SZUPERERŐK:
+                faculty: analysis.faculty,
+                work_style: analysis.work_style,
+                tags: analysis.tags
+              });
+          }
       }
     });
 
@@ -95,6 +111,6 @@ exports.scrape = async function(companyName, baseUrl) {
     console.error(`   ❌ [Magyar Posta] Hálózat hiba:`, err.message);
   }
 
-  console.log(`   ✔️  [Magyar Posta] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [Magyar Posta] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

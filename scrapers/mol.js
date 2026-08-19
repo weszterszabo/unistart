@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [MOL Group] Taleo API letöltése indul...`);
@@ -89,14 +91,11 @@ exports.scrape = async function(companyName, baseUrl) {
       jobsList.forEach(job => {
         // A Taleo egy 'column' nevű tömbbe teszi ömlesztve az adatokat (0: Cím, 1: Hely, 2: Dátum)
         const columns = job.column || [];
-        
         let title = columns[0] || "Névtelen pozíció";
         
-        // Link összerakása a contestNo (vagy jobId) alapján
         let jobIdForUrl = job.contestNo || job.jobId || "";
         let jobUrl = jobIdForUrl ? `https://molgroup.taleo.net/careersection/mhu/jobdetail.ftl?job=${jobIdForUrl}&lang=hu` : "https://molgroup.taleo.net/";
 
-        // A város a columns[1]-ben van, gyakran így: ["Hungary-Tiszaújváros"]
         let rawLocation = columns[1] || "";
         let location = "Magyarország";
         
@@ -110,31 +109,43 @@ exports.scrape = async function(companyName, baseUrl) {
         else if (rawLocation.includes("Győr")) location = "Győr";
         else if (rawLocation.includes("Szeged")) location = "Szeged";
         else if (rawLocation.includes("Nagykanizsa")) location = "Nagykanizsa";
-        // Ha valami más, megpróbáljuk kivágni a "Hungary-" utáni részt
         else {
              const match = rawLocation.match(/Hungary-([^"]+)/i);
              if (match && match[1]) location = match[1].split('-')[0].trim();
         }
 
-        // A Taleo a cég nevét sokszor külön adja, de ha nincs, akkor alapból MOL
         const companyLabel = job.company || "MOL Group";
         
-        // Címkék feldolgozása (részleg / kategória)
         let department = "";
         if (job.labels && Array.isArray(job.labels)) {
             department = job.labels.join(", ");
         }
 
-        allJobs.push({
-          title: title,
-          url: jobUrl,
-          apply_url: jobUrl,
-          location: location,
-          date_posted: new Date().toISOString(), // A Taleo magyar dátumformátuma (2026.08.18.) helyett biztosabb a mai napot menteni Firestore-nak
-          experience_level: "", 
-          subsidiary: companyLabel,
-          employment_type: "Teljes munkaidő"
-        });
+        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        // A részleget is hozzáfűzzük, hátha segít a kategorizálásban
+        const rawDescription = `${companyLabel} ${department}`;
+        const analysis = analyzer.analyzeJob(title, rawDescription);
+
+        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+        if (analysis !== null) {
+            allJobs.push({
+              title: title,
+              url: jobUrl,
+              apply_url: jobUrl,
+              location: location,
+              date_posted: new Date().toISOString(), 
+              
+              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+              experience_level: analysis.job_nature, 
+              subsidiary: companyLabel !== "MOL Group" ? companyLabel : (department || "MOL Group"),
+              employment_type: "Teljes munkaidő",
+              
+              // 🌟 A SZUPERERŐK:
+              faculty: analysis.faculty,
+              work_style: analysis.work_style,
+              tags: analysis.tags
+            });
+        }
       });
 
       // Lapozás ellenőrzése
@@ -157,6 +168,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [MOL Group] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [MOL Group] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

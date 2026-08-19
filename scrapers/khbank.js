@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul (Mindenevő adatszűrővel)...`);
@@ -49,7 +51,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
       json.rows.forEach(jobRow => {
         
-        // 1. MINDEN HTML KÓD ÖSSZEGYŰJTÉSE (Bármilyen néven is jön)
+        // 1. MINDEN HTML KÓD ÖSSZEGYŰJTÉSE
         let htmlSnippet = "";
         for (const key in jobRow) {
             if (typeof jobRow[key] === 'string' && jobRow[key].includes('<')) {
@@ -61,24 +63,21 @@ exports.scrape = async function(companyName, baseUrl) {
         let jobUrl = jobRow.url || "";
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.kh.hu" + jobUrl;
 
-        // 3. CÍM KINYERÉSE (3 lépcsős védelem)
+        // 3. CÍM KINYERÉSE
         let titleMatch = htmlSnippet.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i) || 
                          htmlSnippet.match(/class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\//i);
         
         let title = "Névtelen pozíció";
         
         if (titleMatch && titleMatch[1]) {
-            // Ha megtalálta a HTML-ben
             title = titleMatch[1].replace(/<[^>]+>/g, "").trim();
         } else if (jobRow.title || jobRow.name) {
-            // Ha nyersen benne van a JSON-ben
             title = jobRow.title || jobRow.name;
         } else if (jobUrl) {
-            // Védőháló: Kinyerjük az URL-ből (pl. /allas/junior-elemzo-123 -> Junior elemzo)
             const slug = jobUrl.split('/').filter(Boolean).pop();
             if (slug) {
-                title = slug.replace(/-\d+$/, '').replace(/-/g, ' '); // Számok és kötőjelek levágása
-                title = title.charAt(0).toUpperCase() + title.slice(1); // Kezdőbetű nagybetűsítése
+                title = slug.replace(/-\d+$/, '').replace(/-/g, ' '); 
+                title = title.charAt(0).toUpperCase() + title.slice(1);
             }
         }
 
@@ -97,21 +96,37 @@ exports.scrape = async function(companyName, baseUrl) {
         let deptMatch = htmlSnippet.match(/data-cy="area"[^>]*>([\s\S]*?)<\/div>/i);
         let department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
 
-        // MENTÉS
+        // URL ELLENŐRZÉS: Ha már láttuk, átugorjuk
         if (!seenUrls.has(jobUrl)) {
             seenUrls.add(jobUrl);
-            newJobsOnPage++;
+            newJobsOnPage++; // Ezt pörgetjük a lapozáshoz!
             
-            allJobs.push({
-              title: title,
-              url: jobUrl,
-              apply_url: jobUrl,
-              location: location,
-              date_posted: new Date().toISOString(),
-              experience_level: experience, 
-              subsidiary: department,
-              employment_type: "Teljes munkaidő"
-            });
+            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+            // Megtisztítjuk a htmlSnippet-et a HTML tagektől, hogy csak a nyers szöveg maradjon az elemzéshez
+            const cleanText = htmlSnippet.replace(/<[^>]+>/g, " ");
+            const rawDescription = `${department} ${experience} ${cleanText}`;
+            const analysis = analyzer.analyzeJob(title, rawDescription);
+
+            // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Pályakezdő/Gyakornok)
+            if (analysis !== null) {
+                allJobs.push({
+                  title: title,
+                  url: jobUrl,
+                  apply_url: jobUrl,
+                  location: location,
+                  date_posted: new Date().toISOString(),
+                  
+                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                  experience_level: analysis.job_nature,
+                  subsidiary: department,
+                  employment_type: "Teljes munkaidő",
+
+                  // 🌟 A SZUPERERŐK:
+                  faculty: analysis.faculty,
+                  work_style: analysis.work_style,
+                  tags: analysis.tags
+                });
+            }
         }
       });
 
@@ -135,6 +150,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [K&H Bank] Siker: ${allJobs.length} db egyedi állás feldolgozva.`);
+  console.log(`   ✔️  [K&H Bank] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

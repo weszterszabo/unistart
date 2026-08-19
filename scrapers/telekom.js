@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Telekom] REST API letöltése indul...`);
@@ -44,28 +46,43 @@ exports.scrape = async function(companyName, baseUrl) {
       // Helyszín (pl. Budapest, Eger, stb.)
       let location = job.location || "Magyarország";
 
-      // Labels (címkék) tömbjéből csinálunk egy szép vesszővel elválasztott listát a részleghez (subsidiary)
+      // Labels (címkék) tömbjéből csinálunk egy szép vesszővel elválasztott listát
       let department = "";
       if (job.labels && Array.isArray(job.labels)) {
           department = job.labels.join(", ");
       }
 
-      allJobs.push({
-        title: title,
-        url: jobUrl,
-        apply_url: jobUrl,
-        location: location,
-        date_posted: new Date().toISOString(), // A mai napot mentjük, mert az API nem ad dátumot
-        experience_level: "", 
-        subsidiary: department,
-        employment_type: "Teljes munkaidő"
-      });
+      // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+      // A részleget odaadjuk "leírásként", ez segít a kategorizálásban
+      const rawDescription = `${department}`;
+      const analysis = analyzer.analyzeJob(title, rawDescription);
+
+      // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Pályakezdő vagy Gyakornok)
+      if (analysis !== null) {
+          allJobs.push({
+            title: title,
+            url: jobUrl,
+            apply_url: jobUrl,
+            location: location,
+            date_posted: new Date().toISOString(), // A mai napot mentjük, mert az API nem ad dátumot
+            
+            // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+            experience_level: analysis.job_nature, 
+            subsidiary: department || "Magyar Telekom",
+            employment_type: "Teljes munkaidő",
+            
+            // 🌟 A SZUPERERŐK:
+            faculty: analysis.faculty,
+            work_style: analysis.work_style,
+            tags: analysis.tags
+          });
+      }
     });
 
   } catch (err) {
     console.error(`   ❌ [Telekom] Hálózat hiba:`, err.message);
   }
 
-  console.log(`   ✔️  [Telekom] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [Telekom] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

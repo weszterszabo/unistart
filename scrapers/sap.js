@@ -1,4 +1,6 @@
 const cheerio = require("cheerio");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 const HEADERS = {
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -39,22 +41,40 @@ exports.scrape = async function(companyName, baseUrl) {
       for (const job of uniqueOnPage) {
         if (!seenUrls.has(job.url)) {
           seenUrls.add(job.url);
+          newJobsCount++; // A lapozáshoz pörgetjük!
+          
           process.stdout.write(`   🔎 [SAP] Részletek: ${job.title.substring(0, 30)}... `);
           
           const details = await getDeepDetails(job.url);
           console.log(details ? "Kész!" : "Hiba.");
           
-          allJobs.push({
-            title: job.title,
-            url: job.url,
-            apply_url: job.url,
-            location: details && details.location ? details.location : "Nincs megadva",
-            date_posted: details && details.datePosted ? details.datePosted : new Date().toISOString(),
-            employment_type: details && details.employment_type ? details.employment_type : "",
-            experience_level: details && details.experience_level ? details.experience_level : "",
-            subsidiary: details && details.subsidiary ? details.subsidiary : ""
-          });
-          newJobsCount++;
+          if (details) {
+              // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+              // A getDeepDetails most már a nyers szöveget is visszahozza
+              const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.rawText}`;
+              const analysis = analyzer.analyzeJob(job.title, rawDescription);
+
+              // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+              if (analysis !== null) {
+                  allJobs.push({
+                    title: job.title,
+                    url: job.url,
+                    apply_url: job.url,
+                    location: details.location ? details.location : "Nincs megadva",
+                    date_posted: details.datePosted ? details.datePosted : new Date().toISOString(),
+                    
+                    // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                    experience_level: analysis.job_nature, 
+                    subsidiary: details.subsidiary || "",
+                    employment_type: details.employment_type || "Teljes munkaidő",
+                    
+                    // 🌟 A SZUPERERŐK:
+                    faculty: analysis.faculty,
+                    work_style: analysis.work_style,
+                    tags: analysis.tags
+                  });
+              }
+          }
           await new Promise(r => setTimeout(r, 200));
         }
       }
@@ -73,6 +93,8 @@ exports.scrape = async function(companyName, baseUrl) {
       hasMore = false;
     }
   }
+  
+  console.log(`   ✔️  [SAP] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };
 
@@ -81,7 +103,7 @@ async function getDeepDetails(jobUrl) {
     const res = await fetch(jobUrl, { headers: HEADERS });
     const html = await res.text();
     const $ = cheerio.load(html);
-    let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", datePosted: "" };
+    let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", datePosted: "", rawText: "" };
 
     let locFound = $('.jobGeoLocation, .job-location, .location').first().text().trim();
     if (locFound && locFound.length < 80) details.location = locFound;
@@ -103,6 +125,11 @@ async function getDeepDetails(jobUrl) {
         if(val.length < 80) details.location = val;
       }
     });
+    
+    // 🧠 ZSENIÁLIS HÚZÁS: Kiszedjük a menüket, lábléceket, és csak a tiszta szöveget mentjük le az Analyzernek!
+    $('script, style, nav, footer, header').remove();
+    details.rawText = $('body').text().replace(/\s+/g, ' ').trim();
+
     return details;
   } catch (e) {
     return null;

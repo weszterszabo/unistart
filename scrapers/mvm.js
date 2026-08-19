@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [MVM Csoport] Állások letöltése indul...`);
@@ -15,7 +17,6 @@ exports.scrape = async function(companyName, baseUrl) {
       
       const requestBody = new URLSearchParams();
       requestBody.append("page", page.toString());
-      // Kérünk 100-at, hátha engedi. Ha mégis csak 9-et ad, a ciklus ezt is tökéletesen lekezeli!
       requestBody.append("rowNum", "100");
 
       const response = await fetch(apiUrl, {
@@ -73,29 +74,45 @@ exports.scrape = async function(companyName, baseUrl) {
         }
 
         if (title && jobUrl) {
-            newJobsOnThisPage++;
-            allJobs.push({
-              title: title, 
-              url: jobUrl, 
-              apply_url: jobUrl, 
-              location: location,
-              date_posted: deadline, 
-              experience_level: "", 
-              subsidiary: "MVM Csoport", 
-              employment_type: "Teljes munkaidő"
-            });
+            newJobsOnThisPage++; // Ezt mindenképp növeljük a lapozáshoz!
+
+            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+            // Megtisztítjuk a HTML blokkot a tagektől, így egy szép tiszta szöveget kapunk
+            const rawDescription = htmlRow.replace(/<[^>]+>/g, " ");
+            const analysis = analyzer.analyzeJob(title, rawDescription);
+
+            // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+            if (analysis !== null) {
+                allJobs.push({
+                  title: title, 
+                  url: jobUrl, 
+                  apply_url: jobUrl, 
+                  location: location,
+                  date_posted: deadline, 
+                  
+                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                  experience_level: analysis.job_nature, 
+                  subsidiary: "MVM Csoport", 
+                  employment_type: "Teljes munkaidő",
+                  
+                  // 🌟 A SZUPERERŐK:
+                  faculty: analysis.faculty,
+                  work_style: analysis.work_style,
+                  tags: analysis.tags
+                });
+            }
         }
       });
 
       // Pagináció (Lapozás) ellenőrzése
       const totalJobs = json.total || 0;
       
-      // Ha már begyűjtöttük az összeset, vagy ezen az oldalon nem volt egyetlen új állás sem, megállunk.
-      if (allJobs.length >= totalJobs || newJobsOnThisPage === 0) {
+      // MVM trükk: Az allJobs.length-et itt most nem használhatjuk a teljes számoláshoz, 
+      // mert kidobáljuk az állásokat. Helyette a newJobsOnThisPage véd minket!
+      if (newJobsOnThisPage === 0) {
           hasMore = false;
       } else {
           page++;
-          // Alszunk 300 milliszekundumot a lapozások között, hogy ne tiltson le a szerver a spammelésért
           await new Promise(resolve => setTimeout(resolve, 300));
       }
     }
@@ -104,6 +121,6 @@ exports.scrape = async function(companyName, baseUrl) {
     console.error(`   ❌ [MVM Csoport] Hálózat hiba:`, err.message);
   }
 
-  console.log(`   ✔️  [MVM Csoport] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [MVM Csoport] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

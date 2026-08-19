@@ -1,4 +1,6 @@
 const crypto = require("crypto");
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [ALDI] REST API letöltése indul...`);
@@ -9,6 +11,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
   while (hasMore) {
     console.log(`   ⬇️ [ALDI] Lapozás: ${page}. oldal...`);
+    // A TE TÖKÉLETES URL-ed:
     const apiUrl = `https://karrier.aldi.hu/rest/jobs/search?page=${page}&size=100`;
 
     try {
@@ -26,8 +29,6 @@ exports.scrape = async function(companyName, baseUrl) {
       }
 
       const json = await response.json();
-      
-      // A TE JSON MINTÁD ALAPJÁN a lista a "jobs" kulcsban van!
       const jobsList = json.jobs || [];
 
       if (jobsList.length === 0) {
@@ -44,31 +45,45 @@ exports.scrape = async function(companyName, baseUrl) {
         if (!jobUrl && job.job_id) jobUrl = `job/${job.job_id}`;
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.aldi.hu/" + jobUrl;
 
-        // Csak az új állásokat dolgozzuk fel!
+        // Csak az ÚJ (nem ismétlődő) állások URL-jét vizsgáljuk
         if (!seenUrls.has(jobUrl)) {
             seenUrls.add(jobUrl);
-            newJobsCount++;
-
-            // A te mintád alapján a város a "city" mezőben van
-            let location = job.city || "Magyarország";
+            newJobsCount++; // Növeljük a számlálót a lapozáshoz (akkor is ha később eldobjuk)
 
             const department = job.area_of_activity_title || "";
             const careerLevel = job.career_level_title || "";
+            
+            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+            // Összefűzzük az összes elérhető szöveget, hogy okosabban döntsön
+            const rawDescription = `${careerLevel} ${department} ${job.description || ""}`;
+            const analysis = analyzer.analyzeJob(title, rawDescription);
 
-            allJobs.push({
-              title: title,
-              url: jobUrl,
-              apply_url: jobUrl,
-              location: location,
-              date_posted: new Date().toISOString(), // Az API nem adott normális dátumot, így a mai napot kapja
-              experience_level: careerLevel, 
-              subsidiary: department,
-              employment_type: job.shift || "Teljes munkaidő"
-            });
+            // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA NEM NULL (Azaz ha átment a teszten)
+            if (analysis !== null) {
+                let location = job.city || "Magyarország";
+
+                allJobs.push({
+                  title: title,
+                  url: jobUrl,
+                  apply_url: jobUrl,
+                  location: location,
+                  date_posted: new Date().toISOString(),
+                  
+                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                  experience_level: analysis.job_nature, // A régi 'careerLevel' helyett
+                  subsidiary: department,
+                  employment_type: job.shift || "Teljes munkaidő",
+                  
+                  // 🌟 A SZUPERERŐK: 
+                  faculty: analysis.faculty,         // pl: 💼 Gazdasági & Üzleti
+                  work_style: analysis.work_style,   // pl: 📊 Elemző / Adatvezérelt
+                  tags: analysis.tags                // pl: ["#Angol", "#Excel"]
+                });
+            }
         }
       });
 
-      // Ha nem találtunk ÚJ állást az oldalon, leállítjuk a lapozást!
+      // Ha nem találtunk ÚJ URL-t az oldalon (függetlenül attól, hogy senior vagy junior), leállunk
       if (newJobsCount === 0) {
         console.log(`   ⏹️ [ALDI] Csak ismétlődő állások jöttek, vége a lapozásnak!`);
         hasMore = false;
@@ -83,6 +98,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [ALDI] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [ALDI] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

@@ -1,3 +1,6 @@
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
+
 const HEADERS = {
   "Accept": "application/json, text/javascript, */*; q=0.01",
   "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -16,7 +19,7 @@ exports.scrape = async function(companyName, baseUrl) {
   while (hasMore) {
     console.log(`   ⬇️ [Erste] Oldal ${page} lekérése...`);
     try {
-      // Megfelelő payload formátum: az 'extra' mezőben JSON formában utazik a lapozás és a limit (100)
+      // Megfelelő payload formátum
       const extraParam = JSON.stringify({ page: page, rowNum: "100" }); 
       const bodyData = `q=ds&ajax=1&extra=${encodeURIComponent(extraParam)}`;
       
@@ -41,23 +44,45 @@ exports.scrape = async function(companyName, baseUrl) {
         const eco = item.ecommerceData || {};
         const jobUrl = item.url ? `https://karrier.erstebank.hu${item.url}` : "";
         
+        // Csak az ÚJ állásokkal foglalkozunk (akkor is, ha később a szűrő kidobja)
         if (jobUrl && !seenUrls.has(jobUrl)) {
           seenUrls.add(jobUrl);
-          newJobsThisPage++;
-          allJobs.push({
-            title: eco.item_name || "Névtelen pozíció",
-            url: jobUrl,
-            apply_url: jobUrl,
-            location: eco.location_id || "Magyarország",
-            date_posted: new Date().toISOString(), 
-            employment_type: eco.item_category3 || "", 
-            experience_level: eco.item_category4 || "", 
-            subsidiary: eco.item_category || "" 
-          });
+          newJobsThisPage++; // A lapozás biztosításához
+          
+          const title = eco.item_name || "Névtelen pozíció";
+          const department = eco.item_category || "";
+          const experience = eco.item_category4 || "";
+          const type = eco.item_category3 || "";
+
+          // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+          // A rendelkezésre álló adatokat összefűzzük "leírás" gyanánt
+          const rawDescription = `${department} ${experience} ${type}`;
+          const analysis = analyzer.analyzeJob(title, rawDescription);
+
+          // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA NEM NULL (Azaz ha pályakezdő/gyakornok)
+          if (analysis !== null) {
+              allJobs.push({
+                title: title,
+                url: jobUrl,
+                apply_url: jobUrl,
+                location: eco.location_id || "Magyarország",
+                date_posted: new Date().toISOString(), 
+                
+                // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                experience_level: analysis.job_nature, // "Gyakornok" vagy "Pályakezdő"
+                subsidiary: department, 
+                employment_type: type || "Teljes munkaidő",
+                
+                // 🌟 A SZUPERERŐK: 
+                faculty: analysis.faculty,         // pl: 💼 Gazdasági & Üzleti
+                work_style: analysis.work_style,   // pl: 📊 Elemző / Adatvezérelt
+                tags: analysis.tags                // pl: ["#Excel"]
+              });
+          }
         }
       });
 
-      // BIZTONSÁGI FÉK: Ha ezen az oldalon nem volt ÚJ állás (mert a szerver ismétel), azonnal álljunk meg!
+      // BIZTONSÁGI FÉK: Ha ezen az oldalon nem volt ÚJ link, álljunk meg!
       if (newJobsThisPage === 0) {
          console.log(`   ⏹️ [Erste] Csak ismétlődő állások érkeztek, vége a lapozásnak!`);
          hasMore = false;
@@ -72,6 +97,6 @@ exports.scrape = async function(companyName, baseUrl) {
     }
   }
 
-  console.log(`   ✔️  [Erste] Siker: ${allJobs.length} db egyedi állás feldolgozva.`);
+  console.log(`   ✔️  [Erste] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

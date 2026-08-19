@@ -1,4 +1,6 @@
 const https = require('https');
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
 
 exports.scrape = async function(companyName, baseUrl) {
   console.log(`   ⬇️ [Közszolgállás] Állások letöltése indul...`);
@@ -45,6 +47,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
       const title = job.Speciality.trim();
       const department = job.CreatorOrganizationName ? job.CreatorOrganizationName.trim() : "Közszolgálat";
+      const workType = job.WorkTypeName ? job.WorkTypeName.trim() : "Teljes munkaidő";
       
       let location = "Magyarország";
       if (job.CityName && job.CityGroup) {
@@ -54,25 +57,42 @@ exports.scrape = async function(companyName, baseUrl) {
       }
 
       const jobUrl = `https://kozszolgallas.ksz.gov.hu/JobAd/Info/${job.Id}`;
+      
+      // ZSENIÁLIS TRÜKK: Átalakítjuk a számot olyan szöveggé (pl. "5 év tapasztalat"), 
+      // amit az Agy negatív szótára azonnal felismer és blokkol!
       let expLevel = (job.Experience !== null && job.Experience !== undefined) ? 
-                     (job.Experience === 0 ? "Pályakezdő" : `${job.Experience} év tapasztalat`) : "";
+                     (job.Experience === 0 ? "0 év tapasztalat" : `${job.Experience} év tapasztalat`) : "";
 
-      allJobs.push({
-        title: title, 
-        url: jobUrl, 
-        apply_url: jobUrl, 
-        location: location,
-        date_posted: job.SubmissionDeadline || new Date().toISOString(),
-        experience_level: expLevel, 
-        subsidiary: department,
-        employment_type: job.WorkTypeName ? job.WorkTypeName.trim() : "Teljes munkaidő"
-      });
+      // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+      const rawDescription = `${department} ${workType} ${expLevel}`;
+      const analysis = analyzer.analyzeJob(title, rawDescription);
+
+      // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Pályakezdő/Gyakornok)
+      if (analysis !== null) {
+          allJobs.push({
+            title: title, 
+            url: jobUrl, 
+            apply_url: jobUrl, 
+            location: location,
+            date_posted: job.SubmissionDeadline || new Date().toISOString(),
+            
+            // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+            experience_level: analysis.job_nature, 
+            subsidiary: department,
+            employment_type: workType,
+
+            // 🌟 A SZUPERERŐK:
+            faculty: analysis.faculty,
+            work_style: analysis.work_style,
+            tags: analysis.tags
+          });
+      }
     });
 
   } catch (err) {
     console.error(`   ❌ [Közszolgállás] Hiba:`, err.message);
   }
 
-  console.log(`   ✔️  [Közszolgállás] Siker: ${allJobs.length} db állás feldolgozva.`);
+  console.log(`   ✔️  [Közszolgállás] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
   return allJobs;
 };

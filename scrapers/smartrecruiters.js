@@ -1,3 +1,6 @@
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const analyzer = require("../analyzer");
+
 const HEADERS = {
   "Accept": "application/json, text/plain, */*",
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0.0 Safari/537.36",
@@ -64,29 +67,48 @@ exports.scrape = async function(companyName, baseUrl) {
         }
         loc = loc || item.city || "Magyarország";
 
+        // Kinyerjük az elérhető adatokat a leíráshoz
+        const type = item.typeOfEmployment?.label || item.employment_type || item.contractType?.label || "Teljes munkaidő";
+        const experience = item.experienceLevel?.label || item.experience_level || item.seniority?.label || "";
+        const department = item.company?.name || item.brand?.label || "Bosch";
+
         if (title && jobUrl) {
-          allJobs.push({
-            title: title,
-            url: jobUrl,
-            apply_url: jobUrl,
-            location: loc,
-            date_posted: item.releasedDate || item.postedDate || item.createdAt || new Date().toISOString(),
-            employment_type: item.typeOfEmployment?.label || item.employment_type || item.contractType?.label || "",
-            experience_level: item.experienceLevel?.label || item.experience_level || item.seniority?.label || "",
-            subsidiary: item.company?.name || item.brand?.label || ""
-          });
+            
+            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+            const rawDescription = `${department} ${experience} ${type}`;
+            const analysis = analyzer.analyzeJob(title, rawDescription);
+
+            // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+            if (analysis !== null) {
+                allJobs.push({
+                  title: title,
+                  url: jobUrl,
+                  apply_url: jobUrl,
+                  location: loc,
+                  date_posted: item.releasedDate || item.postedDate || item.createdAt || new Date().toISOString(),
+                  
+                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
+                  experience_level: analysis.job_nature,
+                  subsidiary: department,
+                  employment_type: type,
+                  
+                  // 🌟 A SZUPERERŐK:
+                  faculty: analysis.faculty,
+                  work_style: analysis.work_style,
+                  tags: analysis.tags
+                });
+            }
         }
       });
 
-      // Ha kevesebb állás jött vissza, mint a maximum 100, akkor biztosan elértük a lista végét!
+      // Itt a PAGINÁCIÓ (lapozás) a letöltött `jobArray` alapján történik, tehát nem a szűrt állások számát nézi! Így golyóálló.
       if (jobArray.length < limit) {
         console.log(`   ⏹️ [SmartRecruiters] Elértük a lista végét (${jobArray.length} db jött az utolsó oldalon).`);
         hasMore = false;
       } else {
-        // Ha pont 100 jött, akkor van még következő oldal!
         offset += limit;
         page++;
-        await new Promise(r => setTimeout(r, 400)); // Pici várakozás, hogy ne tiltsanak le
+        await new Promise(r => setTimeout(r, 400));
       }
 
     } catch (err) {
@@ -100,6 +122,6 @@ exports.scrape = async function(companyName, baseUrl) {
     index === self.findIndex((t) => (t.url === job.url))
   );
 
-  console.log(`   ✔️  [SmartRecruiters] Siker: ${allJobs.length} lekérve -> ${uniqueJobs.length} db EGYEDI állás feldolgozva.`);
+  console.log(`   ✔️  [SmartRecruiters] Siker: A szűrőn fennmaradt ${uniqueJobs.length} db EGYEDI DIÁK/JUNIOR állás!`);
   return uniqueJobs;
 };

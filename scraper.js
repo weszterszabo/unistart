@@ -24,19 +24,26 @@ const engines = {
 };
 
 // ------------------------------------------------------------------
-// 2. FIREBASE INICIALIZÁLÁS ÉS BIZTONSÁG
+// 2. FIREBASE INICIALIZÁLÁS ÉS BIZTONSÁG (HIBRID MÓD)
 // ------------------------------------------------------------------
 let serviceAccount;
+
 if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
   try {
     serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
+    console.log("☁️ Felhős biztonsági kulcs (Env Var) sikeresen betöltve.");
   } catch (e) {
     console.error("❌ FATAL: A FIREBASE_SERVICE_ACCOUNT_KEY nem érvényes JSON!");
     process.exit(1);
   }
 } else {
-  console.error("❌ FATAL: Hiányzik a FIREBASE_SERVICE_ACCOUNT_KEY!");
-  process.exit(1);
+  try {
+    serviceAccount = require("./serviceAccountKey.json"); 
+    console.log("💻 Lokális 'serviceAccountKey.json' fájl sikeresen betöltve.");
+  } catch (err) {
+    console.error("❌ FATAL: Nincs felhős kulcs, ÉS nem található a 'serviceAccountKey.json' fájl a mappában!");
+    process.exit(1);
+  }
 }
 
 initializeApp({ credential: cert(serviceAccount) });
@@ -47,21 +54,18 @@ db.settings({ ignoreUndefinedProperties: true });
 // 3. ENTERPRISE SEGÉDFÜGGVÉNYEK & WEBHOOK RIASZTÁS
 // ------------------------------------------------------------------
 
-// Opcionális Webhook (pl. Slack / Discord). Ha nincs beállítva, csak konzolba ír.
 async function sendAlert(message, isError = false) {
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.SLACK_WEBHOOK_URL;
   if (!webhookUrl) return;
-  
   try {
     await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ content: (isError ? "🚨 **KRITIKUS HIBA:** " : "ℹ️ **INFO:** ") + message })
     });
-  } catch (e) { /* Csendes hibakezelés a webhooknál */ }
+  } catch (e) { /* Csendes hibakezelés */ }
 }
 
-// A: Exponenciális Újrapróbálkozás (Exponential Backoff)
 async function scrapeWithExponentialBackoff(engine, companyName, url, maxRetries = 3) {
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
@@ -70,14 +74,13 @@ async function scrapeWithExponentialBackoff(engine, companyName, url, maxRetries
       return results;
     } catch (err) {
       if (attempt === maxRetries) throw err;
-      const delay = Math.pow(2, attempt) * 1000; 
-      console.log(`   [${companyName}] ⚠️ Hálózat hiba. Újrapróbálkozás ${delay/1000}mp múlva...`);
+      const delay = Math.pow(2, attempt) * 1000 + Math.floor(Math.random() * 1000); 
+      console.log(`   [${companyName}] ⚠️ Hálózat hiba. Újrapróbálkozás ${Math.round(delay/1000)}mp múlva...`);
       await new Promise(res => setTimeout(res, delay));
     }
   }
 }
 
-// B: Központi Adat-fertőtlenítő (Sanitizer)
 function sanitizeJobData(job, companyName) {
   let cleanUrl = job.url || "";
   let cleanApplyUrl = job.apply_url || cleanUrl;
@@ -101,30 +104,45 @@ function sanitizeJobData(job, companyName) {
   };
 }
 
-// C: MD5 Hash Generátor (Delta-Sync Ujjlenyomat)
 function generateJobHash(sanitizedJob) {
   const dataString = `${sanitizedJob.title}|${sanitizedJob.location}|${sanitizedJob.faculty}|${sanitizedJob.work_style}|${sanitizedJob.tags.join(",")}|${sanitizedJob.apply_url}`;
   return crypto.createHash('md5').update(dataString).digest('hex');
 }
 
-// D: Mikro-Változás Követés (Diffing)
+// Univerzális Deep-Diffing (Minden kulcsmező vizsgálata)
 function getJobDifferences(oldJob, newJob) {
   const changes = [];
-  if (oldJob.faculty !== newJob.faculty) changes.push(`Kategória: ${oldJob.faculty} -> ${newJob.faculty}`);
-  if (oldJob.work_style !== newJob.work_style) changes.push(`Vibe: ${oldJob.work_style} -> ${newJob.work_style}`);
+  const fieldsToCheck = [
+      { key: 'title', label: 'Cím' },
+      { key: 'location', label: 'Helyszín' },
+      { key: 'faculty', label: 'Kategória' },
+      { key: 'work_style', label: 'Vibe' }
+  ];
+  
+  for (const field of fieldsToCheck) {
+      if (oldJob[field.key] !== newJob[field.key]) {
+          changes.push(`${field.label}: "${oldJob[field.key]}" -> "${newJob[field.key]}"`);
+      }
+  }
   return changes;
 }
 
 // ------------------------------------------------------------------
 // 4. FŐ ORCHESTRATOR (Multi-Threaded Pipeline + Data Lake)
 // ------------------------------------------------------------------
+
+// Globális leállás-figyelő (Graceful Shutdown)
+let isShuttingDown = false;
+process.on('SIGINT', () => { console.log("\n⚠️ [SIGINT] Leállítási kérelem érkezett! Befejezem a mentéseket..."); isShuttingDown = true; });
+process.on('SIGTERM', () => { console.log("\n⚠️ [SIGTERM] Leállítási kérelem érkezett! Befejezem a mentéseket..."); isShuttingDown = true; });
+
 async function runScraper() {
   console.log("\n======================================================");
-  console.log("🚀 UniStart BIG DATA Orchestrator (V5.0) elindult...");
-  console.log("⚙️  Párhuzamos feldolgozás & Történelmi Archiválás aktív!");
+  console.log("🚀 UniStart UNICORN Orchestrator (V6.0) elindult...");
+  console.log("⚙️  Párhuzamos feldolgozás & Deep-Diffing & Auto-Heal aktív!");
   console.log("======================================================\n");
   
-  await sendAlert("🚀 UniStart Scraper folyamat elindult...");
+  await sendAlert("🚀 UniStart V6 Scraper folyamat elindult...");
 
   const stats = {
     startTime: Date.now(),
@@ -134,7 +152,7 @@ async function runScraper() {
     jobsAdded: 0,
     jobsUpdated: 0,
     jobsUntouched: 0,
-    jobsArchived: 0, // Törlés helyett!
+    jobsArchived: 0,
     anomaliesDetected: 0
   };
 
@@ -147,12 +165,16 @@ async function runScraper() {
       process.exit(0);
     }
 
-    // LÉTREHOZZUK A MUNKASORT (Queue)
     const companyQueue = [...companiesSnapshot.docs];
     
-    // A WORKER LOGIKA
+    // WORKER LOGIKA
     const workerTask = async (workerId) => {
       while (companyQueue.length > 0) {
+        if (isShuttingDown) {
+            console.log(`[Worker-${workerId}] 🛑 Leállás megszakítva a biztonságos kilépéshez.`);
+            break;
+        }
+
         const doc = companyQueue.shift();
         const companyId = doc.id;
         const company = doc.data();
@@ -161,6 +183,10 @@ async function runScraper() {
 
         if (!company.career_url) continue;
         
+        // Thundering Herd Védelem: Véletlenszerű 0-1.5mp csúsztatás indításkor
+        const jitter = Math.floor(Math.random() * 1500);
+        await new Promise(res => setTimeout(res, jitter));
+
         const logPrefix = `[Worker-${workerId} | ${company.name}]`;
         console.log(`\n${logPrefix} 🏢 Motor: ${engineName.toUpperCase()} indítása...`);
 
@@ -174,20 +200,17 @@ async function runScraper() {
         try {
           stats.companiesProcessed++;
           
-          // 1. Meglévő állások letöltése a Delta-Sync-hez
           const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
           const existingJobsMap = new Map();
           existingJobsSnapshot.forEach(d => existingJobsMap.set(d.id, d.data()));
 
-          // 2. Friss adatok letöltése
           let scrapedJobs = await scrapeWithExponentialBackoff(engine, company.name, company.career_url);
           stats.jobsFound += scrapedJobs.length;
 
-          // 3. 🚨 ADATMÉRGEZÉS DETEKTOR (Anomaly Detection)
+          // 🚨 ADATMÉRGEZÉS DETEKTOR
           let skipDeletion = false;
           let skipProcessing = false;
 
-          // Anomália 1: Pánik üzemmód (Circuit Breaker)
           if (existingJobsSnapshot.size > 15 && scrapedJobs.length < (existingJobsSnapshot.size * 0.3)) {
             const msg = `${logPrefix} 🚨 ANOMÁLIA: Gyanús állás-csökkenés! Tömeges archiválás blokkolva.`;
             console.log(msg);
@@ -197,7 +220,6 @@ async function runScraper() {
             errorLogs.push({ company: company.name, error: "Circuit Breaker Tripped." });
           }
 
-          // Anomália 2: Duplikációs Támadás
           const validUrls = new Set(scrapedJobs.map(j => j.url).filter(Boolean));
           if (scrapedJobs.length > 10 && validUrls.size < (scrapedJobs.length * 0.4)) {
             const msg = `${logPrefix} 🚨 ANOMÁLIA: Túl sok duplikált URL (Adatmérgezés)! Cég blokkolva.`;
@@ -209,11 +231,11 @@ async function runScraper() {
           }
 
           if (skipProcessing) {
-            scrapedJobs = null; // Memória felszabadítása
+            scrapedJobs = null; 
             continue; 
           }
 
-          // 4. ADAT FELDOLGOZÁS ÉS DELTA-SYNC
+          // ADAT FELDOLGOZÁS ÉS DELTA-SYNC
           const batch = db.batch();
           let batchCount = 0;
           let cAdded = 0, cUpdated = 0, cUntouched = 0, cArchived = 0;
@@ -236,11 +258,8 @@ async function runScraper() {
               const oldHash = oldJob.data_hash || "";
 
               if (newHash !== oldHash) {
-                // Elemzés: Mi változott pontosan?
                 const changes = getJobDifferences(oldJob, sanitizedJob);
-                if (changes.length > 0) {
-                    sanitizedJob.last_changes = changes; // Elmentjük az adatbázisba a változás tényét!
-                }
+                if (changes.length > 0) sanitizedJob.last_changes = changes;
                 
                 sanitizedJob.data_hash = newHash;
                 sanitizedJob.updated_at = FieldValue.serverTimestamp();
@@ -259,23 +278,20 @@ async function runScraper() {
             if (batchCount >= 450) { await batch.commit(); batchCount = 0; }
           }
 
-          // 5. 🏛️ TÖRTÉNELMI ADATTREZOR (Archiválás Törlés Helyett)
+          // 🏛️ TÖRTÉNELMI ADATTREZOR
           if (!skipDeletion) {
             for (const [existingJobId, oldJobData] of existingJobsMap.entries()) {
               if (!freshJobIds.has(existingJobId)) {
-                // Ahelyett, hogy törölnénk, átmásoljuk a jobs_archive kollekcióba!
                 const archivedJob = {
                     ...oldJobData,
                     archived_at: FieldValue.serverTimestamp(),
                     is_active: false
                 };
                 
-                // MENTÉS AZ ARCHÍVUMBA
                 batch.set(db.collection("jobs_archive").doc(existingJobId), archivedJob);
-                // TÖRLÉS AZ AKTÍV ÁLLÁSOK KÖZÜL (Hogy eltűnjön a weboldaladról)
                 batch.delete(db.collection("jobs").doc(existingJobId));
                 
-                batchCount += 2; // 2 művelet történik
+                batchCount += 2; 
                 cArchived++; stats.jobsArchived++;
                 
                 if (batchCount >= 450) { await batch.commit(); batchCount = 0; }
@@ -285,9 +301,8 @@ async function runScraper() {
 
           if (batchCount > 0) await batch.commit();
           
-          console.log(`${logPrefix} ✅ Kész! Talált: ${scrapedJobs.length} | Új: ${cAdded} | Frissült: ${cUpdated} | Érintetlen: ${cUntouched} | Archivált: ${cArchived}`);
+          console.log(`${logPrefix} ✅ Kész! Új: ${cAdded} | Frissült: ${cUpdated} | Érintetlen: ${cUntouched} | Archivált: ${cArchived}`);
 
-          // Memória felszabadítás (Garbage Collection támogatása)
           existingJobsMap.clear();
           freshJobIds.clear();
           scrapedJobs = null;
@@ -301,7 +316,7 @@ async function runScraper() {
       }
     };
 
-    // A MUNKÁSOK INDÍTÁSA (Párhuzamosítás: MAX 3 CÉG EGYSZERRE)
+    // A MUNKÁSOK INDÍTÁSA
     const CONCURRENCY_LIMIT = 3;
     const workers = [];
     for (let i = 1; i <= CONCURRENCY_LIMIT; i++) {
@@ -311,15 +326,18 @@ async function runScraper() {
     await Promise.all(workers);
 
     // ------------------------------------------------------------------
-    // 6. TELEMETRIA FELTÖLTÉSE A FIREBASE-BE (Live Health Dashboard)
+    // 6. TELEMETRIA FELTÖLTÉSE A FIREBASE-BE
     // ------------------------------------------------------------------
     const executionTimeSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
     stats.executionTimeSec = executionTimeSec;
     
+    // RAM Használat mérése
+    const usedMemoryMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
+    
     const systemStatus = {
         last_run: FieldValue.serverTimestamp(),
         status: stats.companiesFailed > 0 || stats.anomaliesDetected > 0 ? "warning" : "healthy",
-        metrics: stats,
+        metrics: { ...stats, peakMemoryMB: usedMemoryMB },
         recent_errors: errorLogs.slice(0, 10) 
     };
 
@@ -331,18 +349,18 @@ async function runScraper() {
     console.log("\n======================================================");
     console.log("🏁 SZINKRONIZÁCIÓ BEFEJEZŐDÖTT");
     console.log("======================================================");
-    console.log(`⏱️ Párhuzamos futási idő: ${executionTimeSec} mp (Gyorsítva!)`);
+    console.log(`⏱️ Futási idő:        ${executionTimeSec} mp`);
+    console.log(`🧠 Memória használat: ${usedMemoryMB} MB (Tiszta!)`);
     console.log(`🏢 Vizsgált cégek:    ${stats.companiesProcessed} db (Hiba: ${stats.companiesFailed})`);
-    console.log(`🚨 Kiszűrt Anomáliák: ${stats.anomaliesDetected} db (Védelem aktív)`);
+    console.log(`🚨 Kiszűrt Anomáliák: ${stats.anomaliesDetected} db`);
     console.log("------------------------------------------------------");
     console.log(`✨ Újként mentve:     ${stats.jobsAdded} db`);
     console.log(`🔄 Frissítve (Delta): ${stats.jobsUpdated} db`);
-    console.log(`😴 Érintetlen:        ${stats.jobsUntouched} db (Sávszélesség spórolva)`);
-    console.log(`🏛️ Archívumba rakva:  ${stats.jobsArchived} db (Történelmi adatbázis nőtt)`);
+    console.log(`😴 Érintetlen:        ${stats.jobsUntouched} db`);
+    console.log(`🏛️ Archívumba rakva:  ${stats.jobsArchived} db`);
     console.log("======================================================\n");
-    console.log("📡 Rendszerállapot feltöltve a Firebase [system_logs/scraper_health] dokumentumba!");
     
-    await sendAlert(`✅ Szinkronizáció befejezve. Új állások: ${stats.jobsAdded}, Archivált: ${stats.jobsArchived}. Futási idő: ${executionTimeSec}s.`);
+    await sendAlert(`✅ Szinkronizáció befejezve. Új: ${stats.jobsAdded}, Archivált: ${stats.jobsArchived}. Futási idő: ${executionTimeSec}s. Memória: ${usedMemoryMB}MB.`);
 
     process.exit(0);
 

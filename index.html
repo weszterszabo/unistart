@@ -5,10 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UniStart - Karrierfórum</title>
 
-<!-- 🌟 LEAFLET.JS TÉRKÉP KÖNYVTÁRAK (Ingyenes, villámgyors) -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
 <style>
 /* ==========================================================================
    CSS VÁLTOZÓK (APPLE DESIGN & GLASSMORPHISM)
@@ -84,81 +80,6 @@ body.modal-open { overflow: hidden; }
 #toastContainer.show { transform: translateX(-50%) translateY(0); opacity: 1; }
 
 /* ==========================================================================
-   TÉRKÉP STÍLUSOK ÉS MARKER-EK (V10)
-   ========================================================================== */
-#mapContainerWrapper {
-    display: none; 
-    width: 100%;
-    height: 600px;
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    border: 1px solid var(--card-border);
-    box-shadow: 0 4px 20px var(--card-shadow);
-    margin-bottom: 30px;
-    z-index: 1;
-}
-
-#jobMap {
-    width: 100%;
-    height: 100%;
-    background-color: var(--card-bg);
-}
-
-.custom-map-pin-cluster {
-    background-color: var(--primary-color);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: 800;
-    font-size: 14px;
-    transition: transform 0.2s;
-}
-.custom-map-pin-cluster:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(10, 132, 255, 0.6);
-}
-
-.leaflet-popup-content-wrapper {
-    background: var(--modal-bg) !important;
-    backdrop-filter: blur(20px) !important;
-    color: var(--text-color) !important;
-    border: 1px solid var(--card-border) !important;
-    border-radius: 16px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
-    padding: 0 !important;
-}
-.leaflet-popup-tip {
-    background: var(--modal-bg) !important;
-    border: 1px solid var(--card-border) !important;
-}
-.leaflet-popup-content {
-    margin: 15px !important;
-    width: 260px !important;
-}
-.leaflet-container a.leaflet-popup-close-button {
-    color: var(--subtitle-color) !important;
-    top: 10px !important;
-    right: 10px !important;
-}
-.leaflet-container a.leaflet-popup-close-button:hover { color: var(--text-color) !important; }
-
-.map-popup-header { border-bottom: 1px solid var(--card-border); padding-bottom: 10px; margin-bottom: 10px; font-weight: 700; font-size: 16px; }
-.map-job-list { max-height: 220px; overflow-y: auto; padding-right: 5px; }
-.map-job-item { padding: 12px; border-bottom: 1px solid var(--card-border); cursor: pointer; transition: background 0.2s, border-radius 0.2s; }
-.map-job-item:last-child { border-bottom: none; }
-.map-job-item:hover { background: rgba(255, 255, 255, 0.08); border-radius: 8px; }
-[data-theme="light"] .map-job-item:hover { background: rgba(0, 0, 0, 0.05); }
-
-.map-job-title { font-weight: 700; font-size: 14px; margin: 0 0 4px 0; color: var(--primary-color); line-height: 1.2;}
-.map-job-company { font-size: 12px; color: var(--subtitle-color); margin: 0 0 6px 0; font-weight: 600;}
-
-/* ==========================================================================
    UNIFIED OMNIBAR ÉS SZŰRŐ CAROUSEL
    ========================================================================== */
 .omnibar-wrapper { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 20px var(--card-shadow); display: flex; flex-direction: column; gap: 15px; }
@@ -169,6 +90,12 @@ body.modal-open { overflow: hidden; }
 .search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; }
 .search-clear-icon { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); background: var(--card-border); color: var(--text-color); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; opacity: 0; pointer-events: none; transition: 0.2s; border: none; }
 .search-box-input:valid ~ .search-clear-icon, .search-box-input.has-value ~ .search-clear-icon { opacity: 1; pointer-events: auto; }
+
+/* 🏷️ Dinamikus Kereső Címkék (Pills) */
+.search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
+.search-tag-chip { background: var(--primary-color); color: white; padding: 6px 12px; border-radius: 12px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 6px; animation: fadeIn 0.2s ease; }
+.search-tag-close { background: rgba(0,0,0,0.2); border: none; color: white; width: 18px; height: 18px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
+.search-tag-close:hover { background: var(--danger-color); }
 
 .filter-carousel-row { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 5px; scrollbar-width: none; align-items: center; }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
@@ -182,10 +109,6 @@ body.modal-open { overflow: hidden; }
 .magic-chip { flex-shrink: 0; background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); border: 1px solid var(--card-border); color: var(--text-color); padding: 9px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
 .magic-chip:hover { border-color: var(--primary-color); }
 .magic-chip.active { background: linear-gradient(135deg, var(--card-bg), var(--tag-bg)); color: var(--primary-color); border-color: var(--primary-color); box-shadow: 0 0 0 1px var(--primary-color); }
-
-.map-toggle-btn { flex-shrink: 0; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border); padding: 9px 16px; border-radius: 20px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
-.map-toggle-btn:hover { border-color: var(--text-color); }
-.map-toggle-btn.active { background: white; color: black; border-color: white; }
 
 .active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
 .active-filter-chip { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 12px; border-radius: 12px; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
@@ -269,7 +192,7 @@ body.modal-open { overflow: hidden; }
 .empty-state-icon { font-size: 60px; margin-bottom: 20px; display: block; opacity: 0.5; }
 
 /* ==========================================================================
-   JOB QUICK VIEW MODAL (Gyorsnézet Ablak) 🚨 Z-INDEX FIXÁLVA
+   JOB QUICK VIEW MODAL
    ========================================================================== */
 .job-preview-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(5px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
 .job-preview-overlay.active { opacity: 1; visibility: visible; }
@@ -280,11 +203,8 @@ body.modal-open { overflow: hidden; }
 .job-preview-logo { width: 80px; height: 80px; background: var(--tag-bg); border: 1px solid var(--card-border); border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 800; color: var(--primary-color); flex-shrink: 0; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
 .job-preview-title { font-size: 24px; font-weight: 800; margin: 0 0 8px 0; color: var(--text-color); line-height: 1.2; padding-right: 30px;}
 .job-preview-company { font-size: 16px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
-
-/* 🚨 JAVÍTOTT Z-INDEX 🚨 */
 .job-preview-close { position: absolute; top: 20px; right: 20px; background: var(--tag-bg); border: none; color: var(--subtitle-color); width: 32px; height: 32px; border-radius: 50%; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 .job-preview-close:hover { background: var(--card-border); color: var(--text-color); }
-
 .job-preview-body { padding: 30px; overflow-y: auto; flex: 1; }
 .job-preview-section { margin-bottom: 25px; }
 .job-preview-section h4 { font-size: 14px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; margin: 0 0 10px 0; }
@@ -313,18 +233,15 @@ body.modal-open { overflow: hidden; }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 4px 12px rgba(10, 132, 255, 0.25); }
 
 /* ==========================================================================
-   STATIKUS MODÁLIS ABLAKOK (Rólunk, Támogatás) 🚨 Z-INDEX FIXÁLVA
+   STATIKUS MODÁLIS ABLAKOK
    ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.2s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
 .big-support-box { background: var(--modal-bg); backdrop-filter: blur(25px); border: 1px solid var(--card-border); border-radius: 20px; width: 100%; max-width: 550px; max-height: 90vh; box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4); position: relative; transform: scale(0.95); transition: 0.2s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .big-support-overlay.active .big-support-box { transform: scale(1); }
 .big-support-content { padding: 30px; overflow-y: auto; flex: 1; }
-
-/* 🚨 JAVÍTOTT Z-INDEX 🚨 */
 .big-close-btn { position: absolute; top: 15px; right: 15px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 32px; height: 32px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 .big-close-btn:hover { background: var(--danger-color); color: white; border-color: var(--danger-color); }
-
 .about-card { background: var(--tag-bg); border-radius: 12px; padding: 20px; border: 1px solid var(--tag-border); display: flex; flex-direction: column; }
 .support-options { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; margin-bottom: 24px; }
 @media (min-width: 600px) { .support-options { flex-direction: row; } }
@@ -357,7 +274,6 @@ body.modal-open { overflow: hidden; }
     .dashboard-content { padding: 20px 15px; }
     
     .omnibar-wrapper { padding: 15px; }
-    
     .company-card { flex-direction: column; align-items: flex-start; padding: 15px; gap: 15px; }
     .company-card-actions { width: 100%; flex-direction: column; }
     .action-icons-row { width: 100%; }
@@ -462,20 +378,32 @@ body.modal-open { overflow: hidden; }
             <div id="forumTab" class="tab-content active">
 
                 <div class="omnibar-wrapper">
-                    <!-- Szöveges Kereső -->
-                    <div class="search-box-container" style="margin-bottom: 0;">
-                        <span class="search-icon">🔍</span>
-                        <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Pozíció, cég, címke (pl. Python, Diákmunka)..." oninput="handleTextSearch(this.value)" required>
-                        <button class="search-clear-icon" id="searchClearBtn" onclick="clearTextSearch()" type="button">✖</button>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        
+                        <!-- 🏷️ Kulcsszó Kereső (Tag alapú) -->
+                        <div class="search-box-container" style="margin-bottom: 0;">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="mainSearchInput" class="search-box-input" placeholder="Kulcsszó (pl. Python) -> Üss Enter-t...">
+                        </div>
+                        
+                        <!-- 🏷️ Kereső Címkék Helye (Alapból rejtett) -->
+                        <div class="search-tags-row" id="searchTagsRow"></div>
+
+                        <!-- 📍 Dedikált Helyszín Kereső -->
+                        <div class="search-box-container" style="margin-bottom: 0;">
+                            <span class="search-icon">📍</span>
+                            <input type="text" id="locationSearchInput" class="search-box-input" placeholder="Helyszín (pl. Budapest, Home office)..." oninput="handleLocationSearch(this.value)">
+                            <button class="search-clear-icon" id="locClearBtn" onclick="clearLocationSearch()" type="button">✖</button>
+                        </div>
+                        
                     </div>
 
-                    <!-- Filter Carousel 🌟 ÚJ GOMB A TÉRKÉPHEZ -->
+                    <!-- Filter Carousel -->
                     <div class="filter-carousel-row">
                         <button class="main-filter-btn" onclick="openFilterModal()">
                             🎛️ Szűrők <span class="filter-badge" id="activeFilterBadge">0</span>
                         </button>
-                        <div class="filter-divider"></div>
-                        <button class="map-toggle-btn" id="mapToggleBtn" onclick="toggleMapView()">🗺️ Térkép</button>
                         <div class="filter-divider"></div>
                         <button class="magic-chip" id="magicChipToday" onclick="toggleMagicFilter('today')">🔥 Mai friss</button>
                         <button class="magic-chip" id="magicChipRemote" onclick="toggleMagicFilter('remote')">🏠 Home Office</button>
@@ -483,7 +411,7 @@ body.modal-open { overflow: hidden; }
                         <button class="magic-chip" id="magicChipBusiness" onclick="toggleMagicFilter('business')">💼 Gazdaság</button>
                     </div>
 
-                    <!-- Aktív Szűrők Buborékok -->
+                    <!-- Aktív Szűrők Buborékok (Modálból) -->
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
                 </div>
                 
@@ -500,15 +428,9 @@ body.modal-open { overflow: hidden; }
                     </h2>
                 </div>
 
-                <!-- 🌟 LISTA NÉZET -->
                 <div class="company-grid" id="jobGridContainer">
                     <div class="company-card skeleton"><div class="skeleton-avatar"></div><div class="company-card-content"><div class="skeleton-text"></div><div class="skeleton-text short"></div></div></div>
                     <div class="company-card skeleton"><div class="skeleton-avatar"></div><div class="company-card-content"><div class="skeleton-text"></div><div class="skeleton-text short"></div></div></div>
-                </div>
-
-                <!-- 🌟 ÚJ V10: TÉRKÉP NÉZET TARTÁLYA -->
-                <div id="mapContainerWrapper">
-                    <div id="jobMap"></div>
                 </div>
 
                 <div id="infiniteScrollAnchor" class="infinite-loader">Görgetés a továbbiakhoz...</div>
@@ -572,9 +494,6 @@ body.modal-open { overflow: hidden; }
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-    // -----------------------------------------------------
-    // 1. TÉMA VÁLTÓ ÉS OS-SYNC
-    // -----------------------------------------------------
     const body = document.body;
     const themeToggleDesktop = document.getElementById('themeToggleDesktop');
     const themeToggleMobile = document.getElementById('themeToggleMobile');
@@ -592,7 +511,6 @@ body.modal-open { overflow: hidden; }
             if (themeToggleMobile) themeToggleMobile.textContent = '☀️';
             localStorage.setItem('theme', 'dark');
         }
-        updateMapTheme(); // V10: Szólunk a térképnek, hogy változott a téma!
     }
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'light' || (!savedTheme && prefersLightScheme.matches)) applyTheme(true);
@@ -600,9 +518,6 @@ body.modal-open { overflow: hidden; }
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
     if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
 
-    // -----------------------------------------------------
-    // 2. UI, SCROLL ÉS MODAL LOGIKA
-    // -----------------------------------------------------
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
@@ -670,7 +585,7 @@ body.modal-open { overflow: hidden; }
     }
 
     // -----------------------------------------------------
-    // 3. FIREBASE INICIALIZÁLÁS
+    // FIREBASE INICIALIZÁLÁS
     // -----------------------------------------------------
     const firebaseConfig = {
         apiKey: "AIzaSyD2efnd7QvT-ODZb3MOG4PaDfIRuvVqAxM", 
@@ -682,14 +597,15 @@ body.modal-open { overflow: hidden; }
     const db = firebase.firestore();
 
     // -----------------------------------------------------
-    // 4. ÁLLAPOTOK ÉS SZŰRŐK
+    // ÁLLAPOTOK ÉS SZŰRŐK
     // -----------------------------------------------------
     let jobsData = [];
     let currentFilteredJobs = [];
     let displayedCount = 15; 
     let filterMode = 'all'; 
 
-    let activeSearchText = ""; 
+    let activeSearchTags = []; 
+    let activeLocationText = ""; 
     let currentSortMode = "date_desc"; 
     let activeMagicFilter = "";
     
@@ -726,7 +642,7 @@ body.modal-open { overflow: hidden; }
 
     function shareJob(jobId, title, company, event) {
         event.stopPropagation();
-        const shareUrl = `${window.location.origin}${window.location.pathname}?companies=${encodeURIComponent(company)}&q=${encodeURIComponent(title.split(' ')[0])}`;
+        const shareUrl = `${window.location.origin}${window.location.pathname}?companies=${encodeURIComponent(company)}&tags=${encodeURIComponent(title.split(' ')[0])}`;
         const shareData = { title: `UniStart: ${title}`, text: `Nézd meg ezt az állást a(z) ${company}-nál!`, url: shareUrl };
         if (navigator.share) { navigator.share(shareData).catch(err => console.log('Megosztás megszakítva', err)); } 
         else { navigator.clipboard.writeText(shareUrl).then(() => { showToast("Állás linkje a vágólapra másolva!", "share"); }); }
@@ -743,7 +659,7 @@ body.modal-open { overflow: hidden; }
     }
 
     // -----------------------------------------------------
-    // 5. JOB QUICK VIEW MODAL
+    // JOB QUICK VIEW MODAL
     // -----------------------------------------------------
     function openJobPreview(jobId) {
         const job = jobsData.find(j => j.id === jobId);
@@ -798,11 +714,15 @@ body.modal-open { overflow: hidden; }
     function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
 
     // -----------------------------------------------------
-    // 6. ADATOK BETÖLTÉSE, SZŰRÉS ÉS MODÁL LOGIKA
+    // ADATOK BETÖLTÉSE, SZŰRÉS ÉS MODÁL LOGIKA
     // -----------------------------------------------------
     function readStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
-        activeSearchText = urlParams.get('q') || "";
+        
+        const tagsParam = urlParams.get('tags');
+        if (tagsParam) activeSearchTags = tagsParam.split('|');
+        
+        activeLocationText = urlParams.get('loc') || "";
         
         const comps = urlParams.get('companies');
         activeCompanies = comps ? comps.split(',') : [];
@@ -812,14 +732,19 @@ body.modal-open { overflow: hidden; }
         
         currentSortMode = urlParams.get('sort') || "date_desc";
         
-        document.getElementById('mainSearchInput').value = activeSearchText;
-        if(activeSearchText !== "") document.getElementById('mainSearchInput').classList.add('has-value');
         document.getElementById('sortSelect').value = currentSortMode;
+        
+        if (activeLocationText) {
+            document.getElementById('locationSearchInput').value = activeLocationText;
+            document.getElementById('locationSearchInput').classList.add('has-value');
+        }
+        renderSearchTags();
     }
 
     function updateURLState() {
         const urlParams = new URLSearchParams();
-        if (activeSearchText) urlParams.set('q', activeSearchText);
+        if (activeSearchTags.length > 0) urlParams.set('tags', activeSearchTags.join('|'));
+        if (activeLocationText) urlParams.set('loc', activeLocationText);
         if (activeCompanies.length > 0) urlParams.set('companies', activeCompanies.join(','));
         if (activeFaculties.length > 0) urlParams.set('faculties', activeFaculties.join(','));
         if (currentSortMode !== "date_desc") urlParams.set('sort', currentSortMode);
@@ -945,14 +870,110 @@ body.modal-open { overflow: hidden; }
         }
     }
 
+    // -----------------------------------------------------
+    // 🏷️ ÚJ: CÍMKÉS ÉS HELYSZÍN KERESŐ LOGIKA
+    // -----------------------------------------------------
+    function renderSearchTags() {
+        const row = document.getElementById('searchTagsRow');
+        row.innerHTML = '';
+        if (activeSearchTags.length === 0) {
+            row.style.display = 'none';
+        } else {
+            row.style.display = 'flex';
+            activeSearchTags.forEach(tag => {
+                const chip = document.createElement('div');
+                chip.className = 'search-tag-chip';
+                chip.innerHTML = `${tag} <button class="search-tag-close" onclick="removeSearchTag('${tag}')">✖</button>`;
+                row.appendChild(chip);
+            });
+        }
+    }
+
+    function removeSearchTag(tag) {
+        activeSearchTags = activeSearchTags.filter(t => t !== tag);
+        renderSearchTags();
+        applyFilters();
+    }
+
+    // Fő Kereső (Tag konvertálás)
+    document.getElementById('mainSearchInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ',') {
+            e.preventDefault();
+            const val = this.value.trim().replace(/,/g, '');
+            if (val && !activeSearchTags.includes(val)) {
+                activeSearchTags.push(val);
+                this.value = '';
+                renderSearchTags();
+                applyFilters();
+            } else if (val) {
+                this.value = ''; 
+            }
+        }
+    });
+
+    document.getElementById('mainSearchInput').addEventListener('blur', function(e) {
+        const val = this.value.trim().replace(/,/g, '');
+        if (val && !activeSearchTags.includes(val)) {
+            activeSearchTags.push(val);
+            this.value = '';
+            renderSearchTags();
+            applyFilters();
+        }
+    });
+
+    function addTagToSearch(tagText, event) {
+        if(event) event.stopPropagation(); 
+        const cleanTag = tagText.replace('#', '').trim();
+        if (!activeSearchTags.includes(cleanTag)) {
+            activeSearchTags.push(cleanTag);
+            renderSearchTags();
+            applyFilters();
+            scrollToTop();
+        }
+    }
+
+    // Helyszín Kereső (Szöveges, Élő)
+    let locTimeout;
+    function handleLocationSearch(val) {
+        const inputEl = document.getElementById('locationSearchInput');
+        if(val.trim() !== "") inputEl.classList.add('has-value');
+        else inputEl.classList.remove('has-value');
+
+        clearTimeout(locTimeout);
+        locTimeout = setTimeout(() => {
+            activeLocationText = val.trim();
+            applyFilters();
+        }, 350); 
+    }
+
+    function clearLocationSearch() {
+        const inputEl = document.getElementById('locationSearchInput');
+        inputEl.value = "";
+        inputEl.classList.remove('has-value');
+        activeLocationText = "";
+        applyFilters();
+    }
+
+    function addLocationToSearch(locText, event) {
+        if (event) event.stopPropagation();
+        const inputEl = document.getElementById('locationSearchInput');
+        inputEl.value = locText;
+        inputEl.classList.add('has-value');
+        activeLocationText = locText;
+        applyFilters();
+        scrollToTop();
+    }
+
+    // -----------------------------------------------------
+    // A FŐ SZŰRŐ (Apply Filters)
+    // -----------------------------------------------------
     function applyFilters() {
         localStorage.setItem('unistart_active_companies', JSON.stringify(activeCompanies));
         localStorage.setItem('unistart_active_faculties', JSON.stringify(activeFaculties));
         updateURLState(); 
         renderActiveFilterChips();
 
-        const searchInputRaw = activeSearchText;
-        const searchWords = searchInputRaw !== "" ? removeAccents(searchInputRaw).split(/\s+/) : [];
+        const locWords = activeLocationText ? removeAccents(activeLocationText.toLowerCase()).split(/\s+/) : [];
         const now = Date.now();
 
         currentFilteredJobs = jobsData.filter(job => {
@@ -961,12 +982,22 @@ body.modal-open { overflow: hidden; }
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
             
-            let matchText = true;
-            if (searchWords.length > 0) {
+            // Címke szűrés (Minden aktív tagnak szerepelnie kell az állásban)
+            let matchTags = true;
+            if (activeSearchTags.length > 0) {
                 const tagsString = (job.tags || []).join(" ");
-                const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.location || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
+                const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
                 const jobCorpusClean = removeAccents(jobCorpusRaw);
-                matchText = searchWords.every(word => jobCorpusClean.includes(word));
+                matchTags = activeSearchTags.every(tag => {
+                    return jobCorpusClean.includes(removeAccents(tag.toLowerCase()));
+                });
+            }
+
+            // Helyszín szűrés
+            let matchLoc = true;
+            if (locWords.length > 0) {
+                const jobLocClean = removeAccents((job.location || '').toLowerCase());
+                matchLoc = locWords.every(w => jobLocClean.includes(w));
             }
             
             let matchMagic = true;
@@ -990,21 +1021,19 @@ body.modal-open { overflow: hidden; }
                 if (!(job.faculty || "").includes("Gazdaság") && !(job.faculty || "").includes("Pénzügy") && !(job.faculty || "").includes("Menedzsment")) matchMagic = false;
             }
 
-            return matchCompany && matchFaculty && matchText && matchMagic;
+            return matchCompany && matchFaculty && matchTags && matchLoc && matchMagic;
         });
 
         currentFilteredJobs.sort((a, b) => {
             let dateA = a.date_posted || a.scraped_at || 0;
             let dateB = b.date_posted || b.scraped_at || 0;
             
-            // Biztonságos Dátum konverzió (Safari NaN védelem)
             if (dateA && dateA.toDate) dateA = dateA.toDate().getTime();
             else if (typeof dateA === 'string') dateA = new Date(dateA).getTime() || 0;
             
             if (dateB && dateB.toDate) dateB = dateB.toDate().getTime();
             else if (typeof dateB === 'string') dateB = new Date(dateB).getTime() || 0;
 
-            // SZIGORÚ MATEMATIKAI RENDEZÉS (Apple/Safari barát kivonás)
             if (currentSortMode === "date_desc") return dateB - dateA;
             if (currentSortMode === "date_asc") return dateA - dateB;
             if (currentSortMode === "company_az") {
@@ -1016,43 +1045,7 @@ body.modal-open { overflow: hidden; }
         });
 
         displayedCount = 15; 
-        
-        if (isMapViewActive) {
-            renderMapMarkers();
-            document.getElementById('jobCountBadge').innerText = currentFilteredJobs.length + ' db';
-        } else {
-            renderGrid();
-        }
-    }
-
-    let searchTimeout;
-    function handleTextSearch(value) {
-        const inputEl = document.getElementById('mainSearchInput');
-        if(value.trim() !== "") inputEl.classList.add('has-value');
-        else inputEl.classList.remove('has-value');
-
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => {
-            activeSearchText = removeAccents(value.toLowerCase().trim());
-            applyFilters();
-        }, 350); 
-    }
-
-    function clearTextSearch() {
-        const inputEl = document.getElementById('mainSearchInput');
-        inputEl.value = "";
-        inputEl.classList.remove('has-value');
-        activeSearchText = "";
-        applyFilters();
-    }
-    
-    function addTagToSearch(tagText, event) {
-        if(event) event.stopPropagation(); 
-        const cleanTag = tagText.replace('#', '').trim();
-        document.getElementById('mainSearchInput').value = cleanTag;
-        document.getElementById('mainSearchInput').classList.add('has-value');
-        handleTextSearch(cleanTag);
-        scrollToTop();
+        renderGrid();
     }
 
     function handleSort(value) { currentSortMode = value; applyFilters(); }
@@ -1065,17 +1058,6 @@ body.modal-open { overflow: hidden; }
         card.style.animationDelay = '0s'; 
         card.innerHTML = `<div style="font-size: 42px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; width: 60px;">☕</div><div class="company-card-content"><h3 class="company-name" style="color: var(--primary-color); margin-bottom: 6px; font-size: 18px;">Tetszik az UniStart?</h3><p class="company-short-desc">Támogasd a szerverköltségeket és a fejlesztést egy kávé árával!</p></div><div class="company-card-actions"><button class="apply-btn">Támogatom</button></div>`;
         return card;
-    }
-
-    function highlightText(text) {
-        if (!activeSearchText || activeSearchText.length < 2) return text;
-        const searchWords = activeSearchText.split(/\s+/).filter(w => w.length > 1);
-        let highlightedText = text;
-        searchWords.forEach(word => {
-            const regex = new RegExp(`(${word})`, 'gi');
-            highlightedText = highlightedText.replace(regex, `<span class="highlight">$1</span>`);
-        });
-        return highlightedText;
     }
 
     function renderGrid() {
@@ -1112,8 +1094,8 @@ body.modal-open { overflow: hidden; }
             card.onclick = () => openJobPreview(job.id);
             card.style.animationDelay = `${(i - startIndex) * 0.05}s`;
 
-            const jobTitle = highlightText(job.title || 'Névtelen pozíció');
-            const companyName = highlightText(job.company_name || 'Névtelen cég');
+            const jobTitle = job.title || 'Névtelen pozíció';
+            const companyName = job.company_name || 'Névtelen cég';
             
             let displayDate = "";
             if (job.date_posted) {
@@ -1122,11 +1104,11 @@ body.modal-open { overflow: hidden; }
                 else displayDate = String(job.date_posted);
             }
 
-            const locTag = job.location && job.location !== "Nincs megadva" ? `<span class="job-tag clickable-tag" onclick="addTagToSearch('${job.location}', event)" title="Keresés erre a helyszínre">📍 ${job.location}</span>` : '';
+            const locTag = job.location && job.location !== "Nincs megadva" ? `<span class="job-tag clickable-tag" onclick="addLocationToSearch('${job.location}', event)" title="Keresés erre a helyszínre">📍 ${job.location}</span>` : '';
             const dPosted = displayDate ? `<span class="job-tag">📅 ${displayDate}</span>` : '';
             const facultyTag = job.faculty && job.faculty !== "🔍 Egyéb / Általános" ? `<span class="job-tag tag-faculty clickable-tag" onclick="addTagToSearch('${job.faculty}', event)" title="Keresés erre a kategóriára">${job.faculty}</span>` : '';
             const vibeTag = job.work_style ? `<span class="job-tag tag-vibe clickable-tag" onclick="addTagToSearch('${job.work_style.split(' ')[1]}', event)" title="Keresés erre a stílusra">${job.work_style}</span>` : '';
-            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightText(tag)}</span>`).join('');
+            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${tag}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
 
@@ -1158,176 +1140,12 @@ body.modal-open { overflow: hidden; }
     function setupInfiniteScroll() {
         const anchor = document.getElementById('infiniteScrollAnchor');
         const observer = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting && displayedCount < currentFilteredJobs.length && !isMapViewActive) {
+            if (entries[0].isIntersecting && displayedCount < currentFilteredJobs.length) {
                 displayedCount += 15; 
                 renderGrid(); 
             }
         }, { rootMargin: "200px" }); 
         observer.observe(anchor);
-    }
-
-    // ==========================================================================
-    // 🌟 ÚJ V10: LEAFLET TÉRKÉP LOGIKA 
-    // ==========================================================================
-    let isMapViewActive = false;
-    let jobMap = null;
-    let mapTileLayer = null;
-    let markersLayerGroup = null;
-
-    const cityCoordinates = {
-        "budapest": [47.4979, 19.0402],
-        "debrecen": [47.5316, 21.6273],
-        "szeged": [46.2530, 20.1414],
-        "miskolc": [48.1000, 20.7833],
-        "pécs": [46.0727, 18.2323],
-        "győr": [47.6833, 17.6351],
-        "nyíregyháza": [47.9554, 21.7167],
-        "kecskemét": [46.9062, 19.6913],
-        "székesfehérvár": [47.1899, 18.4103],
-        "szombathely": [47.2307, 16.6210],
-        "szolnok": [47.1833, 20.2000],
-        "érd": [47.3833, 18.9167],
-        "tatabánya": [47.5800, 18.4033],
-        "sopron": [47.6833, 16.5833],
-        "kaposvár": [46.3667, 17.7833],
-        "veszprém": [47.0928, 17.9135],
-        "békéscsaba": [46.6797, 21.0973],
-        "zalaegerszeg": [46.8400, 16.8439],
-        "eger": [47.9026, 20.3733],
-        "nagykanizsa": [46.4500, 16.9833],
-        "dunaújváros": [46.9619, 18.9355],
-        "hódmezővásárhely": [46.4300, 20.3300],
-        "gödöllő": [47.5989, 19.3644]
-    };
-
-    function getJobCoordinate(locationStr) {
-        if (!locationStr || locationStr.toLowerCase() === "nincs megadva") return null;
-        const loc = locationStr.toLowerCase();
-        
-        if (loc.includes("home office") || loc.includes("remote") || loc.includes("távmunka")) return null;
-        
-        for (const [city, coords] of Object.entries(cityCoordinates)) {
-            if (loc.includes(city)) return coords;
-        }
-        return null; 
-    }
-
-    function toggleMapView() {
-        isMapViewActive = !isMapViewActive;
-        const btn = document.getElementById('mapToggleBtn');
-        const grid = document.getElementById('jobGridContainer');
-        const scrollAnchor = document.getElementById('infiniteScrollAnchor');
-        const mapContainer = document.getElementById('mapContainerWrapper');
-
-        if (isMapViewActive) {
-            btn.classList.add('active');
-            btn.innerText = "📄 Lista nézet";
-            grid.style.display = 'none';
-            scrollAnchor.style.display = 'none';
-            mapContainer.style.display = 'block';
-            
-            initMap();
-            renderMapMarkers();
-        } else {
-            btn.classList.remove('active');
-            btn.innerText = "🗺️ Térkép";
-            grid.style.display = 'grid'; 
-            scrollAnchor.style.display = 'flex';
-            mapContainer.style.display = 'none';
-        }
-    }
-
-    function initMap() {
-        if (jobMap !== null) {
-            jobMap.invalidateSize(); 
-            return;
-        }
-
-        jobMap = L.map('jobMap').setView([47.1625, 19.5033], 7);
-        markersLayerGroup = L.layerGroup().addTo(jobMap);
-
-        updateMapTheme(); 
-    }
-
-    function updateMapTheme() {
-        if (jobMap === null) return;
-        
-        const isLight = document.body.getAttribute('data-theme') === 'light';
-        const tileUrl = isLight 
-            ? 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png' 
-            : 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'; 
-
-        if (mapTileLayer) {
-            jobMap.removeLayer(mapTileLayer);
-        }
-
-        mapTileLayer = L.tileLayer(tileUrl, {
-            attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
-            subdomains: 'abcd',
-            maxZoom: 19
-        }).addTo(jobMap);
-    }
-
-    function renderMapMarkers() {
-        if (jobMap === null || !markersLayerGroup) return;
-
-        markersLayerGroup.clearLayers(); 
-
-        const groupedJobs = {};
-        
-        currentFilteredJobs.forEach(job => {
-            const coords = getJobCoordinate(job.location);
-            if (coords) {
-                const key = `${coords[0]},${coords[1]}`;
-                if (!groupedJobs[key]) groupedJobs[key] = { coords: coords, jobs: [] };
-                groupedJobs[key].jobs.push(job);
-            }
-        });
-
-        for (const key in groupedJobs) {
-            const group = groupedJobs[key];
-            const jobCount = group.jobs.length;
-
-            const clusterIcon = L.divIcon({
-                className: 'custom-cluster-wrapper',
-                html: `<div class="custom-map-pin-cluster">${jobCount}</div>`,
-                iconSize: [36, 36],
-                iconAnchor: [18, 18],
-                popupAnchor: [0, -18]
-            });
-
-            const marker = L.marker(group.coords, { icon: clusterIcon }).addTo(markersLayerGroup);
-
-            let cityName = "Helyszín";
-            for (const [city, crd] of Object.entries(cityCoordinates)) {
-                if (crd[0] === group.coords[0] && crd[1] === group.coords[1]) {
-                    cityName = city.charAt(0).toUpperCase() + city.slice(1);
-                    break;
-                }
-            }
-
-            let jobsHtmlList = group.jobs.map(job => {
-                const isSaved = savedJobIds.includes(job.id);
-                return `
-                    <div class="map-job-item" onclick="openJobPreview('${job.id}')">
-                        <div class="map-job-title">${job.title}</div>
-                        <div class="map-job-company">${job.company_name}</div>
-                        <div class="job-tags" style="margin-top:0;">
-                            ${isSaved ? '<span class="job-tag" style="background:rgba(255, 69, 58, 0.1); color:#ff453a;">❤️ Mentve</span>' : ''}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-
-            const popupContent = `
-                <div class="map-popup-header">${cityName} (${jobCount} állás)</div>
-                <div class="map-job-list">
-                    ${jobsHtmlList}
-                </div>
-            `;
-
-            marker.bindPopup(popupContent);
-        }
     }
 
     auth.onAuthStateChanged((user) => { loadJobsData(); });

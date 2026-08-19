@@ -237,7 +237,7 @@ async function runScraper() {
           }
 
           // ADAT FELDOLGOZÁS ÉS DELTA-SYNC
-          const batch = db.batch();
+          let batch = db.batch(); // 🚨 JAVÍTVA: const helyett let
           let batchCount = 0;
           let cAdded = 0, cUpdated = 0, cUntouched = 0, cArchived = 0;
 
@@ -276,7 +276,12 @@ async function runScraper() {
               batchCount++; cAdded++; stats.jobsAdded++;
             }
 
-            if (batchCount >= 450) { await batch.commit(); batchCount = 0; }
+            // 🚨 JAVÍTÁS: Csomag lezárása ÉS új doboz nyitása!
+            if (batchCount >= 450) { 
+                await batch.commit(); 
+                batch = db.batch(); 
+                batchCount = 0; 
+            }
           }
 
           // 🏛️ TÖRTÉNELMI ADATTREZOR
@@ -295,7 +300,12 @@ async function runScraper() {
                 batchCount += 2; 
                 cArchived++; stats.jobsArchived++;
                 
-                if (batchCount >= 450) { await batch.commit(); batchCount = 0; }
+                // 🚨 JAVÍTÁS: Itt is új doboz kell a lezárás után!
+                if (batchCount >= 450) { 
+                    await batch.commit(); 
+                    batch = db.batch(); 
+                    batchCount = 0; 
+                }
               }
             }
           }

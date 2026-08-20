@@ -449,20 +449,59 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 3. MEGA SZŰRŐ MODÁLIS ABLAK                                          -->
+<!-- HTML: 3. MEGA SZŰRŐ MODÁLIS ABLAK (Kompakt Füles Verzió)                   -->
 <!-- ========================================================================== -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
-        <div class="filter-modal-header">
-            <h2>🎛️ Részletes szűrők</h2>
-            <button class="big-close-btn" style="position: static;" onclick="closeModal('filterModalOverlay')">✖</button>
+        
+        <!-- FEJLÉC ÉS FÜLEK VÁLASZTÓJA -->
+        <div class="filter-modal-header" style="flex-direction: column; align-items: stretch; gap: 16px; padding-bottom: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="font-size: 22px;">🎛️ Részletes szűrők</h2>
+                <button class="big-close-btn" style="position: static;" onclick="closeModal('filterModalOverlay')">✖</button>
+            </div>
+            
+            <div class="info-nav-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 12px;">
+                <button class="info-nav-btn active" id="f-tab-btn-faculty" onclick="switchFilterTab('faculty')">
+                    🎓 Képzés <span id="badge-faculty" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                </button>
+                <button class="info-nav-btn" id="f-tab-btn-company" onclick="switchFilterTab('company')">
+                    🏢 Vállalatok <span id="badge-company" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                </button>
+                <button class="info-nav-btn" id="f-tab-btn-vibe" onclick="switchFilterTab('vibe')">
+                    ✨ Vibe <span id="badge-vibe" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                </button>
+                <button class="info-nav-btn" id="f-tab-btn-tag" onclick="switchFilterTab('tag')">
+                    💻 Technológiák <span id="badge-tag" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                </button>
+            </div>
         </div>
-        <div class="filter-modal-body">
-            <div class="filter-section"><h3>Képzési területek</h3><div class="filter-group" id="modalFacultyButtons"></div></div>
-            <div class="filter-section"><h3>Vállalatok</h3><div class="filter-group" id="modalCompanyButtons"></div></div>
-            <div class="filter-section"><h3>Munkakörnyezet (Vibe)</h3><div class="filter-group" id="modalVibeButtons"></div></div>
-            <div class="filter-section"><h3>Technológiák & Nyelvek (Top 20)</h3><div class="filter-group" id="modalTagButtons"></div></div>
+
+        <!-- TARTALMI SZEKCIÓK (Csak egy látszik egyszerre) -->
+        <div class="filter-modal-body" style="display: block; padding-top: 24px;">
+            
+            <div class="filter-section" id="f-tab-faculty">
+                <h3 style="margin-bottom: 20px;">Válassz képzési területet</h3>
+                <div class="filter-group" id="modalFacultyButtons"></div>
+            </div>
+            
+            <div class="filter-section" id="f-tab-company" style="display: none;">
+                <h3 style="margin-bottom: 20px;">Melyik vállalat érdekel?</h3>
+                <div class="filter-group" id="modalCompanyButtons"></div>
+            </div>
+            
+            <div class="filter-section" id="f-tab-vibe" style="display: none;">
+                <h3 style="margin-bottom: 20px;">Milyen munkakörnyezetet keresel?</h3>
+                <div class="filter-group" id="modalVibeButtons"></div>
+            </div>
+            
+            <div class="filter-section" id="f-tab-tag" style="display: none;">
+                <h3 style="margin-bottom: 20px;">Népszerű nyelvek és címkék</h3>
+                <div class="filter-group" id="modalTagButtons"></div>
+            </div>
+
         </div>
+        
         <div class="filter-modal-footer">
             <button class="clear-all-filters-btn" onclick="clearAllModalFilters()">Összes törlése</button>
             <button class="apply-btn" onclick="applyFiltersFromModal()">Mutasd a találatokat</button>
@@ -1259,6 +1298,24 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     // ==========================================================================
     // JS: 11. CÍMKÉK, KERESÉS ÉS A FŐ SZŰRŐ MOTOR (Apply Filters)
     // ==========================================================================
+    
+    // --- ÚJ: Fülváltó logika a Mega Szűrő ablakhoz ---
+    function switchFilterTab(tabId) {
+        // Rejtjük az összes szűrő szekciót és levesszük a gombokról az aktív státuszt
+        ['faculty', 'company', 'vibe', 'tag'].forEach(id => {
+            const section = document.getElementById('f-tab-' + id);
+            const btn = document.getElementById('f-tab-btn-' + id);
+            if (section) section.style.display = 'none';
+            if (btn) btn.classList.remove('active');
+        });
+        
+        // Csak a kiválasztottat mutatjuk
+        const activeSection = document.getElementById('f-tab-' + tabId);
+        const activeBtn = document.getElementById('f-tab-btn-' + tabId);
+        if (activeSection) activeSection.style.display = 'block';
+        if (activeBtn) activeBtn.classList.add('active');
+    }
+
     function toggleModalFilter(type, value, btnEl) {
         if (type === 'faculty') {
             if (activeFaculties.includes(value)) activeFaculties = activeFaculties.filter(v => v !== value);
@@ -1285,6 +1342,20 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
             const clean = btn.textContent.replace('#','').trim();
             btn.classList.toggle('active-comp', activeSearchTags.includes(clean));
         });
+
+        // --- ÚJ: A füleken lévő kis számlálók (Badgek) frissítése ---
+        const updateBadge = (id, count) => {
+            const badge = document.getElementById('badge-' + id);
+            if (badge) {
+                badge.innerText = count;
+                badge.style.display = count > 0 ? 'inline-block' : 'none'; // Csak akkor látszik, ha van kiválasztva
+            }
+        };
+
+        updateBadge('faculty', activeFaculties.length);
+        updateBadge('company', activeCompanies.length);
+        updateBadge('vibe', activeVibes.length);
+        updateBadge('tag', activeSearchTags.length);
     }
 
     function clearAllModalFilters() { 

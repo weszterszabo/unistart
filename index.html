@@ -530,15 +530,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
             </ul>
         </div>
         <div class="sidebar-bottom">
-            <ul class="secondary-nav-menu">
-                <li class="secondary-nav-item" onclick="openBigSupportModal()"><span class="secondary-nav-icon">☕</span> <span class="nav-text">Támogatás</span></li>
-                <li class="secondary-nav-item" onclick="openAboutModal()"><span class="secondary-nav-icon">🎓</span> <span class="nav-text">Rólunk</span></li>
-                <li class="secondary-nav-item" onclick="openKapcsolatModal()"><span class="secondary-nav-icon">✉️</span> <span class="nav-text">Kapcsolat</span></li>
-                <li class="secondary-nav-item" onclick="openImpresszumModal()"><span class="secondary-nav-icon">⚖️</span> <span class="nav-text">Impresszum</span></li>
-                <li class="secondary-nav-item" onclick="openAdatvedelemModal()"><span class="secondary-nav-icon">🛡️</span> <span class="nav-text">Adatvédelem</span></li>
-            </ul>
-            <div class="sidebar-divider"></div>
-            <div class="sidebar-profile" onclick="openAboutModal()"><span class="nav-icon">ℹ️</span><span class="nav-text">Információ</span></div>
+            <!-- Közös Információ gomb, ami megnyitja a füles modális ablakot -->
+            <div class="sidebar-profile" onclick="openAboutModal()" style="margin-bottom: 10px;">
+                <span class="nav-icon">ℹ️</span>
+                <span class="nav-text">Információ</span>
+            </div>
         </div>
     </aside>
 
@@ -664,6 +660,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
             </div>
 
             <!-- TÁMOGATÁS -->
+           <!-- TÁMOGATÁS -->
             <div id="info-support" class="info-section" style="display: none;">
                 <div class="about-card" style="margin-bottom: 20px;">
                     <h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2>
@@ -681,7 +678,8 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 <div class="account-details" style="margin-top: 0; background: var(--bg-color);">
                     <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
                     <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
-                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Másolás</button>
+                    <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val">UniStart tamogatas</span></div>
+                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Számlaszám másolása</button>
                 </div>
             </div>
 
@@ -833,13 +831,27 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     }
 
     function setAmount(type, event) {
+        // Gombok "aktív" stílusának frissítése
         document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
         if(event && event.currentTarget) event.currentTarget.classList.add('active'); 
+        
         const paypalBtn = document.getElementById('paypalBtn');
+        const revolutBtn = document.getElementById('revolutBtn');
         const paypalBase = 'https://paypal.me/batorweszter';
-        if (type === 'custom') { paypalBtn.href = paypalBase; }
-        else if (type === 'coffee') { paypalBtn.href = paypalBase + '/1500HUF'; }
-        else if (type === 'pizza') { paypalBtn.href = paypalBase + '/5000HUF'; }
+        
+        // Logika a gombok elrejtésére/megjelenítésére és a linkek cseréjére
+        if (type === 'custom') { 
+            paypalBtn.href = paypalBase; 
+            revolutBtn.style.display = 'inline-flex'; // Revolut látszik, elosztják a helyet
+        }
+        else if (type === 'coffee') { 
+            paypalBtn.href = paypalBase + '/1500HUF'; 
+            revolutBtn.style.display = 'none'; // Revolut eltűnik, PayPal 100% széles lesz
+        }
+        else if (type === 'pizza') { 
+            paypalBtn.href = paypalBase + '/5000HUF'; 
+            revolutBtn.style.display = 'none'; // Revolut eltűnik, PayPal 100% széles lesz
+        }
     }
 
     let toastTimeout;
@@ -900,7 +912,18 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     // ==========================================================================
     function setFilterMode(mode) {
         filterMode = mode;
+        
+        // Cím frissítése
         document.getElementById('resultsTitleText').innerText = mode === 'saved' ? "Mentett Állások" : "Találatok";
+        
+        // Keresőblokk (Omnibar) elrejtése vagy megjelenítése
+        const omnibar = document.querySelector('.omnibar-wrapper');
+        if (omnibar) {
+            // Ha mentett állásokon vagyunk, eltüntetjük, különben 'flex' elrendezéssel visszahozzuk
+            omnibar.style.display = mode === 'saved' ? 'none' : 'flex';
+        }
+        
+        // Szűrők alkalmazása és rács újratöltése
         applyFilters();
     }
 

@@ -137,8 +137,6 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .filter-carousel-row { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px 0; scrollbar-width: none; align-items: center; }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
 
-/* ... (itt vannak a gombok kódjai) ... */
-
 .main-filter-btn { flex-shrink: 0; background: var(--text-color); color: var(--bg-color); border: none; padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 .main-filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
 .main-filter-btn:active { transform: scale(0.96); }
@@ -149,7 +147,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .filter-divider { width: 1px; height: 24px; background: var(--card-border); flex-shrink: 0; margin: 0 5px; }
 
 .magic-chip { flex-shrink: 0; background: transparent; border: 1.5px solid var(--tag-border); color: var(--text-color); padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 6px; }
-.magic-chip:hover { border-color: var(--subtitle-color); background: var(--tag-bg); transform: translateY(-2px); box-shadow: 0 4px 10px var(--card-shadow); }
+.magic-chip:hover { border-color: var(--subtitle-color); background: var(--tag-bg); transform: translateY(-2px); }
 .magic-chip:active { transform: scale(0.96); }
 .magic-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 6px 15px rgba(10, 132, 255, 0.3); font-weight: 600; }
 
@@ -1384,39 +1382,24 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 let pDate = job.date_posted;
                 let sDate = job.scraped_at || job.updated_at || 0;
 
-                // Lekaparás/Frissítés idejének konvertálása
+                // 1. Lekaparás/Frissítés idejének konvertálása
                 if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
                 else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
 
-                // Publikálási/Határidő mező konvertálása
+                // 2. Publikálási/Határidő mező konvertálása
                 let postedTime = 0;
                 if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
                 else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
 
-                // Ha a dátum a jövőben van, az határidő! Ezt ne vegyük figyelembe a rendezésnél.
+                // 3. LOGIKA: Ha a dátum a jövőben van, az határidő! 
+                // Ezt ne vegyük figyelembe a rendezésnél, használjuk helyette a rendszerbe kerülés (sDate) idejét.
                 if (postedTime > zdNow) {
                     return sDate || 0;
                 }
                 
+                // Ha a dátum a múltban van, az egy valós publikálási idő, így használhatjuk azt.
                 return postedTime || sDate || 0;
             };
-
-            let timeA = getRealPublishTime(a);
-            let timeB = getRealPublishTime(b);
-
-            // Rendezés a kinyert TÉNYLEGES publikálási idők alapján
-            if (currentSortMode === "date_desc") return timeB - timeA;
-            if (currentSortMode === "date_asc") return timeA - timeB;
-            if (currentSortMode === "company_az") {
-                const nameA = (a.company_name || "").toLowerCase();
-                const nameB = (b.company_name || "").toLowerCase();
-                return nameA.localeCompare(nameB);
-            }
-            return 0;
-        });
-
-        displayedCount = 15; 
-        renderGrid();
 
             let timeA = getRealPublishTime(a);
             let timeB = getRealPublishTime(b);
@@ -1430,11 +1413,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 return nameA.localeCompare(nameB);
             }
             return 0;
-        };
+        });
 
         displayedCount = 15; 
         renderGrid();
-    
+    }
 
     function handleSort(value) { currentSortMode = value; applyFilters(); }
 

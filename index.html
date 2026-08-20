@@ -103,8 +103,6 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 /* ==========================================================================
    CSS: 4. UNIFIED OMNIBAR ÉS KERESŐK (JAVÍTOTT ÉS RUGALMAS DIZÁJN)
    ========================================================================== */
-
-/* Az omnibar fő konténere - megfelelő z-index és overflow biztosítása */
 .omnibar-wrapper { 
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
@@ -114,195 +112,63 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     box-shadow: var(--card-shadow-soft); 
     display: flex; 
     flex-direction: column; 
-    gap: 16px; /* Kicsit kompaktabb térköz */
-    position: relative; 
-    z-index: 10; 
+    gap: 18px; 
 }
-
-/* Keresőmezők sorának flexibilis elrendezése */
-.search-inputs-row { 
-    display: flex; 
-    gap: 16px; 
-    width: 100%; 
-    flex-wrap: wrap; /* Mobilon egymás alá törnek */
-}
-
-/* Desktopon arányos elosztás, mobilon 100% szélesség */
-.keyword-search { flex: 1 1 60%; min-width: 250px; } 
-.location-search { flex: 1 1 30%; min-width: 200px; } 
+.search-inputs-row { display: flex; gap: 16px; width: 100%; margin-bottom: 5px; }
+.keyword-search { flex: 7; } 
+.location-search { flex: 3; } 
 .search-box-container { position: relative; width: 100%; }
 
-/* Maga a beviteli mező */
-.search-box-input { 
-    width: 100%; 
-    padding: 16px 20px 16px 50px; /* picit finomított padding a jobb arányokért */
-    border-radius: 20px; 
-    background: var(--tag-bg); 
-    border: 1.5px solid transparent; 
-    color: var(--text-color); 
-    font-size: 16px; 
-    font-weight: 500; 
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    font-family: inherit; 
-}
-
-.search-box-input:focus { 
-    outline: none; 
-    border-color: var(--primary-color); 
-    background: var(--card-bg); 
-    box-shadow: 0 4px 15px rgba(10, 132, 255, 0.15); /* Elegánsabb fókusz árnyék */
-    transform: translateY(-2px); /* Enyhe emelkedés fókuszkor */
-}
-
+.search-box-input { width: 100%; padding: 18px 20px 18px 50px; border-radius: 20px; background: var(--tag-bg); border: 1.5px solid transparent; color: var(--text-color); font-size: 16px; font-weight: 500; transition: all 0.3s ease; font-family: inherit; }
+.search-box-input:focus { outline: none; border-color: var(--primary-color); background: var(--card-bg); box-shadow: 0 0 0 4px rgba(10, 132, 255, 0.15); }
 .search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.8; font-weight: 400; }
 .search-icon { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; opacity: 0.7; }
 
-/* Keresőcímkék sora */
-.search-tags-row { 
-    display: none; 
-    flex-wrap: wrap; 
-    gap: 8px; 
-    margin-top: 4px; /* Kicsit elválasztjuk a mezőtől */
-}
-
-.search-tag-chip { 
-    background: var(--primary-color); 
-    color: white; 
-    padding: 6px 14px; 
-    border-radius: 100px; 
-    font-size: 13px; 
-    font-weight: 600; 
-    display: inline-flex; 
-    align-items: center; 
-    gap: 8px; 
-    animation: fadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    box-shadow: 0 4px 10px rgba(10, 132, 255, 0.2); 
-    transition: transform 0.2s ease;
-}
-
-.search-tag-chip:hover { transform: translateY(-2px); }
+.search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
+.search-tag-chip { background: var(--primary-color); color: white; padding: 6px 14px; border-radius: 100px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 4px 10px rgba(10, 132, 255, 0.3); }
 .search-tag-chip.loc-tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); box-shadow: none; }
-
-.search-tag-close { 
-    background: rgba(0,0,0,0.2); 
-    border: none; 
-    color: white; 
-    width: 20px; height: 20px; 
-    border-radius: 50%; 
-    font-size: 10px; 
-    display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: 0.2s; 
-}
+.search-tag-close { background: rgba(0,0,0,0.2); border: none; color: white; width: 20px; height: 20px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
 .search-tag-chip.loc-tag .search-tag-close { background: rgba(255, 255, 255, 0.1); color: var(--text-color); }
 [data-theme="light"] .search-tag-chip.loc-tag .search-tag-close { background: rgba(0, 0, 0, 0.1); }
 .search-tag-close:hover { background: var(--danger-color) !important; color: white !important; transform: scale(1.1); }
 .search-tag-close:active { transform: scale(0.9); }
 
-/* Vízszintesen görgethető gombok sora */
-.filter-carousel-row { 
-    display: flex; 
-    gap: 12px; 
-    overflow-x: auto; 
-    padding: 8px 4px; /* Padding a görgető sáv és az animációk miatt */
-    margin: -4px; /* Kompenzálja a belső paddingot */
-    scroll-behavior: smooth;
-    scrollbar-width: none; 
-    align-items: center; 
-    -webkit-overflow-scrolling: touch; /* Sima görgés iOS-en */
-}
+/* JAVÍTÁS: Padding hozzáadva a hover miatt felemelkedő gomboknak, margin a kompenzáláshoz */
+.filter-carousel-row { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px 0; scrollbar-width: none; align-items: center; }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
 
-/* Fő szűrő gomb (felugró ablak megnyitása) */
-.main-filter-btn { 
-    flex-shrink: 0; 
-    background: var(--text-color); 
-    color: var(--bg-color); 
-    border: none; 
-    padding: 10px 20px; 
-    border-radius: 100px; 
-    font-size: 14px; 
-    font-weight: 700; 
-    cursor: pointer; 
-    display: flex; align-items: center; gap: 8px; 
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-}
-.main-filter-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(255,255,255,0.2); }
+/* ... (itt vannak a gombok kódjai) ... */
+
+.main-filter-btn { flex-shrink: 0; background: var(--text-color); color: var(--bg-color); border: none; padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+.main-filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
 .main-filter-btn:active { transform: scale(0.96); }
-[data-theme="light"] .main-filter-btn:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
+[data-theme="light"] .main-filter-btn:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
 
 .filter-badge { background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 7px; font-size: 11px; font-weight: 800; display: none; }
 .filter-badge.active { display: inline-block; }
 .filter-divider { width: 1px; height: 24px; background: var(--card-border); flex-shrink: 0; margin: 0 5px; }
 
-/* Okos gombok (Magic chips) */
-.magic-chip { 
-    flex-shrink: 0; 
-    background: transparent; 
-    border: 1.5px solid var(--tag-border); 
-    color: var(--text-color); 
-    padding: 9px 18px; 
-    border-radius: 100px; 
-    font-size: 13px; 
-    font-weight: 500; 
-    cursor: pointer; 
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    display: inline-flex; align-items: center; gap: 6px; 
-}
-
-/* Itt akadályozzuk meg, hogy "egymásba csússzanak" - a Y eltolás finomítása */
-.magic-chip:hover { 
-    border-color: var(--subtitle-color); 
-    background: var(--tag-bg); 
-    transform: translateY(-2px); 
-    box-shadow: 0 4px 10px var(--card-shadow);
-}
+.magic-chip { flex-shrink: 0; background: transparent; border: 1.5px solid var(--tag-border); color: var(--text-color); padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 6px; }
+.magic-chip:hover { border-color: var(--subtitle-color); background: var(--tag-bg); transform: translateY(-2px); box-shadow: 0 4px 10px var(--card-shadow); }
 .magic-chip:active { transform: scale(0.96); }
-.magic-chip.active { 
-    background: var(--primary-color); 
-    color: white; 
-    border-color: var(--primary-color); 
-    box-shadow: 0 6px 15px rgba(10, 132, 255, 0.3); 
-    font-weight: 600; 
-}
+.magic-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 6px 15px rgba(10, 132, 255, 0.3); font-weight: 600; }
 
-/* Aktív (kiválasztott) szűrők konténere */
-.active-filters-container { 
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 10px; 
-    margin-top: 8px; /* Több hely a sorok között */
-}
-
-.active-filter-chip { 
-    background: transparent; 
-    border: 1px solid var(--tag-border); 
-    color: var(--text-color); 
-    padding: 6px 14px; 
-    border-radius: 100px; 
-    font-size: 12px; font-weight: 500; 
-    display: inline-flex; align-items: center; gap: 8px; 
-    animation: fadeIn 0.2s ease; 
-    transition: transform 0.2s ease;
-}
-.active-filter-chip:hover { transform: translateY(-2px); border-color: var(--subtitle-color); }
+.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+.active-filter-chip { background: transparent; border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.2s ease; }
 .active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
-
-.active-filter-close { 
-    background: var(--tag-bg); 
-    border: none; 
-    color: var(--text-color); 
-    width: 22px; height: 22px; 
-    border-radius: 50%; 
-    font-size: 10px; 
-    display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: 0.2s; 
-}
+.active-filter-close { background: var(--tag-bg); border: none; color: var(--text-color); width: 22px; height: 22px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
 .active-filter-close:hover { background: var(--danger-color); color: white; transform: scale(1.1); }
 .active-filter-close:active { transform: scale(0.9); }
 
 .clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 13px; font-weight: 500; cursor: pointer; padding: 6px 12px; transition: 0.2s; border-radius: 100px; }
 .clear-all-filters-btn:hover { background: rgba(255, 69, 58, 0.1); }
 .clear-all-filters-btn:active { transform: scale(0.96); }
+
+.sort-select { background: transparent; border: 1.5px solid var(--tag-border); color: var(--text-color); padding: 8px 16px; border-radius: 100px; font-size: 14px; font-weight: 500; cursor: pointer; outline: none; font-family: inherit; transition: 0.2s; appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); background-repeat: no-repeat; background-position: right 12px center; background-size: 14px; padding-right: 36px; }
+[data-theme="light"] .sort-select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
+.sort-select:focus { border-color: var(--primary-color); }
+
+.section-title { font-size: 22px; font-weight: 700; margin: 0; color: var(--text-color); }
 
 /* ==========================================================================
    CSS: 5. KÁRTYÁK, GOMBOK ÉS TAG-EK
@@ -435,8 +301,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); font-weight: 600; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3); }
 
 /* ==========================================================================
-   CSS: 9. STATIKUS MODÁLIS ABLAKOK (RÓLUNK, TÁMOGATÁS, IMPRESSZUM)
+   CSS: 9. STATIKUS MODÁLIS ABLAKOK (RÓLUNK, TÁMOGATÁS, IMPRESSZUM) -> JAVÍTVA
    ========================================================================== */
+.big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
+.big-support-overlay.active { opacity: 1; visibility: visible; }
+
 .big-support-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); border: 1px solid var(--card-border); border-radius: 32px; width: 100%; max-width: 600px; max-height: 90dvh; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); opacity: 0; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; padding: 0; }
 .big-support-overlay.active .big-support-box { transform: scale(1); opacity: 1; }
 .big-support-content { padding: 40px; overflow-y: auto; flex: 1; }
@@ -916,12 +785,21 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     // JS: 4. MODÁLIS ABLAKOK NYITÁSA/ZÁRÁSA
     // ==========================================================================
     function openModal(modalId) { 
-        document.getElementById(modalId).classList.add('active'); 
-        document.body.classList.add('modal-open'); 
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active'); 
+            document.body.classList.add('modal-open'); 
+        } else {
+            console.error("Hiba: Nem található modális ablak ezzel az ID-val: " + modalId);
+        }
     }
+    
     function closeModal(modalId) { 
-        document.getElementById(modalId).classList.remove('active'); 
-        document.body.classList.remove('modal-open'); 
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('active'); 
+            document.body.classList.remove('modal-open'); 
+        }
     }
     
     // Ezeket a függvényeket hívják meg a gombok:
@@ -931,9 +809,13 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     function openImpresszumModal() { openModal('impresszumOverlay'); }
     function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
     
-    // Háttérre kattintáskor bezáródik
-    document.querySelectorAll('.filter-modal-overlay, .big-support-overlay, .job-preview-overlay').forEach(modal => {
-        modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
+    // Általános klikk a modálok elsötétített hátterén = bezárás
+    document.addEventListener('click', function(e) { 
+        if (e.target.classList.contains('big-support-overlay') || 
+            e.target.classList.contains('filter-modal-overlay') || 
+            e.target.classList.contains('job-preview-overlay')) { 
+            closeModal(e.target.id); 
+        } 
     });
 
     // ==========================================================================
@@ -992,45 +874,6 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
-
-// ==========================================================================
-    // JS: MODÁLIS ABLAKOK NYITÁSA/ZÁRÁSA (GOLYÓÁLLÓ VERZIÓ)
-    // ==========================================================================
-    
-    // Alap nyitó- és záró funkció, ami ellenőrzi, hogy létezik-e az elem
-    function openModal(modalId) { 
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('active'); 
-            document.body.classList.add('modal-open'); 
-        } else {
-            console.error("Hiba: Nem található modális ablak ezzel az ID-val: " + modalId);
-        }
-    }
-    
-    function closeModal(modalId) { 
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('active'); 
-            document.body.classList.remove('modal-open'); 
-        }
-    }
-    
-    // A gombok ezeket a funkciókat hívják meg:
-    function openBigSupportModal() { openModal('bigSupportOverlay'); }
-    function openAboutModal() { openModal('aboutOverlay'); }
-    function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
-    function openImpresszumModal() { openModal('impresszumOverlay'); }
-    function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
-    
-    // Általános klikk a modálok elsötétített hátterén = bezárás
-    document.addEventListener('click', function(e) { 
-        if (e.target.classList.contains('big-support-overlay') || 
-            e.target.classList.contains('filter-modal-overlay') || 
-            e.target.classList.contains('job-preview-overlay')) { 
-            closeModal(e.target.id); 
-        } 
-    });
 
     // ==========================================================================
     // JS: 7. GLOBÁLIS ÁLLAPOTVÁLTOZÓK ÉS ADATTÖMBÖK
@@ -1541,24 +1384,39 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 let pDate = job.date_posted;
                 let sDate = job.scraped_at || job.updated_at || 0;
 
-                // 1. Lekaparás/Frissítés idejének konvertálása
+                // Lekaparás/Frissítés idejének konvertálása
                 if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
                 else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
 
-                // 2. Publikálási/Határidő mező konvertálása
+                // Publikálási/Határidő mező konvertálása
                 let postedTime = 0;
                 if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
                 else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
 
-                // 3. LOGIKA: Ha a dátum a jövőben van, az határidő! 
-                // Ezt ne vegyük figyelembe a rendezésnél, használjuk helyette a rendszerbe kerülés (sDate) idejét.
+                // Ha a dátum a jövőben van, az határidő! Ezt ne vegyük figyelembe a rendezésnél.
                 if (postedTime > zdNow) {
                     return sDate || 0;
                 }
                 
-                // Ha a dátum a múltban van, az egy valós publikálási idő, így használhatjuk azt.
                 return postedTime || sDate || 0;
             };
+
+            let timeA = getRealPublishTime(a);
+            let timeB = getRealPublishTime(b);
+
+            // Rendezés a kinyert TÉNYLEGES publikálási idők alapján
+            if (currentSortMode === "date_desc") return timeB - timeA;
+            if (currentSortMode === "date_asc") return timeA - timeB;
+            if (currentSortMode === "company_az") {
+                const nameA = (a.company_name || "").toLowerCase();
+                const nameB = (b.company_name || "").toLowerCase();
+                return nameA.localeCompare(nameB);
+            }
+            return 0;
+        });
+
+        displayedCount = 15; 
+        renderGrid();
 
             let timeA = getRealPublishTime(a);
             let timeB = getRealPublishTime(b);
@@ -1572,11 +1430,11 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 return nameA.localeCompare(nameB);
             }
             return 0;
-        });
+        };
 
         displayedCount = 15; 
         renderGrid();
-    }
+    
 
     function handleSort(value) { currentSortMode = value; applyFilters(); }
 

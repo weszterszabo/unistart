@@ -758,36 +758,70 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                     Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶
                 </p>
             </div>
-            <!-- KAPCSOLAT -->
+           <!-- KAPCSOLAT -->
             <div id="info-contact" class="info-section" style="display: none;">
-                <div class="about-card" style="text-align: center; padding: 40px 24px;">
-                    <div style="font-size: 48px; margin-bottom: 16px;">✉️</div>
-                    <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800;">Írj nekünk!</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">Kérdésed van? Hibát találtál? Esetleg egy cég képviselőjeként szeretnél megjelenni az UniStarton? Írj nekünk bátran!</p>
-                    <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: auto; display: inline-block; padding: 14px 32px;">bator.szabo@gmail.com</a>
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <div style="font-size: 48px; margin-bottom: 12px;">✉️</div>
+                    <h2 style="margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: var(--text-color);">Lépj velünk kapcsolatba!</h2>
+                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 auto; max-width: 90%;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
+                </div>
+                
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <!-- Felhasználói kapcsolat -->
+                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 28px; margin-bottom: 12px;">🙋‍♂️</div>
+                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Felhasználóknak</h3>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
+                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%;">Üzenet küldése</a>
+                    </div>
+                    
+                    <!-- B2B / Céges kapcsolat -->
+                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 24px; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.15);">
+                        <div style="font-size: 28px; margin-bottom: 12px;">💼</div>
+                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Cégeknek (B2B)</h3>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
+                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%;">Partnerségi megkeresés</a>
+                    </div>
                 </div>
             </div>
 
             <!-- JOGI & ADATVÉDELEM -->
             <div id="info-legal" class="info-section" style="display: none;">
-                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px;">
-                        <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0;">🛡️ Adatvédelem</h2>
-                        <div class="about-card" style="padding: 20px; height: 100%;">
-                            <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">A platform böngészése során a böngésződ helyi memóriáját (Local Storage) használjuk a kedvenc állásaid és szűrőid elmentésére. Nem gyűjtünk és nem értékesítünk személyes adatokat harmadik feleknek.</p>
-                        </div>
-                    </div>
-                    <div style="flex: 1; min-width: 250px;">
-                        <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0;">⚖️ Impresszum</h2>
-                        <div class="about-card" style="padding: 20px; height: 100%;">
-                            <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
-                                <strong>Üzemeltető:</strong> Weszter Szabó Bátor András<br>
-                                <strong>E-mail:</strong> bator.szabo@gmail.com<br>
-                                <strong>Tárhely:</strong> Rackhost Zrt.
-                            </p>
-                        </div>
+                
+                <!-- ÜZEMELTETŐ -->
+                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 14px; line-height: 1.6;">
+                        <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 600;">Weszter Szabó Bátor András</span>
+                        <strong style="color: var(--subtitle-color);">Cím:</strong> <span style="color: var(--text-color);">1158 Budapest, Klebelsberg Kunó utca 14.</span>
+                        <strong style="color: var(--subtitle-color);">E-mail:</strong> <a href="mailto:bator.szabo@gmail.com" style="color: var(--primary-color); text-decoration: none;">bator.szabo@gmail.com</a>
                     </div>
                 </div>
+
+                <!-- TÁRHELY ÉS INFRASTRUKTÚRA -->
+                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
+                    
+                    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border);">
+                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Rackhost Zrt.</h3>
+                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
+                    </div>
+                    
+                    <div>
+                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
+                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
+                    </div>
+                </div>
+
+                <!-- ADATVÉDELEM -->
+                <div class="about-card" style="padding: 24px; background: var(--bg-color); border: 1px solid var(--card-border); border-radius: 16px;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
+                    <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
+                        Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
+                        A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
+                    </p>
+                </div>
+
             </div>
 
         </div>

@@ -61,29 +61,141 @@
 /* ==========================================================================
    CSS: 2. ALAPVETŐ STÍLUSOK, CSONTVÁZ ANIMÁCIÓK ÉS GÖRGŐK (SCROLLBAR)
    ========================================================================== */
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background-color: var(--bg-color); color: var(--text-color); min-height: 100vh; transition: background-color 0.3s ease, color 0.3s ease; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-body.modal-open { overflow: hidden; }
+html {
+    scroll-behavior: smooth; /* Vajpuha görgetés az egész oldalon */
+    -webkit-text-size-adjust: 100%; /* Megakadályozza a betűk automatikus nagyítását fekvő mobilos nézetben */
+}
 
-h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
+* { 
+    box-sizing: border-box; 
+    -webkit-tap-highlight-color: transparent; 
+    margin: 0; 
+    padding: 0; 
+}
 
-.highlight { background-color: var(--highlight-bg); color: var(--primary-color); border-radius: 6px; padding: 0 4px; font-weight: 700; }
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    min-height: 100vh; 
+    line-height: 1.5; 
+    transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s ease; 
+    
+    /* Prémium Apple szöveg-élsimítás */
+    -webkit-font-smoothing: antialiased; 
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden; 
+}
 
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
-.skeleton { background: linear-gradient(90deg, var(--card-bg) 25%, var(--tag-bg) 50%, var(--card-bg) 75%); background-size: 200% 100%; animation: shimmer 2s infinite linear; border-radius: 24px; border: 1px solid var(--card-border); padding: 28px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 15px; }
-.skeleton-line { height: 18px; background: var(--tag-bg); border-radius: 10px; width: 70%; }
+/* Akadálymentesítés: Gyönyörű fókuszgyűrű, kizárólag billentyűzetes navigációhoz */
+:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    border-radius: 8px;
+    transition: outline-color 0.2s ease;
+}
+
+body.modal-open { 
+    overflow: hidden; 
+    touch-action: none; /* Mobilon megakadályozza a gumi-effektusos túlhúzást nyitott modálnál */
+}
+
+::selection { 
+    background: var(--primary-color); 
+    color: #ffffff; 
+}
+
+/* Folyékony tipográfia és okos tördelés */
+h1, h2, h3, h4, h5 { 
+    letter-spacing: -0.02em; 
+    font-weight: 700; 
+    text-wrap: balance; /* Megakadályozza az árván maradó szavakat az új sorban */
+}
+
+h1 { font-size: clamp(26px, 4vw, 36px); }
+h2 { font-size: clamp(20px, 3vw, 28px); }
+h3 { font-size: clamp(16px, 2vw, 20px); }
+
+/* Okoskereső találatának kiemelése */
+.highlight { 
+    background-color: var(--highlight-bg); 
+    color: var(--primary-color); 
+    border-radius: 4px; 
+    padding: 0 4px; 
+    font-weight: 700; 
+    box-shadow: 0 0 8px var(--highlight-bg); 
+    transition: background-color 0.3s ease;
+}
+
+/* --- CSONTVÁZ (SKELETON) BETÖLTŐ --- */
+@keyframes shimmer { 
+    0% { background-position: 200% 0; } 
+    100% { background-position: -200% 0; } 
+}
+
+.skeleton { 
+    background: var(--card-bg); 
+    border-radius: 24px; 
+    border: 1px solid var(--card-border); 
+    padding: 28px; 
+    margin-bottom: 20px; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 16px; 
+    box-shadow: var(--card-shadow-soft);
+    position: relative;
+    overflow: hidden;
+    will-change: transform;
+}
+
+/* Természetesebb, 110 fokban dőlő fény-átvonulás */
+.skeleton-line { 
+    background: linear-gradient(110deg, var(--tag-bg) 25%, rgba(150, 150, 150, 0.15) 50%, var(--tag-bg) 75%); 
+    background-size: 400% 100%; 
+    animation: shimmer 1.8s infinite cubic-bezier(0.4, 0, 0.2, 1); /* Sokkal organikusabb sebességgörbe */
+    border-radius: 8px; 
+    height: 18px; 
+    width: 70%; 
+    will-change: background-position; 
+}
 .skeleton-line.short { width: 40%; height: 14px; }
-.skeleton-line.tags { width: 100%; height: 28px; border-radius: 14px; margin-top: 10px; }
+.skeleton-line.tags { width: 100%; height: 32px; border-radius: 100px; margin-top: 8px; }
+
+/* --- LEBEGŐ (FLOATING) SCROLLBAROK --- */
+html {
+    scrollbar-width: thin; 
+    scrollbar-color: rgba(150, 150, 150, 0.3) transparent;
+}
 
 ::-webkit-scrollbar { width: 10px; height: 10px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 100px; border: 3px solid var(--bg-color); }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.4); }
-[data-theme="light"] ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.2); border: 3px solid var(--bg-color); }
-[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.4); }
 
-.filter-modal-body::-webkit-scrollbar-thumb, .job-preview-body::-webkit-scrollbar-thumb, .big-support-content::-webkit-scrollbar-thumb { border-color: transparent; background-clip: padding-box; }
+::-webkit-scrollbar-thumb { 
+    background-color: rgba(150, 150, 150, 0.3); 
+    border-radius: 100px; 
+    border: 3px solid var(--bg-color); 
+    background-clip: content-box; 
+    transition: background-color 0.2s ease;
+}
+::-webkit-scrollbar-thumb:hover { 
+    background-color: rgba(150, 150, 150, 0.6); 
+}
 
+/* Világos módú görgők optimalizálása */
+[data-theme="light"] ::-webkit-scrollbar-thumb { 
+    background-color: rgba(0, 0, 0, 0.25); 
+    border-color: var(--bg-color); 
+}
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { 
+    background-color: rgba(0, 0, 0, 0.45); 
+}
+
+.filter-modal-body::-webkit-scrollbar-thumb, 
+.job-preview-body::-webkit-scrollbar-thumb, 
+.big-support-content::-webkit-scrollbar-thumb { 
+    border-color: var(--modal-bg); 
+}
 /* ==========================================================================
    CSS: 3. LEBEGŐ ELEMEK (GÖRGŐ GOMB, LOADEREK, TOAST ÉRTESÍTÉSEK)
    ========================================================================== */

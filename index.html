@@ -915,16 +915,23 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     // ==========================================================================
     // JS: 4. MODÁLIS ABLAKOK NYITÁSA/ZÁRÁSA
     // ==========================================================================
-    function openModal(modalId) { document.getElementById(modalId).classList.add('active'); body.classList.add('modal-open'); }
-    function closeModal(modalId) { document.getElementById(modalId).classList.remove('active'); body.classList.remove('modal-open'); }
+    function openModal(modalId) { 
+        document.getElementById(modalId).classList.add('active'); 
+        document.body.classList.add('modal-open'); 
+    }
+    function closeModal(modalId) { 
+        document.getElementById(modalId).classList.remove('active'); 
+        document.body.classList.remove('modal-open'); 
+    }
     
+    // Ezeket a függvényeket hívják meg a gombok:
     function openBigSupportModal() { openModal('bigSupportOverlay'); }
     function openAboutModal() { openModal('aboutOverlay'); }
     function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
     function openImpresszumModal() { openModal('impresszumOverlay'); }
     function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
     
-    // Általános klikk a modálok hátterénél bezáráshoz
+    // Háttérre kattintáskor bezáródik
     document.querySelectorAll('.filter-modal-overlay, .big-support-overlay, .job-preview-overlay').forEach(modal => {
         modal.addEventListener('click', function(e) { if (e.target === this) closeModal(this.id); });
     });
@@ -1024,7 +1031,7 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
             closeModal(e.target.id); 
         } 
     });
-    
+
     // ==========================================================================
     // JS: 7. GLOBÁLIS ÁLLAPOTVÁLTOZÓK ÉS ADATTÖMBÖK
     // ==========================================================================

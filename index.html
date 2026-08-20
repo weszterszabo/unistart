@@ -986,6 +986,45 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
     const auth = firebase.auth();
     const db = firebase.firestore();
 
+// ==========================================================================
+    // JS: MODÁLIS ABLAKOK NYITÁSA/ZÁRÁSA (GOLYÓÁLLÓ VERZIÓ)
+    // ==========================================================================
+    
+    // Alap nyitó- és záró funkció, ami ellenőrzi, hogy létezik-e az elem
+    function openModal(modalId) { 
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('active'); 
+            document.body.classList.add('modal-open'); 
+        } else {
+            console.error("Hiba: Nem található modális ablak ezzel az ID-val: " + modalId);
+        }
+    }
+    
+    function closeModal(modalId) { 
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('active'); 
+            document.body.classList.remove('modal-open'); 
+        }
+    }
+    
+    // A gombok ezeket a funkciókat hívják meg:
+    function openBigSupportModal() { openModal('bigSupportOverlay'); }
+    function openAboutModal() { openModal('aboutOverlay'); }
+    function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
+    function openImpresszumModal() { openModal('impresszumOverlay'); }
+    function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
+    
+    // Általános klikk a modálok elsötétített hátterén = bezárás
+    document.addEventListener('click', function(e) { 
+        if (e.target.classList.contains('big-support-overlay') || 
+            e.target.classList.contains('filter-modal-overlay') || 
+            e.target.classList.contains('job-preview-overlay')) { 
+            closeModal(e.target.id); 
+        } 
+    });
+    
     // ==========================================================================
     // JS: 7. GLOBÁLIS ÁLLAPOTVÁLTOZÓK ÉS ADATTÖMBÖK
     // ==========================================================================

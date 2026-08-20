@@ -659,30 +659,79 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
                 </div>
             </div>
 
-            <!-- TÁMOGATÁS -->
            <!-- TÁMOGATÁS -->
             <div id="info-support" class="info-section" style="display: none;">
-                <div class="about-card" style="margin-bottom: 20px;">
-                    <h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2>
-                    <p style="color: var(--subtitle-color); font-size: 14px; line-height: 1.6; margin: 0;">Az UniStart egy teljesen független, önerőből fejlesztett projekt. A szerverköltségek, a domain és az adatbázisok fenntartása mind saját zsebből történik. Ha szereted használni a platformot, egy kávé árával is hatalmasat segíthetsz!</p>
+                
+                <!-- Hangsúlyos, barátságos fejléc -->
+                <div class="about-card" style="margin-bottom: 24px; text-align: center; border: 1px solid var(--primary-color); background: rgba(10, 132, 255, 0.05); padding: 32px 24px;">
+                    <div style="font-size: 48px; margin-bottom: 12px; line-height: 1;">❤️</div>
+                    <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">Tartsd életben az UniStartot!</h2>
+                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 90%; margin: 0 auto;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.
+                    </p>
                 </div>
-                <div class="support-options" style="margin-bottom: 20px;">
-                    <button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button>
-                    <button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button>
-                    <button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button>
+
+                <!-- Látványos infó blokkok (Mire megy a pénz?) -->
+                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Mire fordítjuk a támogatásod?</h3>
+                <div style="display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 28px; margin-bottom: 12px;">🖥️</div>
+                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Szerverek</div>
+                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">A villámgyors és stabil adatbázis fenntartása.</div>
+                    </div>
+                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 28px; margin-bottom: 12px;">🚫</div>
+                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Zéró Reklám</div>
+                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
+                    </div>
+                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
+                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Fejlesztés</div>
+                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
+                    </div>
                 </div>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
-                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; background: #003087;"><span>🅿️</span> PayPal</a>
-                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; background: #0075ff;"><span>💳</span> Revolut</a>
+
+                <!-- Támogatási opciók választó -->
+                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Válaszd ki, mivel támogatsz:</h3>
+                <div class="support-options" style="margin-bottom: 24px;">
+                    <button class="option-btn active" onclick="setAmount('custom', event)">
+                        <span class="emoji">✨</span>
+                        <span class="title">Egyéni</span>
+                        <span class="price">Tetszőleges összeg</span>
+                    </button>
+                    <button class="option-btn" onclick="setAmount('coffee', event)">
+                        <span class="emoji">☕</span>
+                        <span class="title">1 Kávé</span>
+                        <span class="price">1 500 Ft</span>
+                    </button>
+                    <button class="option-btn" onclick="setAmount('pizza', event)">
+                        <span class="emoji">🍕</span>
+                        <span class="title">Egy Pizza</span>
+                        <span class="price">5 000 Ft</span>
+                    </button>
                 </div>
-                <div class="account-details" style="margin-top: 0; background: var(--bg-color);">
+
+                <!-- Fizetési gombok dinamikusan -->
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
+                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; background: #003087; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 48, 135, 0.4);"><span>🅿️</span> Támogatás PayPal-al</a>
+                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; background: #0075ff; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 117, 255, 0.4);"><span>💳</span> Támogatás Revolut-al</a>
+                </div>
+
+                <!-- Közvetlen utalás -->
+                <div class="account-details" style="margin-top: 0; background: var(--bg-color); position: relative; overflow: hidden;">
+                    <!-- Kis díszítő csík a kártya szélén -->
+                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--success-color);"></div>
+                    
+                    <h4 style="margin: 0 0 12px 0; font-size: 15px; color: var(--text-color);">🏦 Klasszikus banki utalás</h4>
                     <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
                     <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
-                    <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val">UniStart tamogatas</span></div>
-                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Számlaszám másolása</button>
+                    <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val" style="color: var(--primary-color);">UniStart tamogatas</span></div>
+                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 16px;">📋 Adatok másolása vágólapra</button>
                 </div>
+                
+                <p style="text-align: center; color: var(--subtitle-color); font-size: 14px; margin-top: 24px; font-weight: 500;">
+                    Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶
+                </p>
             </div>
-
             <!-- KAPCSOLAT -->
             <div id="info-contact" class="info-section" style="display: none;">
                 <div class="about-card" style="text-align: center; padding: 40px 24px;">

@@ -614,114 +614,89 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
 <button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ========================================================================== -->
-<!-- HTML: 7. STATIKUS INFORMÁCIÓS MODÁLIS ABLAKOK (Rólunk, Támogatás, stb.)    -->
+<!-- HTML: 7. KÖZÖS INFORMÁCIÓS MODÁLIS ABLAK (Rólunk, Támogatás, Impresszum)   -->
 <!-- ========================================================================== -->
-
-<!-- Támogatás Modális -->
-<div id="bigSupportOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 750px;">
-        <button class="big-close-btn" onclick="closeModal('bigSupportOverlay')">✖</button>
+<div id="infoOverlay" class="big-support-overlay">
+    <div class="big-support-box" style="max-width: 800px;">
+        <button class="big-close-btn" onclick="closeModal('infoOverlay')">✖</button>
         <div class="big-support-content">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div style="font-size: 50px; margin-bottom: 12px;">🚀</div>
-                <h1 style="font-size: 28px; font-weight: 800; margin: 0 0 10px 0;">Támogasd az UniStartot!</h1>
+            
+            <!-- FEJLÉC -->
+            <div style="text-align: center; margin-bottom: 40px;">
+                <div style="font-size: 50px; margin-bottom: 12px;">ℹ️</div>
+                <h1 style="font-size: 32px; font-weight: 800; margin: 0 0 10px 0;">Információk</h1>
+                <p style="color: var(--subtitle-color); font-size: 16px; margin: 0;">Minden, amit az UniStartról tudni érdemes egy helyen.</p>
             </div>
-            <div class="about-card" style="margin-bottom: 20px;">
-                <h2 style="margin: 0 0 12px 0; font-size: 18px;">Miért kérjük a támogatásod?</h2>
-                <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0;">Az UniStart egy teljesen független, önerőből fejlesztett projekt. A szerverköltségek, a domain és az adatbázisok fenntartása mind saját zsebből történik. Ha szereted használni a platformot, és szeretnéd, hogy reklámmentes maradjon, egy kávé árával is hatalmasat segíthetsz!</p>
+
+            <!-- 1. RÓLUNK -->
+            <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 16px 0; color: var(--primary-color);">🎓 Rólunk</h2>
+            <div class="about-card" style="margin-bottom: 40px; padding: 24px;">
+                <p style="color: var(--text-color); font-size: 15px; margin: 0; line-height: 1.6;">Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a leggyorsabb, legátláthatóbb és legmodernebb álláskereső platformot biztosítsuk. Nem hiszünk a bonyolult űrlapokban és az elavult dizájnban. Hiszünk viszont a villámgyors szűrésben és a letisztult felhasználói élményben.</p>
+                
+                <div style="display: flex; gap: 16px; margin-top: 24px; flex-wrap: wrap;">
+                    <div style="flex: 1; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 25px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">NJ</div>
+                        <h3 style="margin: 0 0 4px 0; font-size: 16px;">József Nóra</h3>
+                        <span style="color: #e056fd; font-size: 12px; font-weight: 600;">Társalapító</span>
+                    </div>
+                    <div style="flex: 1; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px;">
+                        <div style="width: 50px; height: 50px; border-radius: 25px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 10px auto;">BA</div>
+                        <h3 style="margin: 0 0 4px 0; font-size: 16px;">Weszter Szabó Bátor András</h3>
+                        <span style="color: var(--primary-color); font-size: 12px; font-weight: 600;">Társalapító</span>
+                    </div>
+                </div>
             </div>
-            <div class="about-card" style="margin-bottom: 0;">
-                <h2 style="margin: 0 0 12px 0; font-size: 18px;">Légy a kezdetek részese!</h2>
-                <div class="support-options">
+
+            <!-- 2. TÁMOGATÁS -->
+            <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 16px 0; color: var(--success-color);">🚀 Támogasd a projektet!</h2>
+            <div class="about-card" style="margin-bottom: 40px; padding: 24px;">
+                <p style="color: var(--text-color); font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">Az UniStart egy teljesen független, önerőből fejlesztett projekt. A szerverköltségek, a domain és az adatbázisok fenntartása mind saját zsebből történik. Ha szereted használni a platformot, és szeretnéd, hogy reklámmentes maradjon, egy kávé árával is hatalmasat segíthetsz!</p>
+                
+                <div class="support-options" style="margin-bottom: 20px;">
                     <button class="option-btn active" onclick="setAmount('custom', event)"><span class="emoji">✨</span><span class="title">Egyéni</span><span class="price">Tetszőleges</span></button>
                     <button class="option-btn" onclick="setAmount('coffee', event)"><span class="emoji">☕</span><span class="title">1 Kávé</span><span class="price">1 500 Ft</span></button>
                     <button class="option-btn" onclick="setAmount('pizza', event)"><span class="emoji">🍕</span><span class="title">Egy Pizza</span><span class="price">5 000 Ft</span></button>
                 </div>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px; justify-content: flex-start;">
-                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #003087;"><span>🅿️</span> PayPal</a>
-                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; min-width: 140px; max-width: 250px; background: #0075ff;"><span>💳</span> Revolut</a>
+                
+                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; background: #003087;"><span>🅿️</span> PayPal</a>
+                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; background: #0075ff;"><span>💳</span> Revolut</a>
                 </div>
-                <div class="transfer-box" style="margin-top: 0;">
-                    <div class="account-details">
-                        <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
-                        <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
-                        <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Másolás</button>
+                
+                <div class="account-details" style="margin-top: 0; background: var(--bg-color);">
+                    <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
+                    <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
+                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 12px;">📋 Másolás</button>
+                </div>
+            </div>
+
+            <!-- 3. KAPCSOLAT -->
+            <h2 style="font-size: 22px; font-weight: 700; margin: 0 0 16px 0; color: #ff9f0a;">✉️ Kapcsolat</h2>
+            <div class="about-card" style="margin-bottom: 40px; padding: 24px; text-align: center;">
+                <p style="color: var(--text-color); font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">Kérdésed van? Hibát találtál? Esetleg egy cég képviselőjeként szeretnél megjelenni az UniStarton? Írj nekünk bátran!</p>
+                <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: auto; display: inline-block; padding: 14px 32px;">bator.szabo@gmail.com</a>
+            </div>
+
+            <!-- 4. ADATVÉDELEM ÉS IMPRESSZUM (Egymás mellett) -->
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 16px 0;">🛡️ Adatvédelem</h2>
+                    <div class="about-card" style="padding: 20px; height: 100%;">
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (Local Storage) használjuk a kedvenc állásaid és szűrőid elmentésére. Nem gyűjtünk és nem értékesítünk személyes adatokat harmadik feleknek.</p>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h2 style="font-size: 20px; font-weight: 700; margin: 0 0 16px 0;">⚖️ Impresszum</h2>
+                    <div class="about-card" style="padding: 20px; height: 100%;">
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
+                            <strong>Üzemeltető:</strong> Weszter Szabó Bátor András<br>
+                            <strong>E-mail:</strong> bator.szabo@gmail.com<br>
+                            <strong>Tárhelyszolgáltató:</strong> Rackhost Zrt.
+                        </p>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
 
-<!-- Rólunk Modális -->
-<div id="aboutOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 650px;">
-        <button class="big-close-btn" onclick="closeModal('aboutOverlay')">✖</button>
-        <div class="big-support-content">
-            <div style="text-align: center; margin-bottom: 30px;">
-                <div style="font-size: 48px; margin-bottom: 12px;">🎓</div>
-                <h1 style="font-size: 26px; font-weight: 800; margin: 0;">Rólunk - UniStart</h1>
-            </div>
-            <div class="about-card" style="margin-bottom: 20px; padding: 24px;">
-                <p style="color: var(--subtitle-color); font-size: 15px; margin: 0; line-height: 1.5;">Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a leggyorsabb, legátláthatóbb és legmodernebb álláskereső platformot biztosítsuk. Nem hiszünk a bonyolult űrlapokban és az elavult dizájnban. Hiszünk viszont a villámgyors szűrésben és a letisztult felhasználói élményben.</p>
-            </div>
-            <div style="display: flex; flex-direction: column; gap: 16px;">
-                <div class="about-card" style="padding: 24px; text-align: center;">
-                    <div style="width: 64px; height: 64px; border-radius: 32px; background: #e056fd; color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">NJ</div>
-                    <h3 style="margin: 0 0 6px 0; font-size: 18px;">József Nóra</h3>
-                    <span style="color: #e056fd; font-size: 13px; font-weight: 600;">Társalapító</span>
-                </div>
-                <div class="about-card" style="padding: 24px; text-align: center;">
-                    <div style="width: 64px; height: 64px; border-radius: 32px; background: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto;">BA</div>
-                    <h3 style="margin: 0 0 6px 0; font-size: 18px;">Weszter Szabó Bátor András</h3>
-                    <span style="color: var(--primary-color); font-size: 13px; font-weight: 600;">Társalapító</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Impresszum Modális -->
-<div id="impresszumOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 550px;">
-        <button class="big-close-btn" onclick="closeModal('impresszumOverlay')">✖</button>
-        <div class="big-support-content">
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">⚖️ Impresszum</h1>
-            <div class="about-card" style="margin-bottom: 15px; padding: 24px;">
-                <p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;">
-                    <strong>Üzemeltető:</strong> Weszter Szabó Bátor András<br>
-                    <strong>E-mail:</strong> bator.szabo@gmail.com<br>
-                    <strong>Tárhelyszolgáltató:</strong> Rackhost Zrt.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Adatvédelem Modális -->
-<div id="adatvedelemOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 550px;">
-        <button class="big-close-btn" onclick="closeModal('adatvedelemOverlay')">✖</button>
-        <div class="big-support-content">
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 24px 0; text-align: center;">🛡️ Adatvédelmi Tájékoztató</h1>
-            <div class="about-card" style="margin-bottom: 15px; padding: 24px;">
-                <p style="font-size: 15px; color: var(--text-color); margin: 0; line-height: 1.6;">Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (Local Storage) használjuk a kedvenc állásaid és szűrőid elmentésére. Nem gyűjtünk és nem értékesítünk személyes adatokat harmadik feleknek.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Kapcsolat Modális -->
-<div id="kapcsolatOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 450px;">
-        <button class="big-close-btn" onclick="closeModal('kapcsolatOverlay')">✖</button>
-        <div class="big-support-content">
-            <div class="about-card" style="text-align: center; padding: 40px 24px;">
-                <div style="font-size: 48px; margin-bottom: 16px;">✉️</div>
-                <h2 style="margin: 0 0 16px 0; font-size: 24px; font-weight: 800;">Írj nekünk!</h2>
-                <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">Kérdésed van? Hibát találtál? Esetleg egy cég képviselőjeként szeretnél megjelenni az UniStarton? Írj nekünk bátran!</p>
-                <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: auto; display: inline-block; padding: 14px 32px;">bator.szabo@gmail.com</a>
-            </div>
         </div>
     </div>
 </div>
@@ -800,12 +775,12 @@ h1, h2, h3, h4, h5 { letter-spacing: -0.02em; }
         }
     }
     
-    // Ezeket a függvényeket hívják meg a gombok:
-    function openBigSupportModal() { openModal('bigSupportOverlay'); }
-    function openAboutModal() { openModal('aboutOverlay'); }
-    function openAdatvedelemModal() { openModal('adatvedelemOverlay'); }
-    function openImpresszumModal() { openModal('impresszumOverlay'); }
-    function openKapcsolatModal() { openModal('kapcsolatOverlay'); }
+    // A gombok ezeket a funkciókat hívják meg - MOST MÁR MIND UGYANAZT AZ ABLAKOT NYITJA:
+    function openBigSupportModal() { openModal('infoOverlay'); }
+    function openAboutModal() { openModal('infoOverlay'); }
+    function openAdatvedelemModal() { openModal('infoOverlay'); }
+    function openImpresszumModal() { openModal('infoOverlay'); }
+    function openKapcsolatModal() { openModal('infoOverlay'); }
     
     // Általános klikk a modálok elsötétített hátterén = bezárás
     document.addEventListener('click', function(e) { 

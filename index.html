@@ -49,7 +49,7 @@
 
     /* 🪄 Animációk és Átmenetek (Vajpuha Apple mozgások) */
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);           
+    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);          
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s var(--ease-smooth);
 
@@ -1496,6 +1496,16 @@ html {
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
+
+    // --- HIÁNYZÓ HIGHLIGHTTEXT FÜGGVÉNY PÓTLÁSA ---
+    function highlightText(text, query) {
+        if (!query || !text) return text;
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedQuery})`, 'gi');
+        return String(text).replace(regex, '<mark>$1</mark>');
+    }
+    // ----------------------------------------------
+
     const body = document.body;
     const themeToggleDesktop = document.getElementById('themeToggleDesktop');
     const themeToggleMobileTabBtn = document.getElementById('themeToggleMobileTabBtn');
@@ -2213,13 +2223,13 @@ html {
 
     function handleSort(value) { currentSortMode = value; applyFilters(); }
 
-    function highlightText(text) {
+    function highlightTextInline(text) {
         if (!activeSearchTags || activeSearchTags.length === 0) return text;
         const searchWords = activeSearchTags.filter(w => w.length > 1);
         let highlightedText = text;
         searchWords.forEach(word => {
             const regex = new RegExp(`(${word})`, 'gi');
-            highlightText = highlightedText.replace(regex, `<span class="highlight">$1</span>`);
+            highlightedText = highlightedText.replace(regex, `<span class="highlight">$1</span>`); // JAVÍTVA!
         });
         return highlightedText;
     }
@@ -2252,8 +2262,9 @@ html {
             card.onclick = () => openJobPreview(job.id);
             card.style.animationDelay = `${(i - startIndex) * 0.05}s`;
 
-            const jobTitle = highlightText(job.title || 'Névtelen pozíció');
-            const companyName = highlightText(job.company_name || 'Névtelen cég');
+            // Használjuk a javított highlight függvényt!
+            const jobTitle = highlightTextInline(job.title || 'Névtelen pozíció');
+            const companyName = highlightTextInline(job.company_name || 'Névtelen cég');
             
             let displayDate = "";
             let isDeadline = false;
@@ -2274,7 +2285,7 @@ html {
             const dPosted = displayDate ? `<span class="job-tag ${isDeadline ? 'tag-deadline' : ''}">${isDeadline ? '⏳ Határidő:' : '📅 Publikálva:'} ${displayDate}</span>` : '';
             const facultyTag = job.faculty && job.faculty !== "🔍 Egyéb / Általános" ? `<span class="job-tag tag-faculty clickable-tag" onclick="addTagToSearch('${job.faculty}', event)" title="Keresés erre a kategóriára">${job.faculty}</span>` : '';
             const vibeTag = job.work_style ? `<span class="job-tag tag-vibe clickable-tag" onclick="addTagToSearch('${job.work_style.split(' ')[1]}', event)" title="Keresés erre a stílusra">${job.work_style}</span>` : '';
-            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightText(tag)}</span>`).join('');
+            const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightTextInline(tag)}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
 

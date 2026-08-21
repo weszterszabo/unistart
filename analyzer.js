@@ -4,7 +4,7 @@ const crypto = require("crypto");
 // 🧠 1. KOGNITÍV SZÓTÁRAK ÉS SZABÁLYOK (A KAPUŐRÖK)
 // ============================================================================
 
-// 1.1 Címke szótár (Ezt hiányolta a rendszer!)
+// 1.1 Címke szótár
 const structuredTagsDict = {
     languages: ["angol", "német", "francia", "spanyol", "english", "german"],
     tech: ["excel", "python", "javascript", "typescript", "sql", "java", "react", "html", "aws", "git", "power bi", "sap", "figma", "photoshop", "autocad", "c++", "c#"],
@@ -18,7 +18,7 @@ const detoxRules = [
     { regex: /&nbsp;/gi, replacement: ' ' }
 ];
 
-// 1.3 Alapvető Regex Segédfüggvény
+// 1.3 Alapvető Regex Segédfüggvény (A sima szavakhoz)
 const buildRegex = (words) => new RegExp('\\b(' + words.map(w => w.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")).join('|') + ')\\b', 'i');
 
 // 1.4 NLP Kapuőr szabályok (Kizáró és elfogadó szavak)
@@ -62,14 +62,21 @@ const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyhá
 const niceToHaveKeywords = ["előny", "plusz", "nice to have", "nem elvárás", "nem feltétel", "plussz", "örülünk", "bónusz", "kiváló, ha", "ideális"];
 const niceToHaveRegex = new RegExp(`(${niceToHaveKeywords.join('|')})`, 'i');
 
-// Pre-compilation a sebességért
+// Pre-compilation a sebességért (Itt van benne a Regex JAVÍTÁS a C++ és C# miatt!)
 const compiledStructuredTags = {};
 for (const [group, tags] of Object.entries(structuredTagsDict)) {
     compiledStructuredTags[group] = tags.map(tag => {
-        // Címkéknél megengedőbb regex
-        const baseRegex = new RegExp('\\b(' + tag.replace(/\|/g, '').replace(/\*/g, '').trim() + ')\\b', 'i');
+        // 1. Megtisztítjuk a tag-et (lekapjuk a | és * jeleket)
+        const cleanedTag = tag.replace(/\|/g, '').replace(/\*/g, '').trim();
+        
+        // 2. ESCAPE: A Regex speciális karaktereit (+, #, stb.) semlegesítjük
+        const escapedTag = cleanedTag.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+        
+        // 3. Okos Szóhatár: Bírja a C++ és C# végződéseket is
+        const baseRegex = new RegExp('(?:^|\\s|\\b)(' + escapedTag + ')(?:$|\\s|\\b|\\W)', 'i');
+        
         return {
-            original: tag.replace(/\|/g, '').replace(/\*/g, '').trim(),
+            original: cleanedTag,
             regex: baseRegex,
             globalRegex: new RegExp(baseRegex.source, 'gi') 
         };

@@ -27,23 +27,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # ⚡ Csomagok gyorsítótárazása (O(1) letöltés)
+          cache: 'npm' # ⚡ Csomagok gyorsítótárazása
 
       - name: 📦 Install dependencies
-        # Ha van package.json fájlod, használd az 'npm ci'-t a gyorsabb/stabilabb telepítésért!
-        # Ha nincs, cseréld vissza erre: run: npm install firebase-admin cheerio
+        # Ha van package.json, ez a legbiztonságosabb telepítés
         run: npm ci 
 
-      - name: 🚀 Run UniStart Scraper Orchestrator
+      - name: 🚀 Run UniStart Scraper
         env:
-          # Adatbázis kulcs
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-          # Webhookok a hiba és siker-üzenetekhez (Amit a JS kódban megírtunk!)
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          # Időzóna kényszerítése, hogy a JS new Date() magyar időt adjon vissza!
           TZ: 'Europe/Budapest'
-        run: node orchestrator.js # Vagy scraper.js, attól függően hogy hívtad el
+        run: node scraper.js
 
       - name: 🚨 Vészjelzés küldése Discordra/Slackre (Csak ha Hiba történt)
         if: failure()

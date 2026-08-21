@@ -35,13 +35,13 @@ const companiesConfig = [
     { name: "OTP Bank", module: "otp.js", baseUrl: "https://karrier.otpbank.hu", active: true },
     { name: "Magyar Posta", module: "posta.js", baseUrl: "https://karrier.posta.hu", active: true },
     { name: "MVM Csoport", module: "mvm.js", baseUrl: "https://mvm.karrierportal.hu", active: true },
-    { name: "K&H Bank", module: "kh.js", baseUrl: "https://karrier.kh.hu", active: true },
+    { name: "K&H Bank", module: "khbank.js", baseUrl: "https://karrier.kh.hu", active: true },
     { name: "LIDL", module: "lidl.js", baseUrl: "https://jobs.lidl.hu", active: true },
     { name: "Erste Bank", module: "erste.js", baseUrl: "https://karrier.erstebank.hu/jsbq", active: true },
-    { name: "4iG / ONE", module: "4ig.js", baseUrl: "https://karrier.4iggroup.hu", active: true },
+    { name: "4iG / ONE", module: "fourig.js", baseUrl: "https://karrier.4iggroup.hu", active: true },
     { name: "Közszolgállás", module: "kozszolgallas.js", baseUrl: "https://kozszolgallas.ksz.gov.hu", active: true },
     { name: "SAP", module: "sap.js", baseUrl: "https://jobs.sap.com", active: true },
-    { name: "Bosch", module: "smartrecruiters.js", baseUrl: "https://jobs.smartrecruiters.com", active: true },
+    { name: "Bosch", module: "smartrecruiters.js", baseUrl: "https://jobs.intesasanpaolo.com/search/?q=&locationsearch=Hungary&format=rss", active: true },
     { name: "Workday (OTP)", module: "workday.js", baseUrl: "https://otpbank.wd3.myworkdayjobs.com/OTP_Karrier", active: true }
 ];
 

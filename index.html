@@ -1109,9 +1109,9 @@ html {
     }
 
     /* ÚJ: Fórum, Mentve és Infó! */
-    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-info .nav-text::after { content: "Infó"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-forum .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-saved .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-info .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
 
     .nav-item.active { 
         background: var(--primary-color) !important; 
@@ -1783,22 +1783,34 @@ html {
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
 
     // ==========================================================================
-    // JS: 3. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ
+    // JS: 3. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ (JAVÍTVA)
     // ==========================================================================
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
+    // Figyeljük mind a dobozos (asztali), mind a natív (mobil) görgetést!
     if (dashboardMain && backToTopBtn) {
         dashboardMain.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', dashboardMain.scrollTop > 300); });
+        window.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', window.scrollY > 300); });
     }
-    function scrollToTop() { if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' }); }
 
+    // A felfelé görgető gomb most már mobilon és asztali gépen is működik
+    function scrollToTop() { 
+        if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' }); 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Fülváltáskor KÖTELEZŐ felugrani az oldal tetejére, hogy ne az "ürességet" nézzük
     function switchTab(tabId, title, navItemId) {
         document.getElementById('currentViewTitle').innerText = title;
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.nav-item, .sidebar-profile').forEach(el => el.classList.remove('active'));
         if (navItemId) document.getElementById(navItemId).classList.add('active');
+        
+        // --- A VARÁZSLAT: Visszaugrik a tetejére azonnal! ---
+        if (dashboardMain) dashboardMain.scrollTop = 0;
+        window.scrollTo(0, 0); 
     }
 
    // ==========================================================================

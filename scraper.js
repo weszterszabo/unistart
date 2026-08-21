@@ -1,386 +1,343 @@
 const { initializeApp, cert } = require("firebase-admin/app");
 const { getFirestore, FieldValue } = require("firebase-admin/firestore");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+const os = require("os");
 
 // ------------------------------------------------------------------
-// 1. MOTOROK BETÖLTÉSE
+// 1. DINAMIKUS MOTOROK BETÖLTÉSE (Auto-Discovery)
 // ------------------------------------------------------------------
-const engines = {
-  sap: require("./scrapers/sap"),
-  smartrecruiters: require("./scrapers/smartrecruiters"),
-  workday: require("./scrapers/workday"),
-  erste: require("./scrapers/erste"),
-  otp: require("./scrapers/otp"),
-  khbank: require("./scrapers/khbank"),
-  aldi: require("./scrapers/aldi"),
-  lidl: require("./scrapers/lidl"),
-  telekom: require("./scrapers/telekom"),
-  fourig: require("./scrapers/fourig"),
-  mol: require("./scrapers/mol"),
-  posta: require("./scrapers/posta"),
-  mvm: require("./scrapers/mvm"),
-  kozszolgallas: require("./scrapers/kozszolgallas"),
-  custom: require("./scrapers/custom")
-};
+const engines = {};
+const scrapersPath = path.join(__dirname, "scrapers");
 
-// ------------------------------------------------------------------
-// 2. FIREBASE INICIALIZÁLÁS ÉS BIZTONSÁG (HIBRID MÓD)
-// ------------------------------------------------------------------
-let serviceAccount;
-
-if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-  try {
-    serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
-    console.log("☁️ Felhős biztonsági kulcs (Env Var) sikeresen betöltve.");
-  } catch (e) {
-    console.error("❌ FATAL: A FIREBASE_SERVICE_ACCOUNT_KEY nem érvényes JSON!");
-    process.exit(1);
-  }
+if (fs.existsSync(scrapersPath)) {
+    const files = fs.readdirSync(scrapersPath).filter(f => f.endsWith('.js'));
+    for (const file of files) engines[file.replace('.js', '')] = require(path.join(scrapersPath, file));
+    console.log(`🔌 [Auto-Discovery] ${Object.keys(engines).length} db motor sikeresen betöltve.`);
 } else {
-  try {
-    serviceAccount = require("./serviceAccountKey.json"); 
-    console.log("💻 Lokális 'serviceAccountKey.json' fájl sikeresen betöltve.");
-  } catch (err) {
-    console.error("❌ FATAL: Nincs felhős kulcs, ÉS nem található a 'serviceAccountKey.json' fájl a mappában!");
-    process.exit(1);
-  }
+    console.warn("⚠️ Nincs 'scrapers' mappa, csak a custom motor lesz elérhető!");
 }
+
+let nlpEngine = null;
+if (fs.existsSync(path.join(__dirname, "nlp.js"))) {
+    nlpEngine = require("./nlp.js");
+    console.log("🧠 [NLP] Quantum/Singularity nyelvi motor csatlakoztatva.");
+}
+
+// ------------------------------------------------------------------
+// 2. FIREBASE INICIALIZÁLÁS (HIBRID)
+// ------------------------------------------------------------------
+const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
+    ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) 
+    : require("./serviceAccountKey.json");
 
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true }); 
 
 // ------------------------------------------------------------------
-// 3. ENTERPRISE SEGÉDFÜGGVÉNYEK & WEBHOOK RIASZTÁS
+// 3. ENTERPRISE SEGÉDOSZTÁLYOK: AEGIS BATCH MANAGER & MARKET PULSE
 // ------------------------------------------------------------------
+class FirestoreBatchManager {
+    constructor(db, limit = 450) {
+        this.db = db; this.limit = limit;
+        this.batch = db.batch(); this.count = 0;
+    }
+    async set(ref, data, opts = {}) { this.batch.set(ref, data, opts); await this.check(); }
+    async delete(ref) { this.batch.delete(ref); await this.check(); }
+    
+    async check() { if (++this.count >= this.limit) await this.flush(); }
+    
+    async flush() {
+        if (this.count === 0) return;
+        for (let i = 1; i <= 3; i++) {
+            try {
+                await this.batch.commit();
+                this.batch = this.db.batch(); this.count = 0; return;
+            } catch (err) {
+                if (i === 3) throw err;
+                console.warn(`⚠️ Batch hiba, újrapróbálkozás (${i}/3)...`);
+                await new Promise(res => setTimeout(res, i * 1000));
+            }
+        }
+    }
+}
 
 async function sendAlert(message, isError = false) {
-  const webhookUrl = process.env.DISCORD_WEBHOOK_URL || process.env.SLACK_WEBHOOK_URL;
-  if (!webhookUrl) return;
-  try {
-    await fetch(webhookUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: (isError ? "🚨 **KRITIKUS HIBA:** " : "ℹ️ **INFO:** ") + message })
-    });
-  } catch (e) { /* Csendes hibakezelés */ }
+    const webhook = process.env.DISCORD_WEBHOOK_URL || process.env.SLACK_WEBHOOK_URL;
+    if (!webhook) return;
+    try { await fetch(webhook, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ content: (isError ? "🚨 **KRITIKUS:** " : "ℹ️ **INFO:** ") + message }) }); } catch (e) { }
 }
 
-async function scrapeWithExponentialBackoff(engine, companyName, url, maxRetries = 3) {
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const results = await engine.scrape(companyName, url);
-      if (!Array.isArray(results)) throw new Error("A motor nem tömböt adott vissza!");
-      return results;
-    } catch (err) {
-      if (attempt === maxRetries) throw err;
-      const delay = Math.pow(2, attempt) * 1000 + Math.floor(Math.random() * 1000); 
-      console.log(`   [${companyName}] ⚠️ Hálózat hiba. Újrapróbálkozás ${Math.round(delay/1000)}mp múlva...`);
-      await new Promise(res => setTimeout(res, delay));
+// ÚJ: Piaci Trend Elemző (Market Pulse Aggregator)
+class MarketPulseTracker {
+    constructor() { this.skills = {}; this.faculties = {}; this.totalJobs = 0; }
+    track(job) {
+        this.totalJobs++;
+        if (job.faculty) this.faculties[job.faculty] = (this.faculties[job.faculty] || 0) + 1;
+        if (job.enriched_tags) job.enriched_tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1);
+        else if (job.tags) job.tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1);
     }
-  }
+    generateReport() {
+        // Csak a top 10 skillt tartjuk meg a napi mentéshez
+        const topSkills = Object.entries(this.skills).sort((a, b) => b[1] - a[1]).slice(0, 10).map(e => ({ skill: e[0], count: e[1] }));
+        return { timestamp: FieldValue.serverTimestamp(), total_active_jobs: this.totalJobs, top_skills: topSkills, faculty_distribution: this.faculties };
+    }
 }
 
-function sanitizeJobData(job, companyName) {
-  let cleanUrl = job.url || "";
-  let cleanApplyUrl = job.apply_url || cleanUrl;
-  if (cleanUrl && !cleanUrl.startsWith("http")) cleanUrl = "https://" + cleanUrl;
-  if (cleanApplyUrl && !cleanApplyUrl.startsWith("http")) cleanApplyUrl = "https://" + cleanApplyUrl;
+// ------------------------------------------------------------------
+// 4. DATA QUALITY GATE & SEMANTIC FINGERPRINTING
+// ------------------------------------------------------------------
+function sanitizeAndScoreJob(rawJob, companyName) {
+    const stripHtml = (str) => (str || "").replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+    const fixUrl = (u) => (u && u !== "null" && u !== "undefined") ? (u.startsWith("http") ? u : "https://" + u) : "";
 
-  return {
-    company_name: companyName,
-    title: (job.title || "Ismeretlen pozíció").replace(/\s+/g, ' ').trim(),
-    location: (job.location || "Nincs megadva").replace(/\s+/g, ' ').trim(),
-    url: cleanUrl,
-    apply_url: cleanApplyUrl,
-    date_posted: (job.date_posted && !isNaN(new Date(job.date_posted).getTime())) 
-                 ? new Date(job.date_posted).toISOString() 
-                 : new Date().toISOString(),
-    employment_type: (job.employment_type || "").trim(),
-    experience_level: (job.experience_level || "").trim(),
-    faculty: job.faculty || "Egyéb",
-    work_style: job.work_style || "",
-    tags: Array.isArray(job.tags) ? [...new Set(job.tags)] : [], 
-  };
+    const cleanJob = {
+        company_name: companyName,
+        title: stripHtml(rawJob.title) || "",
+        location: stripHtml(rawJob.location) || "Nincs megadva",
+        url: fixUrl(rawJob.url),
+        apply_url: fixUrl(rawJob.apply_url || rawJob.url),
+        date_posted: (!isNaN(Date.parse(rawJob.date_posted))) ? new Date(rawJob.date_posted).toISOString() : new Date().toISOString(),
+        faculty: rawJob.faculty || "Egyéb",
+        tags: Array.isArray(rawJob.tags) ? [...new Set(rawJob.tags)] : []
+    };
+
+    if (nlpEngine && cleanJob.title) {
+        const nlpResult = nlpEngine.analyzeJob(cleanJob.title, rawJob.description || "");
+        if (nlpResult) {
+            cleanJob.faculty = nlpResult.airtable_ready?.faculty || cleanJob.faculty;
+            cleanJob.job_nature = nlpResult.airtable_ready?.job_nature;
+            cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
+        }
+    }
+
+    // ÚJ: Szemantikus Ujjlenyomat (Duplikációk megelőzésére, ha változik az URL)
+    const baseString = `${companyName}|${cleanJob.title.toLowerCase()}|${cleanJob.location.toLowerCase()}|${cleanJob.faculty}`;
+    cleanJob.semantic_hash = crypto.createHash('md5').update(baseString).digest('hex');
+    
+    // Alap Hash (Tartalmi változások detektálására)
+    cleanJob.data_hash = crypto.createHash('md5').update(baseString + `|${cleanJob.tags.join(",")}`).digest('hex');
+
+    // Health Score
+    let score = 100;
+    if (!cleanJob.title || cleanJob.title.toLowerCase().includes("teszt")) score -= 100; 
+    if (!cleanJob.url) score -= 100; 
+    if (cleanJob.title === cleanJob.title.toUpperCase()) { cleanJob.title = cleanJob.title.charAt(0) + cleanJob.title.slice(1).toLowerCase(); score -= 10; }
+    
+    cleanJob.health_score = Math.max(0, score);
+    return cleanJob;
 }
 
-function generateJobHash(sanitizedJob) {
-  const dataString = `${sanitizedJob.title}|${sanitizedJob.location}|${sanitizedJob.faculty}|${sanitizedJob.work_style}|${sanitizedJob.tags.join(",")}|${sanitizedJob.apply_url}`;
-  return crypto.createHash('md5').update(dataString).digest('hex');
-}
-
-// Univerzális Deep-Diffing (Minden kulcsmező vizsgálata)
 function getJobDifferences(oldJob, newJob) {
-  const changes = [];
-  const fieldsToCheck = [
-      { key: 'title', label: 'Cím' },
-      { key: 'location', label: 'Helyszín' },
-      { key: 'faculty', label: 'Kategória' },
-      { key: 'work_style', label: 'Vibe' }
-  ];
-  
-  for (const field of fieldsToCheck) {
-      if (oldJob[field.key] !== newJob[field.key]) {
-          changes.push(`${field.label}: "${oldJob[field.key]}" -> "${newJob[field.key]}"`);
-      }
-  }
-  return changes;
+    const changes = {};
+    ['title', 'location', 'faculty', 'url'].forEach(k => { 
+        // ÚJ: Deep-Merge védelem - Ha az új adat null/üres, de a régi nem volt az, NE írjuk felül!
+        if (!newJob[k] && oldJob[k]) newJob[k] = oldJob[k]; 
+        else if (oldJob[k] !== newJob[k]) changes[k] = { from: oldJob[k], to: newJob[k] }; 
+    });
+    return Object.keys(changes).length > 0 ? changes : null;
 }
 
 // ------------------------------------------------------------------
-// 4. FŐ ORCHESTRATOR (Multi-Threaded Pipeline + Data Lake)
+// 5. ORCHESTRATOR FŐ CIKLUS
 // ------------------------------------------------------------------
-
-// Globális leállás-figyelő (Graceful Shutdown)
 let isShuttingDown = false;
-process.on('SIGINT', () => { console.log("\n⚠️ [SIGINT] Leállítási kérelem érkezett! Befejezem a mentéseket..."); isShuttingDown = true; });
-process.on('SIGTERM', () => { console.log("\n⚠️ [SIGTERM] Leállítási kérelem érkezett! Befejezem a mentéseket..."); isShuttingDown = true; });
+process.on('SIGINT', () => { isShuttingDown = true; console.log("\n⚠️ Biztonságos leállás folyamatban..."); });
+process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
-  console.log("\n======================================================");
-  console.log("🚀 UniStart UNICORN Orchestrator (V6.0) elindult...");
-  console.log("⚙️  Párhuzamos feldolgozás & Deep-Diffing & Auto-Heal aktív!");
-  console.log("======================================================\n");
-  
-  await sendAlert("🚀 UniStart V6 Scraper folyamat elindult...");
-
-  const stats = {
-    startTime: Date.now(),
-    companiesProcessed: 0,
-    companiesFailed: 0,
-    jobsFound: 0,
-    jobsAdded: 0,
-    jobsUpdated: 0,
-    jobsUntouched: 0,
-    jobsArchived: 0,
-    anomaliesDetected: 0
-  };
-
-  const errorLogs = [];
-
-  try {
-    const companiesSnapshot = await db.collection("companies").get();
-    if (companiesSnapshot.empty) {
-      console.log("⚠️ Nincs cég az adatbázisban.");
-      process.exit(0);
-    }
-
-    const companyQueue = [...companiesSnapshot.docs];
-    
-    // WORKER LOGIKA
-    const workerTask = async (workerId) => {
-      while (companyQueue.length > 0) {
-        if (isShuttingDown) {
-            console.log(`[Worker-${workerId}] 🛑 Leállás megszakítva a biztonságos kilépéshez.`);
-            break;
-        }
-
-        const doc = companyQueue.shift();
-        const companyId = doc.id;
-        const company = doc.data();
-        const engineName = company.engine || "custom";
-        const engine = engines[engineName];
-
-        if (!company.career_url) continue;
-        
-        // Thundering Herd Védelem: Véletlenszerű 0-1.5mp csúsztatás indításkor
-        const jitter = Math.floor(Math.random() * 1500);
-        await new Promise(res => setTimeout(res, jitter));
-
-        const logPrefix = `[Worker-${workerId} | ${company.name}]`;
-        console.log(`\n${logPrefix} 🏢 Motor: ${engineName.toUpperCase()} indítása...`);
-
-        if (!engine) {
-          console.log(`${logPrefix} ❌ Hiba: Nem létező motor!`);
-          stats.companiesFailed++;
-          errorLogs.push({ company: company.name, error: "Missing engine: " + engineName });
-          continue;
-        }
-
-        try {
-          stats.companiesProcessed++;
-          
-          const existingJobsSnapshot = await db.collection("jobs").where("company_id", "==", companyId).get();
-          const existingJobsMap = new Map();
-          existingJobsSnapshot.forEach(d => existingJobsMap.set(d.id, d.data()));
-
-          let scrapedJobs = await scrapeWithExponentialBackoff(engine, company.name, company.career_url);
-          stats.jobsFound += scrapedJobs.length;
-
-          // 🚨 ADATMÉRGEZÉS DETEKTOR
-          let skipDeletion = false;
-          let skipProcessing = false;
-
-          // ⚠️ ITT VAN KIKAPCSOLVA AZ ANOMÁLIA 1 A NAGY TAKARÍTÁSHOZ (false && ...)
-          if (false && existingJobsSnapshot.size > 15 && scrapedJobs.length < (existingJobsSnapshot.size * 0.3)) {
-            const msg = `${logPrefix} 🚨 ANOMÁLIA: Gyanús állás-csökkenés! Tömeges archiválás blokkolva.`;
-            console.log(msg);
-            await sendAlert(msg, true);
-            skipDeletion = true;
-            stats.anomaliesDetected++;
-            errorLogs.push({ company: company.name, error: "Circuit Breaker Tripped." });
-          }
-
-          const validUrls = new Set(scrapedJobs.map(j => j.url).filter(Boolean));
-          if (scrapedJobs.length > 10 && validUrls.size < (scrapedJobs.length * 0.4)) {
-            const msg = `${logPrefix} 🚨 ANOMÁLIA: Túl sok duplikált URL (Adatmérgezés)! Cég blokkolva.`;
-            console.log(msg);
-            await sendAlert(msg, true);
-            skipProcessing = true;
-            stats.anomaliesDetected++;
-            errorLogs.push({ company: company.name, error: "Data Poisoning Detected." });
-          }
-
-          if (skipProcessing) {
-            scrapedJobs = null; 
-            continue; 
-          }
-
-          // ADAT FELDOLGOZÁS ÉS DELTA-SYNC
-          let batch = db.batch(); // 🚨 JAVÍTVA: const helyett let
-          let batchCount = 0;
-          let cAdded = 0, cUpdated = 0, cUntouched = 0, cArchived = 0;
-
-          const freshJobIds = new Set(); 
-
-          for (const rawJob of scrapedJobs) {
-            if (!rawJob.title) continue;
-
-            const jobIdentityString = rawJob.url || (company.name + rawJob.title);
-            const jobId = crypto.createHash('md5').update(jobIdentityString).digest('hex');
-            
-            freshJobIds.add(jobId);
-            const sanitizedJob = sanitizeJobData(rawJob, company.name);
-            sanitizedJob.company_id = companyId;
-            const newHash = generateJobHash(sanitizedJob);
-
-            if (existingJobsMap.has(jobId)) {
-              const oldJob = existingJobsMap.get(jobId);
-              const oldHash = oldJob.data_hash || "";
-
-              if (newHash !== oldHash) {
-                const changes = getJobDifferences(oldJob, sanitizedJob);
-                if (changes.length > 0) sanitizedJob.last_changes = changes;
-                
-                sanitizedJob.data_hash = newHash;
-                sanitizedJob.updated_at = FieldValue.serverTimestamp();
-                batch.set(db.collection("jobs").doc(jobId), sanitizedJob, { merge: true });
-                batchCount++; cUpdated++; stats.jobsUpdated++;
-              } else {
-                cUntouched++; stats.jobsUntouched++;
-              }
-            } else {
-              sanitizedJob.data_hash = newHash;
-              sanitizedJob.scraped_at = FieldValue.serverTimestamp();
-              batch.set(db.collection("jobs").doc(jobId), sanitizedJob);
-              batchCount++; cAdded++; stats.jobsAdded++;
-            }
-
-            // 🚨 JAVÍTÁS: Csomag lezárása ÉS új doboz nyitása!
-            if (batchCount >= 450) { 
-                await batch.commit(); 
-                batch = db.batch(); 
-                batchCount = 0; 
-            }
-          }
-
-          // 🏛️ TÖRTÉNELMI ADATTREZOR
-          if (!skipDeletion) {
-            for (const [existingJobId, oldJobData] of existingJobsMap.entries()) {
-              if (!freshJobIds.has(existingJobId)) {
-                const archivedJob = {
-                    ...oldJobData,
-                    archived_at: FieldValue.serverTimestamp(),
-                    is_active: false
-                };
-                
-                batch.set(db.collection("jobs_archive").doc(existingJobId), archivedJob);
-                batch.delete(db.collection("jobs").doc(existingJobId));
-                
-                batchCount += 2; 
-                cArchived++; stats.jobsArchived++;
-                
-                // 🚨 JAVÍTÁS: Itt is új doboz kell a lezárás után!
-                if (batchCount >= 450) { 
-                    await batch.commit(); 
-                    batch = db.batch(); 
-                    batchCount = 0; 
-                }
-              }
-            }
-          }
-
-          if (batchCount > 0) await batch.commit();
-          
-          console.log(`${logPrefix} ✅ Kész! Új: ${cAdded} | Frissült: ${cUpdated} | Érintetlen: ${cUntouched} | Archivált: ${cArchived}`);
-
-          existingJobsMap.clear();
-          freshJobIds.clear();
-          scrapedJobs = null;
-
-        } catch (engineError) {
-          console.error(`${logPrefix} ❌ Végzetes Hiba:`, engineError.message);
-          stats.companiesFailed++;
-          errorLogs.push({ company: company.name, error: engineError.message });
-          await sendAlert(`Hiba a(z) ${company.name} feldolgozása közben: ${engineError.message}`, true);
-        }
-      }
-    };
-
-    // A MUNKÁSOK INDÍTÁSA
-    const CONCURRENCY_LIMIT = 3;
-    const workers = [];
-    for (let i = 1; i <= CONCURRENCY_LIMIT; i++) {
-      workers.push(workerTask(i));
-    }
-    
-    await Promise.all(workers);
-
-    // ------------------------------------------------------------------
-    // 6. TELEMETRIA FELTÖLTÉSE A FIREBASE-BE
-    // ------------------------------------------------------------------
-    const executionTimeSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
-    stats.executionTimeSec = executionTimeSec;
-    
-    // RAM Használat mérése
-    const usedMemoryMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
-    
-    const systemStatus = {
-        last_run: FieldValue.serverTimestamp(),
-        status: stats.companiesFailed > 0 || stats.anomaliesDetected > 0 ? "warning" : "healthy",
-        metrics: { ...stats, peakMemoryMB: usedMemoryMB },
-        recent_errors: errorLogs.slice(0, 10) 
-    };
-
-    await db.collection("system_logs").doc("scraper_health").set(systemStatus);
-
-    // ------------------------------------------------------------------
-    // 7. ZÁRÓJELENTÉS
-    // ------------------------------------------------------------------
     console.log("\n======================================================");
-    console.log("🏁 SZINKRONIZÁCIÓ BEFEJEZŐDÖTT");
-    console.log("======================================================");
-    console.log(`⏱️ Futási idő:        ${executionTimeSec} mp`);
-    console.log(`🧠 Memória használat: ${usedMemoryMB} MB (Tiszta!)`);
-    console.log(`🏢 Vizsgált cégek:    ${stats.companiesProcessed} db (Hiba: ${stats.companiesFailed})`);
-    console.log(`🚨 Kiszűrt Anomáliák: ${stats.anomaliesDetected} db`);
-    console.log("------------------------------------------------------");
-    console.log(`✨ Újként mentve:     ${stats.jobsAdded} db`);
-    console.log(`🔄 Frissítve (Delta): ${stats.jobsUpdated} db`);
-    console.log(`😴 Érintetlen:        ${stats.jobsUntouched} db`);
-    console.log(`🏛️ Archívumba rakva:  ${stats.jobsArchived} db`);
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V10.0) elindult");
     console.log("======================================================\n");
-    
-    await sendAlert(`✅ Szinkronizáció befejezve. Új: ${stats.jobsAdded}, Archivált: ${stats.jobsArchived}. Futási idő: ${executionTimeSec}s. Memória: ${usedMemoryMB}MB.`);
+    await sendAlert("🚀 UniStart V10 (Chronos-Nexus) folyamat elindult...");
 
-    process.exit(0);
+    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, archived: 0, resurrected: 0, rejected: 0, anomalies: 0 };
+    const errorLogs = [];
+    const marketPulse = new MarketPulseTracker();
 
-  } catch (error) {
-    console.error("❌ Kritikus hiba az Orchestrator folyamatban:", error);
-    await sendAlert(`Kritikus rendszerhiba az Orchestratorban: ${error.message}`, true);
-    process.exit(1);
-  }
+    try {
+        const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
+        if (companiesSnapshot.empty) return console.log("⚠️ Nincs aktív cég.");
+
+        const companyQueue = [...companiesSnapshot.docs];
+        const CONCURRENCY_LIMIT = Math.min(os.cpus().length, 5); 
+        
+        const workerTask = async (workerId) => {
+            const batchManager = new FirestoreBatchManager(db); 
+
+            while (companyQueue.length > 0) {
+                if (isShuttingDown) break;
+
+                // 🛑 Thermal Throttling: Ha a RAM használat 85% felett van a lefoglaltból, a szál vár 2 másodpercet
+                const memoryUsage = process.memoryUsage();
+                if (memoryUsage.heapUsed / memoryUsage.heapTotal > 0.85) {
+                    console.log(`[W${workerId}] 🛑 Magas RAM használat! Thermal Throttling aktiválva (2s sleep)...`);
+                    await new Promise(res => setTimeout(res, 2000));
+                }
+
+                const companyDoc = companyQueue.shift();
+                const company = companyDoc.data();
+                const engine = engines[company.engine || "custom"];
+
+                if (!company.career_url || !engine) continue;
+                
+                await new Promise(res => setTimeout(res, Math.floor(Math.random() * 1000))); 
+                const logPrefix = `[W${workerId} | ${company.name}]`;
+                console.log(`${logPrefix} 🏢 Motor indítása...`);
+
+                try {
+                    stats.processed++;
+                    
+                    // Lekérjük a létező és archivált állásokat is (Gyors O(1) select lookup)
+                    const existingJobsSnap = await db.collection("jobs").where("company_id", "==", companyDoc.id).select("data_hash", "semantic_hash", "title", "location", "faculty", "url").get();
+                    const existingMap = new Map();
+                    const existingSemanticMap = new Map(); // Szemantikus összerendeléshez
+                    existingJobsSnap.forEach(d => {
+                        const data = d.data();
+                        existingMap.set(d.id, data);
+                        if(data.semantic_hash) existingSemanticMap.set(data.semantic_hash, d.id);
+                    });
+
+                    const archSnap = await db.collection("jobs_archive").where("company_id", "==", companyDoc.id).select("data_hash", "semantic_hash").get();
+                    const archSemanticMap = new Map();
+                    archSnap.forEach(d => { if(d.data().semantic_hash) archSemanticMap.set(d.data().semantic_hash, d.id); });
+
+                    let scrapedJobs = [];
+                    for (let attempt = 1; attempt <= 3; attempt++) {
+                        try { scrapedJobs = await engine.scrape(company.name, company.career_url); break; } 
+                        catch (err) { if (attempt === 3) throw err; await new Promise(res => setTimeout(res, 2000 * attempt)); }
+                    }
+
+                    // 🚨 Circuit Breaker (Anomaly Detection)
+                    let skipDeletion = false;
+                    const prevCount = existingJobsSnap.size;
+                    
+                    if (prevCount >= 15 && scrapedJobs.length < (prevCount * 0.5)) {
+                        await sendAlert(`${logPrefix} 🚨 VÉDELEM: Extrém drop (${prevCount} -> ${scrapedJobs.length}). Archiválás blokkolva!`, true);
+                        skipDeletion = true; stats.anomalies++;
+                    }
+
+                    const validUrls = new Set(scrapedJobs.map(j => j.url).filter(Boolean));
+                    if (scrapedJobs.length > 10 && validUrls.size < (scrapedJobs.length * 0.4)) throw new Error("Adatmérgezés gyanú: Sok azonos URL!");
+
+                    let cAdded = 0, cUpdated = 0, cUntouched = 0, cArchived = 0, cResurrected = 0, cRejected = 0;
+                    const freshJobIds = new Set(); 
+
+                    for (const rawJob of scrapedJobs) {
+                        const cleanJob = sanitizeAndScoreJob(rawJob, company.name);
+                        if (cleanJob.health_score < 50) { cRejected++; stats.rejected++; continue; }
+
+                        cleanJob.company_id = companyDoc.id;
+                        
+                        // ID Generálás: Először megnézzük, van-e Szemantikus egyezés (akár az aktív, akár az archív állások között)!
+                        let jobId;
+                        if (existingSemanticMap.has(cleanJob.semantic_hash)) {
+                            jobId = existingSemanticMap.get(cleanJob.semantic_hash);
+                        } else if (archSemanticMap.has(cleanJob.semantic_hash)) {
+                            jobId = archSemanticMap.get(cleanJob.semantic_hash);
+                        } else {
+                            jobId = crypto.createHash('md5').update(cleanJob.url).digest('hex'); // Fallback hagyományos URL hashre
+                        }
+
+                        freshJobIds.add(jobId);
+                        marketPulse.track(cleanJob); // 📈 Adat küldése a Trend Elemzőnek
+
+                        if (existingMap.has(jobId)) {
+                            const oldJob = existingMap.get(jobId);
+                            if (cleanJob.data_hash !== (oldJob.data_hash || "")) {
+                                const changes = getJobDifferences(oldJob, cleanJob); // Deep-Merge logika itt fut le!
+                                cleanJob.updated_at = FieldValue.serverTimestamp();
+                                
+                                await batchManager.set(db.collection("jobs").doc(jobId), cleanJob, { merge: true });
+                                
+                                if (changes) { // 📜 Audit Trail mentése
+                                    const historyRef = db.collection("jobs").doc(jobId).collection("history").doc();
+                                    await batchManager.set(historyRef, { changed_at: FieldValue.serverTimestamp(), changes });
+                                }
+                                cUpdated++; stats.updated++;
+                            } else { cUntouched++; stats.untouched++; }
+                        } else if (archSemanticMap.has(cleanJob.semantic_hash)) {
+                            cleanJob.updated_at = FieldValue.serverTimestamp();
+                            cleanJob.is_active = true;
+                            await batchManager.set(db.collection("jobs").doc(jobId), cleanJob);
+                            await batchManager.delete(db.collection("jobs_archive").doc(jobId)); 
+                            cResurrected++; stats.resurrected++;
+                        } else {
+                            cleanJob.scraped_at = FieldValue.serverTimestamp();
+                            await batchManager.set(db.collection("jobs").doc(jobId), cleanJob);
+                            cAdded++; stats.added++;
+                        }
+                    }
+
+                    if (!skipDeletion) {
+                        for (const existingJobId of existingMap.keys()) {
+                            if (!freshJobIds.has(existingJobId)) {
+                                const oldDoc = await db.collection("jobs").doc(existingJobId).get();
+                                if (oldDoc.exists) {
+                                    await batchManager.set(db.collection("jobs_archive").doc(existingJobId), { ...oldDoc.data(), archived_at: FieldValue.serverTimestamp(), is_active: false });
+                                    await batchManager.delete(db.collection("jobs").doc(existingJobId));
+                                    cArchived++; stats.archived++;
+                                }
+                            }
+                        }
+                    }
+
+                    await batchManager.flush();
+                    existingMap.clear(); existingSemanticMap.clear(); archSemanticMap.clear(); freshJobIds.clear(); scrapedJobs = null;
+
+                    console.log(`${logPrefix} ✅ Kész | Új: ${cAdded} | Frissült: ${cUpdated} | Feltámadt: ${cResurrected} | Archív: ${cArchived} | Kuka: ${cRejected}`);
+
+                } catch (err) {
+                    console.error(`${logPrefix} ❌ Hiba:`, err.message);
+                    stats.failed++; errorLogs.push({ company: company.name, error: err.message });
+                    await db.collection("system_dlq").add({ company_id: companyDoc.id, company_name: company.name, error: err.message, timestamp: FieldValue.serverTimestamp() });
+                }
+            }
+        };
+
+        await Promise.all(Array.from({ length: CONCURRENCY_LIMIT }, (_, i) => workerTask(i + 1)));
+
+        // ------------------------------------------------------------------
+        // 6. MARKET PULSE MENTÉSE ÉS AUTO-VACUUM
+        // ------------------------------------------------------------------
+        console.log("\n📈 Market Pulse (Piaci Trendek) generálása...");
+        await db.collection("system_analytics").doc("latest_market_pulse").set(marketPulse.generateReport());
+        await db.collection("system_analytics").doc("history").collection("daily_pulses").add(marketPulse.generateReport());
+
+        console.log("🧹 Auto-Vacuum indítása (90 napnál régebbi archívumok)...");
+        const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
+        const vacuumSnap = await db.collection("jobs_archive").where("archived_at", "<", ninetyDaysAgo).limit(500).get();
+        const vacuumBatch = new FirestoreBatchManager(db);
+        vacuumSnap.forEach(doc => vacuumBatch.delete(doc.ref));
+        await vacuumBatch.flush();
+
+        // ------------------------------------------------------------------
+        // 7. ZÁRÓJELENTÉS
+        // ------------------------------------------------------------------
+        const execSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
+        const usedMemMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
+        
+        await db.collection("system_logs").doc("scraper_health").set({
+            last_run: FieldValue.serverTimestamp(), status: stats.failed > 0 || stats.anomalies > 0 ? "warning" : "healthy",
+            metrics: { ...stats, execSec, peakMemoryMB: usedMemMB }, recent_errors: errorLogs.slice(0, 10) 
+        });
+
+        console.log("\n======================================================");
+        console.log("🏁 CHRONOS-NEXUS SZINKRONIZÁCIÓ BEFEJEZŐDÖTT");
+        console.log("======================================================");
+        console.log(`⏱️ Idő: ${execSec}s | 🧠 Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Hiba: ${stats.failed})`);
+        console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated} | 🧟 Feltámadt: ${stats.resurrected}`);
+        console.log(`🗑️ Eldobott szemét: ${stats.rejected} | 🏛️ Archivált: ${stats.archived}`);
+        console.log("======================================================\n");
+        
+        await sendAlert(`✅ V10.0 Kész. Új: ${stats.added}, Eldobva: ${stats.rejected}, Archív: ${stats.archived}, Vacuum törlés: ${vacuumSnap.size}. Memória: ${usedMemMB}MB.`);
+        process.exit(0);
+
+    } catch (err) {
+        console.error("❌ Kritikus hiba:", err); await sendAlert(`Végzetes összeomlás: ${err.message}`, true); process.exit(1);
+    }
 }
 
-// Indítás
 runScraper();

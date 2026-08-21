@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <!-- ========================================================================== -->
-<!-- META ADATOK ÉS OLDAL BEÁLLÍTÁSOK                                           -->
+<!-- HTML: 0. META ADATOK ÉS OLDAL BEÁLLÍTÁSOK                                  -->
 <!-- ========================================================================== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -100,6 +100,7 @@
     --header-bg: rgba(245, 245, 247, 0.85);
     --modal-bg: rgba(255, 255, 255, 0.85);
 }
+
 /* ==========================================================================
    CSS: 2. ALAPVETŐ STÍLUSOK, CSONTVÁZ ANIMÁCIÓK ÉS GÖRGŐK (SCROLLBAR)
    ========================================================================== */
@@ -238,8 +239,8 @@ html {
 .big-support-content::-webkit-scrollbar-thumb { 
     border-color: var(--modal-bg); 
 }
+
 /* ==========================================================================
-  /* ==========================================================================
    CSS: 3. LEBEGŐ ELEMEK (GÖRGŐ GOMB, LOADEREK, TOAST ÉRTESÍTÉSEK)
    ========================================================================== */
 
@@ -1026,16 +1027,15 @@ html {
 [data-theme="light"] .info-nav-btn.active { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
 /* ==========================================================================
-   CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA (NATIVE GÖRGÉS & TAB BAR FIX)
+   CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA (DINAMIKUS LEBEGŐ NAVIGÁCIÓ)
    ========================================================================== */
 @media (max-width: 768px) {
     
-    /* --- 1. A LEGFONTOSABB JAVÍTÁS: NATIVE GÖRGÉS MOBILON --- */
-    /* Kikapcsoljuk a belső dobozos görgetést, így a böngésző gyári, akadásmentes görgetése lép életbe! */
+    /* 1. NATIVE GÖRGÉS BIZTOSÍTÁSA */
     body { overflow-x: hidden; overflow-y: auto; }
     
     #loggedInView { 
-        display: block !important; /* Flexbox korlát feloldása */
+        display: block !important; 
         height: auto !important; 
         min-height: 100vh;
         overflow: visible !important; 
@@ -1045,80 +1045,79 @@ html {
         display: block !important;
         height: auto !important;
         overflow: visible !important; 
-        padding-bottom: calc(100px + env(safe-area-inset-bottom)); /* Hely az alsó Tab Barnak */
+        padding-bottom: calc(110px + env(safe-area-inset-bottom));
     }
 
-    /* --- 2. Fejléc (Most már Sticky a Native görgéshez) --- */
+    /* 2. Ragadós Fejléc */
     .dashboard-header { 
-        padding: 0 20px; 
-        height: 64px; 
-        min-height: 64px; 
-        display: flex;
-        justify-content: center; 
-        align-items: center;
-        box-shadow: 0 1px 0 var(--card-border); 
-        background: var(--header-bg);
-        position: sticky;
-        top: 0;
-        z-index: var(--z-header);
-        backdrop-filter: var(--blur-heavy);
-        -webkit-backdrop-filter: var(--blur-heavy);
+        padding: 0 20px; height: 64px; min-height: 64px; 
+        display: flex; justify-content: center; align-items: center;
+        box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg);
+        position: sticky; top: 0; z-index: var(--z-header);
+        backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy);
     }
     .dashboard-title { text-align: center; font-size: 20px; font-weight: 800; margin: 0;}
     
-    /* --- 3. Alsó Navigációs Sáv (Tab Bar) Javítások --- */
+    /* --- 3. DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) --- */
     .sidebar { 
-        position: fixed; bottom: 0; left: 0; right: 0; 
-        width: 100% !important; height: auto; 
-        min-height: calc(60px + env(safe-area-inset-bottom)); 
-        flex-direction: row; 
-        padding: 8px 6px calc(8px + env(safe-area-inset-bottom)) 6px; 
-        border-right: none; 
-        border-top: 1px solid var(--card-border); 
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); 
-        z-index: var(--z-sidebar); 
-        justify-content: space-around; align-items: center; 
-        background: var(--card-bg); 
+        position: fixed; 
+        bottom: calc(16px + env(safe-area-inset-bottom)); 
+        left: 16px; right: 16px; 
+        width: auto !important; height: 64px; min-height: 64px; 
+        padding: 0 8px; 
+        border-radius: 100px; 
+        border: 1px solid var(--card-border); 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.05); 
+        z-index: var(--z-toast); 
+        display: flex; flex-direction: row; justify-content: center; align-items: center; 
+        background: var(--modal-bg); 
+        backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); 
     }
     
-    .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile { display: none; } 
-    
+    .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile, .sidebar-bottom { display: none !important; } 
+    .sidebar-top-section { width: 100%; display: flex; justify-content: center; }
+
     .nav-menu { 
-        flex-direction: row; width: 100%; justify-content: space-around; gap: 4px; display: flex;
+        flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 8px; display: flex; margin: 0; padding: 0;
     }
     
-    /* Összecsúszás gátló: A min-width: 0; megengedi, hogy a gomb kisebb legyen, mint a szó hossza! */
     .nav-item { 
-        flex: 1; margin: 0; padding: 4px 2px; 
-        display: flex; flex-direction: column; align-items: center; justify-content: center;
-        gap: 4px; height: 100%; 
+        flex: none; margin: 0; 
+        display: flex; flex-direction: row; align-items: center; justify-content: center;
+        padding: 12px; height: 48px; 
         background: transparent !important; box-shadow: none !important; 
         color: var(--subtitle-color);
-        border-radius: var(--radius-sm);
-        min-width: 0; 
+        border-radius: 100px;
+        position: relative;
+        transition: all 0.4s var(--ease-spring);
     }
     .nav-item::before { display: none; } 
 
-    .nav-item.active { color: var(--primary-color); }
-    .nav-item.active .nav-icon { transform: translateY(-2px); }
-    
-    /* A szöveg stílusa (Ha nem fér ki, három ponttal "..." levágja) */
     .nav-text { 
-        display: block; 
-        font-size: 10px; 
-        letter-spacing: -0.3px; 
-        margin: 0; 
-        font-weight: 600; 
-        text-align: center;
-        white-space: nowrap; 
-        overflow: hidden; 
-        text-overflow: ellipsis; 
-        width: 100%;
-        transform: none !important;
-        opacity: 1 !important;
+        font-size: 0 !important; 
+        max-width: 0; opacity: 0; margin-left: 0;
+        display: block; overflow: hidden; white-space: nowrap;
+        transition: all 0.4s var(--ease-spring);
     }
-    .nav-icon { font-size: 22px; margin: 0; transition: transform var(--transition-fast); }
+
+    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    .mobile-only-nav .nav-text::after { content: "Menü"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+
+    .nav-item.active { 
+        background: var(--primary-color) !important; 
+        color: white; 
+        padding: 12px 20px; 
+        box-shadow: 0 6px 20px rgba(10, 132, 255, 0.3);
+    }
+    .nav-item.active .nav-icon { transform: scale(1.1); color: white; }
+    .nav-item.active .nav-text { 
+        max-width: 80px; 
+        opacity: 1; 
+        margin-left: 8px; 
+    }
     
+    .nav-icon { font-size: 22px; margin: 0; transition: transform var(--transition-fast); }
     .mobile-only-nav { display: flex; }
 
     /* --- 4. Tartalom elrendezése --- */
@@ -1129,13 +1128,8 @@ html {
     .keyword-search, .location-search { flex: 1; width: 100%; }
     
     .search-box-input { 
-        padding: 0 16px 0 44px; 
-        font-size: 16px; 
-        border-radius: var(--radius-sm); 
-        height: 48px; 
-        background: var(--tag-bg); 
-        border: 1px solid var(--tag-border);
-        width: 100%;
+        padding: 0 16px 0 44px; font-size: 16px; border-radius: var(--radius-sm); height: 48px; 
+        background: var(--tag-bg); border: 1px solid var(--tag-border); width: 100%;
     }
     .search-box-input:focus { border-color: var(--primary-color); }
     .search-icon { left: 14px; font-size: 18px; color: var(--subtitle-color); }
@@ -1145,48 +1139,36 @@ html {
     
     /* --- 5. Álláskártyák --- */
     .company-grid { gap: 16px; display: flex; flex-direction: column; }
-    .company-card { 
-        flex-direction: column; align-items: flex-start; 
-        padding: 20px; gap: 16px; border-radius: var(--radius-md); 
-    }
+    .company-card { flex-direction: column; align-items: flex-start; padding: 20px; gap: 16px; border-radius: var(--radius-md); }
     .company-card-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; display: flex; }
     .action-icons-row { width: auto; flex: 0; display: flex; gap: 10px; }
     .company-card-actions .apply-btn { flex: 1; padding: 12px; font-size: 15px; height: 44px; justify-content: center;}
     
-    #backToTopBtn { bottom: calc(85px + env(safe-area-inset-bottom)); right: 16px; width: 44px; height: 44px; font-size: 20px; }
+    #backToTopBtn { bottom: calc(95px + env(safe-area-inset-bottom)); right: 16px; width: 44px; height: 44px; font-size: 20px; }
     .search-header-row { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
     .sort-select { margin-left: 0 !important; width: 100%; padding: 0 16px; height: 48px; background-color: var(--tag-bg); border: 1px solid var(--tag-border); }
-    #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: calc(90px + env(safe-area-inset-bottom)); padding: 14px 20px; }
+    #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: calc(95px + env(safe-area-inset-bottom)); padding: 14px 20px; }
     
     /* --- 6. FUNKCIONÁLIS MODÁLIS ABLAKOK --- */
     .filter-modal-box, .mobile-menu-box, .job-preview-box, .big-support-box { 
-        border-radius: 24px 24px 0 0 !important; 
-        padding-top: 0 !important; 
-        position: relative; 
-        background: var(--card-bg) !important; 
-        backdrop-filter: none !important;
-        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important;
+        border-radius: 24px 24px 0 0 !important; padding-top: 0 !important; position: relative; 
+        background: var(--card-bg) !important; backdrop-filter: none !important; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important;
     }
 
     .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { 
-        align-items: flex-end; padding: 0; 
-        background: rgba(0, 0, 0, 0.6) !important; 
+        align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.6) !important; 
     }
     
     .filter-modal-box { width: 100%; max-height: 90dvh; height: 90dvh; margin-top: auto; display: flex; flex-direction: column;}
     .filter-modal-header { padding: 20px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
     .filter-modal-header h2 { font-size: 20px; }
-    
-    /* Ablakon belüli görgés aktiválása */
     .filter-modal-body { grid-template-columns: 1fr; gap: 24px; padding: 20px 16px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;} 
     .filter-section h3 { font-size: 15px; margin: 0 0 12px 0; }
     .f-btn { padding: 10px 16px; font-size: 14px; }
     
     .filter-modal-footer { 
         flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
-        gap: 12px; position: sticky; bottom: 0; 
-        background: var(--card-bg); border-top: 1px solid var(--card-border); 
-        flex-shrink: 0;
+        gap: 12px; position: sticky; bottom: 0; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0;
     }
     .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 14px; font-size: 15px; height: 48px;}
     
@@ -1202,97 +1184,21 @@ html {
     .job-preview-footer .icon-action-btn { flex: 1; height: 48px; }
     
     .mobile-menu-box, .big-support-box { 
-        margin-top: auto; max-height: 90dvh; height: auto; 
-        padding-bottom: env(safe-area-inset-bottom); 
-        display: flex; flex-direction: column;
+        margin-top: auto; max-height: 90dvh; height: auto; padding-bottom: env(safe-area-inset-bottom); display: flex; flex-direction: column;
     }
-    
     .big-close-btn { 
-        top: 16px; right: 16px; width: 36px; height: 36px; 
-        font-size: 16px; background: var(--tag-bg); color: var(--text-color);
-        border: 1px solid var(--card-border);
+        top: 16px; right: 16px; width: 36px; height: 36px; font-size: 16px; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border);
     }
-}
+} 
 
 @media (min-width: 769px) { 
     .mobile-only-nav { display: none; } 
     #mobileMenuOverlay { display: none !important; } 
 }
-/* EZT SEMMIKÉPP NE HAGYD LE: CSS LEZÁRÁSA! */
 </style>
 </head>
 <body>
-    /* =======================================================
-       6. FUNKCIONÁLIS MODÁLIS ABLAKOK MOBILON
-       ======================================================= */
-       
-    /* Modál tartály (Bottom Sheet szerű, de határozott szegéllyel) */
-    .filter-modal-box, .mobile-menu-box, .job-preview-box, .big-support-box { 
-        border-radius: 24px 24px 0 0 !important; 
-        padding-top: 0 !important; 
-        position: relative; 
-        background: var(--card-bg) !important; /* Szilárd, olvasható háttér */
-        backdrop-filter: none !important;
-        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important;
-    }
 
-    /* A hagyományos sötétítő réteg visszahozatala */
-    .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { 
-        align-items: flex-end; padding: 0; 
-        background: rgba(0, 0, 0, 0.6) !important; /* Szabványos elsötétítés */
-    }
-    
-    /* Szűrő Ablak */
-    .filter-modal-box { width: 100%; max-height: 90dvh; height: 90dvh; margin-top: auto; }
-    .filter-modal-header { padding: 20px; border-bottom: 1px solid var(--card-border); }
-    .filter-modal-header h2 { font-size: 20px; }
-    .filter-modal-body { grid-template-columns: 1fr; gap: 24px; padding: 20px 16px; -webkit-overflow-scrolling: touch; } 
-    .filter-section h3 { font-size: 15px; margin: 0 0 12px 0; }
-    .f-btn { padding: 10px 16px; font-size: 14px; }
-    
-    /* Fix, rögzített lábléc a modálban */
-    .filter-modal-footer { 
-        flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
-        gap: 12px; position: sticky; bottom: 0; 
-        background: var(--card-bg); border-top: 1px solid var(--card-border); 
-    }
-    .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 14px; font-size: 15px; height: 48px;}
-    
-    /* Állás Gyorsnézet (Job Preview) */
-    .job-preview-box { margin-top: auto; max-height: 90dvh; }
-    .job-preview-header { padding: 24px 20px 16px 20px; border-bottom: 1px solid var(--card-border); }
-    .job-preview-body { padding: 20px; -webkit-overflow-scrolling: touch; }
-    .job-preview-footer { 
-        flex-direction: column-reverse; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
-        gap: 12px; background: var(--card-bg); border-top: 1px solid var(--card-border);
-    }
-    .job-preview-footer .apply-btn { width: 100%; padding: 14px; height: 48px; }
-    .job-preview-footer .action-icons-row { width: 100%; justify-content: space-between;}
-    .job-preview-footer .icon-action-btn { flex: 1; height: 48px; }
-    
-    /* Mobil Menü és Infó ablak */
-    .mobile-menu-box, .big-support-box { 
-        margin-top: auto; max-height: 90dvh; height: auto; 
-        padding-bottom: env(safe-area-inset-bottom); 
-    }
-    
-    /* Jól látható, fix bezáró gomb az ablakokon */
-    .big-close-btn { 
-        top: 16px; right: 16px; width: 36px; height: 36px; 
-        font-size: 16px; background: var(--tag-bg); color: var(--text-color);
-        border: 1px solid var(--card-border);
-    }
-}
-
-@media (min-width: 769px) { 
-    .mobile-only-nav { display: none; } 
-    #mobileMenuOverlay { display: none !important; } 
-}
-
-/* EZT SEMMIKÉPP NE HAGYD LE: CSS LEZÁRÁSA! */
-</style>
-</head>
-<body>
 <!-- ========================================================================== -->
 <!-- HTML: 1. TOAST (ÉRTESÍTÉSEK) KONTÉNER                                      -->
 <!-- ========================================================================== -->
@@ -1637,6 +1543,7 @@ html {
         </div>
     </main>
 </div>
+
 <!-- ========================================================================== -->
 <!-- HTML: 6. GÖRGŐ GOMB (BACK TO TOP)                                          -->
 <!-- ========================================================================== -->
@@ -1917,7 +1824,7 @@ html {
     }
 
    // ==========================================================================
-    // JS: MODÁLIS ABLAKOK ÉS DINAMIKUS FÜLEK (JAVÍTOTT LOGIKA)
+    // JS: 4. MODÁLIS ABLAKOK ÉS DINAMIKUS FÜLEK (JAVÍTOTT LOGIKA)
     // ==========================================================================
     function openModal(modalId) { 
         const modal = document.getElementById(modalId);
@@ -2655,7 +2562,7 @@ html {
         let highlightedText = text;
         searchWords.forEach(word => {
             const regex = new RegExp(`(${word})`, 'gi');
-            highlightedText = highlightedText.replace(regex, `<span class="highlight">$1</span>`);
+            highlightText = highlightedText.replace(regex, `<span class="highlight">$1</span>`);
         });
         return highlightedText;
     }

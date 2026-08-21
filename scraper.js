@@ -20,33 +20,13 @@ if (fs.existsSync(scrapersPath)) {
 }
 
 let nlpEngine = null;
-if (fs.existsSync(path.join(__dirname, "analyzer.js"))) { // Vagy nlp.js, attól függően hogy nevezted el
+if (fs.existsSync(path.join(__dirname, "analyzer.js"))) {
     nlpEngine = require("./analyzer.js");
     console.log("🧠 [NLP] Quantum/Singularity nyelvi motor csatlakoztatva.");
 }
 
 // ------------------------------------------------------------------
-// 2. HARDCODED CÍMLISTA (Központi Irányítópult)
-// ------------------------------------------------------------------
-const companiesConfig = [
-    { name: "ALDI", module: "aldi.js", baseUrl: "https://karrier.aldi.hu", active: true },
-    { name: "Magyar Telekom", module: "telekom.js", baseUrl: "https://www.telekom.hu", active: true },
-    { name: "MOL Group", module: "mol.js", baseUrl: "https://molgroup.taleo.net", active: true },
-    { name: "OTP Bank", module: "otp.js", baseUrl: "https://karrier.otpbank.hu", active: true },
-    { name: "Magyar Posta", module: "posta.js", baseUrl: "https://karrier.posta.hu", active: true },
-    { name: "MVM Csoport", module: "mvm.js", baseUrl: "https://mvm.karrierportal.hu", active: true },
-    { name: "K&H Bank", module: "khbank.js", baseUrl: "https://karrier.kh.hu", active: true },
-    { name: "LIDL", module: "lidl.js", baseUrl: "https://jobs.lidl.hu", active: true },
-    { name: "Erste Bank", module: "erste.js", baseUrl: "https://karrier.erstebank.hu/jsbq", active: true },
-    { name: "4iG / ONE", module: "fourig.js", baseUrl: "https://karrier.4iggroup.hu", active: true },
-    { name: "Közszolgállás", module: "kozszolgallas.js", baseUrl: "https://kozszolgallas.ksz.gov.hu", active: true },
-    { name: "SAP", module: "sap.js", baseUrl: "https://jobs.sap.com", active: true },
-    { name: "Bosch", module: "smartrecruiters.js", baseUrl: "https://jobs.intesasanpaolo.com/search/?q=&locationsearch=Hungary&format=rss", active: true },
-    { name: "Workday (OTP)", module: "workday.js", baseUrl: "https://otpbank.wd3.myworkdayjobs.com/OTP_Karrier", active: true }
-];
-
-// ------------------------------------------------------------------
-// 3. FIREBASE INICIALIZÁLÁS
+// 2. FIREBASE INICIALIZÁLÁS
 // ------------------------------------------------------------------
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
     ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) 
@@ -57,7 +37,7 @@ const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true }); 
 
 // ------------------------------------------------------------------
-// 4. ENTERPRISE SEGÉDOSZTÁLYOK: AEGIS BATCH MANAGER & MARKET PULSE
+// 3. ENTERPRISE SEGÉDOSZTÁLYOK: AEGIS BATCH MANAGER & MARKET PULSE
 // ------------------------------------------------------------------
 class FirestoreBatchManager {
     constructor(db, limit = 450) {
@@ -105,7 +85,7 @@ class MarketPulseTracker {
 }
 
 // ------------------------------------------------------------------
-// 5. DATA QUALITY GATE & SEMANTIC FINGERPRINTING
+// 4. DATA QUALITY GATE & SEMANTIC FINGERPRINTING
 // ------------------------------------------------------------------
 function sanitizeAndScoreJob(rawJob, companyName) {
     const stripHtml = (str) => (str || "").replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
@@ -154,7 +134,7 @@ function getJobDifferences(oldJob, newJob) {
 }
 
 // ------------------------------------------------------------------
-// 6. ORCHESTRATOR FŐ CIKLUS
+// 5. ORCHESTRATOR FŐ CIKLUS
 // ------------------------------------------------------------------
 let isShuttingDown = false;
 process.on('SIGINT', () => { isShuttingDown = true; console.log("\n⚠️ Biztonságos leállás folyamatban..."); });
@@ -171,10 +151,14 @@ async function runScraper() {
     const marketPulse = new MarketPulseTracker();
 
     try {
-        const activeCompanies = companiesConfig.filter(c => c.active === true);
-        if (activeCompanies.length === 0) return console.log("⚠️ Nincs aktív cég a listában.");
+        // 🔥 A CÉGEKET A FIREBASE 'companies' KOLLEKCIÓBÓL TÖLTJÜK BE!
+        const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
+        if (companiesSnapshot.empty) {
+            console.log("⚠️ Nincs aktív cég az adatbázisban.");
+            return;
+        }
 
-        const companyQueue = [...activeCompanies];
+        const companyQueue = [...companiesSnapshot.docs];
         const CONCURRENCY_LIMIT = Math.min(os.cpus().length, 5); 
         
         const workerTask = async (workerId) => {
@@ -189,17 +173,19 @@ async function runScraper() {
                     await new Promise(res => setTimeout(res, 2000));
                 }
 
-                const company = companyQueue.shift();
+                // Kivesszük a következő céget a sorból
+                const companyDoc = companyQueue.shift();
+                const company = companyDoc.data();
                 
-                // Motor kiválasztása (lecsapjuk a ".js" kiterjesztést)
-                const engineName = company.module.replace('.js', '');
+                // Motor nevének normalizálása (ha valaki véletlenül 'telekom.js'-t írt a db-be)
+                const engineName = (company.engine || "custom").replace('.js', '');
                 const engine = engines[engineName];
                 
-                // Egyedi ID generálása a Firebase-hez a cégnévből (Pl: "Magyar Telekom" -> "magyar_telekom")
-                const companyId = company.name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                const companyId = companyDoc.id; // A Firestore generált ID-t használjuk!
+                const baseUrl = company.career_url; // A 'career_url' mezőt használjuk a DB-ből!
 
-                if (!company.baseUrl || !engine) {
-                    console.error(`[W${workerId}] ❌ Hiba: Nem található a '${company.module}' motor vagy hiányzik a baseUrl. Átugrás.`);
+                if (!baseUrl || !engine) {
+                    console.error(`[W${workerId}] ❌ Hiba: Nem található a '${engineName}' motor, vagy hiányzik a career_url a(z) ${company.name} cégnél. Átugrás.`);
                     continue;
                 }
                 
@@ -210,7 +196,6 @@ async function runScraper() {
                 try {
                     stats.processed++;
                     
-                    // Lekérjük a létező és archivált állásokat is a céghez generált ID alapján
                     const existingJobsSnap = await db.collection("jobs").where("company_id", "==", companyId).select("data_hash", "semantic_hash", "title", "location", "faculty", "url").get();
                     const existingMap = new Map();
                     const existingSemanticMap = new Map(); 
@@ -226,11 +211,14 @@ async function runScraper() {
 
                     let scrapedJobs = [];
                     for (let attempt = 1; attempt <= 3; attempt++) {
-                        try { scrapedJobs = await engine.scrape(company.name, company.baseUrl); break; } 
+                        try { 
+                            // 🚀 Futtatjuk a motort a cég nevével és az adatbázisból jövő career_url-lel!
+                            scrapedJobs = await engine.scrape(company.name, baseUrl); 
+                            break; 
+                        } 
                         catch (err) { if (attempt === 3) throw err; await new Promise(res => setTimeout(res, 2000 * attempt)); }
                     }
 
-                    // 🚨 Circuit Breaker (Anomaly Detection)
                     let skipDeletion = false;
                     const prevCount = existingJobsSnap.size;
                     
@@ -249,7 +237,7 @@ async function runScraper() {
                         const cleanJob = sanitizeAndScoreJob(rawJob, company.name);
                         if (cleanJob.health_score < 50) { cRejected++; stats.rejected++; continue; }
 
-                        cleanJob.company_id = companyId; // <-- Hozzárendeljük a friss ID-t
+                        cleanJob.company_id = companyId; // <-- A Firestore cég ID hozzárendelése
                         
                         let jobId;
                         if (existingSemanticMap.has(cleanJob.semantic_hash)) {

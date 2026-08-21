@@ -1026,189 +1026,175 @@ html {
 [data-theme="light"] .info-nav-btn.active { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
 
 /* ==========================================================================
-   CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA (ULTRA NATIVE IOS ÉLMÉNY & 3D TÉRÉRZET)
+   CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA (FUNKCIONÁLIS & PRÉMIUM)
    ========================================================================== */
 @media (max-width: 768px) {
-    /* 1. App Store "Hátracsúszó" Főoldal Effektus */
-    body { background-color: #000; } /* Mögöttes fekete űr a modálok alatt */
-    [data-theme="light"] body { background-color: #e5e5ea; }
-    
     #loggedInView { 
         flex-direction: column; 
-        background-color: var(--bg-color); /* Saját háttér a sötét űr felett */
-        transition: transform 0.5s var(--ease-spring), border-radius 0.5s var(--ease-spring), filter 0.5s var(--ease-spring);
-        transform-origin: top center;
-        min-height: 100dvh;
     }
     
-    /* Amikor nyitva egy modál: A főoldal visszahúzódik és lekerekedik! */
-    body.modal-open #loggedInView {
-        transform: scale(0.93) translateY(12px);
-        border-radius: 32px;
-        filter: brightness(0.6);
-        pointer-events: none;
-    }
-
-    /* 2. Rejtett görgők, de selymes görgetés mobilon */
-    ::-webkit-scrollbar { display: none; }
-    * { -ms-overflow-style: none; scrollbar-width: none; }
-    
+    /* 1. Fejléc */
     .dashboard-header { 
-        padding: 0 20px; height: 60px; min-height: 60px; 
+        padding: 0 20px; 
+        height: 64px; 
+        min-height: 64px; 
         justify-content: center; 
-        box-shadow: 0 0.5px 0 rgba(255, 255, 255, 0.1); 
-        background: rgba(28, 28, 30, 0.8);
+        box-shadow: 0 1px 0 var(--card-border); 
+        background: var(--header-bg);
     }
-    [data-theme="light"] .dashboard-header { background: rgba(255, 255, 255, 0.8); box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.1); }
     .dashboard-title { text-align: center; font-size: 20px; font-weight: 800; }
     
-    /* 📱 3. Apple Music Stílusú Alsó Navigációs Sáv */
+    /* 2. Stabil, jól olvasható Alsó Navigációs Sáv */
     .sidebar { 
         position: fixed; bottom: 0; left: 0; right: 0; 
         width: 100% !important; height: auto; 
-        min-height: calc(55px + env(safe-area-inset-bottom)); 
+        min-height: calc(60px + env(safe-area-inset-bottom)); 
         flex-direction: row; 
-        padding: 8px 10px calc(8px + env(safe-area-inset-bottom)) 10px; 
+        padding: 8px 12px calc(8px + env(safe-area-inset-bottom)) 12px; 
         border-right: none; 
-        border-top: 0.5px solid rgba(255, 255, 255, 0.1); 
-        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2); 
+        border-top: 1px solid var(--card-border); 
+        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1); 
         z-index: var(--z-sidebar); 
         justify-content: space-around; align-items: flex-start; 
-        background: rgba(20, 20, 22, 0.85); 
-        backdrop-filter: saturate(180%) blur(40px); -webkit-backdrop-filter: saturate(180%) blur(40px); 
+        background: var(--card-bg); /* Tömör, stabil háttérszín */
     }
-    [data-theme="light"] .sidebar { background: rgba(250, 250, 250, 0.85); border-top: 0.5px solid rgba(0, 0, 0, 0.1); }
     
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile { display: none; } 
     
-    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 0; }
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; gap: 4px; }
+    
     .nav-item { 
-        flex: 1; margin: 0; padding: 4px 0; 
+        flex: 1; margin: 0; padding: 6px 0; 
         flex-direction: column; gap: 4px; height: 100%; 
         background: transparent !important; box-shadow: none !important; 
         color: var(--subtitle-color);
+        border-radius: var(--radius-sm);
     }
     .nav-item::before { display: none; } 
 
-    /* Aktív iOS Tab Ikon (Elegáns, csak az ikon ugrik ki) */
+    /* Egyértelmű aktív állapot a menüben */
     .nav-item.active { color: var(--primary-color); }
-    .nav-item.active .nav-icon { 
-        transform: scale(1.15) translateY(-2px); 
-        color: var(--primary-color);
-        filter: drop-shadow(0 4px 10px rgba(10, 132, 255, 0.4));
-    }
-    .nav-text { display: block; font-size: 10px; margin: 0; opacity: 1; font-weight: 600; letter-spacing: 0.2px; transition: color var(--transition-fast); }
-    .nav-icon { font-size: 24px; transition: all var(--transition-normal); }
+    .nav-item.active .nav-icon { transform: translateY(-2px); }
+    
+    .nav-text { display: block; font-size: 11px; margin: 0; opacity: 1; font-weight: 600; text-align: center;}
+    .nav-icon { font-size: 22px; transition: transform var(--transition-fast); }
     
     .mobile-only-nav { display: flex; }
 
-    /* Tartalom térközei a Tab Bar miatt */
-    .dashboard-main { padding-bottom: calc(90px + env(safe-area-inset-bottom)); border-radius: 0 0 32px 32px; } 
-    .dashboard-content { padding: 16px 16px; }
+    /* 3. Tartalom elrendezése és térközei */
+    .dashboard-main { padding-bottom: calc(85px + env(safe-area-inset-bottom)); } 
+    .dashboard-content { padding: 16px; }
     
-    /* 🔍 4. Gyári iOS Spotlight Kereső Hatás */
-    .omnibar-wrapper { padding: 0; margin-bottom: 20px; border-radius: 0; background: transparent; border: none; box-shadow: none; gap: 12px; }
+    /* 4. Egyértelmű, könnyen használható Keresőmezők */
+    .omnibar-wrapper { padding: 16px; margin-bottom: 20px; border-radius: var(--radius-md); gap: 12px; }
     .search-inputs-row { flex-direction: column; gap: 10px; margin-bottom: 0; }
     .keyword-search, .location-search { flex: 1; width: 100%; }
     
     .search-box-input { 
         padding: 0 16px 0 44px; 
-        font-size: 17px; /* 16px felett az iOS billentyűzet nem zoomol be véletlenül! */
-        border-radius: 12px; 
-        height: 44px; /* Pontos Apple érintési célpont */
-        background: rgba(120, 120, 128, 0.16); /* Hivatalos Apple szürke */
-        border: none;
-        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        font-size: 16px; 
+        border-radius: var(--radius-sm); 
+        height: 48px; 
+        background: var(--tag-bg); 
+        border: 1px solid var(--tag-border);
     }
-    [data-theme="light"] .search-box-input { background: rgba(118, 118, 128, 0.12); }
-    .search-icon { left: 14px; font-size: 18px; color: var(--subtitle-color); opacity: 1; }
+    .search-box-input:focus { border-color: var(--primary-color); }
+    .search-icon { left: 14px; font-size: 18px; color: var(--subtitle-color); }
     
-    .filter-carousel-row { padding-bottom: 8px; margin-top: -4px; }
-    .main-filter-btn, .magic-chip { height: 36px; padding: 0 16px; font-size: 14px; }
+    /* Gyorsszűrők */
+    .filter-carousel-row { padding-bottom: 4px; margin-top: 0; }
+    .main-filter-btn, .magic-chip { height: 40px; padding: 0 16px; font-size: 14px; }
     
-    /* Álláskártyák (Haptic Touch visszajelzéssel) */
+    /* 5. Álláskártyák logikus átrendezése */
     .company-grid { gap: 16px; }
     .company-card { 
         flex-direction: column; align-items: flex-start; 
-        padding: 20px; gap: 16px; border-radius: 24px; 
+        padding: 20px; gap: 16px; border-radius: var(--radius-md); 
     }
-    /* Szupergyors lenyomás érzet mobilon */
-    .company-card:active { transform: scale(0.95); transition: transform 0.1s ease; }
     
+    /* Kártya gombjai alul, vízszintesen */
     .company-card-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; }
     .action-icons-row { width: auto; flex: 0; display: flex; gap: 10px; }
-    .company-card-actions .apply-btn { flex: 1; padding: 14px; font-size: 15px; height: 44px; }
+    .company-card-actions .apply-btn { flex: 1; padding: 12px; font-size: 15px; height: 44px; justify-content: center;}
     
-    /* Lebegő elemek */
-    #backToTopBtn { bottom: calc(85px + env(safe-area-inset-bottom)); right: 16px; width: 48px; height: 48px; font-size: 20px; }
+    /* Lebegő elemek és Rendező */
+    #backToTopBtn { bottom: calc(85px + env(safe-area-inset-bottom)); right: 16px; width: 44px; height: 44px; font-size: 20px; }
     .search-header-row { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
-    .sort-select { margin-left: 0 !important; width: 100%; padding: 0 16px; height: 44px; background-color: rgba(120, 120, 128, 0.16); border: none; }
+    
+    .sort-select { margin-left: 0 !important; width: 100%; padding: 0 16px; height: 48px; background-color: var(--tag-bg); border: 1px solid var(--tag-border); }
     #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: calc(90px + env(safe-area-inset-bottom)); padding: 14px 20px; }
     
     /* =======================================================
-       🗂️ 5. MOBIL MODÁLIS ABLAKOK (NATIVE BOTTOM SHEETS)
+       6. FUNKCIONÁLIS MODÁLIS ABLAKOK MOBILON
        ======================================================= */
        
-    /* Közös: Apple Grabber (Behúzó vonal a tetején) */
+    /* Modál tartály (Bottom Sheet szerű, de határozott szegéllyel) */
     .filter-modal-box, .mobile-menu-box, .job-preview-box, .big-support-box { 
-        border-radius: 32px 32px 0 0 !important; 
-        padding-top: 12px !important; 
+        border-radius: 24px 24px 0 0 !important; 
+        padding-top: 0 !important; 
         position: relative; 
-        background: var(--modal-bg);
-        backdrop-filter: saturate(200%) blur(40px) !important; 
-        -webkit-backdrop-filter: saturate(200%) blur(40px) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-        box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.5) !important;
+        background: var(--card-bg) !important; /* Szilárd, olvasható háttér */
+        backdrop-filter: none !important;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important;
     }
-    [data-theme="light"] .filter-modal-box, [data-theme="light"] .mobile-menu-box, [data-theme="light"] .job-preview-box, [data-theme="light"] .big-support-box { border-top: 1px solid rgba(0,0,0,0.05) !important; }
 
-    /* Maga a szürke pirula (pill) a tetején */
-    .filter-modal-box::before, .mobile-menu-box::before, .job-preview-box::before, .big-support-box::before {
-        content: ''; position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
-        width: 38px; height: 5px; border-radius: 100px;
-        background: rgba(150, 150, 150, 0.4);
-    }
-    
-    /* Modál Overlay eltüntetése, hogy a mögöttes összehúzott főoldal érvényesüljön */
+    /* A hagyományos sötétítő réteg visszahozatala */
     .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { 
-        align-items: flex-end; padding: 0; background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        align-items: flex-end; padding: 0; 
+        background: rgba(0, 0, 0, 0.6) !important; /* Szabványos elsötétítés */
     }
     
-    .filter-modal-box { width: 100%; max-height: 93dvh; height: 93dvh; margin-top: auto; }
-    .filter-modal-header { padding: 16px 20px; }
-    .filter-modal-header h2 { font-size: 22px; }
+    /* Szűrő Ablak */
+    .filter-modal-box { width: 100%; max-height: 90dvh; height: 90dvh; margin-top: auto; }
+    .filter-modal-header { padding: 20px; border-bottom: 1px solid var(--card-border); }
+    .filter-modal-header h2 { font-size: 20px; }
     .filter-modal-body { grid-template-columns: 1fr; gap: 24px; padding: 20px 16px; -webkit-overflow-scrolling: touch; } 
     .filter-section h3 { font-size: 15px; margin: 0 0 12px 0; }
-    .f-btn { padding: 12px 18px; font-size: 15px; }
+    .f-btn { padding: 10px 16px; font-size: 14px; }
     
-    .filter-modal-footer { flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); gap: 12px; position: sticky; bottom: 0; background: transparent; border-top: 1px solid var(--card-border); }
+    /* Fix, rögzített lábléc a modálban */
+    .filter-modal-footer { 
+        flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
+        gap: 12px; position: sticky; bottom: 0; 
+        background: var(--card-bg); border-top: 1px solid var(--card-border); 
+    }
     .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 14px; font-size: 15px; height: 48px;}
     
     /* Állás Gyorsnézet (Job Preview) */
-    .job-preview-box { margin-top: auto; max-height: 93dvh; }
-    .job-preview-header { padding: 24px 20px 16px 20px; }
+    .job-preview-box { margin-top: auto; max-height: 90dvh; }
+    .job-preview-header { padding: 24px 20px 16px 20px; border-bottom: 1px solid var(--card-border); }
     .job-preview-body { padding: 20px; -webkit-overflow-scrolling: touch; }
-    .job-preview-footer { flex-direction: column-reverse; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom)); gap: 12px; background: transparent; border-top: 1px solid var(--card-border);}
-    .job-preview-footer .apply-btn { width: 100%; padding: 16px; height: 50px; }
+    .job-preview-footer { 
+        flex-direction: column-reverse; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
+        gap: 12px; background: var(--card-bg); border-top: 1px solid var(--card-border);
+    }
+    .job-preview-footer .apply-btn { width: 100%; padding: 14px; height: 48px; }
     .job-preview-footer .action-icons-row { width: 100%; justify-content: space-between;}
     .job-preview-footer .icon-action-btn { flex: 1; height: 48px; }
     
-    /* Alsó mobil menü (Bottom Sheet) és Információk ablak */
+    /* Mobil Menü és Infó ablak */
     .mobile-menu-box, .big-support-box { 
-        margin-top: auto; max-height: 93dvh; height: auto; 
+        margin-top: auto; max-height: 90dvh; height: auto; 
         padding-bottom: env(safe-area-inset-bottom); 
     }
-    .big-close-btn { top: 16px; right: 16px; width: 32px; height: 32px; font-size: 14px; background: rgba(150, 150, 150, 0.2); }
+    
+    /* Jól látható, fix bezáró gomb az ablakokon */
+    .big-close-btn { 
+        top: 16px; right: 16px; width: 36px; height: 36px; 
+        font-size: 16px; background: var(--tag-bg); color: var(--text-color);
+        border: 1px solid var(--card-border);
+    }
 }
 
 @media (min-width: 769px) { 
     .mobile-only-nav { display: none; } 
     #mobileMenuOverlay { display: none !important; } 
 }
+
+/* EZT SEMMIKÉPP NE HAGYD LE: CSS LEZÁRÁSA! */
 </style>
 </head>
 <body>
-
 <!-- ========================================================================== -->
 <!-- HTML: 1. TOAST (ÉRTESÍTÉSEK) KONTÉNER                                      -->
 <!-- ========================================================================== -->

@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 // ============================================================================
-// 🧠 1. KOGNITÍV SZÓTÁRAK ÉS SZABÁLYOK (V35 QUANTUM-APEX BILINGUAL)
+// 🧠 1. KOGNITÍV SZÓTÁRAK ÉS SZABÁLYOK (V37 NEURAL-ACCENT OMNIVERSE)
 // ============================================================================
 
 // 1.1 Címke szótár
@@ -18,30 +18,39 @@ const detoxRules = [
     { regex: /&nbsp;/gi, replacement: ' ' }
 ];
 
-// 1.3 Alapvető Regex Segédfüggvény
-const buildRegex = (words) => new RegExp('\\b(' + words.map(w => w.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")).join('|') + ')\\b', 'i');
+// ----------------------------------------------------------------------------
+// 1.4 NLP KAPUŐR SZABÁLYOK (A MAGYAR ÉKEZET- ÉS RAGOZÁS-TŰRŐ MOTOR)
+// ----------------------------------------------------------------------------
 
-// ----------------------------------------------------------------------------
-// 1.4 NLP KAPUŐR SZABÁLYOK (A Valaha Volt Legrészletesebb Kétnyelvű Háló)
-// ----------------------------------------------------------------------------
+// 🔮 EGYEDI MAGYAR SZÓHATÁROK (A JavaScript \b hibájának javítása!)
+const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
+const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
+
+// 🔮 RAGOZÁS-TŰRŐ MODUL (Minden lehetséges ragot megfog a szavak végén)
+const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es)?";
 
 // ⛔ KIZÁRÓ (Vezető/Senior): Címben szerepelve azonnali elutasítás.
-const compiledFatalSenior = /\b(senior|szenior|snr|sr\.|head of|director|igazgató|expert|architect|chief|principal|főosztályvezető|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|sme|subject matter expert|dékán|rektor|főorvos|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer)\b/i;
+const seniorWords = "senior|szenior|snr|sr\\.|head of|director|igazgató|expert|architect|chief|principal|főosztályvezető|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|sme|subject matter expert|dékán|rektor|főorvos|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer";
+const compiledFatalSenior = new RegExp(huBoundaryStart + '(' + seniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
-// ⛔ KIZÁRÓ (Kékgalléros/Fizikai): Fizikai munka, amit eldobunk (KIVÉVE, ha explicit "diákmunka" kártya védi!).
-const compiledFatalPhysical = /\b(takarító|biztonsági őr|rakodó|sofőr|futár|pénztáros|árufeltöltő|targoncás|betanított|csomagoló|bolti eladó|villanyszerelő|hegesztő|lakatos|szakács|pincér|felszolgáló|pultos|kőműves|asztalos|festő|gépkocsivezető|gyári munkás|portás|vagyonőr|takarítónő|esztergályos|marós|vízszerelő|gázszerelő|bádogos|cleaner|security guard|loader|driver|courier|cashier|shelf stacker|forklift|packer|shop assistant|electrician|welder|locksmith|cook|chef|waiter|waitress|bartender|barista|mason|carpenter|painter|factory worker|janitor|plumber|maid|housekeeper|gondnok|caretaker|kamionsofőr|truck driver|delivery|postás|postman|sori munkás|segédmunkás|gyártósori|assembly|manual labor|laborer|mezőgazdasági|traktoros|állatgondozó|mészáros|hentes|ács|állványozó|tetőfedő|burkoló|gépszerelő|fényező|pék|cukrász|húsipari|varrónő|textilipari|nyomdász|anyagmozgató|konyhai|mosogató|udvaros|cnc|gépkezelő|fémipari|faipari|production line)\b/i;
+// ⛔ KIZÁRÓ (Kékgalléros/Fizikai): Kőkemény fizikai munka, amit eldobunk! (ZÉRÓ TOLERANCIA)
+const physicalWords = "takarító|biztonsági őr|rakodó|sofőr|futár|pénztáros|árufeltöltő|targoncás|betanított|csomagoló|bolti eladó|villanyszerelő|hegesztő|lakatos|szakács|pincér|felszolgáló|pultos|kőműves|asztalos|festő|gépkocsivezető|gyári munkás|portás|vagyonőr|takarítónő|esztergályos|marós|vízszerelő|gázszerelő|bádogos|cleaner|security guard|loader|driver|courier|cashier|shelf stacker|forklift|packer|shop assistant|electrician|welder|locksmith|cook|chef|waiter|waitress|bartender|barista|mason|carpenter|painter|factory worker|janitor|plumber|maid|housekeeper|gondnok|caretaker|kamionsofőr|truck driver|delivery|postás|postman|sori munkás|segédmunkás|gyártósori|assembly|manual labor|laborer|mezőgazdasági|traktoros|állatgondozó|mészáros|hentes|ács|állványozó|tetőfedő|burkoló|gépszerelő|fényező|pék|cukrász|húsipari|varrónő|textilipari|nyomdász|anyagmozgató|konyhai|mosogató|udvaros|cnc|gépkezelő|gépüzemeltető|fémipari|faipari|production line|higiénia|higénia|higiéniai|higéniai|hygiene|tisztító|tisztítás|mosodai|komissiózó|áruösszekészítő|áru-összekészítő|raktári dolgozó";
+const compiledFatalPhysical = new RegExp(huBoundaryStart + '(' + physicalWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
 // ⚠️ GYANÚS (Fizikai/Technikai): Ezeket MEGMENTI a rendszer, ha a címben van szellemi felmentő szó (pl. Karbantartó Mérnök).
-const compiledDubiousPhysical = /\b(fizikai|raktáros|raktári|operátor|szerelő|műszerész|karbantartó|gépbeállító|physical|warehouse|operator|mechanic|technician|maintenance|diszpécser|dispatcher|technikus|művezető|shift leader|műszakvezető|szerelés|technológus)\b/i;
+const dubiousWords = "fizikai|raktáros|raktári|operátor|szerelő|műszerész|karbantartó|gépbeállító|physical|warehouse|operator|mechanic|technician|maintenance|diszpécser|dispatcher|technikus|művezető|shift leader|műszakvezető|szerelés|technológus";
+const compiledDubiousPhysical = new RegExp(huBoundaryStart + '(' + dubiousWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
 // ✅ EXPLICIT JUNIOR (A Joker kártyák): Mindent felülírnak!
-const compiledExplicitJunior = /\b(diák|diákmunka|gyakornok|gyakornoki|intern|internship|trainee|traineeship|co-op|pályakezdő|pályakezdőket|pályaindító|karrierstart|kezdő|junior|entry-level|entry level|frissdiplomás|friss diplomás|diplomás|student|apprentice|graduate|fresh graduate|tanuló|szövetkezet|iskolaszövetkezet|diákszövetkezet|undergrad|undergraduate|pályakezdőknek|hallgató|ösztöndíjas|scholar|mentee|melo-diak|mind-diak|eudiakok|working student|werkstudent|student worker|career starter|young professional|management trainee|graduate program|rotational program)\b/i;
+const juniorWords = "diák|diákmunka|gyakornok|gyakornoki|intern|internship|trainee|traineeship|co-op|pályakezdő|pályakezdőket|pályaindító|karrierstart|kezdő|junior|entry-level|entry level|frissdiplomás|friss diplomás|diplomás|student|apprentice|graduate|fresh graduate|tanuló|szövetkezet|iskolaszövetkezet|diákszövetkezet|undergrad|undergraduate|pályakezdőknek|hallgató|ösztöndíjas|scholar|mentee|melo-diak|mind-diak|eudiakok|working student|werkstudent|student worker|career starter|young professional|management trainee|graduate program|rotational program";
+const compiledExplicitJunior = new RegExp(huBoundaryStart + '(' + juniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
-// ✅ SZELLEMI MUNKÁK (A "Nagy Háló"): Több mint 800+ irodai, mérnöki, gazdasági és IT kulcsszó!
-const compiledWhiteCollarRoles = /\b(asszisztens|adminisztrátor|referens|munkatárs|tanácsadó|szakértő|specialista|koordinátor|tervező|fejlesztő|mérnök|elemző|kutató|tanár|oktató|pedagógus|ügyintéző|képviselő|támogatás|ügyfélszolgálat|szerkesztő|író|könyvelő|kontroller|auditor|értékesítő|marketinges|hr|toborzó|programozó|orvos|ápoló|gyógyszerész|jogász|ügyvéd|építész|animátor|grafikus|készítő|felelős|ügyvédjelölt|oktatásszervező|menedzser|manager|assistant|administrator|clerk|representative|associate|advisor|consultant|specialist|coordinator|designer|developer|engineer|analyst|researcher|teacher|educator|instructor|tutor|agent|support|customer service|editor|writer|copywriter|accountant|controller|auditor|sales|marketing|recruiter|programmer|architect|animator|graphic|creator|officer|executive|planner|buyer|purchaser|strategist|scientist|lawyer|legal|counsel|személyügyi|pénzügyi|bookkeeper|paralegal|sourcer|talent acquisition|ux|ui|seo|ppc|vlogger|blogger|social media|pr|szóvivő|spokesperson|jogtanácsos|pszichológus|terapeuta|pharmacist|gépészmérnök|villamosmérnök|vegyészmérnök|mechatronikai|építőmérnök|építészmérnök|laboráns|data scientist|adatelemző|business analyst|üzleti elemző|financial analyst|kockázatelemző|underwriter|actuarial|aktuárius|újságíró|riporter|tudósító|tolmács|fordító|logisztikus|fuvarszervező|beszerző|journalist|reporter|translator|interpreter|logistician|lead|csoportvezető|osztályvezető|scrum master|product owner|agile coach|product manager|project manager|projektmenedzser|tesztelő|tester|qa|quality assurance|minőségbiztosítás|helpdesk|üzemeltető|sysadmin|rendszergazda|titkár|secretary|recepciós|receptionist|front office|back office|front-office|back-office|bankár|banker|teller|szervező|organizer|könyvtáros|librarian|modellező|modeler|statisztikus|statistician|ügyfélkapcsolati|térképész|urbanista|szociológus|múzeológus|kurátor|producer|rendező|operatőr|vágó|hangmérnök|világosító|stewardess|légiutaskísérő|meteorológus|geológus|biológus|vegyész|fizikus|matematikus|csillagász|régész|történész|filozófus|nyelvész|irodalmár|teológus|prompt engineer|ai engineer|data engineer|cloud engineer|devops|vámügyintéző|speditőr|vállalkozó|freelancer|bérszámfejtő|számlázó|vámszakértő|adatbázis|telemarketing|piackutató|biztosítás|hitelbíráló|data annotator|ai trainer|kárrendező|payroll|billing|claims|pricing|árazási|purchasing|supply chain|ellátási lánc|compliance|megfelelőségi|attorney|alkalmazott|sdr|bdr|sales development|key account|kam|customer success|ügyfélélmény|köztisztviselő|kormánytisztviselő|ügykezelő|business developer|sales support|sales operations|employer branding|content creator|rendszerszervező|network engineer|biztonsági elemző|clinical research|klinikai kutató|mlops|secops|biztonságtechnikai|hálózat|network administrator|systems engineer|growth hacker|demand generation|seo specialist|ppc specialist|motion designer|video editor|content manager)\b/i;
+// ✅ SZELLEMI MUNKÁK (A "Nagy Háló"): Bármelyik átmegy, ha nem Senior és nem kér 3+ évet kötelezően.
+const whiteCollarWords = "asszisztens|adminisztrátor|referens|munkatárs|tanácsadó|szakértő|specialista|koordinátor|tervező|fejlesztő|mérnök|elemző|kutató|tanár|oktató|pedagógus|ügyintéző|képviselő|támogatás|ügyfélszolgálat|szerkesztő|író|könyvelő|kontroller|auditor|értékesítő|marketinges|hr|toborzó|programozó|orvos|ápoló|gyógyszerész|jogász|ügyvéd|építész|animátor|grafikus|készítő|felelős|ügyvédjelölt|oktatásszervező|menedzser|manager|assistant|administrator|clerk|representative|associate|advisor|consultant|specialist|coordinator|designer|developer|engineer|analyst|researcher|teacher|educator|instructor|tutor|agent|support|customer service|editor|writer|copywriter|accountant|controller|auditor|sales|marketing|recruiter|programmer|architect|animator|graphic|creator|officer|executive|planner|buyer|purchaser|strategist|scientist|lawyer|legal|counsel|személyügyi|pénzügyi|bookkeeper|paralegal|sourcer|talent acquisition|ux|ui|seo|ppc|vlogger|blogger|social media|pr|szóvivő|spokesperson|jogtanácsos|pszichológus|terapeuta|pharmacist|gépészmérnök|villamosmérnök|vegyészmérnök|mechatronikai|építőmérnök|építészmérnök|laboráns|data scientist|adatelemző|business analyst|üzleti elemző|financial analyst|kockázatelemző|underwriter|actuarial|aktuárius|újságíró|riporter|tudósító|tolmács|fordító|logisztikus|fuvarszervező|beszerző|journalist|reporter|translator|interpreter|logistician|lead|csoportvezető|osztályvezető|scrum master|product owner|agile coach|product manager|project manager|projektmenedzser|tesztelő|tester|qa|quality assurance|minőségbiztosítás|helpdesk|üzemeltető|sysadmin|rendszergazda|titkár|secretary|recepciós|receptionist|front office|back office|front-office|back-office|bankár|banker|teller|szervező|organizer|könyvtáros|librarian|modellező|modeler|statisztikus|statistician|ügyfélkapcsolati|térképész|urbanista|szociológus|múzeológus|kurátor|producer|rendező|operatőr|vágó|hangmérnök|világosító|stewardess|légiutaskísérő|meteorológus|geológus|biológus|vegyész|fizikus|matematikus|csillagász|régész|történész|filozófus|nyelvész|irodalmár|teológus|prompt engineer|ai engineer|data engineer|cloud engineer|devops|vámügyintéző|speditőr|vállalkozó|freelancer|bérszámfejtő|számlázó|vámszakértő|adatbázis|telemarketing|piackutató|biztosítás|hitelbíráló|data annotator|ai trainer|kárrendező|payroll|billing|claims|pricing|árazási|purchasing|supply chain|ellátási lánc|compliance|megfelelőségi|attorney|alkalmazott|sdr|bdr|sales development|key account|kam|customer success|ügyfélélmény|köztisztviselő|kormánytisztviselő|ügykezelő|business developer|sales support|sales operations|employer branding|content creator|rendszerszervező|network engineer|biztonsági elemző|clinical research|klinikai kutató|mlops|secops|biztonságtechnikai|hálózat|network administrator|systems engineer|growth hacker|demand generation|seo specialist|ppc specialist|motion designer|video editor|content manager";
+const compiledWhiteCollarRoles = new RegExp(huBoundaryStart + '(' + whiteCollarWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
 // ⛔ KIZÁRÓ (Tapasztalat Regex-ek): Globális (g) kapcsolóval!
-const compiledExperienceReject = /(?:min\.|minimum|legalább|at least|>|több mint|more than)?\s*(?:[3-9]|[1-9][0-9])(?:[\.,][0-9])?\s*(?:\+|or more|[-–]\s*[4-9])?\s*(?:év|éves|évet|year|years|yrs)\s*(?:of\s*)?(?:releváns\s*|szakmai\s*|igazolt\s*|vezetői\s*|munkatapasztalat\s*|igazolható\s*|relevant\s*|professional\s*|work\s*|hands-on\s*)?(?:tapasztalat|gyakorlat|experience|tapasztalattal)/gi;
+const compiledExperienceReject = /(?<![0-2]\s*[-–]\s*)(?:min\.|minimum|legalább|at least|>|több mint|more than)?\s*(?:[3-9]|[1-9][0-9])(?:[\.,][0-9])?\s*(?:\+|or more|[-–]\s*[4-9])?\s*(?:év|éves|évet|year|years|yrs)\s*(?:of\s*)?(?:releváns\s*|szakmai\s*|igazolt\s*|vezetői\s*|munkatapasztalat\s*|igazolható\s*|relevant\s*|professional\s*|work\s*|hands-on\s*)?(?:tapasztalat|gyakorlat|experience|tapasztalattal)/gi;
 const compiledExperienceRejectWords = /(?:több|számos|several|multiple|minimum|legalább|at least)\s*(?:éves|év|years of|years)\s*(?:szakmai\s*|releváns\s*|relevant\s*|professional\s*|work\s*)?(?:tapasztalat|gyakorlat|experience)/gi;
 
 // ✅ NULLKILOMÉTERES FELÜLÍRÁS (Zero-Experience Bypass Regex)
@@ -77,7 +86,7 @@ const compiledVibes = {
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba)/gi;
 
 // ============================================================================
-// 🚀 2. V35.0 QUANTUM-APEX ENGINE (MÉLY-SZEMANTIKAI PARSER)
+// 🚀 2. V37.0 NEURAL-ACCENT ENGINE (MÉLY-SZEMANTIKAI PARSER)
 // ============================================================================
 
 const compiledStructuredTags = {};
@@ -85,7 +94,8 @@ for (const [group, tags] of Object.entries(structuredTagsDict)) {
     compiledStructuredTags[group] = tags.map(tag => {
         const cleanedTag = tag.replace(/\|/g, '').replace(/\*/g, '').trim();
         const escapedTag = cleanedTag.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-        const baseRegex = new RegExp('(?:^|\\s|\\b)(' + escapedTag + ')(?:$|\\s|\\b|\\W)', 'i');
+        // Itt is lecseréljük a sima \b-t az okos magyar szóhatárra a tökéletes egyezésért!
+        const baseRegex = new RegExp(huBoundaryStart + '(' + escapedTag + ')' + huBoundaryEnd, 'i');
         
         return {
             original: cleanedTag,
@@ -207,7 +217,7 @@ exports.analyzeJob = function(title, description = "") {
     for (const rule of detoxRules) safeDesc = safeDesc.replace(rule.regex, rule.replacement);
     let fullText = `${safeTitle} \n ${safeDesc}`;
 
-    // 🛡️ 1. FÁZIS: QUANTUM-APEX EARLY-EXIT LOGIKA (A Nagy Kapuőr)
+    // 🛡️ 1. FÁZIS: NEURAL-ACCENT EARLY-EXIT LOGIKA (A Nagy Kapuőr)
     const isExplicitJuniorTitle = compiledExplicitJunior.test(cleanTitle);
     const isExplicitJuniorText = compiledExplicitJunior.test(fullText);
     const isExplicitJunior = isExplicitJuniorTitle || isExplicitJuniorText;
@@ -264,6 +274,7 @@ exports.analyzeJob = function(title, description = "") {
     if (compiledFatalSenior.test(cleanTitle) && !isExplicitJuniorTitle) return null;
 
     // Kuka 2: Ha a címben kőkemény fizikai munka van (DE ha a CÍMBEN explicit "Diákmunka" van, megmentjük!)
+    // Mostantól a higiéniai munkatárs, gépkezelő stb. GARANTÁLTAN kiesik!
     if (compiledFatalPhysical.test(cleanTitle) && !isExplicitJuniorTitle) return null;
 
     // Kuka 3: Ha gyanús fizikai. DE ha mellette ott van a szellemi háló VAGY explicit diák, megmentjük!

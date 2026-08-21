@@ -29,7 +29,7 @@
     --highlight-bg: rgba(10, 132, 255, 0.25);
     --danger-color: #ff453a; 
     --success-color: #32d74b; 
-    --warning-color: #ffd60a; /* Új: Figyelmeztetés */
+    --warning-color: #ffd60a; 
     --faculty-color: #bf5af2; 
     --subtitle-color: #98989d; 
 
@@ -41,15 +41,15 @@
     --sidebar-width-expanded: 240px; 
     --sidebar-width-collapsed: 72px; 
     --header-height: 64px;
-    --radius-sm: 12px;     /* Kis elemek (pl. ikonok) */
-    --radius-md: 16px;     /* Kisebb kártyák */
-    --radius-lg: 24px;     /* Fő kártyák és Omnibar */
-    --radius-xl: 32px;     /* Modális ablakok */
-    --radius-pill: 100px;  /* Gombok, címkék (Tag-ek) */
+    --radius-sm: 12px;     
+    --radius-md: 16px;     
+    --radius-lg: 24px;     
+    --radius-xl: 32px;     
+    --radius-pill: 100px;  
 
     /* 🪄 Animációk és Átmenetek (Vajpuha Apple mozgások) */
-    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Kellemes visszapattanás */
-    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);           /* Letisztult simítás */
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);           
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s var(--ease-smooth);
 
@@ -105,8 +105,8 @@
    CSS: 2. ALAPVETŐ STÍLUSOK, CSONTVÁZ ANIMÁCIÓK ÉS GÖRGŐK (SCROLLBAR)
    ========================================================================== */
 html {
-    scroll-behavior: smooth; /* Vajpuha görgetés az egész oldalon */
-    -webkit-text-size-adjust: 100%; /* Megakadályozza a betűk automatikus nagyítását fekvő mobilos nézetben */
+    scroll-behavior: smooth; 
+    -webkit-text-size-adjust: 100%; 
 }
 
 * { 
@@ -141,7 +141,7 @@ body {
 
 body.modal-open { 
     overflow: hidden; 
-    touch-action: none; /* Mobilon megakadályozza a gumi-effektusos túlhúzást nyitott modálnál */
+    touch-action: none; 
 }
 
 ::selection { 
@@ -153,7 +153,7 @@ body.modal-open {
 h1, h2, h3, h4, h5 { 
     letter-spacing: -0.02em; 
     font-weight: 700; 
-    text-wrap: balance; /* Megakadályozza az árván maradó szavakat az új sorban */
+    text-wrap: balance; 
 }
 
 h1 { font-size: clamp(26px, 4vw, 36px); }
@@ -196,7 +196,7 @@ h3 { font-size: clamp(16px, 2vw, 20px); }
 .skeleton-line { 
     background: linear-gradient(110deg, var(--tag-bg) 25%, rgba(150, 150, 150, 0.15) 50%, var(--tag-bg) 75%); 
     background-size: 400% 100%; 
-    animation: shimmer 1.8s infinite cubic-bezier(0.4, 0, 0.2, 1); /* Sokkal organikusabb sebességgörbe */
+    animation: shimmer 1.8s infinite cubic-bezier(0.4, 0, 0.2, 1); 
     border-radius: 8px; 
     height: 18px; 
     width: 70%; 
@@ -252,7 +252,7 @@ html {
     width: 54px; 
     height: 54px; 
     border-radius: var(--radius-pill); 
-    background-color: var(--sidebar-bg); /* Finomabb üveghatás */
+    background-color: var(--sidebar-bg); 
     color: var(--text-color); 
     border: 1px solid var(--card-border); 
     font-size: 20px; 
@@ -264,7 +264,7 @@ html {
     justify-content: center; 
     opacity: 0; 
     visibility: hidden; 
-    transform: translateY(20px) scale(0.9); /* Animációhoz előkészítve */
+    transform: translateY(20px) scale(0.9); 
     transition: all 0.4s var(--ease-spring); 
     z-index: var(--z-dropdown); 
     backdrop-filter: var(--blur-heavy); 
@@ -293,7 +293,7 @@ html {
     display: flex; 
     align-items: center; 
     justify-content: center; 
-    gap: 12px; /* Távolság a forgó ikon és a szöveg között */
+    gap: 12px; 
     color: var(--subtitle-color); 
     font-weight: 600; 
     font-size: 14px; 
@@ -359,18 +359,17 @@ html {
     background: var(--success-color); 
     width: 100%; 
     border-radius: 0 0 100px 100px; 
-    box-shadow: 0 -2px 10px rgba(50, 215, 75, 0.4); /* Felfelé világító hatás */
+    box-shadow: 0 -2px 10px rgba(50, 215, 75, 0.4); 
 }
 
 @keyframes toastDrain { 
     from { width: 100%; } 
     to { width: 0%; } 
 }
+
 /* ==========================================================================
    CSS: 4. UNIFIED OMNIBAR ÉS KERESŐK (ULTRA PREMIUM DIZÁJN)
    ========================================================================== */
-
-/* Fő kereső doboz (Omnibar) */
 .omnibar-wrapper { 
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
@@ -385,7 +384,6 @@ html {
     z-index: var(--z-base);
 }
 
-/* Keresőmezők sorának elrendezése */
 .search-inputs-row { 
     display: flex; 
     gap: 16px; 
@@ -396,7 +394,6 @@ html {
 .location-search { flex: 3; } 
 .search-box-container { position: relative; width: 100%; }
 
-/* Maga a beviteli mező (Üveghatással) */
 .search-box-input { 
     width: 100%; 
     padding: 18px 20px 18px 52px; 
@@ -417,7 +414,6 @@ html {
     font-weight: 400; 
 }
 
-/* 🪄 Fókusz állapot (Gépelés közben) */
 .search-box-input:focus { 
     outline: none; 
     border-color: var(--primary-color); 
@@ -426,7 +422,6 @@ html {
     transform: translateY(-1px);
 }
 
-/* Kereső ikon alapállapotban */
 .search-icon { 
     position: absolute; 
     left: 20px; 
@@ -438,14 +433,12 @@ html {
     transition: all var(--transition-normal);
     will-change: transform, opacity, color;
 }
-/* 🪄 UX Varázslat: Az ikon életre kel, ha a mezőbe kattintanak! */
 .search-box-container:focus-within .search-icon {
     opacity: 1;
     color: var(--primary-color);
     transform: translateY(-50%) scale(1.15);
 }
 
-/* Keresőcímkék sora */
 .search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
 
 .search-tag-chip { 
@@ -484,7 +477,6 @@ html {
 .search-tag-close:hover { background: var(--danger-color) !important; color: white !important; transform: scale(1.15); }
 .search-tag-close:active { transform: scale(0.9); }
 
-/* Vízszintesen görgethető gombok sora */
 .filter-carousel-row { 
     display: flex; 
     gap: 10px; 
@@ -495,7 +487,6 @@ html {
 }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
 
-/* Fő szűrő gomb (felugró ablak nyitása) */
 .main-filter-btn { 
     flex-shrink: 0; 
     background: var(--text-color); 
@@ -519,7 +510,6 @@ html {
 .filter-badge.active { display: inline-block; }
 .filter-divider { width: 1px; height: 24px; background: var(--card-border); flex-shrink: 0; margin: 0 5px; }
 
-/* Okos gombok (Magic chips - Home Office, IT, Mai friss) */
 .magic-chip { 
     flex-shrink: 0; 
     background: transparent; 
@@ -551,7 +541,6 @@ html {
     transform: translateY(-2px);
 }
 
-/* Aktív szűrők konténere */
 .active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
 .active-filter-chip { 
     background: transparent; 
@@ -595,7 +584,6 @@ html {
 .clear-all-filters-btn:hover { background: rgba(255, 69, 58, 0.1); transform: translateY(-1px); }
 .clear-all-filters-btn:active { transform: scale(0.96); }
 
-/* Rendező legördülő menü (Sort Select) */
 .sort-select { 
     background: transparent; 
     border: 1.5px solid var(--tag-border); 
@@ -622,7 +610,6 @@ html {
 .sort-select:hover { border-color: var(--subtitle-color); background-color: var(--tag-bg); }
 .sort-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--highlight-bg); }
 
-/* Címsor folyékony méretezéssel */
 .section-title { font-size: clamp(20px, 3vw, 24px); font-weight: 700; margin: 0; color: var(--text-color); }
 
 /* ==========================================================================
@@ -635,7 +622,6 @@ html {
     margin-bottom: 30px; 
 }
 
-/* Álláskártya alapok */
 .company-card { 
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
@@ -654,7 +640,6 @@ html {
     will-change: transform, box-shadow; 
 }
 
-/* 💎 Finom belső ragyogás (Inner glow) sötét módban */
 .company-card::before {
     content: ''; 
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
@@ -662,9 +647,8 @@ html {
     pointer-events: none;
     box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
-[data-theme="light"] .company-card::before { display: none; /* Világosban nincs inner glow */ }
+[data-theme="light"] .company-card::before { display: none; }
 
-/* Kártya interakciók */
 .company-card:hover { 
     transform: translateY(-4px) scale(1.005); 
     box-shadow: var(--card-shadow-hover); 
@@ -677,13 +661,11 @@ html {
 } 
 [data-theme="light"] .company-card:hover { border-color: rgba(0,0,0,0.1); }
 
-/* Kártya szöveges tartalma */
 .company-card-content { flex: 1; min-width: 0; display: flex; flex-direction: column; pointer-events: none; }
 .company-name { font-size: clamp(18px, 2.5vw, 20px); font-weight: 700; margin: 0 0 6px 0; color: var(--text-color); line-height: 1.3; pointer-events: auto; letter-spacing: -0.01em; }
 .company-short-desc { font-size: 15px; color: var(--subtitle-color); margin: 0 0 14px 0; line-height: 1.4; pointer-events: auto; font-weight: 500; transition: color var(--transition-fast); }
 .company-short-desc:hover { color: var(--text-color); }
 
-/* Címkék (Tags) */
 .job-tags { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; }
 .job-tag { 
     background: var(--tag-bg); 
@@ -696,21 +678,17 @@ html {
     transition: all var(--transition-fast); 
 }
 
-/* Egyedi színű címkék */
 .tag-deadline { background: rgba(255, 69, 58, 0.1); color: var(--danger-color); border-color: rgba(255, 69, 58, 0.2); }
 .tag-faculty { background: rgba(191, 90, 242, 0.1); color: var(--faculty-color); border-color: rgba(191, 90, 242, 0.2); }
 .tag-vibe { background: rgba(255, 159, 10, 0.1); color: #ff9f0a; border-color: rgba(255, 159, 10, 0.2); }
 .tag-micro { background: rgba(10, 132, 255, 0.1); color: var(--primary-color); border-color: rgba(10, 132, 255, 0.2); }
 
-/* Kattintható címkék (Keresést indítanak) */
 .clickable-tag { cursor: pointer; }
 .clickable-tag:hover { background: var(--card-border); transform: translateY(-2px); }
 .clickable-tag:active { transform: scale(0.92); }
 
-/* Kártya gombjai */
 .company-card-actions { display: flex; flex-direction: row; gap: 12px; flex-shrink: 0; z-index: var(--z-base); pointer-events: auto; align-items: center; }
 
-/* 💎 Prémium Glossy (Fényes) Főgomb */
 .apply-btn { 
     padding: 12px 28px; 
     border-radius: var(--radius-pill); 
@@ -729,7 +707,6 @@ html {
     position: relative; 
     overflow: hidden; 
 }
-/* Fénycsillanás hover esetén */
 .apply-btn::after { 
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     background: linear-gradient(rgba(255,255,255,0.2), transparent); 
@@ -739,12 +716,10 @@ html {
 .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.35); }
 .apply-btn:active { transform: scale(0.94); box-shadow: 0 2px 5px rgba(10, 132, 255, 0.2); }
 
-/* Másodlagos gomb */
 .apply-btn.secondary { background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--tag-border); }
 .apply-btn.secondary:hover { background: var(--card-border); box-shadow: none; color: var(--text-color); }
 .apply-btn.secondary::after { display: none; }
 
-/* Kerek akcióikonok (Mentés, Megosztás) */
 .icon-action-btn { 
     background: var(--tag-bg); 
     border: 1px solid var(--tag-border); 
@@ -759,7 +734,6 @@ html {
 .icon-action-btn:hover { background: var(--card-border); transform: scale(1.1); }
 .icon-action-btn:active { transform: scale(0.9); }
 
-/* Visszapattanó Kedvenc ikon (Aktív állapot) */
 .icon-action-btn.fav-active { 
     color: var(--danger-color); 
     background: rgba(255, 69, 58, 0.15); 
@@ -767,12 +741,12 @@ html {
     animation: pop 0.5s var(--ease-spring); 
 }
 
-/* Játékos "Pop" animáció */
 @keyframes pop { 
     0% { transform: scale(1); } 
     40% { transform: scale(1.35) rotate(5deg); } 
     100% { transform: scale(1) rotate(0deg); } 
 }
+
 /* ==========================================================================
    CSS: 6. OLDALSÁV ÉS DESKTOP ELRENDEZÉS (NATIVE MACOS / IOS SZINT)
    ========================================================================== */
@@ -785,18 +759,15 @@ html {
     gap: 0; 
     align-items: stretch; 
     overflow: hidden; 
-    background-color: var(--bg-color); /* Alapháttér biztosítása */
+    background-color: var(--bg-color); 
 }
 
-/* --- OLDALSÁV (SIDEBAR) - Prémium üveghatás --- */
 .sidebar { 
     width: var(--sidebar-width-collapsed); 
     background-color: var(--sidebar-bg); 
     backdrop-filter: var(--blur-heavy); 
     -webkit-backdrop-filter: var(--blur-heavy); 
-    /* Hajszálvékony, világító belső él a 3D hatáshoz */
-    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05), 
-                5px 0 30px rgba(0, 0, 0, 0.1); 
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05), 5px 0 30px rgba(0, 0, 0, 0.1); 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between; 
@@ -809,11 +780,9 @@ html {
 }
 .sidebar:hover { width: var(--sidebar-width-expanded); }
 
-/* Fejléc és Logó */
 .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 0 0 30px 0; width: 100%; position: relative; }
 .sidebar-logo { font-size: 22px; font-weight: 800; margin: 0 16px; display: flex; align-items: center; padding: 8px 10px; gap: 14px; letter-spacing: -0.02em; cursor: pointer; user-select: none; }
 
-/* 3D Logó Ikon */
 .logo-icon { 
     width: 36px; height: 36px; 
     background: linear-gradient(135deg, var(--primary-hover), var(--primary-color)); 
@@ -821,15 +790,14 @@ html {
     border-radius: var(--radius-sm); 
     display: flex; align-items: center; justify-content: center; 
     font-size: 20px; flex-shrink: 0; 
-    /* Kombinált árnyék: Színes külső ragyogás + Fehér belső perem */
     box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3); 
     transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease; 
 }
 .sidebar-logo:hover .logo-icon { transform: scale(1.1) rotate(-8deg); box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4); }
 
-.logo-text { opacity: 0; transform: translateX(-15px); transition: all 0.3s var(--ease-smooth); background: linear-gradient(to right, var(--text-color), var(--subtitle-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }.sidebar:hover .logo-text { opacity: 1; transform: translateX(0); }
+.logo-text { opacity: 0; transform: translateX(-15px); transition: all 0.3s var(--ease-smooth); background: linear-gradient(to right, var(--text-color), var(--subtitle-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.sidebar:hover .logo-text { opacity: 1; transform: translateX(0); }
 
-/* Elegáns Téma Váltó */
 .sidebar-theme-toggle { 
     background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); 
     width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; 
@@ -841,7 +809,6 @@ html {
 .sidebar-theme-toggle:hover { background: var(--card-border); transform: scale(1.15) rotate(15deg); box-shadow: var(--card-shadow-soft); }
 .sidebar-theme-toggle:active { transform: scale(0.9) rotate(0deg); }
 
-/* --- NAVIGÁCIÓS MENÜ --- */
 .nav-menu { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .nav-item, .sidebar-profile { 
     margin: 0 14px; padding: 12px 14px; border-radius: var(--radius-sm); cursor: pointer; 
@@ -850,11 +817,9 @@ html {
     position: relative; overflow: hidden; 
 }
 
-/* Kifinomult Aktív Állapot 3D hatással */
 .nav-item.active { 
     background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); 
     color: white; 
-    /* Kidomborodó hatás a gombnak */
     box-shadow: 0 4px 12px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25); 
 }
 .nav-item.active .nav-icon { color: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
@@ -868,25 +833,21 @@ html {
 .nav-icon { width: 24px; font-size: 18px; text-align: center; flex-shrink: 0; transition: transform 0.4s var(--ease-spring); }
 .nav-item:hover .nav-icon, .sidebar-profile:hover .nav-icon { transform: scale(1.2); }
 
-/* Szövegek lágy beúszása */
 .nav-text { opacity: 0; transform: translateX(-10px); transition: all 0.3s var(--ease-smooth); white-space: nowrap; }
 .sidebar:hover .nav-text { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
 
 .mobile-only-nav { display: none; }
 
-/* --- FŐ TARTALMI RÉSZ (DASHBOARD) --- */
 .dashboard-main { 
     flex: 1; display: flex; flex-direction: column; background-color: var(--bg-color); 
     overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; position: relative; 
 }
 
-/* Élő, lélegző Fejléc (Organikus árnyékkal) */
 .dashboard-header { 
     height: var(--header-height); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; 
     padding: 0 40px; background-color: var(--header-bg); 
     backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); 
     position: sticky; top: 0; z-index: var(--z-header); 
-    /* A vonal középen erős, a széleken elhalványul */
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.1); 
 }
 [data-theme="light"] .dashboard-header { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 8px 30px rgba(0, 0, 0, 0.03); }
@@ -895,7 +856,6 @@ html {
 
 .dashboard-content { padding: 40px; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; }
 
-/* Fülek (Tabs) vajpuha animált beúszása */
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: contentFadeIn 0.6s var(--ease-spring) forwards; }
 
@@ -904,14 +864,15 @@ html {
     100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); } 
 }
 
-/* --- ÜRES ÁLLAPOT (EMPTY STATE) FIZIKAI TÉRBEN --- */
+/* JAVÍTÁS: Reszponzív üres állapot (Mentett állások hiánya) */
 .empty-state { 
-    text-align: center; padding: 120px 20px; color: var(--subtitle-color); 
+    text-align: center; 
+    padding: clamp(40px, 10vh, 120px) 20px; 
+    color: var(--subtitle-color); 
     display: flex; flex-direction: column; align-items: center; justify-content: center; 
     position: relative;
 }
 
-/* Lebegő ikon */
 .empty-state-icon { 
     font-size: 76px; margin-bottom: 30px; display: block; opacity: 0.9; 
     animation: float 5s ease-in-out infinite; 
@@ -919,7 +880,6 @@ html {
     z-index: 2;
 }
 
-/* Animált Padló-árnyék (Zseniális térbeli hatás) */
 .empty-state-icon::after {
     content: ''; position: absolute; bottom: -20px; left: 50%; width: 50%; height: 10px;
     background: rgba(0, 0, 0, 0.2); border-radius: 50%;
@@ -932,7 +892,6 @@ html {
 .empty-state h3 { font-size: 24px; color: var(--text-color); margin-bottom: 12px; font-weight: 700; letter-spacing: -0.01em; }
 .empty-state p { font-size: 16px; max-width: 420px; margin: 0 auto 28px auto; line-height: 1.6; }
 
-/* Szinkronizált lebegés és árnyék pulzálás */
 @keyframes float {
     0% { transform: translateY(0px); }
     50% { transform: translateY(-18px); }
@@ -940,7 +899,7 @@ html {
 }
 @keyframes shadowPulse {
     0% { transform: translateX(-50%) scale(1); opacity: 0.8; }
-    50% { transform: translateX(-50%) scale(1.3); opacity: 0.3; } /* Halványul és nő, ahogy az ikon távolodik */
+    50% { transform: translateX(-50%) scale(1.3); opacity: 0.3; } 
     100% { transform: translateX(-50%) scale(1); opacity: 0.8; }
 }
 
@@ -991,7 +950,7 @@ html {
 .f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); font-weight: 600; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3); }
 
 /* ==========================================================================
-   CSS: 9. STATIKUS MODÁLIS ABLAKOK (RÓLUNK, TÁMOGATÁS, IMPRESSZUM) -> JAVÍTVA
+   CSS: 9. STATIKUS MODÁLIS ABLAKOK (RÓLUNK, TÁMOGATÁS, IMPRESSZUM)
    ========================================================================== */
 .big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
@@ -1017,10 +976,9 @@ html {
 .acc-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
 .acc-label { color: var(--subtitle-color); }
 .acc-val { font-weight: 600; font-family: monospace; font-size: 15px; text-align: right; letter-spacing: 0.5px; }
-/* Információs ablak belső menüje */
+
 .info-nav-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); scrollbar-width: none; }
 .info-nav-container::-webkit-scrollbar { display: none; }
-
 .info-nav-btn { background: transparent; color: var(--subtitle-color); border: none; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 100px; cursor: pointer; transition: 0.2s; white-space: nowrap; }
 .info-nav-btn:hover { background: var(--tag-bg); color: var(--text-color); }
 .info-nav-btn.active { background: var(--text-color); color: var(--bg-color); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
@@ -1029,8 +987,6 @@ html {
 /* ==========================================================================
    CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA ÉS INFÓ FÜL (NATIVE APP STÍLUS)
    ========================================================================== */
-
-/* --- iOS Beállítások stílusú kártyák a 3. fülhöz (Globális stílus) --- */
 .ios-menu-row { width: 100%; text-align: left; padding: 14px 20px; background: transparent; border: none; color: var(--text-color); font-size: 16px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; cursor: pointer; transition: background-color 0.2s ease; }
 .ios-menu-row:active { background-color: var(--tag-bg); }
 .ios-menu-divider { height: 1px; background: var(--card-border); margin-left: 54px; }
@@ -1038,110 +994,46 @@ html {
 .ios-icon-box { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
 
 @media (max-width: 768px) {
-    
-    /* 1. NATIVE GÖRGÉS BIZTOSÍTÁSA */
+    /* NATIVE GÖRGÉS BIZTOSÍTÁSA */
     body { overflow-x: hidden; overflow-y: auto; }
     
-    #loggedInView { 
-        display: block !important; 
-        height: auto !important; 
-        min-height: 100vh;
-        overflow: visible !important; 
-    }
-    
-    .dashboard-main { 
-        display: block !important;
-        height: auto !important;
-        overflow: visible !important; 
-        padding-bottom: calc(110px + env(safe-area-inset-bottom));
-    }
+    #loggedInView { display: block !important; height: auto !important; min-height: 100vh; overflow: visible !important; }
+    .dashboard-main { display: block !important; height: auto !important; overflow: visible !important; padding-bottom: calc(110px + env(safe-area-inset-bottom)); }
 
-    /* 2. Ragadós Fejléc */
-    .dashboard-header { 
-        padding: 0 20px; height: 64px; min-height: 64px; 
-        display: flex; justify-content: center; align-items: center;
-        box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg);
-        position: sticky; top: 0; z-index: var(--z-header);
-        backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy);
-    }
+    /* Ragadós Fejléc */
+    .dashboard-header { padding: 0 20px; height: 64px; min-height: 64px; display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg); position: sticky; top: 0; z-index: var(--z-header); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); }
     .dashboard-title { text-align: center; font-size: 20px; font-weight: 800; margin: 0;}
     
-    /* --- 3. DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) --- */
-    .sidebar { 
-        position: fixed; 
-        bottom: calc(16px + env(safe-area-inset-bottom)); 
-        left: 16px; right: 16px; 
-        width: auto !important; height: 64px; min-height: 64px; 
-        padding: 0 8px; 
-        border-radius: 100px; 
-        border: 1px solid var(--card-border); 
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.05); 
-        z-index: var(--z-toast); 
-        display: flex; flex-direction: row; justify-content: center; align-items: center; 
-        background: var(--modal-bg); 
-        backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); 
-    }
-    
+    /* DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) */
+    .sidebar { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom)); left: 16px; right: 16px; width: auto !important; height: 64px; min-height: 64px; padding: 0 8px; border-radius: 100px; border: 1px solid var(--card-border); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.05); z-index: var(--z-toast); display: flex; flex-direction: row; justify-content: center; align-items: center; background: var(--modal-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); }
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile, .sidebar-bottom { display: none !important; } 
     .sidebar-top-section { width: 100%; display: flex; justify-content: center; }
 
-    .nav-menu { 
-        flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 8px; display: flex; margin: 0; padding: 0;
-    }
-    
-    .nav-item { 
-        flex: none; margin: 0; 
-        display: flex; flex-direction: row; align-items: center; justify-content: center;
-        padding: 12px; height: 48px; 
-        background: transparent !important; box-shadow: none !important; 
-        color: var(--subtitle-color);
-        border-radius: 100px;
-        position: relative;
-        transition: all 0.4s var(--ease-spring);
-    }
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 8px; display: flex; margin: 0; padding: 0; }
+    .nav-item { flex: none; margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 12px; height: 48px; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: 100px; position: relative; transition: all 0.4s var(--ease-spring); }
     .nav-item::before { display: none; } 
+    .nav-text { font-size: 0 !important; max-width: 0; opacity: 0; margin-left: 0; display: block; overflow: hidden; white-space: nowrap; transition: all 0.4s var(--ease-spring); }
 
-    .nav-text { 
-        font-size: 0 !important; 
-        max-width: 0; opacity: 0; margin-left: 0;
-        display: block; overflow: hidden; white-space: nowrap;
-        transition: all 0.4s var(--ease-spring);
-    }
+    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    #nav-info-mobile .nav-text::after { content: "Infó"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
 
-    .nav-item.active { 
-        background: var(--primary-color) !important; 
-        color: white; 
-        padding: 12px 20px; 
-        box-shadow: 0 6px 20px rgba(10, 132, 255, 0.3);
-    }
+    .nav-item.active { background: var(--primary-color) !important; color: white; padding: 12px 20px; box-shadow: 0 6px 20px rgba(10, 132, 255, 0.3); }
     .nav-item.active .nav-icon { transform: scale(1.1); color: white; }
-    .nav-item.active .nav-text { 
-        max-width: 80px; 
-        opacity: 1; 
-        margin-left: 8px; 
-    }
+    .nav-item.active .nav-text { max-width: 80px; opacity: 1; margin-left: 8px; }
     
     .nav-icon { font-size: 22px; margin: 0; transition: transform var(--transition-fast); }
     .mobile-only-nav { display: flex; }
 
-    /* --- 4. Tartalom elrendezése --- */
+    /* Tartalom elrendezése mobilra */
     .dashboard-content { padding: 16px; display: block; }
-    
     .omnibar-wrapper { padding: 16px; margin-bottom: 20px; border-radius: var(--radius-md); gap: 12px; display: flex; flex-direction: column;}
     .search-inputs-row { flex-direction: column; gap: 10px; margin-bottom: 0; display: flex;}
     .keyword-search, .location-search { flex: 1; width: 100%; }
-    
-    .search-box-input { 
-        padding: 0 16px 0 44px; font-size: 16px; border-radius: var(--radius-sm); height: 48px; 
-        background: var(--tag-bg); border: 1px solid var(--tag-border); width: 100%;
-    }
-    .search-box-input:focus { border-color: var(--primary-color); }
-    .search-icon { left: 14px; font-size: 18px; color: var(--subtitle-color); }
-    
+    .search-box-input { padding: 0 16px 0 44px; font-size: 16px; border-radius: var(--radius-sm); height: 48px; background: var(--tag-bg); border: 1px solid var(--tag-border); width: 100%; }
     .filter-carousel-row { padding-bottom: 4px; margin-top: 0; display: flex;}
     .main-filter-btn, .magic-chip { height: 40px; padding: 0 16px; font-size: 14px; }
     
-    /* --- 5. Álláskártyák --- */
     .company-grid { gap: 16px; display: flex; flex-direction: column; }
     .company-card { flex-direction: column; align-items: flex-start; padding: 20px; gap: 16px; border-radius: var(--radius-md); }
     .company-card-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; display: flex; }
@@ -1153,15 +1045,9 @@ html {
     .sort-select { margin-left: 0 !important; width: 100%; padding: 0 16px; height: 48px; background-color: var(--tag-bg); border: 1px solid var(--tag-border); }
     #toastContainer { width: 90%; justify-content: center; text-align: center; bottom: calc(95px + env(safe-area-inset-bottom)); padding: 14px 20px; }
     
-    /* --- 6. FUNKCIONÁLIS MODÁLIS ABLAKOK --- */
-    .filter-modal-box, .job-preview-box, .big-support-box { 
-        border-radius: 24px 24px 0 0 !important; padding-top: 0 !important; position: relative; 
-        background: var(--card-bg) !important; backdrop-filter: none !important; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important;
-    }
-
-    .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { 
-        align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.6) !important; 
-    }
+    /* MODÁLIS ABLAKOK MOBILRA */
+    .filter-modal-box, .job-preview-box { border-radius: 24px 24px 0 0 !important; padding-top: 0 !important; position: relative; background: var(--card-bg) !important; backdrop-filter: none !important; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important; }
+    .filter-modal-overlay, .job-preview-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.6) !important; }
     
     .filter-modal-box { width: 100%; max-height: 90dvh; height: 90dvh; margin-top: auto; display: flex; flex-direction: column;}
     .filter-modal-header { padding: 20px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
@@ -1170,39 +1056,29 @@ html {
     .filter-section h3 { font-size: 15px; margin: 0 0 12px 0; }
     .f-btn { padding: 10px 16px; font-size: 14px; }
     
-    .filter-modal-footer { 
-        flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
-        gap: 12px; position: sticky; bottom: 0; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0;
-    }
+    .filter-modal-footer { flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); gap: 12px; position: sticky; bottom: 0; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; }
     .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 14px; font-size: 15px; height: 48px;}
     
     .job-preview-box { margin-top: auto; max-height: 90dvh; display: flex; flex-direction: column;}
     .job-preview-header { padding: 24px 20px 16px 20px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
     .job-preview-body { padding: 20px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;}
-    .job-preview-footer { 
-        flex-direction: column-reverse; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); 
-        gap: 12px; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0;
-    }
+    .job-preview-footer { flex-direction: column-reverse; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); gap: 12px; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; }
     .job-preview-footer .apply-btn { width: 100%; padding: 14px; height: 48px; }
     .job-preview-footer .action-icons-row { width: 100%; justify-content: space-between;}
     .job-preview-footer .icon-action-btn { flex: 1; height: 48px; }
-    
-    .big-support-box { 
-        margin-top: auto; max-height: 90dvh; height: auto; padding-bottom: env(safe-area-inset-bottom); display: flex; flex-direction: column;
-    }
-    .big-close-btn { 
-        top: 16px; right: 16px; width: 36px; height: 36px; font-size: 16px; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border);
-    }
+
+    /* ÜRES ÁLLAPOT MOBILRA JAVÍTVA */
+    .empty-state { padding: 40px 20px; }
 } 
 
 @media (min-width: 769px) { 
     .mobile-only-nav { display: none; } 
 }
 
-/* EZT SEMMIKÉPP NE HAGYD LE: CSS ÉS HEAD LEZÁRÁSA! */
 </style>
 </head>
 <body>
+
 <!-- ========================================================================== -->
 <!-- HTML: 1. TOAST (ÉRTESÍTÉSEK) KONTÉNER                                      -->
 <!-- ========================================================================== -->
@@ -1213,16 +1089,15 @@ html {
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 3. MEGA SZŰRŐ MODÁLIS ABLAK (Kompakt Füles Verzió)                   -->
+<!-- HTML: 2. MEGA SZŰRŐ MODÁLIS ABLAK (Kompakt Füles Verzió)                   -->
 <!-- ========================================================================== -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
-        
         <!-- FEJLÉC ÉS FÜLEK VÁLASZTÓJA -->
         <div class="filter-modal-header" style="flex-direction: column; align-items: stretch; gap: 16px; padding-bottom: 0;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2 style="font-size: 22px;">🎛️ Részletes szűrők</h2>
-                <button class="big-close-btn" style="position: static;" onclick="closeModal('filterModalOverlay')">✖</button>
+                <button class="big-close-btn" onclick="closeModal('filterModalOverlay')">✖</button>
             </div>
             
             <div class="info-nav-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 12px;">
@@ -1243,27 +1118,22 @@ html {
 
         <!-- TARTALMI SZEKCIÓK (Csak egy látszik egyszerre) -->
         <div class="filter-modal-body" style="display: block; padding-top: 24px;">
-            
             <div class="filter-section" id="f-tab-faculty">
                 <h3 style="margin-bottom: 20px;">Válassz képzési területet</h3>
                 <div class="filter-group" id="modalFacultyButtons"></div>
             </div>
-            
             <div class="filter-section" id="f-tab-company" style="display: none;">
                 <h3 style="margin-bottom: 20px;">Melyik vállalat érdekel?</h3>
                 <div class="filter-group" id="modalCompanyButtons"></div>
             </div>
-            
             <div class="filter-section" id="f-tab-vibe" style="display: none;">
                 <h3 style="margin-bottom: 20px;">Milyen munkakörnyezetet keresel?</h3>
                 <div class="filter-group" id="modalVibeButtons"></div>
             </div>
-            
             <div class="filter-section" id="f-tab-tag" style="display: none;">
                 <h3 style="margin-bottom: 20px;">Népszerű nyelvek és címkék</h3>
                 <div class="filter-group" id="modalTagButtons"></div>
             </div>
-
         </div>
         
         <div class="filter-modal-footer">
@@ -1274,7 +1144,7 @@ html {
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 4. ÁLLÁS GYORSNÉZET MODÁLIS ABLAK                                    -->
+<!-- HTML: 3. ÁLLÁS GYORSNÉZET MODÁLIS ABLAK                                    -->
 <!-- ========================================================================== -->
 <div id="jobPreviewOverlay" class="job-preview-overlay">
     <div class="job-preview-box" id="jobPreviewBox">
@@ -1310,27 +1180,24 @@ html {
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 5. FŐ APPLIKÁCIÓ NÉZET ÉS OLDALSÁV (SIDEBAR)                         -->
+<!-- HTML: 4. FŐ APPLIKÁCIÓ NÉZET ÉS OLDALSÁV (A HÁROM FÜLLEL)                  -->
 <!-- ========================================================================== -->
 <div id="loggedInView">
     <aside class="sidebar">
         <div class="sidebar-top-section">
             
-            <!-- FEJLÉC ÉS LOGÓ (Tökéletesen középre igazítva) -->
+            <!-- FEJLÉC ÉS LOGÓ -->
             <div class="sidebar-header" style="position: relative; padding: 0 0 25px 0;">
                 <h2 class="sidebar-logo" style="margin: 0 10px; padding: 8px; width: 100%; display: flex; align-items: center; gap: 14px;">
-                    <!-- A logó ikonja fix 36px, így pont a sáv közepére esik -->
                     <span class="logo-icon" style="width: 36px; height: 36px; display: flex; justify-content: center; align-items: center;">U</span>
                     <span class="logo-text">UniStart</span>
                 </h2>
-                <!-- A téma váltó "lebeg", így nem tolja el a logót balra! -->
                 <button class="sidebar-theme-toggle" id="themeToggleDesktop" title="Téma váltása" style="position: absolute; right: 18px; top: 10px;">☀️</button>
             </div>
             
             <!-- NAVIGÁCIÓS MENÜ -->
             <ul class="nav-menu" style="gap: 8px;">
                 <li class="nav-item active" id="nav-forum" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')" style="margin: 0 10px; padding: 10px;">
-                    <!-- Az ikonok egy láthatatlan 36px-es dobozban ülnek a tökéletes szimmetriáért -->
                     <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">💬</span></div> 
                     <span class="nav-text">Karrierfórum</span>
                 </li>
@@ -1338,17 +1205,17 @@ html {
                     <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">🤍</span></div> 
                     <span class="nav-text">Kedvencek</span>
                 </li>
-                <!-- 📱 Csak mobilon jelenik meg a Menü gomb -->
-                <li class="nav-item mobile-only-nav" onclick="openModal('mobileMenuOverlay')" style="margin: 0 10px; padding: 10px;">
-                    <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">☰</span></div> 
-                    <span class="nav-text">Menü</span>
+                <!-- 📱 Csak mobilon jelenik meg a 3. fül (Infó) -->
+                <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile')" style="margin: 0 10px; padding: 10px;">
+                    <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">ℹ️</span></div> 
+                    <span class="nav-text">Infó</span>
                 </li>
             </ul>
         </div>
         
         <div class="sidebar-bottom">
-            <!-- ALSÓ INFORMÁCIÓ GOMB (Szintén milliméterre a logó alatt) -->
-            <div class="sidebar-profile" onclick="openAboutModal()" style="margin: 0 10px 16px 10px; padding: 10px;">
+            <!-- 💻 Asztali gépen itt van az Info ablak gombja -->
+            <div class="sidebar-profile" id="nav-info-desktop" onclick="openInfoModal('about')" style="margin: 0 10px 16px 10px; padding: 10px;">
                 <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">ℹ️</span></div>
                 <span class="nav-text">Információ</span>
             </div>
@@ -1362,9 +1229,10 @@ html {
         </header>
 
         <div class="dashboard-content">
+            
+            <!-- ======================= 1. FÜL: FÓRUM ======================== -->
             <div id="forumTab" class="tab-content active">
 
-                <!-- OMNIBAR ÉS KERESŐ MEZŐK -->
                 <div class="omnibar-wrapper">
                     <div style="display: flex; flex-direction: column; gap: 12px;">
                         <div class="search-inputs-row">
@@ -1380,7 +1248,6 @@ html {
                         <div class="search-tags-row" id="searchTagsRow"></div>
                     </div>
 
-                    <!-- GYORS SZŰRŐK ÉS CHIPEK -->
                     <div class="filter-carousel-row">
                         <button class="main-filter-btn" onclick="openModal('filterModalOverlay')">
                             🎛️ Szűrők <span class="filter-badge" id="activeFilterBadge">0</span>
@@ -1395,7 +1262,6 @@ html {
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
                 </div>
                 
-                <!-- RENDEZÉS ÉS TALÁLATOK SZÁMA -->
                 <div class="section-header-row" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
                     <h2 class="section-title" style="display: flex; align-items: center; gap: 12px;">
                         <span id="resultsTitleText">Találatok</span>
@@ -1409,102 +1275,82 @@ html {
                     </select>
                 </div>
 
-                <!-- ÁLLÁSKÁRTYÁK HELYE (GRID) -->
                 <div class="company-grid" id="jobGridContainer">
                     <!-- Dinamikus Skeletons jön ide letöltéskor -->
                 </div>
 
-                <!-- VÉGTELEN GÖRGÉS (INFINITE SCROLL) CÉLPONT -->
                 <div id="infiniteScrollAnchor" class="infinite-loader">Görgetés a továbbiakhoz...</div>
                 
-                <!-- TÁMOGATÁS GOMB ALUL -->
                 <div style="text-align: center; margin: 30px 0 50px 0;" id="bottomSupportContainer">
-                    <button class="apply-btn secondary" onclick="openBigSupportModal()" style="padding: 14px 32px; font-weight: 600; box-shadow: var(--card-shadow-soft);">☕ Támogatom a projektet</button>
+                    <button class="apply-btn secondary" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile');" style="padding: 14px 32px; font-weight: 600; box-shadow: var(--card-shadow-soft);">☕ Támogatom a projektet</button>
                 </div>
             </div>
 
-            <!-- MÁSIK FÜL: AJÁNLATOK -->
-            <div id="offersTab" class="tab-content">
-                <div class="empty-state">
-                    <span class="empty-state-icon">🚀</span>
-                    <h3>Hamarosan érkezik</h3>
-                    <p>Itt jelennek majd meg a partnercégeink exkluzív gyakornoki ajánlatai és karrierprogramjai.</p>
-                </div>
-            </div>
-            <!-- MÁSIK FÜL: AJÁNLATOK -->
-            <div id="offersTab" class="tab-content">
-                <div class="empty-state">
-                    <span class="empty-state-icon">🚀</span>
-                    <h3>Hamarosan érkezik</h3>
-                    <p>Itt jelennek majd meg a partnercégeink exkluzív gyakornoki ajánlatai és karrierprogramjai.</p>
-                </div>
-            </div>
-
-            <!-- 📱 HARMADIK FÜL (CSAK MOBILON LÁTSZIK): INFORMÁCIÓ / BEÁLLÍTÁSOK -->
+            <!-- ======================= 2. FÜL: INFORMÁCIÓS OLDAL ======================== -->
             <div id="infoTab" class="tab-content">
-                <div style="display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; padding-top: 10px;">
+                <div style="display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin: 0 auto; padding-top: 10px; padding-bottom: 40px;">
                     
-                    <!-- 💎 Prémium Támogatás Banner -->
-                    <button onclick="openBigSupportModal()" style="width: 100%; text-align: left; padding: 18px 20px; border-radius: var(--radius-lg); background: linear-gradient(135deg, #0a84ff, #5ac8fa); color: white; border: none; display: flex; align-items: center; justify-content: space-between; cursor: pointer; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.3); transition: transform 0.2s;">
+                    <!-- Megjelenés (Sötét/Világos mód) -->
+                    <div class="ios-menu-card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
                         <div style="display: flex; align-items: center; gap: 14px;">
-                            <div style="width: 36px; height: 36px; background: rgba(255,255,255,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(5px);">☕</div>
-                            <div>
-                                <div style="font-size: 16px; font-weight: 700; letter-spacing: 0.2px;">Támogasd a projektet</div>
-                                <div style="font-size: 13px; opacity: 0.95; font-weight: 500; margin-top: 2px;">Hívj meg minket egy kávéra!</div>
-                            </div>
+                            <div class="ios-icon-box" style="background: #ff9f0a; color: white;">🌓</div>
+                            <span style="font-weight: 600; font-size: 16px;">Sötét mód</span>
                         </div>
-                        <span style="font-size: 24px; font-weight: 300; opacity: 0.9;">›</span>
-                    </button>
-                    
-                    <!-- 📂 iOS Stílusú Információs Csoport -->
-                    <div class="ios-menu-card">
-                        <button class="ios-menu-row" onclick="openAboutModal()">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div class="ios-icon-box" style="background: #bf5af2; color: white;">🎓</div>
-                                <span>Rólunk</span>
-                            </div>
-                            <span style="color: var(--subtitle-color); font-size: 24px; font-weight: 300; padding-bottom: 2px;">›</span>
-                        </button>
-                        <div class="ios-menu-divider"></div>
-                        <button class="ios-menu-row" onclick="openKapcsolatModal()">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div class="ios-icon-box" style="background: #32d74b; color: white;">✉️</div>
-                                <span>Kapcsolat</span>
-                            </div>
-                            <span style="color: var(--subtitle-color); font-size: 24px; font-weight: 300; padding-bottom: 2px;">›</span>
-                        </button>
+                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 40px; height: 40px; font-size: 18px; background: var(--bg-color); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
                     </div>
 
-                    <!-- ⚖️ iOS Stílusú Jogi Csoport -->
-                    <div class="ios-menu-card">
-                        <button class="ios-menu-row" onclick="openImpresszumModal()">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div class="ios-icon-box" style="background: #8e8e93; color: white;">⚖️</div>
-                                <span>Impresszum</span>
+                    <!-- Támogatás Banner -->
+                    <div style="background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); border-radius: var(--radius-lg); padding: 24px; color: white; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.3);">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div style="width: 48px; height: 48px; background: rgba(255,255,255,0.2); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 24px; backdrop-filter: blur(5px);">☕</div>
+                            <div>
+                                <h3 style="margin: 0; font-size: 20px; font-weight: 800;">Támogasd a projektet!</h3>
+                                <p style="margin: 4px 0 0 0; font-size: 14px; opacity: 0.9;">Tartsd életben az ingyenes platformot.</p>
                             </div>
-                            <span style="color: var(--subtitle-color); font-size: 24px; font-weight: 300; padding-bottom: 2px;">›</span>
-                        </button>
-                        <div class="ios-menu-divider"></div>
-                        <button class="ios-menu-row" onclick="openAdatvedelemModal()">
-                            <div style="display: flex; align-items: center; gap: 14px;">
-                                <div class="ios-icon-box" style="background: #0a84ff; color: white;">🛡️</div>
-                                <span>Adatvédelem</span>
-                            </div>
-                            <span style="color: var(--subtitle-color); font-size: 24px; font-weight: 300; padding-bottom: 2px;">›</span>
-                        </button>
-                    </div>
-                    
-                    <!-- 🌙 Téma (Megjelenés) Kapcsoló Sor -->
-                    <div class="ios-menu-card" style="padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 14px;">
-                            <div class="ios-icon-box" style="background: #ff9f0a; color: white; font-size: 16px;">🌓</div>
-                            <span style="font-weight: 500; font-size: 16px; color: var(--text-color);">Megjelenés</span>
                         </div>
-                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 36px; height: 36px; font-size: 16px; background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color);" onclick="toggleTheme()">☀️</button>
+                        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                            <a href="https://paypal.me/batorweszter/1500HUF" target="_blank" style="flex: 1; text-align: center; background: rgba(255,255,255,0.2); color: white; text-decoration: none; padding: 12px; border-radius: 12px; font-weight: 600;">PayPal</a>
+                            <a href="https://revolut.me/btoranxt2h" target="_blank" style="flex: 1; text-align: center; background: white; color: var(--primary-color); text-decoration: none; padding: 12px; border-radius: 12px; font-weight: 600;">Revolut</a>
+                        </div>
                     </div>
-                    
-                    <!-- 🏷️ Alkalmazás Verzió -->
-                    <div style="text-align: center; font-size: 13px; color: var(--subtitle-color); margin-top: 8px; margin-bottom: 20px; opacity: 0.6; font-weight: 500; line-height: 1.5;">
+
+                    <!-- Rólunk -->
+                    <div>
+                        <h2 style="font-size: 20px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;"><span>🎓</span> A Csapat</h2>
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 200px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center;">
+                                <div style="width: 56px; height: 56px; border-radius: 28px; background: linear-gradient(135deg, #e056fd, #be2edd); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 12px auto;">NJ</div>
+                                <h3 style="margin: 0 0 4px 0; font-size: 18px;">József Nóra</h3>
+                                <span style="color: #e056fd; font-size: 13px; font-weight: 600; display: block; margin-bottom: 16px;">UX & Stratégia</span>
+                                <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn secondary" style="width: 100%; padding: 10px;">LinkedIn</a>
+                            </div>
+                            <div style="flex: 1; min-width: 200px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center;">
+                                <div style="width: 56px; height: 56px; border-radius: 28px; background: linear-gradient(135deg, #0a84ff, #005bb5); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700; margin: 0 auto 12px auto;">BA</div>
+                                <h3 style="margin: 0 0 4px 0; font-size: 18px;">Weszter Szabó Bátor</h3>
+                                <span style="color: var(--primary-color); font-size: 13px; font-weight: 600; display: block; margin-bottom: 16px;">Fejlesztés & Adatbázis</span>
+                                <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn secondary" style="width: 100%; padding: 10px;">LinkedIn</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Kapcsolat -->
+                    <div class="ios-menu-card" style="padding: 24px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 8px 0; display: flex; align-items: center; gap: 8px;"><span>✉️</span> Kapcsolat</h2>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 16px 0;">Ötleted van? Hibát találtál? Vagy cégként csatlakoznál?</p>
+                        <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="width: 100%;">E-mail írása</a>
+                    </div>
+
+                    <!-- Jogi / Impresszum -->
+                    <div class="ios-menu-card" style="padding: 24px;">
+                        <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px;"><span>⚖️</span> Jogi & Adatvédelem</h2>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
+                            <strong>Üzemeltető:</strong> Weszter Szabó Bátor András<br>
+                            <strong>Cím:</strong> 1158 Bp, Klebelsberg K. u. 14.<br><br>
+                            Személyes adatokat nem gyűjtünk. A beállításaidat a böngésződ helyi memóriájában tároljuk. Tárhely: Rackhost Zrt. & Google Firebase.
+                        </p>
+                    </div>
+
+                    <div style="text-align: center; font-size: 13px; color: var(--subtitle-color); opacity: 0.6;">
                         UniStart v1.0.0<br>Made with 🤍 in Budapest
                     </div>
                 </div>
@@ -1515,22 +1361,19 @@ html {
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 6. GÖRGŐ GOMB (BACK TO TOP)                                          -->
+<!-- HTML: 5. GÖRGŐ GOMB ÉS CSS JAVÍTÁS                                         -->
 <!-- ========================================================================== -->
 <button id="backToTopBtn" onclick="scrollToTop()" title="Ugrás a tetejére">↑</button>
 
 <!-- ========================================================================== -->
-<!-- HTML: 7. KÖZÖS INFORMÁCIÓS MODÁLIS ABLAK (Dinamikus Fülekkel)              -->
+<!-- HTML: 6. ASZTALI GÉPES MODÁLIS ABLAK (INFO)                                -->
 <!-- ========================================================================== -->
 <div id="infoOverlay" class="big-support-overlay">
     <div class="big-support-box" style="max-width: 750px;">
         <button class="big-close-btn" onclick="closeModal('infoOverlay')">✖</button>
-        
-        <!-- FEJLÉC ÉS BELSŐ MENÜ -->
         <div style="padding: 30px 40px 0 40px; text-align: center;">
             <div style="font-size: 36px; margin-bottom: 10px;">ℹ️</div>
             <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 20px 0;">Információk</h1>
-            
             <div class="info-nav-container">
                 <button class="info-nav-btn active" id="btn-about" onclick="switchInfoTab('about')">🎓 Rólunk</button>
                 <button class="info-nav-btn" id="btn-support" onclick="switchInfoTab('support')">🚀 Támogatás</button>
@@ -1539,236 +1382,72 @@ html {
             </div>
         </div>
 
-        <!-- TARTALMI SZEKCIÓK (A JS váltogatja, melyik látszik) -->
         <div class="big-support-content" style="padding-top: 10px;">
-            
             <!-- RÓLUNK -->
             <div id="info-about" class="info-section">
-                
-                <!-- Küldetésünk kártya -->
                 <div class="about-card" style="margin-bottom: 32px; padding: 32px 24px; border: 1px solid var(--faculty-color); background: rgba(191, 90, 242, 0.05); text-align: center;">
                     <div style="font-size: 40px; margin-bottom: 12px; line-height: 1;">🎯</div>
                     <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">A küldetésünk</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 95%; margin: 0 auto;">
-                        Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a <strong>leggyorsabb, legátláthatóbb és legmodernebb</strong> álláskereső platformot biztosítsuk. Nem hiszünk a bonyolult űrlapokban és az elavult dizájnban. Hiszünk viszont a villámgyors szűrésben és a prémium felhasználói élményben.
-                    </p>
-                </div>
-
-                <!-- Alapértékek (Ikon grid) -->
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Alapértékeink</h3>
-                <div style="display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
-                        <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Gyorsaság</div>
-                        <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Azonnali szűrés és találatok, felesleges várakozás nélkül.</div>
-                    </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 24px; margin-bottom: 8px;">✨</div>
-                        <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Letisztultság</div>
-                        <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Zéró felesleges információ vagy zavaró vizuális zaj.</div>
-                    </div>
-                </div>
-
-                <!-- A Csapat -->
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">A Csapat</h3>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #e056fd, #be2edd); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(224, 86, 253, 0.3);">NJ</div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">József Nóra</h3>
-                            <span style="color: #e056fd; font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Design, felhasználói élmény (UX) és platform stratégia.</p>
-                        </div>
-                        <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
-                            <span>💼</span> LinkedIn Profil
-                        </a>
-                    </div>
-                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
-                        <div>
-                            <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #0a84ff, #005bb5); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);">BA</div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">Weszter Szabó Bátor</h3>
-                            <span style="color: var(--primary-color); font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Technológia, adatbázis és a platform teljeskörű fejlesztése.</p>
-                        </div>
-                        <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
-                            <span>💼</span> LinkedIn Profil
-                        </a>
-                    </div>
+                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 95%; margin: 0 auto;">Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a leggyorsabb, legátláthatóbb és legmodernebb álláskereső platformot biztosítsuk.</p>
                 </div>
             </div>
-
-           <!-- TÁMOGATÁS -->
+            
+            <!-- TÁMOGATÁS -->
             <div id="info-support" class="info-section" style="display: none;">
-                
-                <!-- Hangsúlyos, barátságos fejléc -->
                 <div class="about-card" style="margin-bottom: 24px; text-align: center; border: 1px solid var(--primary-color); background: rgba(10, 132, 255, 0.05); padding: 32px 24px;">
                     <div style="font-size: 48px; margin-bottom: 12px; line-height: 1;">❤️</div>
                     <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">Tartsd életben az UniStartot!</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 90%; margin: 0 auto;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.
-                    </p>
+                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 90%; margin: 0 auto;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Kérjük, támogasd a szerverköltségeinket!</p>
                 </div>
-
-                <!-- Látványos infó blokkok (Mire megy a pénz?) -->
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Mire fordítjuk a támogatásod?</h3>
-                <div style="display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🖥️</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Szerverek</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">A villámgyors és stabil adatbázis fenntartása.</div>
-                    </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🚫</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Zéró Reklám</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
-                    </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Fejlesztés</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
-                    </div>
-                </div>
-
-                <!-- Támogatási opciók választó -->
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Válaszd ki, mivel támogatsz:</h3>
-                <div class="support-options" style="margin-bottom: 24px;">
-                    <button class="option-btn active" onclick="setAmount('custom', event)">
-                        <span class="emoji">✨</span>
-                        <span class="title">Egyéni</span>
-                        <span class="price">Tetszőleges összeg</span>
-                    </button>
-                    <button class="option-btn" onclick="setAmount('coffee', event)">
-                        <span class="emoji">☕</span>
-                        <span class="title">1 Kávé</span>
-                        <span class="price">1 500 Ft</span>
-                    </button>
-                    <button class="option-btn" onclick="setAmount('pizza', event)">
-                        <span class="emoji">🍕</span>
-                        <span class="title">Egy Pizza</span>
-                        <span class="price">5 000 Ft</span>
-                    </button>
-                </div>
-
-                <!-- Fizetési gombok dinamikusan -->
                 <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-                    <a id="paypalBtn" href="https://paypal.me/batorweszter" target="_blank" class="apply-btn" style="flex: 1; background: #003087; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 48, 135, 0.4);"><span>🅿️</span> Támogatás PayPal-al</a>
-                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; background: #0075ff; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 117, 255, 0.4);"><span>💳</span> Támogatás Revolut-al</a>
+                    <a id="paypalBtn" href="https://paypal.me/batorweszter/1500HUF" target="_blank" class="apply-btn" style="flex: 1; background: #003087; font-size: 16px;"><span>🅿️</span> Támogatás PayPal-al</a>
+                    <a id="revolutBtn" href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn" style="flex: 1; background: #0075ff; font-size: 16px;"><span>💳</span> Támogatás Revolut-al</a>
                 </div>
-
-                <!-- Közvetlen utalás -->
-                <div class="account-details" style="margin-top: 0; background: var(--bg-color); position: relative; overflow: hidden;">
-                    <!-- Kis díszítő csík a kártya szélén -->
-                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--success-color);"></div>
-                    
-                    <h4 style="margin: 0 0 12px 0; font-size: 15px; color: var(--text-color);">🏦 Klasszikus banki utalás</h4>
-                    <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
-                    <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val" id="ibanVal">HU14 1070 0024 7196 9958 5110 0005</span></div>
-                    <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val" style="color: var(--primary-color);">UniStart tamogatas</span></div>
-                    <button class="apply-btn secondary" id="copyBtn" onclick="copyIban()" style="width: 100%; margin-top: 16px;">📋 Adatok másolása vágólapra</button>
-                </div>
-                
-                <p style="text-align: center; color: var(--subtitle-color); font-size: 14px; margin-top: 24px; font-weight: 500;">
-                    Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶
-                </p>
             </div>
-           <!-- KAPCSOLAT -->
+
+            <!-- KAPCSOLAT -->
             <div id="info-contact" class="info-section" style="display: none;">
                 <div style="text-align: center; margin-bottom: 32px;">
                     <div style="font-size: 48px; margin-bottom: 12px;">✉️</div>
                     <h2 style="margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: var(--text-color);">Lépj velünk kapcsolatba!</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 auto; max-width: 90%;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
-                </div>
-                
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <!-- Felhasználói kapcsolat -->
-                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🙋‍♂️</div>
-                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Felhasználóknak</h3>
-                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
-                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%;">Üzenet küldése</a>
-                    </div>
-                    
-                    <!-- B2B / Céges kapcsolat -->
-                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 24px; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.15);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">💼</div>
-                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Cégeknek (B2B)</h3>
-                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
-                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%;">Partnerségi megkeresés</a>
-                    </div>
+                    <a href="mailto:bator.szabo@gmail.com" class="apply-btn" style="margin-top: 20px;">E-mail küldése</a>
                 </div>
             </div>
 
             <!-- JOGI & ADATVÉDELEM -->
             <div id="info-legal" class="info-section" style="display: none;">
-                
-                <!-- ÜZEMELTETŐ -->
-                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
-                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 14px; line-height: 1.6;">
-                        <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 600;">Weszter Szabó Bátor András</span>
-                        <strong style="color: var(--subtitle-color);">Cím:</strong> <span style="color: var(--text-color);">1158 Budapest, Klebelsberg Kunó utca 14.</span>
-                        <strong style="color: var(--subtitle-color);">E-mail:</strong> <a href="mailto:bator.szabo@gmail.com" style="color: var(--primary-color); text-decoration: none;">bator.szabo@gmail.com</a>
-                    </div>
+                <div class="about-card" style="margin-bottom: 24px; padding: 24px;">
+                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; color: var(--text-color);">⚖️ Impresszum</h2>
+                    <p style="color: var(--subtitle-color); font-size: 15px;">Weszter Szabó Bátor András<br>bator.szabo@gmail.com</p>
                 </div>
-
-                <!-- TÁRHELY ÉS INFRASTRUKTÚRA -->
-                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
-                    
-                    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border);">
-                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Rackhost Zrt.</h3>
-                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
-                    </div>
-                    
-                    <div>
-                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
-                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
-                    </div>
-                </div>
-
-                <!-- ADATVÉDELEM -->
-                <div class="about-card" style="padding: 24px; background: var(--bg-color); border: 1px solid var(--card-border); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
-                    <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
-                        Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
-                        A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
-                    </p>
-                </div>
-
             </div>
-
         </div>
     </div>
 </div>
 
 <!-- ========================================================================== -->
-<!-- JS: 1. FIREBASE SDK IMPORTOK                                               -->
+<!-- JS: 1. FIREBASE SDK IMPORTOK ÉS TÉMA                                       -->
 <!-- ========================================================================== -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 
 <script>
-    // ==========================================================================
-    // JS: 2. TÉMA VÁLTÁS (SÖTÉT/VILÁGOS MÓD) LOGIKÁJA
-    // ==========================================================================
     const body = document.body;
     const themeToggleDesktop = document.getElementById('themeToggleDesktop');
-    const themeToggleMobileBtn = document.getElementById('themeToggleMobileBtn');
+    const themeToggleMobileTabBtn = document.getElementById('themeToggleMobileTabBtn');
     const prefersLightScheme = window.matchMedia("(prefers-color-scheme: light)");
 
-    // A régi themeToggleMobileBtn Helyett:
-    const themeToggleMobileTabBtn = document.getElementById('themeToggleMobileTabBtn');
-    
     function applyTheme(isLight) {
         if (isLight) {
             body.setAttribute('data-theme', 'light');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '🌙';
-            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '🌙'; // <-- Ezt is javítsd!
+            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '🌙';
             localStorage.setItem('theme', 'light');
         } else {
             body.removeAttribute('data-theme');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '☀️';
-            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '☀️'; // <-- Ezt is javítsd!
+            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '☀️';
             localStorage.setItem('theme', 'dark');
         }
     }
@@ -1778,35 +1457,47 @@ html {
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
 
     // ==========================================================================
-    // JS: 3. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ
+    // JS: 2. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ (JAVÍTVA)
     // ==========================================================================
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
-    // Figyeljük az asztali dobozt ÉS a mobilos főablakot is a görgő gombhoz!
     if (dashboardMain && backToTopBtn) {
         dashboardMain.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', dashboardMain.scrollTop > 300); });
         window.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', window.scrollY > 300); });
     }
-    
+
     function scrollToTop() { 
-        if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' }); 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+            if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' }); 
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch(e) {
+            if (dashboardMain) dashboardMain.scrollTop = 0;
+            window.scrollTo(0, 0);
+        }
     }
 
     function switchTab(tabId, title, navItemId) {
         document.getElementById('currentViewTitle').innerText = title;
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.getElementById(tabId).classList.add('active');
-        document.querySelectorAll('.nav-item, .sidebar-profile').forEach(el => el.classList.remove('active'));
-        if (navItemId) document.getElementById(navItemId).classList.add('active');
+        const targetTab = document.getElementById(tabId);
+        if (targetTab) targetTab.classList.add('active');
         
-        // A VARÁZSLAT: Fülváltáskor azonnal visszaugrik a tetejére, hogy ne a semmit nézzük!
-        if (dashboardMain) dashboardMain.scrollTop = 0;
-        window.scrollTo({ top: 0, behavior: 'instant' }); 
+        document.querySelectorAll('.nav-item, .sidebar-profile').forEach(el => el.classList.remove('active'));
+        if (navItemId) {
+            const navItem = document.getElementById(navItemId);
+            if (navItem) navItem.classList.add('active');
+        }
+        
+        // IPHONE BIZTOS UGRÁS A LAP TETEJÉRE
+        try {
+            if (dashboardMain) dashboardMain.scrollTop = 0;
+            window.scrollTo(0, 0); 
+        } catch (err) {}
     }
-   // ==========================================================================
-    // JS: 4. MODÁLIS ABLAKOK ÉS DINAMIKUS FÜLEK (JAVÍTOTT LOGIKA)
+
+    // ==========================================================================
+    // JS: 3. MODÁLIS ABLAKOK LOGIKÁJA
     // ==========================================================================
     function openModal(modalId) { 
         const modal = document.getElementById(modalId);
@@ -1818,75 +1509,31 @@ html {
         if (modal) { modal.classList.remove('active'); document.body.classList.remove('modal-open'); }
     }
 
-    // Belső fülváltó logika az információs ablakon belül
     function switchInfoTab(tabId) {
-        // Elrejtjük az összes szekciót, és levesszük az aktív stílust a gombokról
         document.querySelectorAll('.info-section').forEach(el => el.style.display = 'none');
         document.querySelectorAll('.info-nav-btn').forEach(btn => btn.classList.remove('active'));
-        
-        // Megjelenítjük a kért szekciót és bekapcsoljuk a hozzá tartozó gombot
-        document.getElementById('info-' + tabId).style.display = 'block';
-        document.getElementById('btn-' + tabId).classList.add('active');
+        const section = document.getElementById('info-' + tabId);
+        const btn = document.getElementById('btn-' + tabId);
+        if(section) section.style.display = 'block';
+        if(btn) btn.classList.add('active');
     }
 
-    // Megnyitja a modálist, egyből a megfelelő fülre pörgetve
     function openInfoModal(tabId) {
         switchInfoTab(tabId);
         openModal('infoOverlay');
     }
-    
-    // A gombok ezeket a funkciókat hívják meg:
-    function openBigSupportModal() { openInfoModal('support'); }
-    function openAboutModal() { openInfoModal('about'); }
-    function openKapcsolatModal() { openInfoModal('contact'); }
-    function openImpresszumModal() { openInfoModal('legal'); }
-    function openAdatvedelemModal() { openInfoModal('legal'); }
-    
-    // Háttérre kattintáskor bezáródik
+
     document.addEventListener('click', function(e) { 
-        if (e.target.classList.contains('big-support-overlay') || 
-            e.target.classList.contains('filter-modal-overlay') || 
-            e.target.classList.contains('job-preview-overlay')) { 
+        if (e.target.classList.contains('filter-modal-overlay') || 
+            e.target.classList.contains('job-preview-overlay') ||
+            e.target.classList.contains('big-support-overlay')) { 
             closeModal(e.target.id); 
         } 
     });
 
     // ==========================================================================
-    // JS: 5. ÉRTESÍTÉSEK (TOAST) ÉS VÁGÓLAP (COPY IBAN)
+    // JS: 4. ÉRTESÍTÉSEK (TOAST)
     // ==========================================================================
-    function copyIban() {
-        navigator.clipboard.writeText('HU14107000247196995851100005').then(() => {
-            showToast("📋 Számlaszám sikeresen másolva!", "success");
-            const btn = document.getElementById('copyBtn'); 
-            btn.innerText = '✓ Másolva!'; btn.style.background = '#32d74b'; btn.style.color = '#000';
-            setTimeout(() => { btn.innerText = '📋 Másolás'; btn.style.background = 'var(--tag-bg)'; btn.style.color = 'var(--text-color)'; }, 2000);
-        });
-    }
-
-    function setAmount(type, event) {
-        // Gombok "aktív" stílusának frissítése
-        document.querySelectorAll('.option-btn').forEach(btn => btn.classList.remove('active'));
-        if(event && event.currentTarget) event.currentTarget.classList.add('active'); 
-        
-        const paypalBtn = document.getElementById('paypalBtn');
-        const revolutBtn = document.getElementById('revolutBtn');
-        const paypalBase = 'https://paypal.me/batorweszter';
-        
-        // Logika a gombok elrejtésére/megjelenítésére és a linkek cseréjére
-        if (type === 'custom') { 
-            paypalBtn.href = paypalBase; 
-            revolutBtn.style.display = 'inline-flex'; // Revolut látszik, elosztják a helyet
-        }
-        else if (type === 'coffee') { 
-            paypalBtn.href = paypalBase + '/1500HUF'; 
-            revolutBtn.style.display = 'none'; // Revolut eltűnik, PayPal 100% széles lesz
-        }
-        else if (type === 'pizza') { 
-            paypalBtn.href = paypalBase + '/5000HUF'; 
-            revolutBtn.style.display = 'none'; // Revolut eltűnik, PayPal 100% széles lesz
-        }
-    }
-
     let toastTimeout;
     function showToast(message, type = "info") {
         const toast = document.getElementById('toastContainer');
@@ -1911,7 +1558,7 @@ html {
     }
 
     // ==========================================================================
-    // JS: 6. FIREBASE INICIALIZÁLÁS (DB ÉS AUTH)
+    // JS: 5. FIREBASE INICIALIZÁLÁS ÉS VÁLTOZÓK
     // ==========================================================================
     const firebaseConfig = {
         apiKey: "AIzaSyD2efnd7QvT-ODZb3MOG4PaDfIRuvVqAxM", 
@@ -1922,9 +1569,6 @@ html {
     const auth = firebase.auth();
     const db = firebase.firestore();
 
-    // ==========================================================================
-    // JS: 7. GLOBÁLIS ÁLLAPOTVÁLTOZÓK ÉS ADATTÖMBÖK
-    // ==========================================================================
     let jobsData = [];
     let currentFilteredJobs = [];
     let displayedCount = 15; 
@@ -1941,22 +1585,13 @@ html {
     let savedJobIds = JSON.parse(localStorage.getItem('unistart_saved_jobs') || "[]");
 
     // ==========================================================================
-    // JS: 8. MŰVELETEK (MENTÉS, MEGOSZTÁS, GYORSSZŰRŐK)
+    // JS: 6. MŰVELETEK ÉS SZŰRŐ MOTOR
     // ==========================================================================
     function setFilterMode(mode) {
         filterMode = mode;
-        
-        // Cím frissítése
         document.getElementById('resultsTitleText').innerText = mode === 'saved' ? "Mentett Állások" : "Találatok";
-        
-        // Keresőblokk (Omnibar) elrejtése vagy megjelenítése
         const omnibar = document.querySelector('.omnibar-wrapper');
-        if (omnibar) {
-            // Ha mentett állásokon vagyunk, eltüntetjük, különben 'flex' elrendezéssel visszahozzuk
-            omnibar.style.display = mode === 'saved' ? 'none' : 'flex';
-        }
-        
-        // Szűrők alkalmazása és rács újratöltése
+        if (omnibar) omnibar.style.display = mode === 'saved' ? 'none' : 'flex';
         applyFilters();
     }
 
@@ -1999,9 +1634,6 @@ html {
         applyFilters();
     }
 
-    // ==========================================================================
-    // JS: 9. ÁLLÁS GYORSNÉZET (JOB PREVIEW MODAL)
-    // ==========================================================================
     function openJobPreview(jobId) {
         const job = jobsData.find(j => j.id === jobId);
         if (!job) return;
@@ -2025,9 +1657,7 @@ html {
 
             if (jobDateObj) {
                 displayDate = jobDateObj.toISOString().split('T')[0];
-                if (jobDateObj.getTime() > Date.now() + 86400000) { 
-                    isDeadline = true; 
-                }
+                if (jobDateObj.getTime() > Date.now() + 86400000) { isDeadline = true; }
             }
         }
         const dateTag = document.getElementById('jpDate');
@@ -2058,9 +1688,6 @@ html {
 
     function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
 
-    // ==========================================================================
-    // JS: 10. URL PARAMÉTEREK KEZELÉSE ÉS FIREBASE LETÖLTÉS
-    // ==========================================================================
     function readStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         const tagsParam = urlParams.get('tags');
@@ -2106,7 +1733,6 @@ html {
 
     async function loadJobsData() {
         readStateFromURL(); 
-        
         document.getElementById('jobGridContainer').innerHTML = skeletonHTML;
         
         try {
@@ -2170,21 +1796,13 @@ html {
         }
     }
 
-    // ==========================================================================
-    // JS: 11. CÍMKÉK, KERESÉS ÉS A FŐ SZŰRŐ MOTOR (Apply Filters)
-    // ==========================================================================
-    
-    // --- ÚJ: Fülváltó logika a Mega Szűrő ablakhoz ---
     function switchFilterTab(tabId) {
-        // Rejtjük az összes szűrő szekciót és levesszük a gombokról az aktív státuszt
         ['faculty', 'company', 'vibe', 'tag'].forEach(id => {
             const section = document.getElementById('f-tab-' + id);
             const btn = document.getElementById('f-tab-btn-' + id);
             if (section) section.style.display = 'none';
             if (btn) btn.classList.remove('active');
         });
-        
-        // Csak a kiválasztottat mutatjuk
         const activeSection = document.getElementById('f-tab-' + tabId);
         const activeBtn = document.getElementById('f-tab-btn-' + tabId);
         if (activeSection) activeSection.style.display = 'block';
@@ -2218,12 +1836,11 @@ html {
             btn.classList.toggle('active-comp', activeSearchTags.includes(clean));
         });
 
-        // --- ÚJ: A füleken lévő kis számlálók (Badgek) frissítése ---
         const updateBadge = (id, count) => {
             const badge = document.getElementById('badge-' + id);
             if (badge) {
                 badge.innerText = count;
-                badge.style.display = count > 0 ? 'inline-block' : 'none'; // Csak akkor látszik, ha van kiválasztva
+                badge.style.display = count > 0 ? 'inline-block' : 'none'; 
             }
         };
 
@@ -2234,9 +1851,7 @@ html {
     }
 
     function clearAllModalFilters() { 
-        activeFaculties = []; 
-        activeCompanies = []; 
-        activeVibes = [];
+        activeFaculties = []; activeCompanies = []; activeVibes = [];
         updateModalButtonsVisuals(); 
     }
     
@@ -2399,7 +2014,6 @@ html {
         }
     }
 
-    // --- A FŐ SZŰRŐ MOTOR ---
     function applyFilters() {
         localStorage.setItem('unistart_active_companies', JSON.stringify(activeCompanies));
         localStorage.setItem('unistart_active_faculties', JSON.stringify(activeFaculties));
@@ -2469,36 +2083,26 @@ html {
         currentFilteredJobs.sort((a, b) => {
             const zdNow = Date.now();
 
-            // Belső segédfüggvény, ami megkeresi a TÉNYLEGES publikálási időt
             const getRealPublishTime = (job) => {
                 let pDate = job.date_posted;
                 let sDate = job.scraped_at || job.updated_at || 0;
 
-                // 1. Lekaparás/Frissítés idejének konvertálása
                 if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
                 else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
 
-                // 2. Publikálási/Határidő mező konvertálása
                 let postedTime = 0;
                 if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
                 else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
 
-                // 3. LOGIKA: Ha a dátum a jövőben van, az határidő! 
-                // Ezt ne vegyük figyelembe a rendezésnél, használjuk helyette a rendszerbe kerülés (sDate) idejét.
-                if (postedTime > zdNow) {
-                    return sDate || 0;
-                }
-                
-                // Ha a dátum a múltban van, az egy valós publikálási idő, így használhatjuk azt.
+                if (postedTime > zdNow) return sDate || 0;
                 return postedTime || sDate || 0;
             };
 
             let timeA = getRealPublishTime(a);
             let timeB = getRealPublishTime(b);
 
-            // Rendezés a kinyert TÉNYLEGES publikálási idők alapján
-            if (currentSortMode === "date_desc") return timeB - timeA; // Legújabbak elöl
-            if (currentSortMode === "date_asc") return timeA - timeB;  // Legrégebbiek elöl
+            if (currentSortMode === "date_desc") return timeB - timeA; 
+            if (currentSortMode === "date_asc") return timeA - timeB;  
             if (currentSortMode === "company_az") {
                 const nameA = (a.company_name || "").toLowerCase();
                 const nameB = (b.company_name || "").toLowerCase();
@@ -2512,31 +2116,6 @@ html {
     }
 
     function handleSort(value) { currentSortMode = value; applyFilters(); }
-
-    // ==========================================================================
-    // JS: 12. ÁLLÁSKÁRTYÁK LEGENERÁLÁSA (RENDER GRID)
-    // ==========================================================================
-    function createSupportCard() {
-        const card = document.createElement('div');
-        card.className = 'company-card support-card-mosaic';
-        card.onclick = () => openBigSupportModal();
-        card.style.cursor = 'pointer';
-        card.style.animationDelay = '0s'; 
-        
-        card.innerHTML = `
-            <div class="company-card-content" style="display:flex; flex-direction:row; align-items:center; gap: 20px;">
-                <div style="font-size: 42px; flex-shrink: 0;">☕</div>
-                <div>
-                    <h3 class="company-name" style="color: var(--primary-color);">Tetszik az UniStart?</h3>
-                    <p class="company-short-desc" style="margin:0;">Támogasd a szerverköltségeket és a fejlesztést egy kávé árával!</p>
-                </div>
-            </div>
-            <div class="company-card-actions">
-                <button class="apply-btn" style="width: auto; padding: 12px 30px;">Támogatom</button>
-            </div>
-        `;
-        return card;
-    }
 
     function highlightText(text) {
         if (!activeSearchTags || activeSearchTags.length === 0) return text;
@@ -2558,7 +2137,7 @@ html {
         
         if (currentFilteredJobs.length === 0) {
             if (filterMode === 'saved') {
-                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
+                container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else {
                 container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
             }
@@ -2570,12 +2149,6 @@ html {
         let endIndex = Math.min(displayedCount, currentFilteredJobs.length);
 
         for (let i = startIndex; i < endIndex; i++) {
-            if ((i + 1) % 15 === 0 && filterMode !== 'saved') { 
-                container.appendChild(createSupportCard());
-                endIndex = Math.min(endIndex + 1, currentFilteredJobs.length);
-                if (i >= endIndex) break;
-            }
-            
             const job = currentFilteredJobs[i];
             const isSaved = savedJobIds.includes(job.id);
             const card = document.createElement('div'); 
@@ -2631,9 +2204,6 @@ html {
         else anchor.classList.add('active');
     }
 
-    // ==========================================================================
-    // JS: 13. VÉGTELEN GÖRGÉS (INFINITE SCROLL) FIGYELŐ
-    // ==========================================================================
     function setupInfiniteScroll() {
         const anchor = document.getElementById('infiniteScrollAnchor');
         const observer = new IntersectionObserver((entries) => {
@@ -2645,9 +2215,6 @@ html {
         observer.observe(anchor);
     }
 
-    // ==========================================================================
-    // JS: 14. AUTH FIGYELŐ INDÍTÁSA
-    // ==========================================================================
     auth.onAuthStateChanged((user) => { loadJobsData(); });
 
 </script>

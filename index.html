@@ -343,6 +343,7 @@ html {
     opacity: 0; 
     transition: all 0.5s var(--ease-spring); 
     overflow: hidden; 
+    pointer-events: none; /* A MEGOLDÁS: Ez átengedi az ujjlenyomatot a menü gombjaira! */
 }
 #toastContainer.show { 
     transform: translateX(-50%) translateY(0) scale(1); 
@@ -365,7 +366,6 @@ html {
     from { width: 100%; } 
     to { width: 0%; } 
 }
-
 /* ==========================================================================
    CSS: 4. UNIFIED OMNIBAR ÉS KERESŐK (ULTRA PREMIUM DIZÁJN)
    ========================================================================== */
@@ -1108,11 +1108,6 @@ html {
         transition: all 0.4s var(--ease-spring);
     }
 
-    /* ÚJ: Fórum, Mentve és Infó! */
-    #nav-forum .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-saved .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-info .nav-text::after { content: ""; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-
     .nav-item.active { 
         background: var(--primary-color) !important; 
         color: white; 
@@ -1783,24 +1778,22 @@ html {
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
 
     // ==========================================================================
-    // JS: 3. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ (JAVÍTVA)
+    // JS: 3. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ
     // ==========================================================================
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
-    // Figyeljük mind a dobozos (asztali), mind a natív (mobil) görgetést!
+    // Figyeljük az asztali dobozt ÉS a mobilos főablakot is a görgő gombhoz!
     if (dashboardMain && backToTopBtn) {
         dashboardMain.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', dashboardMain.scrollTop > 300); });
         window.addEventListener('scroll', () => { backToTopBtn.classList.toggle('show', window.scrollY > 300); });
     }
-
-    // A felfelé görgető gomb most már mobilon és asztali gépen is működik
+    
     function scrollToTop() { 
         if (dashboardMain) dashboardMain.scrollTo({ top: 0, behavior: 'smooth' }); 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Fülváltáskor KÖTELEZŐ felugrani az oldal tetejére, hogy ne az "ürességet" nézzük
     function switchTab(tabId, title, navItemId) {
         document.getElementById('currentViewTitle').innerText = title;
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -1808,11 +1801,10 @@ html {
         document.querySelectorAll('.nav-item, .sidebar-profile').forEach(el => el.classList.remove('active'));
         if (navItemId) document.getElementById(navItemId).classList.add('active');
         
-        // --- A VARÁZSLAT: Visszaugrik a tetejére azonnal! ---
+        // A VARÁZSLAT: Fülváltáskor azonnal visszaugrik a tetejére, hogy ne a semmit nézzük!
         if (dashboardMain) dashboardMain.scrollTop = 0;
-        window.scrollTo(0, 0); 
+        window.scrollTo({ top: 0, behavior: 'instant' }); 
     }
-
    // ==========================================================================
     // JS: 4. MODÁLIS ABLAKOK ÉS DINAMIKUS FÜLEK (JAVÍTOTT LOGIKA)
     // ==========================================================================

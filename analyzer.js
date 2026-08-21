@@ -1,7 +1,62 @@
 const crypto = require("crypto");
 
 // ============================================================================
-// 🚀 V18.0 NEXUS-COGNITION ENGINE: MÉLY-SZEMANTIKAI ÉS KOGNITÍV PARSER
+// 🧠 1. KOGNITÍV SZÓTÁRAK ÉS SZABÁLYOK (A KAPUŐRÖK)
+// ============================================================================
+
+// 1.1 Címke szótár (Ezt hiányolta a rendszer!)
+const structuredTagsDict = {
+    languages: ["angol", "német", "francia", "spanyol", "english", "german"],
+    tech: ["excel", "python", "javascript", "typescript", "sql", "java", "react", "html", "aws", "git", "power bi", "sap", "figma", "photoshop", "autocad", "c++", "c#"],
+    soft_skills: ["kommunikáci", "csapatmunka", "proaktív", "precíz", "problémamegoldó", "analitikus", "kreatív", "önálló", "terhelhető"],
+    work_setup: ["home office", "remote", "hibrid", "távmunka", "on-site", "rugalmas munkaidő"]
+};
+
+// 1.2 Tisztító szabályok (HTML és zaj eltávolítása)
+const detoxRules = [
+    { regex: /<[^>]*>?/gm, replacement: ' ' },
+    { regex: /&nbsp;/gi, replacement: ' ' }
+];
+
+// 1.3 Alapvető Regex Segédfüggvény
+const buildRegex = (words) => new RegExp('\\b(' + words.map(w => w.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")).join('|') + ')\\b', 'i');
+
+// 1.4 NLP Kapuőr szabályok (Kizáró és elfogadó szavak)
+const compiledFatalSenior = /(senior|vezető|manager|head of|director|igazgató|expert|szenior|lead\b|architect|chief|manager)/i;
+const compiledFatalPhysical = /(takarító|biztonsági őr|rakodó|sofőr|futár|pénztáros|árufeltöltő|targoncás)/i;
+const compiledDubiousPhysical = /(fizikai|raktáros|operátor|szerelő)/i;
+const compiledSaviors = /(diák|gyakornok|mérnök|asszisztens)/i;
+const compiledAccept = /(diák|gyakornok|intern|trainee|pályakezdő|junior|entry-level|frissdiplomás|asszisztens|student)/i;
+// Kizárja azokat, ahol 3-9 év, vagy 10+ év tapasztalatot kérnek
+const compiledExperienceReject = /[3-9]\s*(?:év|year|éves)|(?:1[0-9])\s*(?:év|year|éves)/i;
+const compiledJuniorSaviors = /(junior|gyakornok|diák|pályakezdő)/i;
+
+// 1.5 Kategóriák és Vibe-ok
+const compiledCategories = {
+    "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops)/i,
+    "💼 Gazdasági & Üzleti": /(pénzügy|gazdaság|business|sales|marketing|hr|könyvelő|kontroller|értékesítő|emberi erőforrás|toborzó)/i,
+    "⚙️ Mérnöki & Műszaki": /(mérnök|engineer|villamosmérnök|gépészmérnök|mechatronika|minőségbiztosítás|quality)/i,
+    "📊 Elemző & Adattudomány": /(elemző|analyst|data scientist|adatelemző|business intelligence)/i,
+    "🎨 Ügyfélszolgálat & Admin": /(adminisztrátor|ügyfélszolgálat|customer service|recepciós|asszisztens|támogatás)/i
+};
+
+const compiledAntiCategories = {
+    "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/i
+};
+
+const compiledVibes = {
+    "🚀 Innovatív / Startup": /(startup|innováció|agilis|scrum|modern|fejlődő)/i,
+    "📊 Elemző / Adatvezérelt": /(analitikus|adatvezérelt|precíz|statisztika|kutatás)/i,
+    "🤝 Emberközpontú": /(támogató|csapatjátékos|emberközpontú|mentorálás|kellemes légkör)/i,
+    "🌍 Nemzetközi": /(multinacionális|nemzetközi|angol|külföldi|global)/i
+};
+
+// 1.6 Magyar nagyvárosok felismerése
+const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba)/gi;
+
+
+// ============================================================================
+// 🚀 2. V18.0 NEXUS-COGNITION ENGINE (MÉLY-SZEMANTIKAI PARSER)
 // ============================================================================
 
 const niceToHaveKeywords = ["előny", "plusz", "nice to have", "nem elvárás", "nem feltétel", "plussz", "örülünk", "bónusz", "kiváló, ha", "ideális"];
@@ -11,7 +66,8 @@ const niceToHaveRegex = new RegExp(`(${niceToHaveKeywords.join('|')})`, 'i');
 const compiledStructuredTags = {};
 for (const [group, tags] of Object.entries(structuredTagsDict)) {
     compiledStructuredTags[group] = tags.map(tag => {
-        const baseRegex = buildRegex([tag]);
+        // Címkéknél megengedőbb regex
+        const baseRegex = new RegExp('\\b(' + tag.replace(/\|/g, '').replace(/\*/g, '').trim() + ')\\b', 'i');
         return {
             original: tag.replace(/\|/g, '').replace(/\*/g, '').trim(),
             regex: baseRegex,
@@ -22,7 +78,7 @@ for (const [group, tags] of Object.entries(structuredTagsDict)) {
 
 const sanitizeText = (text) => text ? String(text).toLowerCase() : "";
 
-// 🧠 1. LRU CACHE (Memória-védelem OOM ellen! Max 2000 elemet tárol)
+// 🧠 LRU CACHE (Memória-védelem OOM ellen! Max 2000 elemet tárol)
 class LRUCache {
     constructor(limit = 2000) {
         this.cache = new Map();
@@ -32,12 +88,11 @@ class LRUCache {
         if (!this.cache.has(key)) return null;
         const val = this.cache.get(key);
         this.cache.delete(key);
-        this.cache.set(key, val); // Frissítjük a pozícióját (legutóbb használt)
+        this.cache.set(key, val);
         return val;
     }
     set(key, value) {
         if (this.cache.size >= this.limit) {
-            // Töröljük a legrégebbit (az első elemet a Map-ben)
             this.cache.delete(this.cache.keys().next().value);
         }
         this.cache.set(key, value);
@@ -45,9 +100,8 @@ class LRUCache {
 }
 const analysisCache = new LRUCache(2000);
 
-// 🧠 2. HYPER-SALARY PARSER (A piac legokosabb fizetés-kinyerője)
+// 🧠 HYPER-SALARY PARSER
 function parseSalary(text) {
-    // Felismeri: 1.2M, 850k, 12.000.000, 2000 EUR, bruttó/nettó, óra/hó/év
     const salaryRegex = /(?:(bruttó|br\.|nettó|net\.)\s*)?(?:€|eur\s*)?(\d{1,3}(?:[\s\.]\d{3})*|\d{1,4}[kmM])(?:\s*-\s*(?:€|eur\s*)?(\d{1,3}(?:[\s\.]\d{3})*|\d{1,4}[kmM]))?\s*(ft|huf|eur|€|euro)?(?:\s*\/\s*(óra|hó|hónap|év))?/i;
     const match = text.match(salaryRegex);
     if (!match) return null;
@@ -65,7 +119,6 @@ function parseSalary(text) {
     const currency = (match[4] || "").toLowerCase().includes("eur") || (match[4] || "") === "€" || match[0].includes("€") ? "EUR" : "HUF";
     const periodStr = (match[5] || "").toLowerCase();
     
-    // Intelligens időszak becslés
     let isHourly = periodStr.includes('óra');
     let isYearly = periodStr.includes('év');
     if (!periodStr) {
@@ -84,7 +137,7 @@ function parseSalary(text) {
     };
 }
 
-// 🧠 3. NYELVTUDÁS SZINT (Javított normalizáció)
+// 🧠 NYELVTUDÁS SZINT DETEKTOR
 function parseLanguageLevels(text) {
     const levels = {};
     const langRegex = /(angol|német|francia|spanyol|olasz)[^\w]{0,35}(a1|a2|b1|b2|c1|c2|alapfok|középfok|felsőfok|társalgási|tárgyalási|tárgyalóképes|folyékony|anyanyelvi)/gi;
@@ -98,13 +151,12 @@ function parseLanguageLevels(text) {
         else if (level.includes("ALAP")) level = "A2/B1";
         else if (level.includes("ANYANYELV")) level = "C2";
 
-        // Csak a legmagasabb szintet tartjuk meg, ha egy nyelvet többször említenek
         levels[lang] = levels[lang] > level ? levels[lang] : level; 
     }
     return Object.keys(levels).length > 0 ? levels : null;
 }
 
-// 🧠 4. HOME OFFICE ARÁNY DETEKTOR
+// 🧠 HOME OFFICE ARÁNY DETEKTOR
 function extractHomeOfficeRatio(text) {
     const hoRegex = /heti\s*(\d)\s*nap(ot)?\s*(home office|ho|távmunka)/i;
     const match = text.match(hoRegex);
@@ -116,7 +168,7 @@ function extractHomeOfficeRatio(text) {
 }
 
 // ============================================================================
-// 🚀 FŐ ELEMZŐ FÜGGVÉNY
+// 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA
 // ============================================================================
 exports.analyzeJob = function(title, description = "") {
     
@@ -178,7 +230,7 @@ exports.analyzeJob = function(title, description = "") {
     const parsedLanguageLevels = parseLanguageLevels(fullText);
     const hoRatio = extractHomeOfficeRatio(fullText);
     
-    // ÚJ: Kiterjesztett végzettség azonosítás
+    // Kiterjesztett végzettség azonosítás
     const degreeMatch = fullText.match(/\b(bsc|msc|ba|ma|bachelor|master|alapképzés|mesterképzés|érettségi|okj|technikum|phd)\b/i);
     let requiredDegree = null;
     if (degreeMatch) {
@@ -227,7 +279,7 @@ exports.analyzeJob = function(title, description = "") {
         allFlatTags.push(...extractedTags[group]);
     }
     
-    // HO Arány betöltése a címkék közé, ha találtunk pontosat
+    // HO Arány betöltése a címkék közé
     if (hoRatio && extractedTags.work_setup.includes("Home office")) {
         extractedTags.work_setup = extractedTags.work_setup.filter(t => t !== "Home office");
         extractedTags.work_setup.push(hoRatio);
@@ -258,7 +310,6 @@ exports.analyzeJob = function(title, description = "") {
             required: extractedTags,
             nice_to_have: niceToHaveTags
         },
-        // EZ A BLOKK TÖKÉLETES TULAJDONSÁG-MAPPINGET BIZTOSÍT A FRONTEND ÉS DB SZÁMÁRA
         airtable_ready: { 
             faculty: assignedCategory,
             job_nature: jobNature,
@@ -273,8 +324,6 @@ exports.analyzeJob = function(title, description = "") {
         }
     };
 
-    // Eredmény elmentése az OOM-védett memóriába
     analysisCache.set(cacheKey, finalPayload);
-
     return finalPayload;
 };

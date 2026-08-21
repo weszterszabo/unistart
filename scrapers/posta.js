@@ -1,10 +1,21 @@
-const crypto = require("crypto");
-// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const cheerio = require("cheerio");
+// 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
+// 🛡️ Stealth Headers: Valódi XMLHttpRequest szimulálása
+const HEADERS = {
+  "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+  "Accept": "application/json, text/javascript, */*; q=0.01",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "X-Requested-With": "XMLHttpRequest",
+  "Origin": "https://karrier.posta.hu",
+  "Referer": "https://karrier.posta.hu/allasok"
+};
+
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [Magyar Posta] API letöltése indul...`);
+  console.log(`   ⬇️ [Magyar Posta] Phantom-JSBQ API letöltése indul...`);
   const allJobs = [];
+  const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
 
   const apiUrl = "https://karrier.posta.hu/jsbq";
 
@@ -14,19 +25,20 @@ exports.scrape = async function(companyName, baseUrl) {
     requestBody.append("page", "1");
     requestBody.append("rowNum", "10000");
 
+    // 🛑 Időtúllépés kezelés (15 másodperc, mert a nagy payload legenerálása lassabb lehet)
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
     const response = await fetch(apiUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        "Accept": "application/json, text/javascript, */*; q=0.01",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-        "X-Requested-With": "XMLHttpRequest"
-      },
+      signal: controller.signal,
+      headers: HEADERS,
       body: requestBody
     });
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
-      console.error(`   ❌ [Magyar Posta] Hiba a letöltés során (HTTP ${response.status})`);
+      console.error(`   ❌ [Magyar Posta] HTTP Hiba a letöltés során (Status: ${response.status})`);
       return [];
     }
 
@@ -38,77 +50,77 @@ exports.scrape = async function(companyName, baseUrl) {
       return [];
     }
 
-    rowsList.forEach(jobItem => {
-      // A Posta API egy "row" nevű kulcsban adja a teljes HTML kódot az adott állás kártyájáról!
+    for (const jobItem of rowsList) {
       const htmlRow = jobItem.row || "";
-      if (!htmlRow) return;
+      if (!htmlRow) continue;
 
-      // 1. Link és Cím kinyerése Regex segítségével a HTML-ből
-      const titleLinkMatch = htmlRow.match(/class="[^"]*jobList__item__title[^"]*"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/i);
-      let jobUrl = jobItem.url || "";
-      let title = "Névtelen pozíció";
+      // 🕵️ Töltsük be a nyers HTML snippetet a Cheerio virtuális DOM-jába!
+      const $ = cheerio.load(htmlRow);
+
+      // 1. Cím és Link kinyerése (Törhetetlen CSS szelektorral)
+      const titleElement = $('.jobList__item__title').first();
+      let title = titleElement.text().replace(/\s+/g, ' ').trim() || "Névtelen pozíció";
       
-      if (titleLinkMatch) {
-          if (!jobUrl) jobUrl = titleLinkMatch[1];
-          title = titleLinkMatch[2].replace(/<[^>]+>/g, "").trim();
-      }
-      
+      let jobUrl = titleElement.attr('href') || jobItem.url || "";
       if (jobUrl && !jobUrl.startsWith("http")) {
           jobUrl = "https://karrier.posta.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
       }
 
-      // 2. Város kinyerése
-      const cityMatch = htmlRow.match(/class="[^"]*job_list_city[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
-      let location = cityMatch ? cityMatch[1].replace(/<[^>]+>/g, "").trim() : "Magyarország";
-      // Sokszor benne van a pontos utca is, azt levágjuk
-      if (location.includes(",")) location = location.split(",")[0].replace(/\d{4}/, "").trim();
+      // 🛑 DUPLIKÁCIÓ ELLENŐRZÉS
+      if (!jobUrl || seenUrls.has(jobUrl)) continue;
+      seenUrls.add(jobUrl);
 
-      // 3. Részleg/Kategória kinyerése
-      const catMatch = htmlRow.match(/class="[^"]*job_list_specialities[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
-      const department = catMatch ? catMatch[1].replace(/<[^>]+>/g, "").trim() : "Posta";
-
-      // 4. Tapasztalat kinyerése
-      const expMatch = htmlRow.match(/class="[^"]*job_list_experiences[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
-      const experience = expMatch ? expMatch[1].replace(/<[^>]+>/g, "").trim() : "";
-
-      // 5. Műszak/Munkaidő
-      const scheduleMatch = htmlRow.match(/class="[^"]*iconInfo--schedule[^"]*"[^>]*>([\s\S]*?)<\/div>/i);
-      const employmentType = scheduleMatch ? scheduleMatch[1].replace(/<[^>]+>/g, "").trim() : "Teljes munkaidő";
-
-      // Csak az érvényeseket mentjük
-      if (title && jobUrl) {
-          
-          // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-          // Megtisztítjuk a html-t, és hozzácsapjuk a részleget meg a tapasztalatot, hogy az Agy 100%-os biztonsággal döntsön
-          const cleanText = htmlRow.replace(/<[^>]+>/g, " ");
-          const rawDescription = `${cleanText} ${department} ${experience} ${employmentType}`;
-          const analysis = analyzer.analyzeJob(title, rawDescription);
-
-          // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Nem null)
-          if (analysis !== null) {
-              allJobs.push({
-                title: title,
-                url: jobUrl,
-                apply_url: jobUrl,
-                location: location,
-                date_posted: new Date().toISOString(),
-                
-                // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
-                experience_level: analysis.job_nature, 
-                subsidiary: department,
-                employment_type: employmentType,
-
-                // 🌟 A SZUPERERŐK:
-                faculty: analysis.faculty,
-                work_style: analysis.work_style,
-                tags: analysis.tags
-              });
-          }
+      // 2. Város kinyerése és letisztítása
+      let location = $('.job_list_city').text().replace(/\s+/g, ' ').trim() || "Magyarország";
+      // Irányítószám és utca levágása (ugyanaz a remek üzleti logika, amit te írtál)
+      if (location.includes(",")) {
+          location = location.split(",")[0].replace(/\d{4}/g, "").trim();
       }
-    });
+
+      // 3. Egyéb mezők kinyerése
+      const department = $('.job_list_specialities').text().replace(/\s+/g, ' ').trim() || "Posta";
+      const experience = $('.job_list_experiences').text().replace(/\s+/g, ' ').trim() || "";
+      const employmentType = $('.iconInfo--schedule').text().replace(/\s+/g, ' ').trim() || "Teljes munkaidő";
+
+      // 🧠 4. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+      // A Cheerio $.text() leszed minden HTML taget az egész kártyáról, tiszta szöveget kapunk!
+      const cleanDescription = $.text().replace(/\s+/g, ' ').trim();
+      
+      // Ráerősítünk a tapasztalatra és kategóriára, hogy az NLP biztosan kapjon kapaszkodót
+      const rawContext = `${department} ${experience} ${employmentType} ${cleanDescription}`;
+      const analysis = analyzer.analyzeJob(title, rawContext);
+
+      // 🛡️ 5. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+      if (analysis !== null) {
+          
+          // V17 / V16 Kompatibilis adatkinyerés
+          const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+          const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+          const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+          let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+          if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
+
+          allJobs.push({
+            title: title,
+            url: jobUrl,
+            apply_url: jobUrl,
+            location: location,
+            date_posted: new Date().toISOString(), // JSBQ-ban nincs dátum, a jelenlegi időpont marad
+            
+            experience_level: jobNature, 
+            subsidiary: department,
+            employment_type: employmentType,
+
+            // 🌟 A SZUPERERŐK:
+            faculty: faculty,
+            work_style: workStyle,
+            tags: tags
+          });
+      }
+    }
 
   } catch (err) {
-    console.error(`   ❌ [Magyar Posta] Hálózat hiba:`, err.message);
+    console.error(`   ❌ [Magyar Posta] Hálózat hiba vagy időtúllépés:`, err.message);
   }
 
   console.log(`   ✔️  [Magyar Posta] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

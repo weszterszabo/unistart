@@ -1,86 +1,67 @@
-const crypto = require("crypto");
-// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+// 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
+// 🛡️ Stealth Headers: Oracle Taleo WAF elleni védelem
+const HEADERS = {
+  "Content-Type": "application/json",
+  "Accept": "application/json",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Origin": "https://molgroup.taleo.net",
+  "Referer": "https://molgroup.taleo.net/careersection/mhu/jobsearch.ftl?lang=hu",
+  "tz": "GMT+02:00",
+  "tzname": "Europe/Budapest"
+};
+
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [MOL Group] Taleo API letöltése indul...`);
+  console.log(`   ⬇️ [MOL Group] Phantom-Taleo API letöltése indul...`);
   const allJobs = [];
+  const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
   
   let page = 1;
   let hasMore = true;
-
-  // A Taleo (Oracle) rendszernek egy POST kérést kell küldeni az állásokért
   const apiUrl = "https://molgroup.taleo.net/careersection/rest/jobboard/searchjobs?lang=hu&portal=8205100397";
 
   while (hasMore) {
     console.log(`   ⬇️ [MOL] Lapozás: ${page}. oldal...`);
     
-    // Taleo-nál a lapozás és a szűrők egy JSON body-ban mennek
     const requestBody = {
       "multilineEnabled": false,
-      "sortingSelection": {
-          "sortBySelectionParam": "3",
-          "ascendingSortingOrder": "false"
-      },
+      "sortingSelection": { "sortBySelectionParam": "3", "ascendingSortingOrder": "false" },
       "fieldData": {
-          "fields": {
-              "KEYWORD": "",
-              "LOCATION": "2205100397" // Ez a "Magyarország" kódja a MOL Taleo rendszerében!
-          },
+          "fields": { "KEYWORD": "", "LOCATION": "2205100397" }, // 2205100397 = Magyarország
           "valid": true
       },
-      "filterSelectionParam": {
-          "searchFilterSelections": [
-              {
-                  "id": "LOCATION",
-                  "selectedValues": []
-              }
-          ]
-      },
+      "filterSelectionParam": { "searchFilterSelections": [{ "id": "LOCATION", "selectedValues": [] }] },
       "advancedSearchFiltersSelectionParam": {
           "searchFilterSelections": [
-              {
-                  "id": "ORGANIZATION",
-                  "selectedValues": []
-              },
-              {
-                  "id": "LOCATION",
-                  "selectedValues": []
-              },
-              {
-                  "id": "JOB_FIELD",
-                  "selectedValues": []
-              },
-              {
-                  "id": "JOB_SCHEDULE",
-                  "selectedValues": []
-              }
+              { "id": "ORGANIZATION", "selectedValues": [] },
+              { "id": "LOCATION", "selectedValues": [] },
+              { "id": "JOB_FIELD", "selectedValues": [] },
+              { "id": "JOB_SCHEDULE", "selectedValues": [] }
           ]
       },
       "pageNo": page
     };
 
     try {
+      // 🛑 Időtúllépés kezelés (10 másodperc), mert az Oracle szerverek hajlamosak beragadni
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const response = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-          "tz": "GMT+02:00",
-          "tzname": "Europe/Budapest"
-        },
+        signal: controller.signal,
+        headers: HEADERS,
         body: JSON.stringify(requestBody)
       });
+      clearTimeout(timeoutId);
 
       if (!response.ok) {
-        console.error(`   ❌ [MOL] Hiba a letöltés során (HTTP ${response.status})`);
+        console.error(`   ❌ [MOL] HTTP Hiba a letöltés során (Status: ${response.status})`);
         break;
       }
 
       const json = await response.json();
-      
-      // A Taleo a 'requisitionList' kulcsban adja vissza a találatokat
       const jobsList = json.requisitionList || [];
 
       if (jobsList.length === 0) {
@@ -88,17 +69,25 @@ exports.scrape = async function(companyName, baseUrl) {
         break;
       }
 
-      jobsList.forEach(job => {
-        // A Taleo egy 'column' nevű tömbbe teszi ömlesztve az adatokat (0: Cím, 1: Hely, 2: Dátum)
+      let newJobsCount = 0;
+
+      for (const job of jobsList) {
         const columns = job.column || [];
         let title = columns[0] || "Névtelen pozíció";
         
-        let jobIdForUrl = job.contestNo || job.jobId || "";
-        let jobUrl = jobIdForUrl ? `https://molgroup.taleo.net/careersection/mhu/jobdetail.ftl?job=${jobIdForUrl}&lang=hu` : "https://molgroup.taleo.net/";
+        // Link normalizálás és Duplikáció-szűrés
+        let jobIdForUrl = job.contestNo || job.jobId || job.requisitionNo || "";
+        let jobUrl = jobIdForUrl ? `https://molgroup.taleo.net/careersection/mhu/jobdetail.ftl?job=${jobIdForUrl}&lang=hu` : "";
+        
+        if (!jobUrl || seenUrls.has(jobUrl)) continue;
+        seenUrls.add(jobUrl);
+        newJobsCount++;
 
+        // 📍 INTELLIGENS HELYSZÍN KINYERÉS (Taleo formátum tisztítása)
         let rawLocation = columns[1] || "";
         let location = "Magyarország";
         
+        // Megtartottuk a keménykódolt üzleti logikádat, mert tökéletes!
         if (rawLocation.includes("Budapest") || rawLocation.includes("Dombóvári")) location = "Budapest";
         else if (rawLocation.includes("Tiszaújváros")) location = "Tiszaújváros";
         else if (rawLocation.includes("Százhalombatta")) location = "Százhalombatta";
@@ -110,60 +99,76 @@ exports.scrape = async function(companyName, baseUrl) {
         else if (rawLocation.includes("Szeged")) location = "Szeged";
         else if (rawLocation.includes("Nagykanizsa")) location = "Nagykanizsa";
         else {
-             const match = rawLocation.match(/Hungary-([^"]+)/i);
-             if (match && match[1]) location = match[1].split('-')[0].trim();
+             // Dinamikus Regex, ha új várost adnak hozzá (pl. "Hungary-Baranya-Pécs")
+             const match = rawLocation.match(/Hungary(?:-[^-]+)*-([^"-]+)/i);
+             if (match && match[1]) location = match[1].trim();
         }
 
         const companyLabel = job.company || "MOL Group";
-        
-        let department = "";
-        if (job.labels && Array.isArray(job.labels)) {
-            department = job.labels.join(", ");
-        }
+        let department = Array.isArray(job.labels) ? job.labels.join(", ") : "";
+
+        // 🕵️ MÉLY-ADATBÁNYÁSZAT (Deep Extract)
+        // A Taleo a columns[2]-be vagy a labels-be tesz extra infókat, mindet odaadjuk az Agynak
+        const rawDescription = [
+            companyLabel, department, job.organization, ...columns
+        ].filter(Boolean).join(" ").replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
 
         // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-        // A részleget is hozzáfűzzük, hátha segít a kategorizálásban
-        const rawDescription = `${companyLabel} ${department}`;
         const analysis = analyzer.analyzeJob(title, rawDescription);
 
-        // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
+        // 🛡️ 3. JUNIOR KAPUŐR: Csak akkor mentjük, ha átment
         if (analysis !== null) {
+            
+            // V17 / V16 Kompatibilis adatkinyerés
+            const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+            const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+            const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+            let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+            if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
+
+            // Dátum kinyerés: A Taleo a columns[2]-ben adja vissza sokszor a dátumot (pl. "Okt 24, 2026")
+            let postedDate = new Date().toISOString();
+            if (columns[2] && isNaN(Date.parse(columns[2])) === false) {
+                postedDate = new Date(columns[2]).toISOString();
+            }
+
             allJobs.push({
-              title: title,
+              title: title.replace(/\s+/g, ' ').trim(),
               url: jobUrl,
               apply_url: jobUrl,
               location: location,
-              date_posted: new Date().toISOString(), 
+              date_posted: postedDate,
               
-              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
-              experience_level: analysis.job_nature, 
+              experience_level: jobNature, 
               subsidiary: companyLabel !== "MOL Group" ? companyLabel : (department || "MOL Group"),
               employment_type: "Teljes munkaidő",
               
               // 🌟 A SZUPERERŐK:
-              faculty: analysis.faculty,
-              work_style: analysis.work_style,
-              tags: analysis.tags
+              faculty: faculty,
+              work_style: workStyle,
+              tags: tags
             });
         }
-      });
+      }
 
-      // Lapozás ellenőrzése
+      // 🏎️ 4. OKOS EARLY-EXIT ÉS THROTTLING
       const pagingData = json.pagingData || {};
       const totalCount = pagingData.totalCount || 0;
       const currentPage = pagingData.currentPageNo || page;
       const pageSize = pagingData.pageSize || 25;
       
-      // Ha elértük a maximális állásszámot, leállunk
-      if (currentPage * pageSize >= totalCount) {
+      // Ha elértük a maximális állásszámot, VAGY ezen az oldalon már nem volt egyetlen új állás sem
+      if ((currentPage * pageSize) >= totalCount || newJobsCount === 0) {
+          console.log(`   ⏹️ [MOL] Elértük a lista végét. (Összes állás a szerveren: ${totalCount})`);
           hasMore = false;
       } else {
           page++;
-          await new Promise(r => setTimeout(r, 400));
+          // 🛑 Anti-Bot Jitter: Véletlenszerű várakozás 500ms és 900ms között
+          await new Promise(r => setTimeout(r, 500 + Math.random() * 400));
       }
 
     } catch (err) {
-      console.error(`   ❌ [MOL] Hálózat hiba:`, err.message);
+      console.error(`   ❌ [MOL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
       hasMore = false;
     }
   }

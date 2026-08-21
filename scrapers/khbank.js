@@ -1,57 +1,61 @@
-const crypto = require("crypto");
-// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+const cheerio = require("cheerio");
+// 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
+// 🛡️ Stealth Headers: Valódi XMLHttpRequest szimulálása
+const HEADERS = {
+  "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+  "Accept": "application/json, text/javascript, */*; q=0.01",
+  "X-Requested-With": "XMLHttpRequest",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Referer": "https://karrier.kh.hu/allasok",
+  "Origin": "https://karrier.kh.hu"
+};
+
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [K&H Bank] JSON API letöltése indul (Mindenevő adatszűrővel)...`);
+  console.log(`   ⬇️ [K&H Bank] Phantom-JSBQ API letöltése indul...`);
   const allJobs = [];
+  const seenUrls = new Set(); 
+  
   let page = 1;
   let hasMore = true;
-  const seenUrls = new Set(); 
-
   const apiUrl = "https://karrier.kh.hu/jsbq";
 
   while (hasMore) {
     console.log(`   ⬇️ [K&H Bank] Lapozás: ${page}. oldal...`);
     
+    // JSBQ speciális payload összeállítása
     const bodyParams = new URLSearchParams();
     bodyParams.append("init", "1");
     bodyParams.append("ds", "q");
     bodyParams.append("ajax", "1");
     bodyParams.append("isCart", "0");
-    // Lapozás paraméter
     bodyParams.append("routeQuery", `page=${page}`); 
 
     try {
       const response = await fetch(apiUrl, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-          "Accept": "application/json, text/javascript, */*; q=0.01",
-          "X-Requested-With": "XMLHttpRequest",
-          "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-          "Referer": "https://karrier.kh.hu/allasok"
-        },
+        headers: HEADERS,
         body: bodyParams
       });
 
       if (!response.ok) {
-        console.error(`   ❌ [K&H Bank] Hiba a letöltés során (HTTP ${response.status})`);
+        console.error(`   ❌ [K&H Bank] HTTP Hiba a letöltés során (Status: ${response.status})`);
         break;
       }
 
       const json = await response.json();
       
       if (!json.rows || json.rows.length === 0) {
+        console.log(`   ⏹️ [K&H Bank] Nincs több állás a listában.`);
         hasMore = false;
         break;
       }
 
       let newJobsOnPage = 0;
 
-      json.rows.forEach(jobRow => {
-        
-        // 1. MINDEN HTML KÓD ÖSSZEGYŰJTÉSE
+      for (const jobRow of json.rows) {
+        // 🕵️ 1. MINDEN HTML TÖREDÉK ÖSSZEGYŰJTÉSE (Deep Extract)
         let htmlSnippet = "";
         for (const key in jobRow) {
             if (typeof jobRow[key] === 'string' && jobRow[key].includes('<')) {
@@ -59,77 +63,77 @@ exports.scrape = async function(companyName, baseUrl) {
             }
         }
 
-        // 2. LINK KINYERÉSE
+        // Töltsük be a nyers HTML-t a virtuális DOM-ba (Sokkal stabilabb, mint a RegEx)
+        const $ = cheerio.load(htmlSnippet);
+
+        // 2. LINK NORMALIZÁLÁS (Kapuőr a duplikációk ellen)
         let jobUrl = jobRow.url || "";
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.kh.hu" + jobUrl;
+        
+        if (!jobUrl || seenUrls.has(jobUrl)) continue;
+        
+        seenUrls.add(jobUrl);
+        newJobsOnPage++;
 
-        // 3. CÍM KINYERÉSE
-        let titleMatch = htmlSnippet.match(/<h2[^>]*>([\s\S]*?)<\/h2>/i) || 
-                         htmlSnippet.match(/class="[^"]*title[^"]*"[^>]*>([\s\S]*?)<\//i);
+        // 3. ADATOK KINYERÉSE (CSS Szelektorokkal - Törhetetlen logika)
+        let title = $('h2, .title, [data-cy="title"]').first().text().trim();
         
-        let title = "Névtelen pozíció";
-        
-        if (titleMatch && titleMatch[1]) {
-            title = titleMatch[1].replace(/<[^>]+>/g, "").trim();
-        } else if (jobRow.title || jobRow.name) {
-            title = jobRow.title || jobRow.name;
-        } else if (jobUrl) {
-            const slug = jobUrl.split('/').filter(Boolean).pop();
-            if (slug) {
-                title = slug.replace(/-\d+$/, '').replace(/-/g, ' '); 
-                title = title.charAt(0).toUpperCase() + title.slice(1);
-            }
+        // Védőháló a címhez (Ha a HTML-ből nem jött ki, megnézzük a JSON gyökerét)
+        if (!title) {
+            if (jobRow.title || jobRow.name) title = jobRow.title || jobRow.name;
+            else if (jobUrl) {
+                const slug = jobUrl.split('/').filter(Boolean).pop();
+                if (slug) title = slug.replace(/-\d+$/, '').replace(/-/g, ' ').replace(/^\w/, c => c.toUpperCase());
+            } else title = "Névtelen pozíció";
         }
 
-        // 4. HELYSZÍN KINYERÉSE
-        let locMatch = htmlSnippet.match(/itemprop="address"[^>]*>([\s\S]*?)<\/span>/i) || 
-                       htmlSnippet.match(/data-cy="address"[^>]*>([\s\S]*?)<\//i);
-        let location = jobRow.city || "Magyarország";
-        if (locMatch && locMatch[1]) {
-            location = locMatch[1].replace(/<[^>]+>/g, "").trim();
+        let location = $('[itemprop="address"], [data-cy="address"]').first().text().trim() || jobRow.city || "Magyarország";
+        let experience = $('[data-cy="experiences"]').first().text().trim();
+        let department = $('[data-cy="area"]').first().text().trim();
+
+        // Extra védelem: Hátha van ecommerceData (mint az Erste-nél)
+        if (jobRow.ecommerceData) {
+            department = department || jobRow.ecommerceData.item_category || "";
+            experience = experience || jobRow.ecommerceData.item_category4 || "";
         }
 
-        // 5. TAPASZTALATI SZINT ÉS SZAKTERÜLET
-        let expMatch = htmlSnippet.match(/data-cy="experiences"[^>]*>([\s\S]*?)<\/div>/i);
-        let experience = expMatch ? expMatch[1].replace(/<[^>]+>/g, "").trim() : "";
+        // 🧠 4. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
+        // A Cheerio $.text() automatikusan lehámozza az összes HTML taget, tiszta szöveget ad!
+        const cleanDescription = $.text().replace(/\s+/g, ' ').trim();
+        const rawContext = `${department} ${experience} ${cleanDescription}`;
+        
+        const analysis = analyzer.analyzeJob(title, rawContext);
 
-        let deptMatch = htmlSnippet.match(/data-cy="area"[^>]*>([\s\S]*?)<\/div>/i);
-        let department = deptMatch ? deptMatch[1].replace(/<[^>]+>/g, "").trim() : "";
-
-        // URL ELLENŐRZÉS: Ha már láttuk, átugorjuk
-        if (!seenUrls.has(jobUrl)) {
-            seenUrls.add(jobUrl);
-            newJobsOnPage++; // Ezt pörgetjük a lapozáshoz!
+        // 🛡️ 5. JUNIOR KAPUŐR: Csak a relevánsakat tartjuk meg
+        if (analysis !== null) {
             
-            // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-            // Megtisztítjuk a htmlSnippet-et a HTML tagektől, hogy csak a nyers szöveg maradjon az elemzéshez
-            const cleanText = htmlSnippet.replace(/<[^>]+>/g, " ");
-            const rawDescription = `${department} ${experience} ${cleanText}`;
-            const analysis = analyzer.analyzeJob(title, rawDescription);
+            // V17 / V16 Kompatibilitás
+            const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+            const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+            const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+            let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+            if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
 
-            // 🧠 3. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Pályakezdő/Gyakornok)
-            if (analysis !== null) {
-                allJobs.push({
-                  title: title,
-                  url: jobUrl,
-                  apply_url: jobUrl,
-                  location: location,
-                  date_posted: new Date().toISOString(),
-                  
-                  // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
-                  experience_level: analysis.job_nature,
-                  subsidiary: department,
-                  employment_type: "Teljes munkaidő",
+            allJobs.push({
+              title: title.replace(/\s+/g, ' ').trim(),
+              url: jobUrl,
+              apply_url: jobUrl,
+              location: location.replace(/\s+/g, ' ').trim(),
+              date_posted: jobRow.publish_date || jobRow.created || new Date().toISOString(),
+              
+              experience_level: jobNature,
+              subsidiary: department || "K&H Csoport",
+              employment_type: "Teljes munkaidő", // K&H-nál ritka a részmunkaidő, de ha kiderül, az NLP felülírja
 
-                  // 🌟 A SZUPERERŐK:
-                  faculty: analysis.faculty,
-                  work_style: analysis.work_style,
-                  tags: analysis.tags
-                });
-            }
+              // 🌟 A SZUPERERŐK:
+              faculty: faculty,
+              work_style: workStyle,
+              tags: tags
+            });
         }
-      });
+      }
 
+      // 🏎️ 6. OKOS EARLY-EXIT ÉS THROTTLING
       if (newJobsOnPage === 0) {
         console.log(`   ⏹️ [K&H Bank] Csak ismétlődő állások érkeztek az API-ból! Vége a lapozásnak.`);
         hasMore = false;
@@ -141,11 +145,12 @@ exports.scrape = async function(companyName, baseUrl) {
         hasMore = false;
       } else {
         page++;
-        await new Promise(r => setTimeout(r, 400));
+        // 🛑 Anti-Bot Jitter (Véletlenszerű várakozás 400ms és 800ms között)
+        await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
       }
 
     } catch (err) {
-      console.error(`   ❌ [K&H Bank] Hálózat hiba:`, err.message);
+      console.error(`   ❌ [K&H Bank] Végzetes Hiba a(z) ${page}. oldalon:`, err.message);
       hasMore = false;
     }
   }

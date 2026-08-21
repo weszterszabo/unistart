@@ -2,25 +2,56 @@ name: Napi Allasszinkronizacio
 
 on:
   schedule:
+    # 🕒 Figyelem: A cron UTC időzónában fut! 
+    # UTC 02:00 = Magyarországon (CET) télen 03:00, nyáron (CEST) 04:00.
     - cron: '0 2 * * *'
   workflow_dispatch:
+
+# 🛑 Konkurencia védelem: Megakadályozza, hogy két scraper egyszerre fusson
+concurrency:
+  group: scraper-pipeline
+  cancel-in-progress: false
 
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
+    
+    # ⏱️ Költség- és Végtelen ciklus védelem (Hard Limit)
+    timeout-minutes: 35 
+
     steps:
-      - name: Checkout repository
+      - name: 📥 Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm' # ⚡ Csomagok gyorsítótárazása (O(1) letöltés)
 
-      - name: Install dependencies
-        run: npm install firebase-admin cheerio
+      - name: 📦 Install dependencies
+        # Ha van package.json fájlod, használd az 'npm ci'-t a gyorsabb/stabilabb telepítésért!
+        # Ha nincs, cseréld vissza erre: run: npm install firebase-admin cheerio
+        run: npm ci 
 
-      - name: Run scraper
+      - name: 🚀 Run UniStart Scraper Orchestrator
         env:
+          # Adatbázis kulcs
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-        run: node scraper.js
+          # Webhookok a hiba és siker-üzenetekhez (Amit a JS kódban megírtunk!)
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          # Időzóna kényszerítése, hogy a JS new Date() magyar időt adjon vissza!
+          TZ: 'Europe/Budapest'
+        run: node orchestrator.js # Vagy scraper.js, attól függően hogy hívtad el
+
+      - name: 🚨 Vészjelzés küldése Discordra/Slackre (Csak ha Hiba történt)
+        if: failure()
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
+            curl -H "Content-Type: application/json" \
+            -d '{"content": "🚨 **KRITIKUS HIBA:** A napi GitHub Actions scraper (UniStart) összeomlott vagy időtúllépést okozott! Kérlek, nézd meg a logokat a GitHubon."}' \
+            $DISCORD_WEBHOOK_URL
+          fi

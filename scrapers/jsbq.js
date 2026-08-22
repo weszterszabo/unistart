@@ -2,21 +2,24 @@ const cheerio = require("cheerio");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🛡️ Stealth Headers: Valódi XMLHttpRequest álcázása
-const HEADERS = {
-  "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-  "Accept": "application/json, text/javascript, */*; q=0.01",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-  "X-Requested-With": "XMLHttpRequest",
-  "Origin": "https://mvm.karrierportal.hu",
-  "Referer": "https://mvm.karrierportal.hu/allasok"
-};
-
 exports.scrape = async function(companyName, baseUrl) {
-  console.log(`   ⬇️ [MVM Csoport] Phantom-JSBQ letöltése indul...`);
+  console.log(`   ⬇️ [${companyName}] Phantom-JSBQ letöltése indul...`);
   const allJobs = [];
-  const apiUrl = "https://mvm.karrierportal.hu/jsbq";
   
+  // 🌍 Dinamikus API URL építése a Firebase-ből kapott baseUrl alapján
+  // Pl: https://spar.karrierportal.hu/jsbq
+  const apiUrl = `${baseUrl.replace(/\/$/, '')}/jsbq`;
+  
+  // 🛡️ Stealth Headers: Valódi XMLHttpRequest álcázása dinamikus Origin és Referer értékekkel
+  const HEADERS = {
+    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+    "Accept": "application/json, text/javascript, */*; q=0.01",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    "X-Requested-With": "XMLHttpRequest",
+    "Origin": baseUrl,
+    "Referer": `${baseUrl.replace(/\/$/, '')}/allasok`
+  };
+
   let page = 1;
   let hasMore = true;
   
@@ -26,7 +29,7 @@ exports.scrape = async function(companyName, baseUrl) {
   try {
     // 🔁 GOLYÓÁLLÓ LAPOZÁS
     while (hasMore) {
-      console.log(`   ⬇️ [MVM Csoport] Lapozás: ${page}. oldal lekérése...`);
+      console.log(`   ⬇️ [${companyName}] Lapozás: ${page}. oldal lekérése...`);
       
       const requestBody = new URLSearchParams();
       requestBody.append("page", page.toString());
@@ -45,7 +48,7 @@ exports.scrape = async function(companyName, baseUrl) {
       clearTimeout(timeoutId);
 
       if (!response.ok) {
-        console.error(`   ❌ [MVM Csoport] HTTP Hiba a letöltés során (Status: ${response.status})`);
+        console.error(`   ❌ [${companyName}] HTTP Hiba a letöltés során (Status: ${response.status})`);
         break;
       }
 
@@ -71,8 +74,10 @@ exports.scrape = async function(companyName, baseUrl) {
         let title = titleElement.text().replace(/\s+/g, ' ').trim() || "Névtelen pozíció";
         
         let jobUrl = titleElement.attr('href') || jobItem.url || "";
+        
+        // Dinamikus relatív link kiegészítés a Firebase baseUrl alapján
         if (jobUrl && !jobUrl.startsWith("http")) {
-            jobUrl = "https://mvm.karrierportal.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
+            jobUrl = baseUrl.replace(/\/$/, '') + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
         }
 
         // 🛑 DUPLIKÁCIÓ ELLENŐRZÉS
@@ -82,26 +87,22 @@ exports.scrape = async function(companyName, baseUrl) {
         newJobsOnThisPage++; 
 
         // 2. Helyszín és Dátum kinyerése
-        // Trükk: A span-ban van a "Helyszín:" felirat, mi csak a mellette lévő nyers szöveget kérjük el!
         let location = $('.job_list_place').contents().not('span').text().replace(/\s+/g, ' ').trim() || "Magyarország";
-        
         let deadline = $('.job_list_application_deadline').contents().not('span').text().replace(/\s+/g, ' ').trim() || new Date().toISOString();
         
-        // Dátum formázása (Maradt az eredeti, bombabiztos logikád!)
+        // Dátum formázása
         if (deadline.includes(".")) {
             const parts = deadline.split(".").map(p => p.trim()).filter(Boolean);
             if (parts.length === 3) deadline = `${parts[0]}-${parts[1]}-${parts[2]}`;
         }
 
         // 🧠 3. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-        // A Cheerio $.text() leszed minden HTML taget, tiszta szöveget kapunk az egész kártyáról!
         const rawDescription = $.text().replace(/\s+/g, ' ').trim();
         const analysis = analyzer.analyzeJob(title, rawDescription);
 
         // 🛡️ 4. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
         if (analysis !== null) {
             
-            // V17 / V16 Kompatibilis adatkinyerés
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
             const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
             const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
@@ -113,14 +114,12 @@ exports.scrape = async function(companyName, baseUrl) {
               url: jobUrl, 
               apply_url: jobUrl, 
               location: location,
-              date_posted: deadline, // MVM-nél ez valójában a határidő!
+              date_posted: deadline,
               
-              // ÚJ CÍMKÉZÉS AZ AGY ALAPJÁN!
               experience_level: jobNature, 
-              subsidiary: "MVM Csoport", 
+              subsidiary: companyName, // 🌟 Dinamikusan megkapja a cégnevet (pl. SPAR, MVM, Erste)
               employment_type: "Teljes munkaidő",
               
-              // 🌟 A SZUPERERŐK:
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -130,10 +129,10 @@ exports.scrape = async function(companyName, baseUrl) {
       
       // 🏎️ OKOS EARLY-EXIT ÉS THROTTLING
       if (newJobsOnThisPage === 0) {
-          console.log(`   ⏹️ [MVM Csoport] Nincs több ÚJ állás az oldalon, vége a lapozásnak.`);
+          console.log(`   ⏹️ [${companyName}] Nincs több ÚJ állás az oldalon, vége a lapozásnak.`);
           hasMore = false;
       } else if (rowsList.length < 100) {
-          console.log(`   ⏹️ [MVM Csoport] Elértük a lista végét (${rowsList.length} állás).`);
+          console.log(`   ⏹️ [${companyName}] Elértük a lista végét (${rowsList.length} állás).`);
           hasMore = false;
       } else {
           page++;
@@ -143,9 +142,9 @@ exports.scrape = async function(companyName, baseUrl) {
     }
 
   } catch (err) {
-    console.error(`   ❌ [MVM Csoport] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
+    console.error(`   ❌ [${companyName}] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
   }
 
-  console.log(`   ✔️  [MVM Csoport] Siker: A szűrőn fennmaradt ${allJobs.length} db PÁLYAKEZDŐ/JUNIOR/GYAKORNOK állás!`);
+  console.log(`   ✔️  [${companyName}] Siker: A szűrőn fennmaradt ${allJobs.length} db PÁLYAKEZDŐ/JUNIOR/GYAKORNOK állás!`);
   return allJobs;
 };

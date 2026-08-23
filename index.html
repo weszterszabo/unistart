@@ -6,54 +6,60 @@
 <!-- ========================================================================== -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
 <title>UniStart - Karrierfórum</title>
+
+<!-- 🚀 KÖZHANG DIZÁJN BETŰKÉSZLET -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 /* ==========================================================================
-   CSS: 1. VÁLTOZÓK (APPLE PREMIUM DESIGN & DESIGN SYSTEM)
+   CSS: 1. VÁLTOZÓK (KÖZHANG PREMIUM DARK DESIGN SYSTEM)
    ========================================================================== */
 :root {
-    /* 🎨 Színek - Sötét Mód (Alapértelmezett) */
-    --bg-color: #000000; 
-    --text-color: #f5f5f7; 
-    --card-bg: #1c1c1e;
+    /* 🎨 Színek - Sötét Mód (Közhang stílus: Mélyfekete és törtfehér) */
+    --bg-color: #0d0e11; 
+    --text-color: #ffffff; 
+    --card-bg: rgba(255, 255, 255, 0.02);
     
-    /* 🪟 Üveg-effektus és Szegélyek */
+    /* 🪟 Üveg-effektus és Szegélyek (Közhang finom vonalai) */
     --card-border: rgba(255, 255, 255, 0.08); 
-    --tag-bg: rgba(255, 255, 255, 0.06); 
-    --tag-border: rgba(255, 255, 255, 0.12);
+    --tag-bg: rgba(255, 255, 255, 0.05); 
+    --tag-border: rgba(255, 255, 255, 0.1);
     
-    /* 🔵 Brand és Állapot Színek (Hivatalos iOS sötét paletta) */
-    --primary-color: #0a84ff; 
-    --primary-hover: #0071e3;
-    --highlight-bg: rgba(10, 132, 255, 0.25);
-    --danger-color: #ff453a; 
-    --success-color: #32d74b; 
-    --warning-color: #ffd60a; 
-    --faculty-color: #bf5af2; 
-    --subtitle-color: #98989d; 
+    /* 🔵 Brand és Állapot Színek */
+    --primary-color: #3b82f6; 
+    --primary-hover: #2563eb;
+    --highlight-bg: rgba(59, 130, 246, 0.2);
+    --danger-color: #ef4444; 
+    --success-color: #6cff75; /* Közhang ikonikus zöldje */
+    --warning-color: #f59e0b; 
+    --faculty-color: #a855f7; 
+    --subtitle-color: #9ca3af; 
 
-    /* ☁️ Árnyékok (Térbeli mélység sötét módban) */
-    --card-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
-    --card-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.6), 0 4px 12px rgba(0, 0, 0, 0.3);
+    /* ☁️ Árnyékok (Térbeli mélység) */
+    --card-shadow-soft: 0 4px 24px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+    --card-shadow-hover: 0 16px 48px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.12);
     
-    /* 📏 Elrendezés és Kerekítések (Layout & Radius) */
-    --sidebar-width-expanded: 240px; 
-    --sidebar-width-collapsed: 72px; 
-    --header-height: 64px;
+    /* 📏 Elrendezés és Kerekítések */
+    --sidebar-width-expanded: 260px; 
+    --sidebar-width-collapsed: 84px; 
+    --header-height: 72px;
     --radius-sm: 12px;     
     --radius-md: 16px;     
-    --radius-lg: 24px;     
-    --radius-xl: 32px;     
-    --radius-pill: 100px;  
+    --radius-lg: 20px;     
+    --radius-xl: 28px;     
+    --radius-pill: 999px;  
 
-    /* 🪄 Animációk és Átmenetek (Vajpuha Apple mozgások) */
+    /* 🪄 Animációk és Átmenetek */
     --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275); 
     --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);          
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s var(--ease-smooth);
 
-    /* 🛡️ Z-index Rétegek (Abszolút védelem egymásra csúszás ellen) */
+    /* 🛡️ Z-index Rétegek */
     --z-base: 10;
     --z-header: 30;
     --z-sidebar: 40;
@@ -63,33 +69,33 @@
     --z-toast: 99999;
 
     /* 🌁 Háttér elmosások (Blur Effect) */
-    --blur-heavy: blur(30px);
-    --sidebar-bg: rgba(28, 28, 30, 0.85);
-    --header-bg: rgba(0, 0, 0, 0.85);
-    --modal-bg: rgba(28, 28, 30, 0.75);
+    --blur-heavy: blur(24px);
+    --sidebar-bg: rgba(13, 14, 17, 0.75);
+    --header-bg: rgba(13, 14, 17, 0.85);
+    --modal-bg: rgba(13, 14, 17, 0.95);
 }
 
-/* ☀️ VILÁGOS MÓD KIVÉTELEK */
+/* ☀️ VILÁGOS MÓD KIVÉTELEK (Ha valaki mégis átkapcsolja) */
 [data-theme="light"] {
-    --bg-color: #f5f5f7; 
-    --text-color: #1d1d1f; 
+    --bg-color: #f8f9fa; 
+    --text-color: #0d0e11; 
     --card-bg: #ffffff;
-    --card-border: rgba(0, 0, 0, 0.06); 
-    --tag-bg: #f2f2f7; 
+    --card-border: rgba(0, 0, 0, 0.08); 
+    --tag-bg: #f3f4f6; 
     --tag-border: rgba(0, 0, 0, 0.05); 
-    --primary-color: #0071e3; 
-    --primary-hover: #0077ed;
-    --highlight-bg: rgba(0, 113, 227, 0.15);
-    --danger-color: #ff3b30; 
-    --success-color: #34c759; 
-    --warning-color: #ffcc00;
-    --faculty-color: #af52de; 
-    --subtitle-color: #86868b; 
-    --card-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06), 0 1px 4px rgba(0, 0, 0, 0.03);
-    --card-shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
-    --sidebar-bg: rgba(242, 242, 247, 0.85);
-    --header-bg: rgba(245, 245, 247, 0.85);
-    --modal-bg: rgba(255, 255, 255, 0.85);
+    --primary-color: #2563eb; 
+    --primary-hover: #1d4ed8;
+    --highlight-bg: rgba(37, 99, 235, 0.15);
+    --danger-color: #dc2626; 
+    --success-color: #10b981; 
+    --warning-color: #f59e0b;
+    --faculty-color: #9333ea; 
+    --subtitle-color: #6b7280; 
+    --card-shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04), 0 1px 4px rgba(0, 0, 0, 0.02);
+    --card-shadow-hover: 0 16px 40px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+    --sidebar-bg: rgba(248, 249, 250, 0.85);
+    --header-bg: rgba(248, 249, 250, 0.85);
+    --modal-bg: rgba(255, 255, 255, 0.95);
 }
 
 /* ==========================================================================
@@ -108,11 +114,12 @@ html {
 }
 
 body { 
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+    /* 🚀 KÖZHANG BETŰTÍPUS */
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
     background-color: var(--bg-color); 
     color: var(--text-color); 
     min-height: 100vh;
-    min-height: 100dvh; /* 🚀 V15: Dynamic Viewport Height támogatás */
+    min-height: 100dvh; 
     line-height: 1.5; 
     transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s ease; 
     -webkit-font-smoothing: antialiased; 
@@ -122,7 +129,7 @@ body {
 }
 
 :focus-visible {
-    outline: 3px solid var(--primary-color);
+    outline: 2px solid var(--primary-color);
     outline-offset: 2px;
     border-radius: 8px;
     transition: outline-color 0.2s ease;
@@ -130,11 +137,10 @@ body {
 
 body.modal-open { 
     overflow: hidden; 
-    overscroll-behavior-y: none; /* 🚀 Kereszt-böngészős túlgörgetés védelem */
+    overscroll-behavior-y: none; 
     touch-action: none; 
 }
 
-/* 🚀 Zéró érintési késleltetés (Tap-Delay removal) minden interaktív elemen */
 button, a, .company-card, .magic-chip, .clickable-tag, .sort-select {
     touch-action: manipulation;
 }
@@ -145,14 +151,14 @@ button, a, .company-card, .magic-chip, .clickable-tag, .sort-select {
 }
 
 h1, h2, h3, h4, h5 { 
-    letter-spacing: -0.02em; 
-    font-weight: 700; 
+    letter-spacing: -0.03em; /* Még feszesebb, modernebb betűköz */
+    font-weight: 800; 
     text-wrap: balance; 
 }
 
-h1 { font-size: clamp(26px, 4vw, 36px); }
-h2 { font-size: clamp(20px, 3vw, 28px); }
-h3 { font-size: clamp(16px, 2vw, 20px); }
+h1 { font-size: clamp(28px, 4vw, 40px); }
+h2 { font-size: clamp(22px, 3vw, 30px); }
+h3 { font-size: clamp(18px, 2vw, 22px); }
 
 .highlight { 
     background-color: var(--highlight-bg); 
@@ -171,9 +177,9 @@ h3 { font-size: clamp(16px, 2vw, 20px); }
 
 .skeleton { 
     background: var(--card-bg); 
-    border-radius: 24px; 
+    border-radius: var(--radius-lg); 
     border: 1px solid var(--card-border); 
-    padding: 28px; 
+    padding: 32px; 
     margin-bottom: 20px; 
     display: flex; 
     flex-direction: column; 
@@ -182,46 +188,52 @@ h3 { font-size: clamp(16px, 2vw, 20px); }
     position: relative;
     overflow: hidden;
     will-change: transform;
-    contain: content; /* 🚀 Rendering izoláció */
-    transform: translate3d(0,0,0); /* 🚀 GPU Gyorsítás */
+    contain: content; 
+    transform: translate3d(0,0,0); 
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .skeleton-line { 
-    background: linear-gradient(110deg, var(--tag-bg) 25%, rgba(150, 150, 150, 0.15) 50%, var(--tag-bg) 75%); 
+    background: linear-gradient(90deg, var(--tag-bg) 25%, rgba(255, 255, 255, 0.08) 50%, var(--tag-bg) 75%); 
     background-size: 400% 100%; 
-    animation: shimmer 1.8s infinite cubic-bezier(0.4, 0, 0.2, 1); 
+    animation: shimmer 2s infinite cubic-bezier(0.4, 0, 0.2, 1); 
     border-radius: 8px; 
     height: 18px; 
     width: 70%; 
     will-change: background-position; 
 }
+[data-theme="light"] .skeleton-line {
+    background: linear-gradient(90deg, var(--tag-bg) 25%, rgba(0, 0, 0, 0.05) 50%, var(--tag-bg) 75%); 
+    background-size: 400% 100%; 
+}
 .skeleton-line.short { width: 40%; height: 14px; }
-.skeleton-line.tags { width: 100%; height: 32px; border-radius: 100px; margin-top: 8px; }
+.skeleton-line.tags { width: 100%; height: 32px; border-radius: var(--radius-pill); margin-top: 8px; }
 
 html {
     scrollbar-width: thin; 
-    scrollbar-color: rgba(150, 150, 150, 0.3) transparent;
+    scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
 }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { 
-    background-color: rgba(150, 150, 150, 0.3); 
-    border-radius: 100px; 
-    border: 3px solid var(--bg-color); 
-    background-clip: content-box; 
+    background-color: rgba(255, 255, 255, 0.15); 
+    border-radius: var(--radius-pill); 
+    border: 2px solid var(--bg-color); 
+    background-clip: padding-box; 
     transition: background-color 0.2s ease;
 }
 @media (hover: hover) {
-    ::-webkit-scrollbar-thumb:hover { background-color: rgba(150, 150, 150, 0.6); }
+    ::-webkit-scrollbar-thumb:hover { background-color: rgba(255, 255, 255, 0.3); }
 }
 
 [data-theme="light"] ::-webkit-scrollbar-thumb { 
-    background-color: rgba(0, 0, 0, 0.25); 
+    background-color: rgba(0, 0, 0, 0.2); 
     border-color: var(--bg-color); 
 }
 @media (hover: hover) {
-    [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.45); }
+    [data-theme="light"] ::-webkit-scrollbar-thumb:hover { background-color: rgba(0, 0, 0, 0.4); }
 }
 
 .filter-modal-body::-webkit-scrollbar-thumb, 
@@ -237,8 +249,8 @@ html {
     position: fixed; 
     bottom: 30px; 
     right: 30px; 
-    width: 54px; 
-    height: 54px; 
+    width: 56px; 
+    height: 56px; 
     border-radius: var(--radius-pill); 
     background-color: var(--sidebar-bg); 
     color: var(--text-color); 
@@ -252,7 +264,7 @@ html {
     justify-content: center; 
     opacity: 0; 
     visibility: hidden; 
-    transform: translateY(20px) scale(0.9) translate3d(0,0,0); /* 🚀 GPU */
+    transform: translateY(20px) scale(0.9) translate3d(0,0,0); 
     transition: all 0.4s var(--ease-spring); 
     z-index: var(--z-dropdown); 
     backdrop-filter: var(--blur-heavy); 
@@ -261,7 +273,7 @@ html {
 }
 #backToTopBtn.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1) translate3d(0,0,0); }
 @media (hover: hover) {
-    #backToTopBtn:hover { border-color: var(--primary-color); color: var(--primary-color); transform: translateY(-4px) scale(1.05) translate3d(0,0,0); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.25); }
+    #backToTopBtn:hover { border-color: var(--primary-color); color: var(--primary-color); transform: translateY(-4px) scale(1.05) translate3d(0,0,0); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3); }
 }
 #backToTopBtn:active { transform: translateY(0) scale(0.92) translate3d(0,0,0); box-shadow: var(--card-shadow-soft); transition: transform 0.1s ease; }
 
@@ -282,12 +294,12 @@ html {
 .infinite-loader.active { opacity: 1; }
 .infinite-loader::before {
     content: '';
-    width: 18px;
-    height: 18px;
-    border: 2.5px solid var(--card-border);
-    border-top-color: var(--primary-color);
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--card-border);
+    border-top-color: var(--success-color); /* Közhang zöldje töltésnél */
     border-radius: 50%;
-    animation: spin 0.8s linear infinite;
+    animation: spin 0.8s cubic-bezier(0.6, 0.1, 0.4, 0.9) infinite;
     display: block;
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -326,25 +338,27 @@ html {
     background: var(--success-color); 
     width: 100%; 
     border-radius: 0 0 100px 100px; 
-    box-shadow: 0 -2px 10px rgba(50, 215, 75, 0.4); 
+    box-shadow: 0 -2px 10px rgba(108, 255, 117, 0.4); 
 }
 @keyframes toastDrain { from { width: 100%; } to { width: 0%; } }
 
 /* ==========================================================================
-   CSS: 4. UNIFIED OMNIBAR ÉS KERESŐK (ULTRA PREMIUM DIZÁJN)
+   CSS: 4. UNIFIED OMNIBAR ÉS KERESŐK (KÖZHANG GLASS DIZÁJN)
    ========================================================================== */
 .omnibar-wrapper { 
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
     border-radius: var(--radius-lg); 
-    padding: 24px; 
-    margin-bottom: 30px; 
+    padding: 32px; 
+    margin-bottom: 32px; 
     box-shadow: var(--card-shadow-soft); 
     display: flex; 
     flex-direction: column; 
-    gap: 18px; 
+    gap: 20px; 
     position: relative;
     z-index: var(--z-base);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 .search-inputs-row { display: flex; gap: 16px; width: 100%; margin-bottom: 5px; }
@@ -354,63 +368,61 @@ html {
 
 .search-box-input { 
     width: 100%; 
-    padding: 18px 20px 18px 52px; 
+    padding: 20px 24px 20px 56px; 
     border-radius: var(--radius-md); 
     background: var(--tag-bg); 
-    border: 1.5px solid transparent; 
+    border: 1px solid var(--tag-border); 
     color: var(--text-color); 
     font-size: 16px; 
     font-weight: 500; 
     transition: all var(--transition-normal); 
     font-family: inherit; 
-    backdrop-filter: blur(12px); 
-    -webkit-backdrop-filter: blur(12px);
     appearance: none; 
     -webkit-appearance: none;
 }
-.search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.8; font-weight: 400; }
+.search-box-input::placeholder { color: var(--subtitle-color); opacity: 0.6; font-weight: 500; }
 .search-box-input:focus { 
     outline: none; 
     border-color: var(--primary-color); 
-    background: var(--card-bg); 
+    background: rgba(255,255,255,0.02); 
     box-shadow: 0 0 0 4px var(--highlight-bg); 
-    transform: translateY(-1px);
+    transform: translateY(-2px);
 }
 
 .search-icon { 
     position: absolute; 
-    left: 20px; 
+    left: 22px; 
     top: 50%; 
     transform: translateY(-50%); 
-    font-size: 18px; 
+    font-size: 20px; 
     pointer-events: none; 
-    opacity: 0.5; 
+    color: var(--subtitle-color);
     transition: all var(--transition-normal);
-    will-change: transform, opacity, color;
+    will-change: transform, color;
 }
-.search-box-container:focus-within .search-icon { opacity: 1; color: var(--primary-color); transform: translateY(-50%) scale(1.15); }
+.search-box-container:focus-within .search-icon { color: var(--primary-color); transform: translateY(-50%) scale(1.1); }
 
 .search-tags-row { display: none; flex-wrap: wrap; gap: 8px; margin-bottom: 5px; }
 .search-tag-chip { 
     background: var(--primary-color); 
     color: white; 
-    padding: 6px 14px; 
+    padding: 8px 16px; 
     border-radius: var(--radius-pill); 
     font-size: 13px; 
-    font-weight: 600; 
+    font-weight: 700; 
     display: flex; 
     align-items: center; 
-    gap: 8px; 
+    gap: 10px; 
     animation: fadeIn 0.3s var(--ease-spring); 
-    box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3); 
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.4); 
 }
 .search-tag-chip.loc-tag { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); box-shadow: none; }
 .search-tag-close { 
     background: rgba(0, 0, 0, 0.2); 
     border: none; 
     color: white; 
-    width: 20px; 
-    height: 20px; 
+    width: 22px; 
+    height: 22px; 
     border-radius: 50%; 
     font-size: 10px; 
     display: flex; align-items: center; justify-content: center; 
@@ -424,7 +436,7 @@ html {
 }
 .search-tag-close:active { transform: scale(0.9); transition: transform 0.1s; }
 
-.filter-carousel-row { display: flex; gap: 10px; overflow-x: auto; padding: 4px 0 8px 0; scrollbar-width: none; align-items: center; -webkit-overflow-scrolling: touch; }
+.filter-carousel-row { display: flex; gap: 12px; overflow-x: auto; padding: 4px 0 8px 0; scrollbar-width: none; align-items: center; -webkit-overflow-scrolling: touch; }
 .filter-carousel-row::-webkit-scrollbar { display: none; }
 
 .main-filter-btn { 
@@ -432,10 +444,10 @@ html {
     background: var(--text-color); 
     color: var(--bg-color); 
     border: none; 
-    padding: 10px 20px; 
+    padding: 12px 24px; 
     border-radius: var(--radius-pill); 
     font-size: 14px; 
-    font-weight: 700; 
+    font-weight: 800; 
     cursor: pointer; 
     display: flex; 
     align-items: center; 
@@ -443,110 +455,111 @@ html {
     transition: all 0.4s var(--ease-spring); 
 }
 @media (hover: hover) {
-    .main-filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.2); }
-    [data-theme="light"] .main-filter-btn:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+    .main-filter-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,255,255,0.25); }
+    [data-theme="light"] .main-filter-btn:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
 }
 .main-filter-btn:active { transform: scale(0.96); transition: transform 0.1s; }
 
-.filter-badge { background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 7px; font-size: 11px; font-weight: 800; display: none; }
+.filter-badge { background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; font-weight: 800; display: none; }
 .filter-badge.active { display: inline-block; }
-.filter-divider { width: 1px; height: 24px; background: var(--card-border); flex-shrink: 0; margin: 0 5px; }
+.filter-divider { width: 1px; height: 28px; background: var(--card-border); flex-shrink: 0; margin: 0 8px; }
 
 .magic-chip { 
     flex-shrink: 0; 
-    background: transparent; 
-    border: 1.5px solid var(--tag-border); 
+    background: var(--tag-bg); 
+    border: 1px solid var(--tag-border); 
     color: var(--text-color); 
-    padding: 9px 18px; 
+    padding: 11px 20px; 
     border-radius: var(--radius-pill); 
-    font-size: 13px; 
-    font-weight: 500; 
+    font-size: 14px; 
+    font-weight: 600; 
     cursor: pointer; 
     transition: all 0.4s var(--ease-spring); 
     display: flex; 
     align-items: center; 
-    gap: 6px; 
+    gap: 8px; 
 }
 @media (hover: hover) {
-    .magic-chip:hover { border-color: var(--subtitle-color); background: var(--tag-bg); transform: translateY(-2px) scale(1.02); box-shadow: 0 6px 15px var(--card-shadow-soft); }
+    .magic-chip:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); transform: translateY(-2px); box-shadow: var(--card-shadow-soft); }
 }
 .magic-chip:active { transform: scale(0.96); transition: transform 0.1s; }
-.magic-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 6px 20px rgba(10, 132, 255, 0.35); font-weight: 600; transform: translateY(-2px); }
+.magic-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4); transform: translateY(-2px); }
 
-.active-filters-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
-.active-filter-chip { background: transparent; border: 1px solid var(--tag-border); color: var(--text-color); padding: 6px 14px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; display: flex; align-items: center; gap: 8px; animation: fadeIn 0.3s var(--ease-spring); }
-.active-filter-chip span { color: var(--subtitle-color); font-weight: 400; }
-.active-filter-close { background: var(--tag-bg); border: none; color: var(--text-color); width: 22px; height: 22px; border-radius: 50%; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--transition-fast); }
+.active-filters-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.active-filter-chip { background: transparent; border: 1px solid var(--tag-border); color: var(--text-color); padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; animation: fadeIn 0.3s var(--ease-spring); }
+.active-filter-chip span { color: var(--subtitle-color); font-weight: 500; }
+.active-filter-close { background: var(--tag-bg); border: none; color: var(--text-color); width: 24px; height: 24px; border-radius: 50%; font-size: 11px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all var(--transition-fast); }
 @media (hover: hover) {
     .active-filter-close:hover { background: var(--danger-color); color: white; transform: scale(1.15); }
 }
 .active-filter-close:active { transform: scale(0.9); transition: transform 0.1s; }
 
-.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 13px; font-weight: 500; cursor: pointer; padding: 6px 12px; transition: var(--transition-fast); border-radius: var(--radius-pill); }
+.clear-all-filters-btn { background: transparent; border: none; color: var(--danger-color); font-size: 14px; font-weight: 600; cursor: pointer; padding: 8px 16px; transition: var(--transition-fast); border-radius: var(--radius-pill); }
 @media (hover: hover) {
-    .clear-all-filters-btn:hover { background: rgba(255, 69, 58, 0.1); transform: translateY(-1px); }
+    .clear-all-filters-btn:hover { background: rgba(239, 68, 68, 0.1); transform: translateY(-1px); }
 }
 .clear-all-filters-btn:active { transform: scale(0.96); transition: transform 0.1s; }
 
 .sort-select { 
-    background: transparent; 
-    border: 1.5px solid var(--tag-border); 
+    background: var(--tag-bg); 
+    border: 1px solid var(--tag-border); 
     color: var(--text-color); 
-    padding: 8px 16px; 
+    padding: 10px 40px 10px 20px; 
     border-radius: var(--radius-pill); 
     font-size: 14px; 
-    font-weight: 500; 
+    font-weight: 600; 
     cursor: pointer; 
     outline: none; 
     font-family: inherit; 
     transition: all var(--transition-fast); 
     appearance: none; 
     -webkit-appearance: none; 
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); 
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); 
     background-repeat: no-repeat; 
-    background-position: right 12px center; 
-    background-size: 14px; 
-    padding-right: 36px; 
+    background-position: right 14px center; 
+    background-size: 16px; 
 }
 [data-theme="light"] .sort-select { background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); }
 @media (hover: hover) {
-    .sort-select:hover { border-color: var(--subtitle-color); background-color: var(--tag-bg); }
+    .sort-select:hover { border-color: rgba(255,255,255,0.2); background-color: rgba(255,255,255,0.08); }
 }
-.sort-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px var(--highlight-bg); }
+.sort-select:focus { border-color: var(--primary-color); box-shadow: 0 0 0 4px var(--highlight-bg); }
 
-.section-title { font-size: clamp(20px, 3vw, 24px); font-weight: 700; margin: 0; color: var(--text-color); }
+.section-title { font-size: clamp(22px, 3vw, 28px); font-weight: 800; margin: 0; color: var(--text-color); }
 
 /* ==========================================================================
-   CSS: 5. KÁRTYÁK, GOMBOK ÉS TAG-EK (ULTRA PREMIUM DIZÁJN)
+   CSS: 5. KÁRTYÁK, GOMBOK ÉS TAG-EK (KÖZHANG PREMIUM DIZÁJN)
    ========================================================================== */
 .company-grid { 
     display: flex; 
     flex-direction: column; 
-    gap: 20px; 
-    margin-bottom: 30px; 
+    gap: 24px; 
+    margin-bottom: 40px; 
 }
 
 .company-card { 
     background: var(--card-bg); 
     border: 1px solid var(--card-border); 
     border-radius: var(--radius-lg); 
-    padding: 28px; 
+    padding: 32px; 
     transition: all var(--transition-normal); 
     display: flex; 
     flex-direction: row; 
     justify-content: space-between; 
     align-items: center; 
-    gap: 24px; 
+    gap: 28px; 
     cursor: pointer; 
     position: relative; 
     overflow: hidden; 
     box-shadow: var(--card-shadow-soft); 
-    will-change: transform, box-shadow; 
-    contain: layout style paint; /* 🚀 ENTERPRISE TELJESÍTMÉNY NÖVELÉS - Rendering izoláció */
-    content-visibility: auto; /* 🚀 DOM CULLING - Képernyőn kívüli elemek elrejtése */
-    contain-intrinsic-size: auto 180px; /* 🚀 V15: Scroll ugrálás megelőzése */
-    transform: translate3d(0,0,0); /* 🚀 GPU Fix */
+    will-change: transform, box-shadow, border-color; 
+    contain: layout style paint; 
+    content-visibility: auto; 
+    contain-intrinsic-size: auto 200px; 
+    transform: translate3d(0,0,0); 
     backface-visibility: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
 }
 
 .company-card::before {
@@ -554,17 +567,17 @@ html {
     position: absolute; top: 0; left: 0; right: 0; bottom: 0;
     border-radius: inherit; 
     pointer-events: none;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 [data-theme="light"] .company-card::before { display: none; }
 
 @media (hover: hover) {
     .company-card:hover { 
-        transform: translateY(-4px) scale(1.005) translate3d(0,0,0); 
+        transform: translateY(-6px) scale(1.01) translate3d(0,0,0); 
         box-shadow: var(--card-shadow-hover); 
-        border-color: rgba(255,255,255,0.15); 
+        border-color: rgba(255,255,255,0.2); 
     }
-    [data-theme="light"] .company-card:hover { border-color: rgba(0,0,0,0.1); }
+    [data-theme="light"] .company-card:hover { border-color: rgba(0,0,0,0.15); }
 }
 
 .company-card:active { 
@@ -576,54 +589,54 @@ html {
 /* Támogatói kártya beillesztve a hirdetések közé */
 .company-card.support-ad-card {
     border: 1.5px solid var(--primary-color);
-    background: linear-gradient(135deg, rgba(10, 132, 255, 0.08), transparent);
+    background: linear-gradient(145deg, rgba(59, 130, 246, 0.1), rgba(0,0,0,0));
 }
 @media (hover: hover) {
     .company-card.support-ad-card:hover {
-        box-shadow: 0 15px 35px rgba(10, 132, 255, 0.25);
+        box-shadow: 0 20px 48px rgba(59, 130, 246, 0.3);
         border-color: var(--primary-hover);
     }
 }
 [data-theme="light"] .company-card.support-ad-card {
-    background: linear-gradient(135deg, rgba(0, 113, 227, 0.06), transparent);
+    background: linear-gradient(145deg, rgba(37, 99, 235, 0.08), transparent);
 }
 
 .company-card-content { flex: 1; min-width: 0; display: flex; flex-direction: column; pointer-events: none; }
-.company-name { font-size: clamp(18px, 2.5vw, 20px); font-weight: 700; margin: 0 0 6px 0; color: var(--text-color); line-height: 1.3; pointer-events: auto; letter-spacing: -0.01em; }
-.company-short-desc { font-size: 15px; color: var(--subtitle-color); margin: 0 0 14px 0; line-height: 1.4; pointer-events: auto; font-weight: 500; transition: color var(--transition-fast); }
+.company-name { font-size: clamp(20px, 2.5vw, 24px); font-weight: 800; margin: 0 0 8px 0; color: var(--text-color); line-height: 1.3; pointer-events: auto; letter-spacing: -0.02em; }
+.company-short-desc { font-size: 16px; color: var(--subtitle-color); margin: 0 0 18px 0; line-height: 1.5; pointer-events: auto; font-weight: 600; transition: color var(--transition-fast); }
 @media (hover: hover) { .company-short-desc:hover { color: var(--text-color); } }
 
-.job-tags { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; }
+.job-tags { display: flex; flex-wrap: wrap; gap: 10px; pointer-events: auto; }
 .job-tag { 
     background: var(--tag-bg); 
     color: var(--text-color); 
     border: 1px solid var(--tag-border); 
-    padding: 6px 12px; 
+    padding: 8px 14px; 
     border-radius: var(--radius-pill); 
-    font-size: 12px; 
-    font-weight: 600; 
+    font-size: 13px; 
+    font-weight: 700; 
     transition: all var(--transition-fast); 
 }
 
-.tag-deadline { background: rgba(255, 69, 58, 0.1); color: var(--danger-color); border-color: rgba(255, 69, 58, 0.2); }
-.tag-faculty { background: rgba(191, 90, 242, 0.1); color: var(--faculty-color); border-color: rgba(191, 90, 242, 0.2); }
-.tag-vibe { background: rgba(255, 159, 10, 0.1); color: #ff9f0a; border-color: rgba(255, 159, 10, 0.2); }
-.tag-micro { background: rgba(10, 132, 255, 0.1); color: var(--primary-color); border-color: rgba(10, 132, 255, 0.2); }
+.tag-deadline { background: rgba(239, 68, 68, 0.1); color: var(--danger-color); border-color: rgba(239, 68, 68, 0.2); }
+.tag-faculty { background: rgba(168, 85, 247, 0.1); color: var(--faculty-color); border-color: rgba(168, 85, 247, 0.2); }
+.tag-vibe { background: rgba(245, 158, 11, 0.1); color: var(--warning-color); border-color: rgba(245, 158, 11, 0.2); }
+.tag-micro { background: rgba(59, 130, 246, 0.1); color: var(--primary-color); border-color: rgba(59, 130, 246, 0.2); }
 
 .clickable-tag { cursor: pointer; }
-@media (hover: hover) { .clickable-tag:hover { background: var(--card-border); transform: translateY(-2px); } }
+@media (hover: hover) { .clickable-tag:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); } }
 .clickable-tag:active { transform: scale(0.92); transition: transform 0.1s; }
 
-.company-card-actions { display: flex; flex-direction: row; gap: 12px; flex-shrink: 0; z-index: var(--z-base); pointer-events: auto; align-items: center; }
+.company-card-actions { display: flex; flex-direction: row; gap: 16px; flex-shrink: 0; z-index: var(--z-base); pointer-events: auto; align-items: center; }
 
 .apply-btn { 
-    padding: 12px 28px; 
+    padding: 14px 32px; 
     border-radius: var(--radius-pill); 
     border: none; 
-    background: var(--primary-color); 
-    color: white; 
+    background: var(--text-color); 
+    color: var(--bg-color); 
     font-size: 15px; 
-    font-weight: 600; 
+    font-weight: 800; 
     cursor: pointer; 
     transition: all 0.4s var(--ease-spring); 
     display: inline-flex; 
@@ -634,6 +647,7 @@ html {
     position: relative; 
     overflow: hidden; 
 }
+[data-theme="light"] .apply-btn { background: var(--primary-color); color: white; }
 .apply-btn::after { 
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
     background: linear-gradient(rgba(255,255,255,0.2), transparent); 
@@ -641,32 +655,33 @@ html {
 }
 @media (hover: hover) {
     .apply-btn:hover::after { opacity: 1; }
-    .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(10, 132, 255, 0.35); }
+    .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); }
+    [data-theme="light"] .apply-btn:hover { box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4); }
 }
-.apply-btn:active { transform: scale(0.94); box-shadow: 0 2px 5px rgba(10, 132, 255, 0.2); transition: transform 0.1s; }
+.apply-btn:active { transform: scale(0.94); box-shadow: none; transition: transform 0.1s; }
 
-.apply-btn.secondary { background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--tag-border); }
-@media (hover: hover) { .apply-btn.secondary:hover { background: var(--card-border); box-shadow: none; color: var(--text-color); } }
+.apply-btn.secondary { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--card-border); }
+@media (hover: hover) { .apply-btn.secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); box-shadow: var(--card-shadow-soft); color: var(--text-color); } }
 .apply-btn.secondary::after { display: none; }
 
 .icon-action-btn { 
-    background: var(--tag-bg); 
-    border: 1px solid var(--tag-border); 
+    background: var(--card-bg); 
+    border: 1px solid var(--card-border); 
     color: var(--text-color); 
-    width: 44px; height: 44px; 
+    width: 48px; height: 48px; 
     border-radius: var(--radius-pill); 
-    font-size: 18px; 
+    font-size: 20px; 
     cursor: pointer; 
     transition: all 0.4s var(--ease-spring); 
     display: flex; align-items: center; justify-content: center; 
 }
-@media (hover: hover) { .icon-action-btn:hover { background: var(--card-border); transform: scale(1.1); } }
+@media (hover: hover) { .icon-action-btn:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); transform: scale(1.1); } }
 .icon-action-btn:active { transform: scale(0.9); transition: transform 0.1s; }
 
 .icon-action-btn.fav-active { 
     color: var(--danger-color); 
-    background: rgba(255, 69, 58, 0.15); 
-    border-color: rgba(255, 69, 58, 0.3); 
+    background: rgba(239, 68, 68, 0.15); 
+    border-color: rgba(239, 68, 68, 0.3); 
     animation: pop 0.5s var(--ease-spring); 
 }
 
@@ -685,23 +700,24 @@ html {
     padding: 0; 
     max-width: 100%; 
     height: 100vh;
-    height: 100dvh; /* 🚀 V15 */ 
+    height: 100dvh; 
     gap: 0; 
     align-items: stretch; 
     overflow: hidden; 
     background-color: var(--bg-color); 
 }
 
+/* Számítógépes Oldalsáv - Javított Margók és Paddingok a szétesés ellen */
 .sidebar { 
     width: var(--sidebar-width-collapsed); 
     background-color: var(--sidebar-bg); 
     backdrop-filter: var(--blur-heavy); 
     -webkit-backdrop-filter: var(--blur-heavy); 
-    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05), 5px 0 30px rgba(0, 0, 0, 0.1); 
+    box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.05), 5px 0 30px rgba(0, 0, 0, 0.2); 
     display: flex; 
     flex-direction: column; 
     justify-content: space-between; 
-    padding: 24px 0; 
+    padding: 32px 0; 
     transition: width 0.4s var(--ease-spring); 
     white-space: nowrap; 
     overflow: hidden; 
@@ -710,45 +726,120 @@ html {
 }
 @media (hover: hover) { .sidebar:hover { width: var(--sidebar-width-expanded); } }
 
-.sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 0 0 30px 0; width: 100%; position: relative; }
-.sidebar-logo { font-size: 22px; font-weight: 800; margin: 0 16px; display: flex; align-items: center; padding: 8px 10px; gap: 14px; letter-spacing: -0.02em; cursor: pointer; user-select: none; }
-.logo-icon { width: 36px; height: 36px; background: linear-gradient(135deg, var(--primary-hover), var(--primary-color)); color: white; border-radius: var(--radius-sm); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.3); transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease; }
+.sidebar-header { 
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    padding: 0 0 40px 0; 
+    width: 100%; 
+    position: relative; 
+}
+
+.sidebar-logo { 
+    margin: 0 16px; 
+    padding: 8px 12px; 
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+    font-size: 24px; 
+    font-weight: 800; 
+    letter-spacing: -0.03em; 
+    cursor: pointer; 
+    user-select: none; 
+}
+.logo-icon { 
+    width: 40px; 
+    height: 40px; 
+    background: linear-gradient(135deg, var(--success-color), #22c55e); 
+    color: #000; 
+    border-radius: var(--radius-sm); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 22px; 
+    flex-shrink: 0; 
+    box-shadow: 0 4px 20px rgba(108, 255, 117, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.6); 
+    transition: transform 0.4s var(--ease-spring), box-shadow 0.4s ease; 
+}
 @media (hover: hover) {
-    .sidebar-logo:hover .logo-icon { transform: scale(1.1) rotate(-8deg); box-shadow: 0 6px 20px rgba(10, 132, 255, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.4); }
+    .sidebar-logo:hover .logo-icon { transform: scale(1.1) rotate(-8deg); box-shadow: 0 6px 24px rgba(108, 255, 117, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.6); }
     .sidebar:hover .logo-text { opacity: 1; transform: translateX(0); }
     .sidebar:hover .sidebar-theme-toggle { opacity: 1; pointer-events: auto; transform: scale(1) rotate(0deg); }
     .sidebar-theme-toggle:hover { background: var(--card-border); transform: scale(1.15) rotate(15deg); box-shadow: var(--card-shadow-soft); }
 }
-.logo-text { opacity: 0; transform: translateX(-15px); transition: all 0.3s var(--ease-smooth); background: linear-gradient(to right, var(--text-color), var(--subtitle-color)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.logo-text { opacity: 0; transform: translateX(-15px); transition: all 0.3s var(--ease-smooth); color: var(--text-color); }
 
-.sidebar-theme-toggle { background: var(--tag-bg); border: 1px solid var(--tag-border); color: var(--text-color); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 15px; opacity: 0; pointer-events: none; margin-right: 20px; transition: all 0.5s var(--ease-spring); transform: scale(0.5) rotate(-180deg); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+.sidebar-theme-toggle { 
+    position: absolute; 
+    right: 24px; 
+    top: 10px;
+    background: var(--tag-bg); 
+    border: 1px solid var(--tag-border); 
+    color: var(--text-color); 
+    width: 36px; 
+    height: 36px; 
+    border-radius: 50%; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    font-size: 16px; 
+    opacity: 0; 
+    pointer-events: none; 
+    transition: all 0.5s var(--ease-spring); 
+    transform: scale(0.5) rotate(-180deg); 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+}
 
-.nav-menu { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.nav-item, .sidebar-profile { margin: 0 14px; padding: 12px 14px; border-radius: var(--radius-sm); cursor: pointer; font-weight: 600; font-size: 15px; color: var(--subtitle-color); transition: all 0.3s var(--ease-smooth); display: flex; align-items: center; gap: 14px; position: relative; overflow: hidden; }
-.nav-item.active { background: linear-gradient(135deg, var(--primary-color), var(--primary-hover)); color: white; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.25); }
-.nav-item.active .nav-icon { color: white; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2)); }
+.nav-menu { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.nav-item, .sidebar-profile { 
+    margin: 0 16px; 
+    padding: 14px 16px; 
+    border-radius: var(--radius-sm); 
+    cursor: pointer; 
+    font-weight: 700; 
+    font-size: 16px; 
+    color: var(--subtitle-color); 
+    transition: all 0.3s var(--ease-smooth); 
+    display: flex; 
+    align-items: center; 
+    gap: 16px; 
+    position: relative; 
+    overflow: hidden; 
+}
+.nav-item.active { background: var(--card-bg); color: var(--text-color); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); }
+.nav-item.active .nav-icon { color: var(--success-color); filter: drop-shadow(0 2px 8px rgba(108, 255, 117, 0.4)); }
 @media (hover: hover) {
-    .nav-item:not(.active):hover, .sidebar-profile:not(.active):hover { background-color: var(--tag-bg); color: var(--text-color); transform: translateX(4px); }
+    .nav-item:not(.active):hover, .sidebar-profile:not(.active):hover { background-color: var(--tag-bg); color: var(--text-color); transform: translateX(6px); }
     .nav-item:hover .nav-icon, .sidebar-profile:hover .nav-icon { transform: scale(1.2); }
     .sidebar:hover .nav-text { opacity: 1; transform: translateX(0); transition-delay: 0.05s; }
 }
-.nav-icon { width: 24px; font-size: 18px; text-align: center; flex-shrink: 0; transition: transform 0.4s var(--ease-spring); }
+
+.nav-icon-box {
+    width: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+.nav-icon { font-size: 20px; text-align: center; transition: transform 0.4s var(--ease-spring); }
 .nav-text { opacity: 0; transform: translateX(-10px); transition: all 0.3s var(--ease-smooth); white-space: nowrap; }
 
 .dashboard-main { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-color); overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; position: relative; -webkit-overflow-scrolling: touch; }
-.dashboard-header { height: var(--header-height); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; background-color: var(--header-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); position: sticky; top: 0; z-index: var(--z-header); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 8px 30px rgba(0, 0, 0, 0.1); transform: translate3d(0,0,0); }
-[data-theme="light"] .dashboard-header { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 8px 30px rgba(0, 0, 0, 0.03); }
-.dashboard-title { font-size: clamp(22px, 3vw, 26px); font-weight: 800; margin: 0; letter-spacing: -0.02em; }
-.dashboard-content { padding: 40px; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; }
+.dashboard-header { height: var(--header-height); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background-color: var(--header-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); position: sticky; top: 0; z-index: var(--z-header); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 12px 40px rgba(0, 0, 0, 0.2); transform: translate3d(0,0,0); }
+[data-theme="light"] .dashboard-header { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 12px 40px rgba(0, 0, 0, 0.05); }
+.dashboard-title { font-size: clamp(24px, 3vw, 28px); font-weight: 800; margin: 0; letter-spacing: -0.03em; }
+.dashboard-content { padding: 48px; flex: 1; max-width: 1300px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; }
 
 .tab-content { display: none; }
 .tab-content.active { display: block; animation: contentFadeIn 0.6s var(--ease-spring) forwards; }
-@keyframes contentFadeIn { 0% { opacity: 0; transform: translateY(20px) scale(0.98); filter: blur(4px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); } }
+@keyframes contentFadeIn { 0% { opacity: 0; transform: translateY(24px) scale(0.98); filter: blur(8px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0px); } }
 
-/* JAVÍTÁS: Reszponzív üres állapot (Mentett állások hiánya) */
+/* Üres állapot (Mentett állások, Ajánlatok hiánya) */
 .empty-state { 
     text-align: center; 
-    padding: clamp(40px, 10vh, 120px) 20px; 
+    padding: clamp(60px, 15vh, 160px) 20px; 
     color: var(--subtitle-color); 
     display: flex; flex-direction: column; align-items: center; justify-content: center; 
     position: relative;
@@ -756,108 +847,108 @@ html {
     margin: 0 auto;
 }
 
-.empty-state-icon { font-size: 76px; margin-bottom: 30px; display: block; opacity: 0.9; animation: float 5s ease-in-out infinite; position: relative; z-index: 2; }
-.empty-state-icon::after { content: ''; position: absolute; bottom: -20px; left: 50%; width: 50%; height: 10px; background: rgba(0, 0, 0, 0.2); border-radius: 50%; transform: translateX(-50%); filter: blur(6px); animation: shadowPulse 5s ease-in-out infinite; z-index: 1; }
+.empty-state-icon { font-size: 80px; margin-bottom: 32px; display: block; opacity: 0.9; animation: float 5s ease-in-out infinite; position: relative; z-index: 2; }
+.empty-state-icon::after { content: ''; position: absolute; bottom: -20px; left: 50%; width: 50%; height: 10px; background: rgba(0, 0, 0, 0.3); border-radius: 50%; transform: translateX(-50%); filter: blur(8px); animation: shadowPulse 5s ease-in-out infinite; z-index: 1; }
 [data-theme="light"] .empty-state-icon::after { background: rgba(0, 0, 0, 0.1); }
-.empty-state h3 { font-size: 24px; color: var(--text-color); margin-bottom: 12px; font-weight: 700; }
-.empty-state p { font-size: 16px; margin: 0 auto 28px auto; line-height: 1.6; }
+.empty-state h3 { font-size: 26px; color: var(--text-color); margin-bottom: 16px; font-weight: 800; letter-spacing: -0.02em; }
+.empty-state p { font-size: 16px; margin: 0 auto 32px auto; line-height: 1.6; font-weight: 500; }
 
-@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-18px); } 100% { transform: translateY(0px); } }
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-20px); } 100% { transform: translateY(0px); } }
 @keyframes shadowPulse { 0% { transform: translateX(-50%) scale(1); opacity: 0.8; } 50% { transform: translateX(-50%) scale(1.3); opacity: 0.3; } 100% { transform: translateX(-50%) scale(1); opacity: 0.8; } }
 
 /* ==========================================================================
    CSS: 7. INFORMÁCIÓS FÜL (INFO TAB ÉS BEÁLLÍTÁSOK) - GLOBÁLIS STÍLUSOK
    ========================================================================== */
-.about-card { background: var(--tag-bg); border-radius: 20px; padding: 24px; border: 1px solid transparent; display: flex; flex-direction: column; }
-.ios-menu-row { width: 100%; text-align: left; padding: 14px 20px; background: transparent; border: none; color: var(--text-color); font-size: 16px; font-weight: 500; display: flex; align-items: center; justify-content: space-between; transition: background-color 0.2s ease; }
+.about-card { background: var(--card-bg); border-radius: var(--radius-lg); padding: 32px; border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; }
+.ios-menu-row { width: 100%; text-align: left; padding: 18px 24px; background: transparent; border: none; color: var(--text-color); font-size: 16px; font-weight: 700; display: flex; align-items: center; justify-content: space-between; transition: background-color 0.2s ease; }
 .ios-menu-row:active { background-color: var(--tag-bg); }
-.ios-menu-divider { height: 1px; background: var(--card-border); margin-left: 54px; }
+.ios-menu-divider { height: 1px; background: var(--card-border); margin-left: 64px; }
 .ios-menu-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--card-shadow-soft); }
-.ios-icon-box { width: 30px; height: 30px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+.ios-icon-box { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 
-.support-options { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; margin-bottom: 32px; }
+.support-options { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; margin-bottom: 40px; }
 @media (min-width: 600px) { .support-options { flex-direction: row; } }
-.option-btn { flex: 1; background: var(--tag-bg); border: 1.5px solid transparent; border-radius: 20px; padding: 24px 16px; text-align: center; cursor: pointer; transition: all 0.3s ease; color: var(--text-color); }
+.option-btn { flex: 1; background: var(--card-bg); border: 1.5px solid var(--card-border); border-radius: var(--radius-lg); padding: 32px 20px; text-align: center; cursor: pointer; transition: all 0.3s ease; color: var(--text-color); box-shadow: var(--card-shadow-soft); }
 @media (hover: hover) {
-    .option-btn:hover, .option-btn.active { border-color: var(--primary-color); background: rgba(10, 132, 255, 0.05); transform: translateY(-3px); }
+    .option-btn:hover, .option-btn.active { border-color: var(--primary-color); background: rgba(59, 130, 246, 0.05); transform: translateY(-4px); box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2); }
 }
 .option-btn:active { transform: scale(0.97); transition: transform 0.1s; }
-.option-btn.active { border-color: var(--primary-color); background: rgba(10, 132, 255, 0.05); }
-.option-btn .emoji { font-size: 36px; margin-bottom: 12px; display: block; }
-.option-btn .title { font-size: 18px; font-weight: 600; margin-bottom: 6px; display: block; }
-.option-btn .price { font-size: 15px; color: var(--subtitle-color); font-weight: 500; }
-.account-details { background: var(--card-bg); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; margin-top: 20px; display: flex; flex-direction: column; gap: 12px; text-align: left; position: relative; overflow: hidden; }
-.acc-row { display: flex; justify-content: space-between; align-items: center; font-size: 15px; }
-.acc-label { color: var(--subtitle-color); }
-.acc-val { font-weight: 600; font-family: monospace; font-size: 15px; text-align: right; letter-spacing: 0.5px; }
+.option-btn.active { border-color: var(--primary-color); background: rgba(59, 130, 246, 0.05); }
+.option-btn .emoji { font-size: 42px; margin-bottom: 16px; display: block; }
+.option-btn .title { font-size: 20px; font-weight: 800; margin-bottom: 8px; display: block; letter-spacing: -0.02em; }
+.option-btn .price { font-size: 16px; color: var(--subtitle-color); font-weight: 600; }
+.account-details { background: var(--bg-color); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-md); margin-top: 24px; display: flex; flex-direction: column; gap: 16px; text-align: left; position: relative; overflow: hidden; }
+.acc-row { display: flex; justify-content: space-between; align-items: center; font-size: 16px; }
+.acc-label { color: var(--subtitle-color); font-weight: 500; }
+.acc-val { font-weight: 700; font-family: 'Plus Jakarta Sans', monospace; font-size: 16px; text-align: right; letter-spacing: 0.5px; }
 
 /* ==========================================================================
    CSS: 8. ÁLLÁS GYORSNÉZET (JOB PREVIEW MODAL) ÉS MEGA SZŰRŐ
    ========================================================================== */
-.job-preview-overlay, .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; }
+.job-preview-overlay, .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
 .filter-modal-overlay { z-index: 20000; align-items: center; padding: 20px; }
 .job-preview-overlay.active, .filter-modal-overlay.active { opacity: 1; visibility: visible; }
 
-.job-preview-box, .filter-modal-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); border-top: 1px solid var(--card-border); border-radius: 32px 32px 0 0; width: 100%; max-height: 90dvh; box-shadow: 0 -20px 50px rgba(0, 0, 0, 0.4); transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
-.filter-modal-box { border-radius: 32px; width: 95%; max-width: 1200px; height: 90dvh; transform: scale(0.95); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
-.job-preview-box { max-width: 750px; }
+.job-preview-box, .filter-modal-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(40px); -webkit-backdrop-filter: saturate(180%) blur(40px); border-top: 1px solid var(--card-border); border-radius: 36px 36px 0 0; width: 100%; max-height: 90dvh; box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1); display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
+.filter-modal-box { border-radius: 32px; width: 95%; max-width: 1200px; height: 90dvh; transform: scale(0.95); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); border: 1px solid var(--card-border); }
+.job-preview-box { max-width: 800px; }
 
 @media (min-width: 768px) { .job-preview-overlay { align-items: center; padding: 20px; } .job-preview-box { border-radius: 32px; border: 1px solid var(--card-border); transform: translateY(20px) scale(0.95); opacity: 0; } .job-preview-overlay.active .job-preview-box { transform: translateY(0) scale(1); opacity: 1; } }
 .job-preview-overlay.active .job-preview-box { transform: translateY(0); }
 .filter-modal-overlay.active .filter-modal-box { transform: scale(1); opacity: 1; }
 
-.job-preview-header, .filter-modal-header { padding: 40px 40px 24px 40px; border-bottom: 1px solid var(--card-border); position: relative; flex-shrink: 0; }
-.filter-modal-header { padding: 30px 40px; display: flex; justify-content: space-between; align-items: center; }
-.job-preview-title { font-size: 28px; font-weight: 800; margin: 0 0 10px 0; color: var(--text-color); line-height: 1.2; padding-right: 40px;}
-.job-preview-company { font-size: 18px; color: var(--subtitle-color); font-weight: 500; margin: 0; }
-.filter-modal-header h2 { margin: 0; font-size: 24px; font-weight: 800; }
+.job-preview-header, .filter-modal-header { padding: 48px 48px 32px 48px; border-bottom: 1px solid var(--card-border); position: relative; flex-shrink: 0; }
+.filter-modal-header { padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; }
+.job-preview-title { font-size: 32px; font-weight: 800; margin: 0 0 12px 0; color: var(--text-color); line-height: 1.2; padding-right: 48px; letter-spacing: -0.03em;}
+.job-preview-company { font-size: 20px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
+.filter-modal-header h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
 
-.job-preview-close, .big-close-btn { position: absolute; top: 24px; right: 24px; background: var(--tag-bg); border: none; color: var(--text-color); width: 36px; height: 36px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
+.job-preview-close, .big-close-btn { position: absolute; top: 32px; right: 32px; background: var(--tag-bg); border: none; color: var(--text-color); width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
 @media (hover: hover) { .job-preview-close:hover, .big-close-btn:hover { background: var(--card-border); transform: scale(1.1); } }
 .job-preview-close:active, .big-close-btn:active { transform: scale(0.9); transition: transform 0.1s; }
 .big-close-btn { position: static; margin: 0; } 
 
-.job-preview-body, .filter-modal-body { padding: 40px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
-.filter-modal-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; align-content: start; }
-.job-preview-section, .filter-section { margin-bottom: 32px; display: flex; flex-direction: column; }
-.job-preview-section h4, .filter-section h3 { font-size: 15px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 0.5px; margin: 0 0 16px 0; font-weight: 700; }
-.filter-section h3 { border-bottom: 1px solid var(--card-border); padding-bottom: 12px; margin-bottom: 20px;}
+.job-preview-body, .filter-modal-body { padding: 48px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.filter-modal-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px; align-content: start; }
+.job-preview-section, .filter-section { margin-bottom: 40px; display: flex; flex-direction: column; }
+.job-preview-section h4, .filter-section h3 { font-size: 16px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 1px; margin: 0 0 20px 0; font-weight: 800; }
+.filter-section h3 { border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 24px;}
 
-.job-preview-tags { display: flex; flex-wrap: wrap; gap: 10px; }
-.job-preview-tags .job-tag { font-size: 14px; padding: 10px 18px; border-radius: 100px; }
-.filter-group { display: flex; flex-wrap: wrap; gap: 10px; }
+.job-preview-tags { display: flex; flex-wrap: wrap; gap: 12px; }
+.job-preview-tags .job-tag { font-size: 15px; padding: 12px 20px; border-radius: var(--radius-pill); }
+.filter-group { display: flex; flex-wrap: wrap; gap: 12px; }
 
-.job-preview-footer, .filter-modal-footer { padding: 24px 40px; border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.2); display: flex; gap: 16px; align-items: center; justify-content: flex-end; flex-shrink: 0; }
-.filter-modal-footer { position: sticky; bottom: 0; z-index: 10; gap: 20px; }
-[data-theme="light"] .job-preview-footer, [data-theme="light"] .filter-modal-footer { background: rgba(255,255,255,0.5); }
-.job-preview-footer .apply-btn, .filter-modal-footer .apply-btn { padding: 16px 40px; font-size: 16px; width: auto; }
+.job-preview-footer, .filter-modal-footer { padding: 32px 48px; border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.3); display: flex; gap: 20px; align-items: center; justify-content: flex-end; flex-shrink: 0; }
+.filter-modal-footer { position: sticky; bottom: 0; z-index: 10; gap: 24px; background: var(--modal-bg); border-top: 1px solid var(--card-border); }
+[data-theme="light"] .job-preview-footer, [data-theme="light"] .filter-modal-footer { background: rgba(255,255,255,0.8); }
+.job-preview-footer .apply-btn, .filter-modal-footer .apply-btn { padding: 18px 48px; font-size: 16px; width: auto; }
 
-.f-btn { background: transparent; border: 1.5px solid var(--tag-border); color: var(--text-color); padding: 10px 20px; border-radius: 100px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-@media (hover: hover) { .f-btn:hover { border-color: var(--subtitle-color); background: var(--tag-bg); transform: translateY(-2px); } }
+.f-btn { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-color); padding: 12px 24px; border-radius: var(--radius-pill); font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@media (hover: hover) { .f-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); transform: translateY(-2px); box-shadow: var(--card-shadow-soft); } }
 .f-btn:active { transform: scale(0.96); transition: transform 0.1s; }
-.f-btn.active-fac { background: var(--faculty-color); color: white; border-color: var(--faculty-color); font-weight: 600; box-shadow: 0 4px 15px rgba(191, 90, 242, 0.3); }
-.f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); font-weight: 600; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3); }
+.f-btn.active-fac { background: var(--faculty-color); color: white; border-color: var(--faculty-color); font-weight: 700; box-shadow: 0 8px 24px rgba(168, 85, 247, 0.3); }
+.f-btn.active-comp { background: var(--primary-color); color: white; border-color: var(--primary-color); font-weight: 700; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3); }
 
-.info-nav-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid var(--card-border); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+.info-nav-container { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 16px; margin-bottom: 16px; border-bottom: 1px solid var(--card-border); scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 .info-nav-container::-webkit-scrollbar { display: none; }
-.info-nav-btn { background: transparent; color: var(--subtitle-color); border: none; font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 100px; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+.info-nav-btn { background: transparent; color: var(--subtitle-color); border: none; font-size: 15px; font-weight: 700; padding: 10px 20px; border-radius: var(--radius-pill); cursor: pointer; transition: 0.2s; white-space: nowrap; }
 @media (hover: hover) { .info-nav-btn:hover { background: var(--tag-bg); color: var(--text-color); } }
-.info-nav-btn.active { background: var(--text-color); color: var(--bg-color); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-[data-theme="light"] .info-nav-btn.active { box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.info-nav-btn.active { background: var(--text-color); color: var(--bg-color); box-shadow: 0 4px 16px rgba(255,255,255,0.1); }
+[data-theme="light"] .info-nav-btn.active { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
 
 /* ==========================================================================
    CSS: 9. MODÁLIS ABLAK (ASZTALI INFO OVERLAY)
    ========================================================================== */
-.big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.3s; padding: 20px; }
+.big-support-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: 0.4s; padding: 20px; }
 .big-support-overlay.active { opacity: 1; visibility: visible; }
-.big-support-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(30px); -webkit-backdrop-filter: saturate(180%) blur(30px); border: 1px solid var(--card-border); border-radius: 32px; width: 100%; max-width: 750px; max-height: 90dvh; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); position: relative; transform: scale(0.95); opacity: 0; transition: 0.3s; display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
+.big-support-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(40px); -webkit-backdrop-filter: saturate(180%) blur(40px); border: 1px solid var(--card-border); border-radius: 32px; width: 100%; max-width: 800px; max-height: 90dvh; box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8); position: relative; transform: scale(0.95); opacity: 0; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
 .big-support-overlay.active .big-support-box { transform: scale(1); opacity: 1; }
-.big-support-content { padding: 40px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
+.big-support-content { padding: 48px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
 
 /* ==========================================================================
    CSS: 10. MOBIL NÉZET OPTIMALIZÁLÁSA ÉS INFÓ FÜL (NATIVE APP STÍLUS)
    ========================================================================== */
-.mobile-only-nav { display: none; }
+.mobile-only-nav { display: none !important; }
 
 @media (max-width: 768px) {
     /* NATIVE GÖRGÉS BIZTOSÍTÁSA ÉS SZIGETELÉS */
@@ -865,81 +956,91 @@ html {
     
     #loggedInView { display: block !important; height: auto !important; min-height: 100dvh !important; overflow: visible !important; }
     /* Padding bottom with Safe Area for modern iPhones */
-    .dashboard-main { display: block !important; height: auto !important; overflow: visible !important; padding-bottom: calc(110px + env(safe-area-inset-bottom, 20px)); }
+    .dashboard-main { display: block !important; height: auto !important; overflow: visible !important; padding-bottom: calc(120px + env(safe-area-inset-bottom, 20px)); }
 
     /* Ragadós Fejléc */
-    .dashboard-header { padding: 0 20px; height: 64px; min-height: 64px; display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg); position: sticky; top: 0; z-index: var(--z-header); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
-    .dashboard-title { text-align: center; font-size: 20px; font-weight: 800; margin: 0;}
+    .dashboard-header { padding: 0 24px; height: 72px; min-height: 72px; display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg); position: sticky; top: 0; z-index: var(--z-header); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
+    .dashboard-title { text-align: center; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.03em;}
     
-    /* DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) */
-    .sidebar { position: fixed; bottom: calc(16px + env(safe-area-inset-bottom, 16px)); left: 16px; right: 16px; width: auto !important; height: 64px; min-height: 64px; padding: 0 8px; border-radius: 100px; border: 1px solid var(--card-border); box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255,255,255,0.05); z-index: var(--z-toast); display: flex; flex-direction: row; justify-content: center; align-items: center; background: var(--modal-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
+    /* DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) - Középre rendezett 4 elemhez optimalizálva */
+    .sidebar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 16px)); left: 20px; right: 20px; width: auto !important; height: 68px; min-height: 68px; padding: 0 10px; border-radius: var(--radius-pill); border: 1px solid var(--card-border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.08); z-index: var(--z-toast); display: flex; flex-direction: row; justify-content: center; align-items: center; background: var(--modal-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile, .sidebar-bottom { display: none !important; } 
     .sidebar-top-section { width: 100%; display: flex; justify-content: center; }
 
-    .nav-menu { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 8px; display: flex; margin: 0; padding: 0; }
-    .nav-item { flex: none; margin: 0; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 12px; height: 48px; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: 100px; position: relative; transition: all 0.4s var(--ease-spring); touch-action: manipulation; }
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 4px; display: flex; margin: 0; padding: 0; }
+    
+    /* 🚀 JAVÍTÁS: A margókat nulláztuk, hogy biztosan elférjen 4 gomb is mobilon */
+    .nav-item { flex: none; margin: 0 !important; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 12px 16px !important; height: 52px; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: var(--radius-pill); position: relative; transition: all 0.4s var(--ease-spring); touch-action: manipulation; }
     .nav-item::before { display: none; } 
     .nav-text { font-size: 0 !important; max-width: 0; opacity: 0; margin-left: 0; display: block; overflow: hidden; white-space: nowrap; transition: all 0.4s var(--ease-spring); }
 
-    /* Fórum, Mentve és Infó RÖVIDÍTÉSEK! */
-    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
-    #nav-info-mobile .nav-text::after { content: "Infó"; font-size: 15px; font-weight: 700; letter-spacing: 0.3px; }
+    /* Fórum, Mentve, Ajánlatok és Infó RÖVIDÍTÉSEK! */
+    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    #nav-offers .nav-text::after { content: "Ajánlatok"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
+    #nav-info-mobile .nav-text::after { content: "Infó"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
 
-    .nav-item.active { background: var(--primary-color) !important; color: white; padding: 12px 20px; box-shadow: 0 6px 20px rgba(10, 132, 255, 0.3); }
-    .nav-item.active .nav-icon { transform: scale(1.1); color: white; }
+    .nav-item.active { background: var(--text-color) !important; color: var(--bg-color); padding: 12px 20px !important; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); }
+    [data-theme="light"] .nav-item.active { background: var(--primary-color) !important; color: white; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); }
+    .nav-item.active .nav-icon { transform: scale(1.1); color: var(--bg-color); filter: none; }
+    [data-theme="light"] .nav-item.active .nav-icon { color: white; }
     .nav-item.active .nav-text { max-width: 80px; opacity: 1; margin-left: 8px; }
     
+    .nav-icon-box { width: 28px !important; }
     .nav-icon { font-size: 22px; margin: 0; transition: transform var(--transition-fast); }
-    .mobile-only-nav { display: flex; }
+    
+    /* 🚀 MOST MÁR BIZTOSAN LÁTSZÓDIK AZ INFÓ GOMB */
+    .mobile-only-nav { display: flex !important; }
 
     /* Tartalom elrendezése mobilra */
-    .dashboard-content { padding: 16px; display: block; }
-    .omnibar-wrapper { padding: 16px; margin-bottom: 20px; border-radius: var(--radius-md); gap: 12px; display: flex; flex-direction: column;}
+    .dashboard-content { padding: 20px; display: block; }
+    .omnibar-wrapper { padding: 20px; margin-bottom: 24px; border-radius: var(--radius-lg); gap: 16px; display: flex; flex-direction: column;}
     .search-inputs-row { flex-direction: column; gap: 10px; margin-bottom: 0; display: flex;}
     .keyword-search, .location-search { flex: 1; width: 100%; }
-    .search-box-input { padding: 0 16px 0 44px; font-size: 16px; border-radius: var(--radius-sm); height: 48px; background: var(--tag-bg); border: 1px solid var(--tag-border); width: 100%; }
+    .search-box-input { padding: 0 20px 0 48px; font-size: 16px; border-radius: var(--radius-sm); height: 52px; background: var(--card-bg); border: 1px solid var(--card-border); width: 100%; }
     .filter-carousel-row { padding-bottom: 4px; margin-top: 0; display: flex;}
-    .main-filter-btn, .magic-chip { height: 40px; padding: 0 16px; font-size: 14px; }
+    .main-filter-btn, .magic-chip { height: 44px; padding: 0 20px; font-size: 15px; }
     
-    .company-grid { gap: 16px; display: flex; flex-direction: column; }
-    .company-card { flex-direction: column; align-items: flex-start; padding: 20px; gap: 16px; border-radius: var(--radius-md); }
-    .company-card-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; gap: 12px; display: flex; }
-    .action-icons-row { width: auto; flex: 0; display: flex; gap: 10px; }
-    .company-card-actions .apply-btn { flex: 1; padding: 12px; font-size: 15px; height: 44px; justify-content: center;}
+    .company-grid { gap: 20px; display: flex; flex-direction: column; }
+    .company-card { flex-direction: column; align-items: flex-start; padding: 24px; gap: 20px; border-radius: var(--radius-lg); }
+    .company-card-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; gap: 16px; display: flex; }
+    .action-icons-row { width: auto; flex: 0; display: flex; gap: 12px; }
+    .company-card-actions .apply-btn { flex: 1; padding: 14px; font-size: 16px; height: 52px; justify-content: center;}
+    .icon-action-btn { width: 52px; height: 52px; font-size: 22px; }
     
-    #backToTopBtn { bottom: calc(95px + env(safe-area-inset-bottom, 20px)); right: 16px; width: 44px; height: 44px; font-size: 20px; }
-    .search-header-row { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
-    .sort-select { margin-left: 0 !important; width: 100%; padding: 0 16px; height: 48px; background-color: var(--tag-bg); border: 1px solid var(--tag-border); }
+    #backToTopBtn { bottom: calc(105px + env(safe-area-inset-bottom, 20px)); right: 20px; width: 50px; height: 50px; font-size: 22px; }
+    .search-header-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+    .sort-select { margin-left: 0 !important; width: 100%; padding: 0 20px; height: 52px; background-color: var(--card-bg); border: 1px solid var(--card-border); font-size: 15px; }
     
     /* MODÁLIS ABLAKOK MOBILRA */
-    .filter-modal-box, .job-preview-box, .big-support-box { border-radius: 24px 24px 0 0 !important; padding-top: 0 !important; position: relative; background: var(--card-bg) !important; backdrop-filter: none !important; box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3) !important; }
-    .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.6) !important; }
+    .filter-modal-box, .job-preview-box, .big-support-box { border-radius: 32px 32px 0 0 !important; padding-top: 0 !important; position: relative; background: var(--modal-bg) !important; backdrop-filter: blur(40px) !important; -webkit-backdrop-filter: blur(40px) !important; box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.8) !important; border: 1px solid var(--card-border); border-bottom: none;}
+    .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.8) !important; }
     
-    .filter-modal-box { width: 100%; max-height: 90dvh; height: 90dvh; margin-top: auto; display: flex; flex-direction: column;}
-    .filter-modal-header { padding: 20px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
-    .filter-modal-header h2 { font-size: 20px; }
-    .filter-modal-body { grid-template-columns: 1fr; gap: 24px; padding: 20px 16px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;} 
-    .filter-section h3 { font-size: 15px; margin: 0 0 12px 0; }
-    .f-btn { padding: 10px 16px; font-size: 14px; }
+    .filter-modal-box { width: 100%; max-height: 92dvh; height: 92dvh; margin-top: auto; display: flex; flex-direction: column;}
+    .filter-modal-header { padding: 24px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
+    .filter-modal-header h2 { font-size: 22px; }
+    .filter-modal-body { grid-template-columns: 1fr; gap: 32px; padding: 24px 20px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;} 
+    .filter-section h3 { font-size: 16px; margin: 0 0 16px 0; }
+    .f-btn { padding: 12px 20px; font-size: 15px; }
     
-    .filter-modal-footer { flex-direction: row; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 16px)); gap: 12px; position: sticky; bottom: 0; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
-    .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 14px; font-size: 15px; height: 48px;}
+    .filter-modal-footer { flex-direction: row; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 16px)); gap: 16px; position: sticky; bottom: 0; background: var(--modal-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
+    .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 16px; font-size: 16px; height: 56px;}
     
-    .job-preview-box { margin-top: auto; max-height: 90dvh; display: flex; flex-direction: column;}
-    .job-preview-header { padding: 24px 20px 16px 20px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
-    .job-preview-body { padding: 20px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;}
-    .job-preview-footer { flex-direction: column-reverse; padding: 16px; padding-bottom: calc(16px + env(safe-area-inset-bottom, 16px)); gap: 12px; background: var(--card-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
-    .job-preview-footer .apply-btn { width: 100%; padding: 14px; height: 48px; }
+    .job-preview-box { margin-top: auto; max-height: 92dvh; display: flex; flex-direction: column;}
+    .job-preview-header { padding: 32px 24px 24px 24px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
+    .job-preview-title { font-size: 26px; padding-right: 32px; }
+    .job-preview-body { padding: 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;}
+    .job-preview-footer { flex-direction: column-reverse; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 16px)); gap: 16px; background: var(--modal-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
+    .job-preview-footer .apply-btn { width: 100%; padding: 16px; height: 56px; }
     .job-preview-footer .action-icons-row { width: 100%; justify-content: space-between;}
-    .job-preview-footer .icon-action-btn { flex: 1; height: 48px; }
+    .job-preview-footer .icon-action-btn { flex: 1; height: 56px; }
 
-    .big-support-box { margin-top: auto; max-height: 90dvh; height: auto; padding-bottom: env(safe-area-inset-bottom, 16px); display: flex; flex-direction: column; }
-    .big-close-btn { top: 16px; right: 16px; width: 36px; height: 36px; font-size: 16px; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border); position: absolute; margin: 0; }
+    .big-support-box { margin-top: auto; max-height: 92dvh; height: auto; padding-bottom: env(safe-area-inset-bottom, 16px); display: flex; flex-direction: column; }
+    .big-close-btn { top: 20px; right: 20px; width: 40px; height: 40px; font-size: 18px; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border); position: absolute; margin: 0; }
 } 
 
 @media (min-width: 769px) { 
-    .mobile-only-nav { display: none; } 
+    .mobile-only-nav { display: none !important; } 
 }
 
 </style>
@@ -961,44 +1062,44 @@ html {
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
         <!-- FEJLÉC ÉS FÜLEK VÁLASZTÓJA -->
-        <div class="filter-modal-header" style="flex-direction: column; align-items: stretch; gap: 16px; padding-bottom: 0;">
+        <div class="filter-modal-header" style="flex-direction: column; align-items: stretch; gap: 20px; padding-bottom: 0;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h2 style="font-size: 22px;">🎛️ Részletes szűrők</h2>
+                <h2 style="font-size: 24px;">🎛️ Részletes szűrők</h2>
                 <button class="big-close-btn" style="position: static;" onclick="closeModal('filterModalOverlay')">✖</button>
             </div>
             
-            <div class="info-nav-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 12px;">
+            <div class="info-nav-container" style="border-bottom: none; margin-bottom: 0; padding-bottom: 16px;">
                 <button class="info-nav-btn active" id="f-tab-btn-faculty" onclick="switchFilterTab('faculty')">
-                    🎓 Képzés <span id="badge-faculty" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                    🎓 Képzés <span id="badge-faculty" class="filter-badge" style="position:static; margin-left:6px; transform:translateY(-1px);">0</span>
                 </button>
                 <button class="info-nav-btn" id="f-tab-btn-company" onclick="switchFilterTab('company')">
-                    🏢 Vállalatok <span id="badge-company" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                    🏢 Vállalatok <span id="badge-company" class="filter-badge" style="position:static; margin-left:6px; transform:translateY(-1px);">0</span>
                 </button>
                 <button class="info-nav-btn" id="f-tab-btn-vibe" onclick="switchFilterTab('vibe')">
-                    ✨ Vibe <span id="badge-vibe" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                    ✨ Vibe <span id="badge-vibe" class="filter-badge" style="position:static; margin-left:6px; transform:translateY(-1px);">0</span>
                 </button>
                 <button class="info-nav-btn" id="f-tab-btn-tag" onclick="switchFilterTab('tag')">
-                    💻 Technológiák <span id="badge-tag" class="filter-badge" style="position:static; margin-left:4px; transform:translateY(-1px);">0</span>
+                    💻 Technológiák <span id="badge-tag" class="filter-badge" style="position:static; margin-left:6px; transform:translateY(-1px);">0</span>
                 </button>
             </div>
         </div>
 
         <!-- TARTALMI SZEKCIÓK (Csak egy látszik egyszerre) -->
-        <div class="filter-modal-body" style="display: block; padding-top: 24px;">
+        <div class="filter-modal-body" style="display: block; padding-top: 32px;">
             <div class="filter-section" id="f-tab-faculty">
-                <h3 style="margin-bottom: 20px;">Válassz képzési területet</h3>
+                <h3 style="margin-bottom: 24px;">Válassz képzési területet</h3>
                 <div class="filter-group" id="modalFacultyButtons"></div>
             </div>
             <div class="filter-section" id="f-tab-company" style="display: none;">
-                <h3 style="margin-bottom: 20px;">Melyik vállalat érdekel?</h3>
+                <h3 style="margin-bottom: 24px;">Melyik vállalat érdekel?</h3>
                 <div class="filter-group" id="modalCompanyButtons"></div>
             </div>
             <div class="filter-section" id="f-tab-vibe" style="display: none;">
-                <h3 style="margin-bottom: 20px;">Milyen munkakörnyezetet keresel?</h3>
+                <h3 style="margin-bottom: 24px;">Milyen munkakörnyezetet keresel?</h3>
                 <div class="filter-group" id="modalVibeButtons"></div>
             </div>
             <div class="filter-section" id="f-tab-tag" style="display: none;">
-                <h3 style="margin-bottom: 20px;">Népszerű nyelvek és címkék</h3>
+                <h3 style="margin-bottom: 24px;">Népszerű nyelvek és címkék</h3>
                 <div class="filter-group" id="modalTagButtons"></div>
             </div>
         </div>
@@ -1047,34 +1148,39 @@ html {
 </div>
 
 <!-- ========================================================================== -->
-<!-- HTML: 4. FŐ APPLIKÁCIÓ NÉZET ÉS OLDALSÁV (A HÁROM FÜLLEL)                  -->
+<!-- HTML: 4. FŐ APPLIKÁCIÓ NÉZET ÉS OLDALSÁV (A 4 FÜLLEL)                      -->
 <!-- ========================================================================== -->
 <div id="loggedInView">
     <aside class="sidebar">
         <div class="sidebar-top-section">
             
             <!-- FEJLÉC ÉS LOGÓ -->
-            <div class="sidebar-header" style="position: relative; padding: 0 0 25px 0;">
-                <h2 class="sidebar-logo" style="margin: 0 10px; padding: 8px; width: 100%; display: flex; align-items: center; gap: 14px;">
-                    <span class="logo-icon" style="width: 36px; height: 36px; display: flex; justify-content: center; align-items: center;">U</span>
+            <div class="sidebar-header">
+                <h2 class="sidebar-logo">
+                    <span class="logo-icon">U</span>
                     <span class="logo-text">UniStart</span>
                 </h2>
-                <button class="sidebar-theme-toggle" id="themeToggleDesktop" title="Téma váltása" style="position: absolute; right: 18px; top: 10px;">☀️</button>
+                <button class="sidebar-theme-toggle" id="themeToggleDesktop" title="Téma váltása">☀️</button>
             </div>
             
             <!-- NAVIGÁCIÓS MENÜ -->
-            <ul class="nav-menu" style="gap: 8px;">
-                <li class="nav-item active" id="nav-forum" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')" style="margin: 0 10px; padding: 10px;">
-                    <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">💬</span></div> 
+            <ul class="nav-menu">
+                <li class="nav-item active" id="nav-forum" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')">
+                    <div class="nav-icon-box"><span class="nav-icon">💬</span></div> 
                     <span class="nav-text">Karrierfórum</span>
                 </li>
-                <li class="nav-item" id="nav-saved" onclick="setFilterMode('saved'); switchTab('forumTab', 'Mentett Állások', 'nav-saved')" style="margin: 0 10px; padding: 10px;">
-                    <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">🤍</span></div> 
+                <li class="nav-item" id="nav-saved" onclick="setFilterMode('saved'); switchTab('forumTab', 'Mentett Állások', 'nav-saved')">
+                    <div class="nav-icon-box"><span class="nav-icon">🤍</span></div> 
                     <span class="nav-text">Kedvencek</span>
                 </li>
-                <!-- 📱 Csak mobilon jelenik meg a 3. fül (Infó) -->
-                <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile')" style="margin: 0 10px; padding: 10px;">
-                    <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">ℹ️</span></div> 
+                <!-- 🚀 ÚJ FÜL: Ajánlatok -->
+                <li class="nav-item" id="nav-offers" onclick="setFilterMode('offers'); switchTab('forumTab', 'Ajánlatok', 'nav-offers')">
+                    <div class="nav-icon-box"><span class="nav-icon">🎁</span></div> 
+                    <span class="nav-text">Ajánlatok</span>
+                </li>
+                <!-- 📱 Csak mobilon jelenik meg a 4. fül (Infó) -->
+                <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile')">
+                    <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div> 
                     <span class="nav-text">Infó</span>
                 </li>
             </ul>
@@ -1082,8 +1188,8 @@ html {
         
         <div class="sidebar-bottom">
             <!-- 💻 Asztali gépen itt van az Info ablak gombja -->
-            <div class="sidebar-profile" id="nav-info-desktop" onclick="openInfoModal('about')" style="margin: 0 10px 16px 10px; padding: 10px;">
-                <div style="width: 36px; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><span class="nav-icon">ℹ️</span></div>
+            <div class="sidebar-profile" id="nav-info-desktop" onclick="openInfoModal('about')">
+                <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div>
                 <span class="nav-text">Információ</span>
             </div>
         </div>
@@ -1097,11 +1203,11 @@ html {
 
         <div class="dashboard-content">
             
-            <!-- ======================= 1. FÜL: FÓRUM ======================== -->
+            <!-- ======================= 1. FÜL: FÓRUM / MENTETT / AJÁNLATOK ======================== -->
             <div id="forumTab" class="tab-content active">
 
                 <div class="omnibar-wrapper">
-                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; flex-direction: column; gap: 16px;">
                         <div class="search-inputs-row">
                             <div class="search-box-container keyword-search">
                                 <span class="search-icon">🔍</span>
@@ -1129,10 +1235,10 @@ html {
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
                 </div>
                 
-                <div class="section-header-row" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
-                    <h2 class="section-title" style="display: flex; align-items: center; gap: 12px;">
+                <div class="section-header-row" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+                    <h2 class="section-title" style="display: flex; align-items: center; gap: 16px;">
                         <span id="resultsTitleText">Találatok</span>
-                        <span id="jobCountBadge" style="font-size: 14px; background: var(--tag-bg); border: 1px solid var(--tag-border); padding: 4px 12px; border-radius: var(--radius-pill); color: var(--subtitle-color); font-weight: 600;">0 db</span>
+                        <span id="jobCountBadge" style="font-size: 15px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 6px 16px; border-radius: var(--radius-pill); color: var(--subtitle-color); font-weight: 700;">0 db</span>
                     </h2>
                     
                     <select id="sortSelect" class="sort-select" onchange="handleSort(this.value)">
@@ -1153,64 +1259,64 @@ html {
 
             <!-- ======================= 2. FÜL: INFORMÁCIÓS OLDAL (MOBIL) ======================== -->
             <div id="infoTab" class="tab-content">
-                <div style="display: flex; flex-direction: column; gap: 40px; max-width: 800px; margin: 0 auto; padding-top: 10px; padding-bottom: 40px;">
+                <div style="display: flex; flex-direction: column; gap: 48px; max-width: 800px; margin: 0 auto; padding-top: 10px; padding-bottom: 40px;">
                     
                     <!-- Megjelenés (Sötét/Világos mód) -->
-                    <div class="ios-menu-card" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
-                        <div style="display: flex; align-items: center; gap: 14px;">
-                            <div class="ios-icon-box" style="background: #ff9f0a; color: white;">🌓</div>
-                            <span style="font-weight: 600; font-size: 16px;">Sötét mód</span>
+                    <div class="ios-menu-card" style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+                        <div style="display: flex; align-items: center; gap: 16px;">
+                            <div class="ios-icon-box" style="background: #f59e0b; color: white;">🌓</div>
+                            <span style="font-weight: 700; font-size: 18px;">Sötét mód</span>
                         </div>
-                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 40px; height: 40px; font-size: 18px; background: var(--bg-color); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
+                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 44px; height: 44px; font-size: 20px; background: var(--card-bg); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
                     </div>
 
                     <!-- RÓLUNK & CSAPAT SZÖVEGES TARTALOM (HIÁNYTALANUL) -->
                     <div>
-                        <h2 class="section-title" style="margin-bottom: 20px;">🎓 Rólunk</h2>
+                        <h2 class="section-title" style="margin-bottom: 24px;">🎓 Rólunk</h2>
                         
-                        <div class="about-card" style="margin-bottom: 32px; padding: 32px 24px; border: 1px solid var(--faculty-color); background: rgba(191, 90, 242, 0.05); text-align: center;">
-                            <div style="font-size: 40px; margin-bottom: 12px; line-height: 1;">🎯</div>
-                            <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">A küldetésünk</h2>
-                            <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 95%; margin: 0 auto;">
+                        <div class="about-card" style="margin-bottom: 32px; padding: 40px 32px; border: 1px solid var(--faculty-color); background: rgba(168, 85, 247, 0.05); text-align: center;">
+                            <div style="font-size: 48px; margin-bottom: 16px; line-height: 1;">🎯</div>
+                            <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">A küldetésünk</h2>
+                            <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; max-width: 95%; margin: 0 auto; font-weight: 500;">
                                 Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a <strong>leggyorsabb, legátláthatóbb és legmodernebb</strong> álláskereső platformot biztosítsuk. Nem hiszünk a bonyolult űrlapokban és az elavult dizájnban. Hiszünk viszont a villámgyors szűrésben és a prémium felhasználói élményben.
                             </p>
                         </div>
 
-                        <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Alapértékeink</h3>
-                        <div style="display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
-                                <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Gyorsaság</div>
-                                <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Azonnali szűrés és találatok, felesleges várakozás nélkül.</div>
+                        <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Alapértékeink</h3>
+                        <div style="display: flex; gap: 20px; margin-bottom: 48px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+                                <div style="font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text-color);">Gyorsaság</div>
+                                <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Azonnali szűrés és találatok, felesleges várakozás nélkül.</div>
                             </div>
-                            <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 24px; margin-bottom: 8px;">✨</div>
-                                <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Letisztultság</div>
-                                <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Zéró felesleges információ vagy zavaró vizuális zaj.</div>
+                            <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 12px;">✨</div>
+                                <div style="font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text-color);">Letisztultság</div>
+                                <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Zéró felesleges információ vagy zavaró vizuális zaj.</div>
                             </div>
                         </div>
 
-                        <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">A Csapat</h3>
-                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+                        <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">A Csapat</h3>
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
                                 <div>
-                                    <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #e056fd, #be2edd); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(224, 86, 253, 0.3);">NJ</div>
-                                    <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">József Nóra</h3>
-                                    <span style="color: #e056fd; font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                                    <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Design, felhasználói élmény (UX) és platform stratégia.</p>
+                                    <div style="width: 80px; height: 80px; border-radius: 40px; background: linear-gradient(135deg, #d946ef, #9333ea); color: white; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin: 0 auto 16px auto; box-shadow: 0 8px 24px rgba(217, 70, 239, 0.4);">NJ</div>
+                                    <h3 style="margin: 0 0 6px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">József Nóra</h3>
+                                    <span style="color: #d946ef; font-size: 14px; font-weight: 700; display: block; margin-bottom: 12px;">Társalapító</span>
+                                    <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Design, felhasználói élmény (UX) és platform stratégia.</p>
                                 </div>
-                                <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
+                                <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn" style="background: #0284c7; color: white; font-size: 14px; padding: 12px 20px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);">
                                     <span>💼</span> LinkedIn Profil
                                 </a>
                             </div>
-                            <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+                            <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
                                 <div>
-                                    <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #0a84ff, #005bb5); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);">BA</div>
-                                    <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">Weszter Szabó Bátor</h3>
-                                    <span style="color: var(--primary-color); font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                                    <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Technológia, adatbázis és a platform teljeskörű fejlesztése.</p>
+                                    <div style="width: 80px; height: 80px; border-radius: 40px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin: 0 auto 16px auto; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);">BA</div>
+                                    <h3 style="margin: 0 0 6px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Weszter Szabó Bátor</h3>
+                                    <span style="color: var(--primary-color); font-size: 14px; font-weight: 700; display: block; margin-bottom: 12px;">Társalapító</span>
+                                    <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Technológia, adatbázis és a platform teljeskörű fejlesztése.</p>
                                 </div>
-                                <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
+                                <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn" style="background: #0284c7; color: white; font-size: 14px; padding: 12px 20px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);">
                                     <span>💼</span> LinkedIn Profil
                                 </a>
                             </div>
@@ -1219,35 +1325,35 @@ html {
 
                     <!-- TÁMOGATÁS TARTALOM (HIÁNYTALANUL) -->
                     <div>
-                        <h2 class="section-title" style="margin-bottom: 20px;">🚀 Támogatás</h2>
+                        <h2 class="section-title" style="margin-bottom: 24px;">🚀 Támogatás</h2>
                         
-                        <div class="about-card" style="margin-bottom: 24px; text-align: center; border: 1px solid var(--primary-color); background: rgba(10, 132, 255, 0.05); padding: 32px 24px;">
-                            <div style="font-size: 48px; margin-bottom: 12px; line-height: 1;">❤️</div>
-                            <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">Tartsd életben az UniStartot!</h2>
-                            <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 90%; margin: 0 auto;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.</p>
+                        <div class="about-card" style="margin-bottom: 32px; text-align: center; border: 1px solid var(--primary-color); background: rgba(59, 130, 246, 0.05); padding: 40px 32px;">
+                            <div style="font-size: 56px; margin-bottom: 16px; line-height: 1;">❤️</div>
+                            <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">Tartsd életben az UniStartot!</h2>
+                            <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; max-width: 90%; margin: 0 auto; font-weight: 500;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.</p>
                         </div>
 
-                        <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Mire fordítjuk a támogatásod?</h3>
-                        <div style="display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 28px; margin-bottom: 12px;">🖥️</div>
-                                <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Szerverek</div>
-                                <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">A villámgyors és stabil adatbázis fenntartása.</div>
+                        <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Mire fordítjuk a támogatásod?</h3>
+                        <div style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 16px;">🖥️</div>
+                                <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Szerverek</div>
+                                <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">A villámgyors és stabil adatbázis fenntartása.</div>
                             </div>
-                            <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 28px; margin-bottom: 12px;">🚫</div>
-                                <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Zéró Reklám</div>
-                                <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
+                            <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 16px;">🚫</div>
+                                <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Zéró Reklám</div>
+                                <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
                             </div>
-                            <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
-                                <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Fejlesztés</div>
-                                <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
+                            <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 16px;">💡</div>
+                                <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Fejlesztés</div>
+                                <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
                             </div>
                         </div>
 
-                        <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Válaszd ki, mivel támogatsz:</h3>
-                        <div class="support-options" style="margin-bottom: 24px;">
+                        <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Válaszd ki, mivel támogatsz:</h3>
+                        <div class="support-options" style="margin-bottom: 32px;">
                             <button class="option-btn active" onclick="setAmount('custom', event)">
                                 <span class="emoji">✨</span>
                                 <span class="title">Egyéni</span>
@@ -1265,80 +1371,78 @@ html {
                             </button>
                         </div>
 
-                        <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-                            <a href="https://paypal.me/batorweszter" target="_blank" class="apply-btn paypal-link-dyn" style="flex: 1; background: #003087; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 48, 135, 0.4);"><span>🅿️</span> Támogatás PayPal-al</a>
-                            <a href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn revolut-link-dyn" style="flex: 1; background: #0075ff; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 117, 255, 0.4);"><span>💳</span> Támogatás Revolut-al</a>
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 32px;">
+                            <a href="https://paypal.me/batorweszter" target="_blank" class="apply-btn paypal-link-dyn" style="flex: 1; background: #003087; color: white; font-size: 16px; box-shadow: 0 8px 24px rgba(0, 48, 135, 0.4); padding: 18px;"><span>🅿️</span> Támogatás PayPal-al</a>
+                            <a href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn revolut-link-dyn" style="flex: 1; background: #2563eb; color: white; font-size: 16px; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4); padding: 18px;"><span>💳</span> Támogatás Revolut-al</a>
                         </div>
 
-                        <div class="account-details" style="margin-top: 0; background: var(--bg-color); position: relative; overflow: hidden;">
-                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--success-color);"></div>
-                            <h4 style="margin: 0 0 12px 0; font-size: 15px; color: var(--text-color);">🏦 Klasszikus banki utalás</h4>
+                        <div class="account-details" style="margin-top: 0; background: var(--card-bg); position: relative; overflow: hidden; box-shadow: var(--card-shadow-soft); padding: 32px;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--success-color);"></div>
+                            <h4 style="margin: 0 0 16px 0; font-size: 18px; color: var(--text-color); font-weight: 800;">🏦 Klasszikus banki utalás</h4>
                             <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
                             <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val">HU14 1070 0024 7196 9958 5110 0005</span></div>
                             <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val" style="color: var(--primary-color);">UniStart tamogatas</span></div>
-                            <button class="apply-btn secondary copy-btn-dyn" onclick="copyIban()" style="width: 100%; margin-top: 16px;">📋 Adatok másolása vágólapra</button>
+                            <button class="apply-btn secondary copy-btn-dyn" onclick="copyIban()" style="width: 100%; margin-top: 24px; padding: 16px;">📋 Adatok másolása vágólapra</button>
                         </div>
                         
-                        <p style="text-align: center; color: var(--subtitle-color); font-size: 14px; margin-top: 24px; font-weight: 500;">Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶</p>
+                        <p style="text-align: center; color: var(--subtitle-color); font-size: 15px; margin-top: 32px; font-weight: 600;">Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶</p>
                     </div>
 
                     <!-- KAPCSOLAT TARTALOM (HIÁNYTALANUL) -->
                     <div>
-                        <h2 class="section-title" style="margin-bottom: 20px;">✉️ Kapcsolat</h2>
+                        <h2 class="section-title" style="margin-bottom: 24px;">✉️ Kapcsolat</h2>
                         
-                        <div style="text-align: center; margin-bottom: 32px;">
-                            <div style="font-size: 48px; margin-bottom: 12px;">✉️</div>
-                            <h2 style="margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: var(--text-color);">Lépj velünk kapcsolatba!</h2>
-                            <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 auto; max-width: 90%;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
+                        <div style="text-align: center; margin-bottom: 40px;">
+                            <div style="font-size: 56px; margin-bottom: 16px;">✉️</div>
+                            <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">Lépj velünk kapcsolatba!</h2>
+                            <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; margin: 0 auto; max-width: 90%; font-weight: 500;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
                         </div>
                         
-                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                                <div style="font-size: 28px; margin-bottom: 12px;">🙋‍♂️</div>
-                                <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Felhasználóknak</h3>
-                                <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
-                                <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%;">Üzenet küldése</a>
+                        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                                <div style="font-size: 32px; margin-bottom: 16px;">🙋‍♂️</div>
+                                <h3 style="margin: 0 0 12px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Felhasználóknak</h3>
+                                <p style="font-size: 15px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
+                                <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%; padding: 16px;">Üzenet küldése</a>
                             </div>
                             
-                            <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 24px; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.15);">
-                                <div style="font-size: 28px; margin-bottom: 12px;">💼</div>
-                                <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Cégeknek (B2B)</h3>
-                                <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
-                                <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%;">Partnerségi megkeresés</a>
+                            <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);">
+                                <div style="font-size: 32px; margin-bottom: 16px;">💼</div>
+                                <h3 style="margin: 0 0 12px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Cégeknek (B2B)</h3>
+                                <p style="font-size: 15px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
+                                <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%; padding: 16px;">Partnerségi megkeresés</a>
                             </div>
                         </div>
                     </div>
 
                     <!-- JOGI ÉS ADATVÉDELEM TARTALOM (HIÁNYTALANUL) -->
                     <div>
-                        <h2 class="section-title" style="margin-bottom: 20px;">⚖️ Impresszum & Adatvédelem</h2>
+                        <h2 class="section-title" style="margin-bottom: 24px;">⚖️ Impresszum & Adatvédelem</h2>
                         
-                        <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
-                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 14px; line-height: 1.6;">
-                                <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 600;">Weszter Szabó Bátor András</span>
+                        <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
+                            <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
+                            <div style="display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; font-size: 15px; line-height: 1.6; font-weight: 500;">
+                                <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 700;">Weszter Szabó Bátor András</span>
                                 <strong style="color: var(--subtitle-color);">Cím:</strong> <span style="color: var(--text-color);">1158 Budapest, Klebelsberg Kunó utca 14.</span>
                                 <strong style="color: var(--subtitle-color);">E-mail:</strong> <a href="mailto:bator.szabo@gmail.com" style="color: var(--primary-color); text-decoration: none;">bator.szabo@gmail.com</a>
                             </div>
                         </div>
 
-                        <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
-                            
-                            <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border);">
-                                <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Rackhost Zrt.</h3>
-                                <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
+                        <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
+                            <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
+                            <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--card-border);">
+                                <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-color);">Rackhost Zrt.</h3>
+                                <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
                             </div>
-                            
                             <div>
-                                <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
-                                <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
+                                <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
+                                <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
                             </div>
                         </div>
 
-                        <div class="about-card" style="padding: 24px; background: var(--bg-color); border: 1px solid var(--card-border); border-radius: 16px;">
-                            <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
-                            <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
+                        <div class="about-card" style="padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft);">
+                            <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 16px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
+                            <p style="font-size: 15px; color: var(--subtitle-color); margin: 0; line-height: 1.7; font-weight: 500;">
                                 Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
                                 A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
                             </p>
@@ -1346,7 +1450,7 @@ html {
                     </div>
 
                     <!-- Vízjel -->
-                    <div style="text-align: center; font-size: 13px; color: var(--subtitle-color); opacity: 0.6; padding-top: 20px;">
+                    <div style="text-align: center; font-size: 14px; color: var(--subtitle-color); opacity: 0.5; padding-top: 32px; font-weight: 600; letter-spacing: 0.5px;">
                         UniStart v1.0.0<br>Made with 🤍 in Budapest
                     </div>
 
@@ -1366,11 +1470,11 @@ html {
 <!-- HTML: 6. ASZTALI GÉPES MODÁLIS ABLAK (INFO OVERLAY) - HIÁNYTALANUL         -->
 <!-- ========================================================================== -->
 <div id="infoOverlay" class="big-support-overlay">
-    <div class="big-support-box" style="max-width: 750px;">
+    <div class="big-support-box" style="max-width: 800px;">
         <button class="big-close-btn" onclick="closeModal('infoOverlay')">✖</button>
-        <div style="padding: 30px 40px 0 40px; text-align: center;">
-            <div style="font-size: 36px; margin-bottom: 10px;">ℹ️</div>
-            <h1 style="font-size: 24px; font-weight: 800; margin: 0 0 20px 0;">Információk</h1>
+        <div style="padding: 40px 48px 0 48px; text-align: center;">
+            <div style="font-size: 40px; margin-bottom: 12px;">ℹ️</div>
+            <h1 style="font-size: 28px; font-weight: 800; margin: 0 0 24px 0; letter-spacing: -0.02em;">Információk</h1>
             <div class="info-nav-container">
                 <button class="info-nav-btn active" id="btn-about" onclick="switchInfoTab('about')">🎓 Rólunk</button>
                 <button class="info-nav-btn" id="btn-support" onclick="switchInfoTab('support')">🚀 Támogatás</button>
@@ -1379,53 +1483,53 @@ html {
             </div>
         </div>
 
-        <div class="big-support-content" style="padding-top: 10px;">
+        <div class="big-support-content" style="padding-top: 16px;">
             <!-- RÓLUNK -->
             <div id="info-about" class="info-section">
                 
-                <div class="about-card" style="margin-bottom: 32px; padding: 32px 24px; border: 1px solid var(--faculty-color); background: rgba(191, 90, 242, 0.05); text-align: center;">
-                    <div style="font-size: 40px; margin-bottom: 12px; line-height: 1;">🎯</div>
-                    <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">A küldetésünk</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 95%; margin: 0 auto;">
+                <div class="about-card" style="margin-bottom: 32px; padding: 40px 32px; border: 1px solid var(--faculty-color); background: rgba(168, 85, 247, 0.05); text-align: center;">
+                    <div style="font-size: 48px; margin-bottom: 16px; line-height: 1;">🎯</div>
+                    <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">A küldetésünk</h2>
+                    <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; max-width: 95%; margin: 0 auto; font-weight: 500;">
                         Az UniStartot azzal a céllal hoztuk létre, hogy a magyar egyetemisták és pályakezdők számára a <strong>leggyorsabb, legátláthatóbb és legmodernebb</strong> álláskereső platformot biztosítsuk. Nem hiszünk a bonyolult űrlapokban és az elavult dizájnban. Hiszünk viszont a villámgyors szűrésben és a prémium felhasználói élményben.
                     </p>
                 </div>
 
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Alapértékeink</h3>
-                <div style="display: flex; gap: 16px; margin-bottom: 40px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 24px; margin-bottom: 8px;">⚡</div>
-                        <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Gyorsaság</div>
-                        <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Azonnali szűrés és találatok, felesleges várakozás nélkül.</div>
+                <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Alapértékeink</h3>
+                <div style="display: flex; gap: 20px; margin-bottom: 48px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
+                        <div style="font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text-color);">Gyorsaság</div>
+                        <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Azonnali szűrés és találatok, felesleges várakozás nélkül.</div>
                     </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 16px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 24px; margin-bottom: 8px;">✨</div>
-                        <div style="font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-color);">Letisztultság</div>
-                        <div style="font-size: 12px; color: var(--subtitle-color); line-height: 1.4;">Zéró felesleges információ vagy zavaró vizuális zaj.</div>
+                    <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 12px;">✨</div>
+                        <div style="font-weight: 800; font-size: 16px; margin-bottom: 6px; color: var(--text-color);">Letisztultság</div>
+                        <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Zéró felesleges információ vagy zavaró vizuális zaj.</div>
                     </div>
                 </div>
 
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">A Csapat</h3>
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+                <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">A Csapat</h3>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #e056fd, #be2edd); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(224, 86, 253, 0.3);">NJ</div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">József Nóra</h3>
-                            <span style="color: #e056fd; font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Design, felhasználói élmény (UX) és platform stratégia.</p>
+                            <div style="width: 80px; height: 80px; border-radius: 40px; background: linear-gradient(135deg, #d946ef, #9333ea); color: white; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin: 0 auto 16px auto; box-shadow: 0 8px 24px rgba(217, 70, 239, 0.4);">NJ</div>
+                            <h3 style="margin: 0 0 6px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">József Nóra</h3>
+                            <span style="color: #d946ef; font-size: 14px; font-weight: 700; display: block; margin-bottom: 12px;">Társalapító</span>
+                            <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Design, felhasználói élmény (UX) és platform stratégia.</p>
                         </div>
-                        <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
+                        <a href="https://www.linkedin.com/in/nora-jozsef/" target="_blank" class="apply-btn" style="background: #0284c7; color: white; font-size: 14px; padding: 12px 20px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);">
                             <span>💼</span> LinkedIn Profil
                         </a>
                     </div>
-                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
+                    <div style="flex: 1; min-width: 200px; text-align: center; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px 24px; border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft); display: flex; flex-direction: column; justify-content: space-between;">
                         <div>
-                            <div style="width: 64px; height: 64px; border-radius: 32px; background: linear-gradient(135deg, #0a84ff, #005bb5); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 700; margin: 0 auto 12px auto; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3);">BA</div>
-                            <h3 style="margin: 0 0 4px 0; font-size: 18px; color: var(--text-color);">Weszter Szabó Bátor</h3>
-                            <span style="color: var(--primary-color); font-size: 13px; font-weight: 600; display: block; margin-bottom: 10px;">Társalapító</span>
-                            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Technológia, adatbázis és a platform teljeskörű fejlesztése.</p>
+                            <div style="width: 80px; height: 80px; border-radius: 40px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 800; margin: 0 auto 16px auto; box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);">BA</div>
+                            <h3 style="margin: 0 0 6px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Weszter Szabó Bátor</h3>
+                            <span style="color: var(--primary-color); font-size: 14px; font-weight: 700; display: block; margin-bottom: 12px;">Társalapító</span>
+                            <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Technológia, adatbázis és a platform teljeskörű fejlesztése.</p>
                         </div>
-                        <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn" style="background: #0077b5; font-size: 13px; padding: 10px 16px; box-shadow: 0 4px 12px rgba(0, 119, 181, 0.25);">
+                        <a href="https://www.linkedin.com/in/weszter" target="_blank" class="apply-btn" style="background: #0284c7; color: white; font-size: 14px; padding: 12px 20px; box-shadow: 0 8px 20px rgba(2, 132, 199, 0.3);">
                             <span>💼</span> LinkedIn Profil
                         </a>
                     </div>
@@ -1434,33 +1538,33 @@ html {
             
             <!-- TÁMOGATÁS -->
             <div id="info-support" class="info-section" style="display: none;">
-                <div class="about-card" style="margin-bottom: 24px; text-align: center; border: 1px solid var(--primary-color); background: rgba(10, 132, 255, 0.05); padding: 32px 24px;">
-                    <div style="font-size: 48px; margin-bottom: 12px; line-height: 1;">❤️</div>
-                    <h2 style="margin: 0 0 12px 0; font-size: 22px; font-weight: 800; color: var(--text-color);">Tartsd életben az UniStartot!</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; max-width: 90%; margin: 0 auto;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.</p>
+                <div class="about-card" style="margin-bottom: 32px; text-align: center; border: 1px solid var(--primary-color); background: rgba(59, 130, 246, 0.05); padding: 40px 32px;">
+                    <div style="font-size: 56px; margin-bottom: 16px; line-height: 1;">❤️</div>
+                    <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">Tartsd életben az UniStartot!</h2>
+                    <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; max-width: 90%; margin: 0 auto; font-weight: 500;">Az UniStart egy lelkesedésből született, 100%-ban független projekt. Nem áll mögöttünk nagyvállalati tőke vagy befektető. Az oldalt a szabadidőnkben fejlesztjük, a fenntartási költségeket pedig saját zsebből fedezzük, hogy a hallgatók számára mindig ingyenes maradjon.</p>
                 </div>
 
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Mire fordítjuk a támogatásod?</h3>
-                <div style="display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🖥️</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Szerverek</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">A villámgyors és stabil adatbázis fenntartása.</div>
+                <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Mire fordítjuk a támogatásod?</h3>
+                <div style="display: flex; gap: 20px; margin-bottom: 40px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 16px;">🖥️</div>
+                        <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Szerverek</div>
+                        <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">A villámgyors és stabil adatbázis fenntartása.</div>
                     </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🚫</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Zéró Reklám</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
+                    <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 16px;">🚫</div>
+                        <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Zéró Reklám</div>
+                        <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Hogy soha ne zavarjanak felugró, idegesítő hirdetések.</div>
                     </div>
-                    <div style="flex: 1; min-width: 140px; background: var(--bg-color); border: 1px solid var(--card-border); padding: 20px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">💡</div>
-                        <div style="font-weight: 700; font-size: 15px; margin-bottom: 6px; color: var(--text-color);">Fejlesztés</div>
-                        <div style="font-size: 13px; color: var(--subtitle-color); line-height: 1.4;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
+                    <div style="flex: 1; min-width: 140px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 16px;">💡</div>
+                        <div style="font-weight: 800; font-size: 16px; margin-bottom: 8px; color: var(--text-color);">Fejlesztés</div>
+                        <div style="font-size: 14px; color: var(--subtitle-color); line-height: 1.5; font-weight: 500;">Kávé a hosszú, éjszakába nyúló kódolásokhoz.</div>
                     </div>
                 </div>
 
-                <h3 style="font-size: 16px; margin: 0 0 16px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 0.5px;">Válaszd ki, mivel támogatsz:</h3>
-                <div class="support-options" style="margin-bottom: 24px;">
+                <h3 style="font-size: 18px; margin: 0 0 20px 0; color: var(--subtitle-color); text-transform: uppercase; letter-spacing: 1px; font-weight: 800;">Válaszd ki, mivel támogatsz:</h3>
+                <div class="support-options" style="margin-bottom: 32px;">
                     <button class="option-btn active" onclick="setAmount('custom', event)">
                         <span class="emoji">✨</span>
                         <span class="title">Egyéni</span>
@@ -1478,72 +1582,72 @@ html {
                     </button>
                 </div>
 
-                <div style="display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 24px;">
-                    <a href="https://paypal.me/batorweszter" target="_blank" class="apply-btn paypal-link-dyn" style="flex: 1; background: #003087; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 48, 135, 0.4);"><span>🅿️</span> Támogatás PayPal-al</a>
-                    <a href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn revolut-link-dyn" style="flex: 1; background: #0075ff; font-size: 16px; box-shadow: 0 4px 15px rgba(0, 117, 255, 0.4);"><span>💳</span> Támogatás Revolut-al</a>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 32px;">
+                    <a href="https://paypal.me/batorweszter" target="_blank" class="apply-btn paypal-link-dyn" style="flex: 1; background: #003087; color: white; font-size: 16px; box-shadow: 0 8px 24px rgba(0, 48, 135, 0.4); padding: 18px;"><span>🅿️</span> Támogatás PayPal-al</a>
+                    <a href="https://revolut.me/btoranxt2h" target="_blank" class="apply-btn revolut-link-dyn" style="flex: 1; background: #2563eb; color: white; font-size: 16px; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4); padding: 18px;"><span>💳</span> Támogatás Revolut-al</a>
                 </div>
 
-                <div class="account-details" style="margin-top: 0; background: var(--bg-color); position: relative; overflow: hidden;">
-                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--success-color);"></div>
-                    <h4 style="margin: 0 0 12px 0; font-size: 15px; color: var(--text-color);">🏦 Klasszikus banki utalás</h4>
+                <div class="account-details" style="margin-top: 0; background: var(--card-bg); position: relative; overflow: hidden; box-shadow: var(--card-shadow-soft); padding: 32px;">
+                    <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--success-color);"></div>
+                    <h4 style="margin: 0 0 16px 0; font-size: 18px; color: var(--text-color); font-weight: 800;">🏦 Klasszikus banki utalás</h4>
                     <div class="acc-row"><span class="acc-label">Név:</span><span class="acc-val">Weszter SZABÓ BÁTOR ANDRÁS</span></div>
                     <div class="acc-row"><span class="acc-label">IBAN:</span><span class="acc-val">HU14 1070 0024 7196 9958 5110 0005</span></div>
                     <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val" style="color: var(--primary-color);">UniStart tamogatas</span></div>
-                    <button class="apply-btn secondary copy-btn-dyn" onclick="copyIban()" style="width: 100%; margin-top: 16px;">📋 Adatok másolása vágólapra</button>
+                    <button class="apply-btn secondary copy-btn-dyn" onclick="copyIban()" style="width: 100%; margin-top: 24px; padding: 16px;">📋 Adatok másolása vágólapra</button>
                 </div>
             </div>
 
             <!-- KAPCSOLAT -->
             <div id="info-contact" class="info-section" style="display: none;">
-                <div style="text-align: center; margin-bottom: 32px;">
-                    <div style="font-size: 48px; margin-bottom: 12px;">✉️</div>
-                    <h2 style="margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: var(--text-color);">Lépj velünk kapcsolatba!</h2>
-                    <p style="color: var(--subtitle-color); font-size: 15px; line-height: 1.6; margin: 0 auto; max-width: 90%;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <div style="font-size: 56px; margin-bottom: 16px;">✉️</div>
+                    <h2 style="margin: 0 0 16px 0; font-size: 26px; font-weight: 800; color: var(--text-color); letter-spacing: -0.02em;">Lépj velünk kapcsolatba!</h2>
+                    <p style="color: var(--subtitle-color); font-size: 16px; line-height: 1.7; margin: 0 auto; max-width: 90%; font-weight: 500;">Akár kérdésed van, hibát találtál, vagy a cégeddel csatlakoznál a platformhoz, szívesen hallunk felőled.</p>
                 </div>
                 
-                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 24px; border-radius: 16px; text-align: center; box-shadow: var(--card-shadow-soft);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">🙋‍♂️</div>
-                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Felhasználóknak</h3>
-                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
-                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%;">Üzenet küldése</a>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: var(--card-shadow-soft);">
+                        <div style="font-size: 32px; margin-bottom: 16px;">🙋‍♂️</div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Felhasználóknak</h3>
+                        <p style="font-size: 15px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Ötleted van a fejlesztésre? Valami nem működik megfelelően? Írj nekünk!</p>
+                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - Felhasználói észrevétel" class="apply-btn secondary" style="width: 100%; padding: 16px;">Üzenet küldése</a>
                     </div>
                     
-                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 24px; border-radius: 16px; text-align: center; box-shadow: 0 8px 25px rgba(10, 132, 255, 0.15);">
-                        <div style="font-size: 28px; margin-bottom: 12px;">💼</div>
-                        <h3 style="margin: 0 0 8px 0; font-size: 18px; color: var(--text-color);">Cégeknek (B2B)</h3>
-                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0 0 20px 0; line-height: 1.5;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
-                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%;">Partnerségi megkeresés</a>
+                    <div style="flex: 1; min-width: 250px; background: var(--card-bg); border: 1px solid var(--primary-color); padding: 32px; border-radius: var(--radius-lg); text-align: center; box-shadow: 0 12px 32px rgba(59, 130, 246, 0.2);">
+                        <div style="font-size: 32px; margin-bottom: 16px;">💼</div>
+                        <h3 style="margin: 0 0 12px 0; font-size: 20px; color: var(--text-color); font-weight: 800;">Cégeknek (B2B)</h3>
+                        <p style="font-size: 15px; color: var(--subtitle-color); margin: 0 0 24px 0; line-height: 1.6; font-weight: 500;">Szeretnéd, ha a ti állásaitok is a leggyorsabb felületen jelennének meg?</p>
+                        <a href="mailto:bator.szabo@gmail.com?subject=UniStart - B2B Partnerségi megkeresés" class="apply-btn" style="width: 100%; padding: 16px;">Partnerségi megkeresés</a>
                     </div>
                 </div>
             </div>
 
             <!-- JOGI & ADATVÉDELEM -->
             <div id="info-legal" class="info-section" style="display: none;">
-                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
-                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 10px 16px; font-size: 14px; line-height: 1.6;">
-                        <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 600;">Weszter Szabó Bátor András</span>
+                <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
+                    <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
+                    <div style="display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; font-size: 15px; line-height: 1.6; font-weight: 500;">
+                        <strong style="color: var(--subtitle-color);">Név:</strong> <span style="color: var(--text-color); font-weight: 700;">Weszter Szabó Bátor András</span>
                         <strong style="color: var(--subtitle-color);">Cím:</strong> <span style="color: var(--text-color);">1158 Budapest, Klebelsberg Kunó utca 14.</span>
                         <strong style="color: var(--subtitle-color);">E-mail:</strong> <a href="mailto:bator.szabo@gmail.com" style="color: var(--primary-color); text-decoration: none;">bator.szabo@gmail.com</a>
                     </div>
                 </div>
 
-                <div class="about-card" style="margin-bottom: 24px; padding: 24px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
-                    <div style="margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--card-border);">
-                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Rackhost Zrt.</h3>
-                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
+                <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
+                    <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>☁️</span> Infrastruktúra & Tárhely</h2>
+                    <div style="margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--card-border);">
+                        <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-color);">Rackhost Zrt.</h3>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
                     </div>
                     <div>
-                        <h3 style="font-size: 15px; font-weight: 600; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
-                        <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.5;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
+                        <h3 style="font-size: 16px; font-weight: 700; margin: 0 0 6px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
+                        <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
                     </div>
                 </div>
 
-                <div class="about-card" style="padding: 24px; background: var(--bg-color); border: 1px solid var(--card-border); border-radius: 16px;">
-                    <h2 style="font-size: 18px; font-weight: 700; margin: 0 0 12px 0; display: flex; align-items: center; gap: 8px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
-                    <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.6;">
+                <div class="about-card" style="padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); border-radius: var(--radius-lg); box-shadow: var(--card-shadow-soft);">
+                    <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 16px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
+                    <p style="font-size: 15px; color: var(--subtitle-color); margin: 0; line-height: 1.7; font-weight: 500;">
                         Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
                         A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
                     </p>
@@ -1711,7 +1815,7 @@ html {
         
         msg.innerText = message;
         if (type === "success") { icon.innerText = "✅"; toast.style.borderColor = "var(--success-color)"; progress.style.background = "var(--success-color)";}
-        else if (type === "heart") { icon.innerText = "❤️"; toast.style.borderColor = "#ff453a"; progress.style.background = "#ff453a";}
+        else if (type === "heart") { icon.innerText = "❤️"; toast.style.borderColor = "#ef4444"; progress.style.background = "#ef4444";}
         else if (type === "share") { icon.innerText = "📤"; toast.style.borderColor = "var(--primary-color)"; progress.style.background = "var(--primary-color)";}
         else { icon.innerText = "ℹ️"; toast.style.borderColor = "var(--card-border)"; progress.style.background = "var(--text-color)";}
         
@@ -1750,8 +1854,8 @@ html {
             showToast("📋 Számlaszám sikeresen másolva!", "success");
             const btns = document.querySelectorAll('.copy-btn-dyn'); 
             btns.forEach(btn => {
-                btn.innerText = '✓ Másolva!'; btn.style.background = '#32d74b'; btn.style.color = '#000';
-                setTimeout(() => { btn.innerText = '📋 Adatok másolása vágólapra'; btn.style.background = 'var(--tag-bg)'; btn.style.color = 'var(--text-color)'; }, 2000);
+                btn.innerText = '✓ Másolva!'; btn.style.background = 'var(--success-color)'; btn.style.color = '#000';
+                setTimeout(() => { btn.innerText = '📋 Adatok másolása vágólapra'; btn.style.background = 'var(--card-bg)'; btn.style.color = 'var(--text-color)'; }, 2000);
             });
         });
     }
@@ -1783,7 +1887,7 @@ html {
     let activeVibes = JSON.parse(localStorage.getItem('unistart_active_vibes') || "[]");
     let savedJobIds = JSON.parse(localStorage.getItem('unistart_saved_jobs') || "[]");
 
-    let infiniteObserver = null; // 🚀 V16: Memóriaszivárgás gátló (Observer)
+    let infiniteObserver = null; 
 
     function removeAccents(str) { return str.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
 
@@ -1792,9 +1896,16 @@ html {
     // ==========================================================================
     function setFilterMode(mode) {
         filterMode = mode;
-        document.getElementById('resultsTitleText').innerText = mode === 'saved' ? "Mentett Állások" : "Találatok";
+        if (mode === 'saved') {
+            document.getElementById('resultsTitleText').innerText = "Mentett Állások";
+        } else if (mode === 'offers') {
+            document.getElementById('resultsTitleText').innerText = "Ajánlatok";
+        } else {
+            document.getElementById('resultsTitleText').innerText = "Találatok";
+        }
+        
         const omnibar = document.querySelector('.omnibar-wrapper');
-        if (omnibar) omnibar.style.display = mode === 'saved' ? 'none' : 'flex';
+        if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'offers') ? 'none' : 'flex';
         applyFilters();
     }
 
@@ -1940,20 +2051,17 @@ html {
             const snapshot = await db.collection("jobs").get();
             jobsData = [];
             
-            const now = Date.now(); // Konstans időbélyeg a kompilációhoz
+            const now = Date.now(); 
 
-            // 🚀 V16: Memória Szintű Pre-Kompiláció (O(1) Szűrés és Rendezés)
             snapshot.forEach(doc => {
                 let data = doc.data();
                 let job = { id: doc.id, ...data };
                 
-                // 1. Kereső index
                 const tagsString = (job.tags || []).join(" ");
                 const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
                 job._corpusClean = removeAccents(jobCorpusRaw);
                 job._locClean = removeAccents((job.location || '').toLowerCase());
                 
-                // 2. Rendezési indexek előszámolása (Ez 100x gyorsabbá teszi a filtereket!)
                 let sDate = job.scraped_at || job.updated_at || 0;
                 if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
                 else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
@@ -1963,13 +2071,8 @@ html {
                 if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
                 else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
 
-                // Dinamikus Publikálási Idő a rendezéshez
                 job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
-                
-                // Mai Friss mágikus szűrőhöz fix időbélyeg
                 job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
-
-                // ABC rendezéshez index
                 job._companyNameLower = (job.company_name || "").toLowerCase();
                 
                 jobsData.push(job);
@@ -1978,7 +2081,7 @@ html {
             const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
             const facContainer = document.getElementById('modalFacultyButtons');
             if(facContainer) {
-                facContainer.replaceChildren(); // V15: Gyors DOM tisztítás
+                try { facContainer.replaceChildren(); } catch(e) { facContainer.innerHTML = ''; }
                 faculties.forEach(fac => {
                     const btn = document.createElement('button');
                     btn.className = 'f-btn';
@@ -1991,7 +2094,7 @@ html {
             let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
             const compContainer = document.getElementById('modalCompanyButtons');
             if(compContainer) {
-                compContainer.replaceChildren();
+                try { compContainer.replaceChildren(); } catch(e) { compContainer.innerHTML = ''; }
                 uniqueCompanies.forEach(compName => {
                     const btn = document.createElement('button');
                     btn.className = 'f-btn';
@@ -2004,7 +2107,7 @@ html {
             const uniqueVibes = Array.from(new Set(jobsData.map(j => j.work_style))).filter(v => v).sort();
             const vibeContainer = document.getElementById('modalVibeButtons');
             if(vibeContainer) {
-                vibeContainer.replaceChildren();
+                try { vibeContainer.replaceChildren(); } catch(e) { vibeContainer.innerHTML = ''; }
                 uniqueVibes.forEach(vibe => {
                     const btn = document.createElement('button');
                     btn.className = 'f-btn';
@@ -2019,7 +2122,7 @@ html {
             const topTags = Object.keys(tagCount).sort((a,b) => tagCount[b] - tagCount[a]).slice(0, 20);
             const tagContainer = document.getElementById('modalTagButtons');
             if(tagContainer) {
-                tagContainer.replaceChildren();
+                try { tagContainer.replaceChildren(); } catch(e) { tagContainer.innerHTML = ''; }
                 topTags.forEach(tag => {
                     const btn = document.createElement('button');
                     btn.className = 'f-btn';
@@ -2122,7 +2225,7 @@ html {
         const badge = document.getElementById('activeFilterBadge');
         if (!container || !badge) return;
 
-        container.replaceChildren(); 
+        try { container.replaceChildren(); } catch(e) { container.innerHTML = ''; }
         
         const totalFilters = activeFaculties.length + activeCompanies.length + activeVibes.length;
         if (totalFilters === 0) {
@@ -2169,7 +2272,7 @@ html {
         const row = document.getElementById('searchTagsRow');
         if(!row) return;
 
-        row.replaceChildren(); 
+        try { row.replaceChildren(); } catch(e) { row.innerHTML = ''; }
 
         if (activeSearchTags.length === 0 && activeLocationTags.length === 0) {
             row.style.display = 'none';
@@ -2271,7 +2374,6 @@ html {
         }
     }
 
-    // 🚀 V16: Ultra-Gyorsított Konstans Szűrő Motor
     function applyFilters() {
         localStorage.setItem('unistart_active_companies', JSON.stringify(activeCompanies));
         localStorage.setItem('unistart_active_faculties', JSON.stringify(activeFaculties));
@@ -2279,10 +2381,13 @@ html {
         updateURLState(); 
         renderActiveFilterChips();
 
-        const now = Date.now(); // 🚀 Konstans változó a teljes ciklushoz
+        const now = Date.now();
         const oneDayAgo = now - 86400000;
 
         currentFilteredJobs = jobsData.filter(job => {
+            // 🚀 ÚJ: Ha az "Ajánlatok" fülön vagyunk, ne töltsön be állásokat!
+            if (filterMode === 'offers') return false; 
+            
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
 
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
@@ -2291,7 +2396,6 @@ html {
             
             let matchTags = true;
             if (activeSearchTags.length > 0) {
-                // 🚀 Villámgyors szűrés a memóriába mentett adatokból
                 matchTags = activeSearchTags.every(tag => {
                     return job._corpusClean && job._corpusClean.includes(removeAccents(tag.toLowerCase()));
                 });
@@ -2306,7 +2410,6 @@ html {
             
             let matchMagic = true;
             if (activeMagicFilter === 'today') {
-                // 🚀 Azonnali kiértékelés az előkompilált indexből (Date konverzió nélkül!)
                 if (job._magicDate < oneDayAgo) matchMagic = false; 
             }
             else if (activeMagicFilter === 'remote') {
@@ -2322,7 +2425,6 @@ html {
             return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc && matchMagic;
         });
 
-        // 🚀 V16 O(1) Rendezési Algoritmus (Dátum konverziók a ciklusban kiiktatva)
         currentFilteredJobs.sort((a, b) => {
             if (currentSortMode === "date_desc") return b._sortTime - a._sortTime; 
             if (currentSortMode === "date_asc") return a._sortTime - b._sortTime;  
@@ -2362,6 +2464,9 @@ html {
         if (currentFilteredJobs.length === 0) {
             if (filterMode === 'saved') {
                 container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
+            } else if (filterMode === 'offers') {
+                // 🚀 ÚJ: Ajánlatok (Offers) Üres Állapota!
+                container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🎁</span><h3 style="margin-top:0;">Még nincsenek ajánlataid</h3><p>Itt fognak megjelenni a profilodhoz illő, személyre szabott exkluzív karrier ajánlatok!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else {
                 container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
             }
@@ -2440,7 +2545,7 @@ html {
                         <p class="company-short-desc">Segíts egy kávé árával, hogy a platform 100%-ban ingyenes, villámgyors és reklámmentes maradjon a magyar hallgatóknak!</p>
                     </div>
                     <div class="company-card-actions">
-                        <button class="apply-btn" style="width: 100%; box-shadow: 0 4px 15px rgba(10, 132, 255, 0.3); pointer-events: none;">Támogatom a fejlesztést ☕</button>
+                        <button class="apply-btn" style="width: 100%; box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3); pointer-events: none;">Támogatom a fejlesztést ☕</button>
                     </div>
                 `;
                 fragment.appendChild(supportCard);
@@ -2460,7 +2565,6 @@ html {
         const anchor = document.getElementById('infiniteScrollAnchor');
         if(!anchor) return;
 
-        // 🚀 V16: Memóriaszivárgás gátló
         if (infiniteObserver) {
             infiniteObserver.disconnect();
         }

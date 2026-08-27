@@ -935,25 +935,20 @@ html {
     body { overflow-x: hidden; overflow-y: auto; }
     
     #loggedInView { display: block !important; height: auto !important; min-height: 100dvh !important; overflow: visible !important; }
-    /* Padding bottom with Safe Area for modern iPhones */
     .dashboard-main { display: block !important; height: auto !important; overflow: visible !important; padding-bottom: calc(120px + env(safe-area-inset-bottom, 20px)); }
 
-    /* Ragadós Fejléc */
     .dashboard-header { padding: 0 24px; height: 72px; min-height: 72px; display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 0 var(--card-border); background: var(--header-bg); position: sticky; top: 0; z-index: var(--z-header); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
     .dashboard-title { text-align: center; font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -0.03em;}
     
-    /* DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) - Középre rendezett 4 elemhez optimalizálva */
+    /* DINAMIKUS LEBEGŐ NAVIGÁCIÓ (FLOATING DOCK) */
     .sidebar { position: fixed; bottom: calc(20px + env(safe-area-inset-bottom, 16px)); left: 20px; right: 20px; width: auto !important; height: 68px; min-height: 68px; padding: 0 10px; border-radius: var(--radius-pill); border: 1px solid var(--card-border); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255,255,255,0.08); z-index: var(--z-toast); display: flex; flex-direction: row; justify-content: center; align-items: center; background: var(--modal-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); transform: translate3d(0,0,0); }
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile, .sidebar-bottom { display: none !important; } 
     .sidebar-top-section { width: 100%; display: flex; justify-content: center; }
 
     .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; align-items: center; display: flex; margin: 0; padding: 0; }
     
-    /* 🚀 ÚJ JAVÍTÁS: Csak az ikonok maradtak mobilon (szöveg nélkül), tökéletesen középre igazítva! */
     .nav-item { flex: none; margin: 0 !important; width: 52px; height: 52px; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: 50% !important; position: relative; transition: all 0.4s var(--ease-spring); touch-action: manipulation; }
     .nav-item::before { display: none; } 
-    
-    /* Szöveg teljes eltávolítása mobil nézetben */
     .nav-text { display: none !important; }
 
     .nav-item.active { background: var(--text-color) !important; color: var(--bg-color) !important; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2) !important; }
@@ -963,16 +958,15 @@ html {
     .nav-icon-box { width: auto !important; display: flex; align-items: center; justify-content: center; }
     .nav-icon { font-size: 24px; margin: 0; transition: transform var(--transition-fast); }
     
-    /* 🚀 JAVÍTVA: A téma váltó gomb (Nap/Hold) nagyobb lett mobilon, hogy könnyebben lehessen rányomni */
-    .ios-menu-card .sidebar-theme-toggle {
-        width: 52px !important;
-        height: 52px !important;
-        font-size: 24px !important;
-        border-radius: var(--radius-md) !important;
-    }
-
-    /* 🚀 MOST MÁR BIZTOSAN LÁTSZÓDIK AZ INFÓ GOMB */
     .mobile-only-nav { display: flex !important; }
+
+    /* ÜRES ÁLLAPOT KÖZÉPRE ZÁRÁSA MOBILON */
+    .empty-state {
+        height: calc(100dvh - 72px - 120px - env(safe-area-inset-bottom, 20px));
+        padding: 20px;
+        margin: 0;
+        justify-content: center;
+    }
 
     /* Tartalom elrendezése mobilra */
     .dashboard-content { padding: 20px; display: block; }
@@ -1147,19 +1141,21 @@ html {
             
             <!-- NAVIGÁCIÓS MENÜ -->
             <ul class="nav-menu">
-                <li class="nav-item active" id="nav-forum" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')">
+                <li class="nav-item active" id="nav-forum" onclick="setExclusiveSupportMode(false); setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')">
                     <div class="nav-icon-box"><span class="nav-icon">💬</span></div> 
                     <span class="nav-text">Karrierfórum</span>
                 </li>
-                <li class="nav-item" id="nav-saved" onclick="setFilterMode('saved'); switchTab('forumTab', 'Mentett Állások', 'nav-saved')">
+                <li class="nav-item" id="nav-saved" onclick="setExclusiveSupportMode(false); setFilterMode('saved'); switchTab('forumTab', 'Mentett Állások', 'nav-saved')">
                     <div class="nav-icon-box"><span class="nav-icon">🤍</span></div> 
                     <span class="nav-text">Kedvencek</span>
                 </li>
-                <li class="nav-item" id="nav-offers" onclick="setFilterMode('offers'); switchTab('forumTab', 'Ajánlatok', 'nav-offers')">
+                <!-- 🚀 ÚJ FÜL: Ajánlatok -->
+                <li class="nav-item" id="nav-offers" onclick="setExclusiveSupportMode(false); setFilterMode('offers'); switchTab('forumTab', 'Ajánlatok', 'nav-offers')">
                     <div class="nav-icon-box"><span class="nav-icon">🎁</span></div> 
                     <span class="nav-text">Ajánlatok</span>
                 </li>
-                <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile')">
+                <!-- 📱 Csak mobilon jelenik meg a 4. fül (Infó) -->
+                <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="setExclusiveSupportMode(false); switchTab('infoTab', 'Információk', 'nav-info-mobile'); switchInfoTab('about');">
                     <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div> 
                     <span class="nav-text">Infó</span>
                 </li>
@@ -1167,7 +1163,8 @@ html {
         </div>
         
         <div class="sidebar-bottom">
-            <div class="sidebar-profile" id="nav-info-desktop" onclick="openInfoModal('about')">
+            <!-- 💻 Asztali gépen itt van az Info ablak gombja -->
+            <div class="sidebar-profile" id="nav-info-desktop" onclick="setExclusiveSupportMode(false); openInfoModal('about')">
                 <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div>
                 <span class="nav-text">Információ</span>
             </div>
@@ -1204,7 +1201,6 @@ html {
                         <button class="main-filter-btn" onclick="openModal('filterModalOverlay')">
                             🎛️ Szűrők <span class="filter-badge" id="activeFilterBadge">0</span>
                         </button>
-                        <!-- 🚀 JAVÍTVA: A "Mai friss", "Home office", "IT Terület" és "Gazdaság" gombok TÖRÖLVE lettek a kérésnek megfelelően! -->
                     </div>
 
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
@@ -1212,7 +1208,6 @@ html {
                 
                 <div class="section-header-row" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                     <h2 class="section-title" style="display: flex; align-items: center; gap: 16px;">
-                        <!-- 🚀 JAVÍTVA: Mindig csak "Találatok" marad, ahogy kérted, nincs redundancia a Mentett állások/Ajánlatok fülön -->
                         <span id="resultsTitleText">Találatok</span>
                         <span id="jobCountBadge" style="font-size: 15px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 6px 16px; border-radius: var(--radius-pill); color: var(--subtitle-color); font-weight: 700;">0 db</span>
                     </h2>
@@ -1238,16 +1233,15 @@ html {
                 <div style="display: flex; flex-direction: column; gap: 48px; max-width: 800px; margin: 0 auto; padding-top: 10px; padding-bottom: 40px;">
                     
                     <!-- Megjelenés (Sötét/Világos mód) -->
-                    <div class="ios-menu-card" style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center;">
+                    <div id="mobileThemeToggleCard" class="ios-menu-card" style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleTheme()">
                         <div style="display: flex; align-items: center; gap: 16px;">
                             <div class="ios-icon-box" style="background: #f59e0b; color: white;">🌓</div>
-                            <span style="font-weight: 700; font-size: 18px;">Sötét mód</span>
+                            <span style="font-weight: 700; font-size: 18px;">Sötét / Világos mód</span>
                         </div>
-                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 52px; height: 52px; font-size: 24px; border-radius: var(--radius-md); background: var(--card-bg); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
                     </div>
 
                     <!-- RÓLUNK & CSAPAT SZÖVEGES TARTALOM (HIÁNYTALANUL) -->
-                    <div>
+                    <div id="info-about" class="info-section">
                         <h2 class="section-title" style="margin-bottom: 24px;">🎓 Rólunk</h2>
                         
                         <div class="about-card" style="margin-bottom: 32px; padding: 40px 32px; border: 1px solid var(--faculty-color); background: rgba(168, 85, 247, 0.05); text-align: center;">
@@ -1300,7 +1294,7 @@ html {
                     </div>
 
                     <!-- TÁMOGATÁS TARTALOM (HIÁNYTALANUL) -->
-                    <div>
+                    <div id="info-support" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">🚀 Támogatás</h2>
                         
                         <div class="about-card" style="margin-bottom: 32px; text-align: center; border: 1px solid var(--primary-color); background: rgba(59, 130, 246, 0.05); padding: 40px 32px;">
@@ -1365,7 +1359,7 @@ html {
                     </div>
 
                     <!-- KAPCSOLAT TARTALOM (HIÁNYTALANUL) -->
-                    <div>
+                    <div id="info-contact" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">✉️ Kapcsolat</h2>
                         
                         <div style="text-align: center; margin-bottom: 40px;">
@@ -1392,7 +1386,7 @@ html {
                     </div>
 
                     <!-- JOGI ÉS ADATVÉDELEM TARTALOM (HIÁNYTALANUL) -->
-                    <div>
+                    <div id="info-legal" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">⚖️ Impresszum & Adatvédelem</h2>
                         
                         <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
@@ -1450,7 +1444,7 @@ html {
         <button class="big-close-btn" onclick="closeModal('infoOverlay')">✖</button>
         <div style="padding: 40px 48px 0 48px; text-align: center;">
             <div style="font-size: 40px; margin-bottom: 12px;">ℹ️</div>
-            <h1 style="font-size: 28px; font-weight: 800; margin: 0 0 24px 0; letter-spacing: -0.02em;">Információk</h1>
+            <h1 id="infoModalTitle" style="font-size: 28px; font-weight: 800; margin: 0 0 24px 0; letter-spacing: -0.02em;">Információk</h1>
             <div class="info-nav-container">
                 <button class="info-nav-btn active" id="btn-about" onclick="switchInfoTab('about')">🎓 Rólunk</button>
                 <button class="info-nav-btn" id="btn-support" onclick="switchInfoTab('support')">🚀 Támogatás</button>
@@ -1642,7 +1636,7 @@ html {
 
 <script>
 
-    // DÁTUM MEGÁLLAPÍTÓ FÜGGVÉNY (LOCAL TIMEZONE ALAPJÁN)
+    // 🚀 DÁTUM MEGÁLLAPÍTÓ FÜGGVÉNY (LOCAL TIMEZONE ALAPJÁN A "MAI FRISS"-HEZ)
     function getLocalDateStr(dateVal) {
         if (!dateVal) return "";
         const d = new Date(dateVal);
@@ -1659,19 +1653,16 @@ html {
 
     const body = document.body;
     const themeToggleDesktop = document.getElementById('themeToggleDesktop');
-    const themeToggleMobileTabBtn = document.getElementById('themeToggleMobileTabBtn');
     const prefersLightScheme = window.matchMedia("(prefers-color-scheme: light)");
 
     function applyTheme(isLight) {
         if (isLight) {
             body.setAttribute('data-theme', 'light');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '🌙';
-            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '🌙';
             localStorage.setItem('theme', 'light');
         } else {
             body.removeAttribute('data-theme');
             if (themeToggleDesktop) themeToggleDesktop.textContent = '☀️';
-            if (themeToggleMobileTabBtn) themeToggleMobileTabBtn.textContent = '☀️';
             localStorage.setItem('theme', 'dark');
         }
     }
@@ -1681,13 +1672,29 @@ html {
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
 
     // ==========================================================================
-    // JS: 2. GÖRGÉS, LAPFÜLEK ÉS NAVIGÁCIÓ (🚀 GPU GYORSÍTOTT)
+    // JS: 2. GÖRGÉS, LAPFÜLEK, MEMÓRIA (APP STATE) ÉS NAVIGÁCIÓ
     // ==========================================================================
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
+    // APP MEMÓRIA MENTÉSE (Zero-GC Debounce)
+    function saveAppState() {
+        const state = {
+            filterMode: filterMode,
+            activeNavId: document.querySelector('.nav-item.active')?.id || 'nav-forum',
+            scrollPos: dashboardMain ? dashboardMain.scrollTop : 0,
+            displayedCount: displayedCount
+        };
+        localStorage.setItem('unistart_app_state', JSON.stringify(state));
+    }
+
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') saveAppState();
+    });
+
     if (dashboardMain && backToTopBtn) {
         let isScrolling = false;
+        let scrollTimeout;
         
         dashboardMain.addEventListener('scroll', () => { 
             if (!isScrolling) {
@@ -1697,6 +1704,8 @@ html {
                 });
                 isScrolling = true;
             }
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(saveAppState, 500); // 🚀 Memória mentése görgetés után
         }, { passive: true });
         
         window.addEventListener('scroll', () => { 
@@ -1707,6 +1716,8 @@ html {
                 });
                 isScrolling = true;
             }
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(saveAppState, 500);
         }, { passive: true });
     }
 
@@ -1717,6 +1728,28 @@ html {
         } catch(e) {
             if (dashboardMain) dashboardMain.scrollTop = 0;
             window.scrollTo(0, 0);
+        }
+    }
+
+    // 🚀 TÁMOGATÁS "EXCLUSIVE MODE" LOGIKÁJA
+    function setExclusiveSupportMode(isActive) {
+        const navContainers = document.querySelectorAll('.info-nav-container');
+        const mobileThemeCard = document.getElementById('mobileThemeToggleCard');
+        const desktopModalTitle = document.getElementById('infoModalTitle');
+        const mobileViewTitle = document.getElementById('currentViewTitle');
+        
+        navContainers.forEach(el => { el.style.display = isActive ? 'none' : 'flex'; });
+        
+        if (mobileThemeCard) mobileThemeCard.style.display = isActive ? 'none' : 'flex';
+        
+        if (isActive) {
+            if (desktopModalTitle) desktopModalTitle.innerText = 'Támogatás';
+            if (mobileViewTitle && window.innerWidth <= 768) mobileViewTitle.innerText = 'Támogatás';
+        } else {
+            if (desktopModalTitle) desktopModalTitle.innerText = 'Információk';
+            if (mobileViewTitle && window.innerWidth <= 768 && document.getElementById('infoTab').classList.contains('active')) {
+                mobileViewTitle.innerText = 'Információk';
+            }
         }
     }
 
@@ -1736,6 +1769,8 @@ html {
             if (dashboardMain) dashboardMain.scrollTop = 0;
             window.scrollTo(0, 0); 
         } catch (err) {}
+        
+        setTimeout(saveAppState, 100); // 🚀 Lapváltás mentése
     }
 
     // ==========================================================================
@@ -1748,7 +1783,10 @@ html {
     
     function closeModal(modalId) { 
         const modal = document.getElementById(modalId);
-        if (modal) { modal.classList.remove('active'); document.body.classList.remove('modal-open'); }
+        if (modal) { 
+            modal.classList.remove('active'); document.body.classList.remove('modal-open');
+            if (modalId === 'infoOverlay') setExclusiveSupportMode(false); // Biztonsági visszaállítás
+        }
     }
 
     function switchInfoTab(tabId) {
@@ -1760,22 +1798,21 @@ html {
         if(btn) btn.classList.add('active');
     }
 
-    function openInfoModal(tabId) {
+    function openInfoModal(tabId, isExclusive = false) {
+        setExclusiveSupportMode(isExclusive);
         switchInfoTab(tabId);
         openModal('infoOverlay');
     }
 
     function openSupportTab(event) {
         if(event) event.stopPropagation();
+        setExclusiveSupportMode(true); // 🚀 Bekapcsoljuk az exkluzív nézetet
         if (window.innerWidth <= 768) {
-            switchTab('infoTab', 'Információk', 'nav-info-mobile');
+            switchTab('infoTab', 'Támogatás', 'nav-info-mobile');
             switchInfoTab('support');
-            try {
-                if (dashboardMain) dashboardMain.scrollTop = 0;
-                window.scrollTo(0, 0); 
-            } catch (err) {}
+            scrollToTop();
         } else {
-            openInfoModal('support');
+            openInfoModal('support', true);
         }
     }
 
@@ -1878,14 +1915,14 @@ html {
     // ==========================================================================
     // JS: 6. MŰVELETEK ÉS SZŰRŐ MOTOR
     // ==========================================================================
-    function setFilterMode(mode) {
+    function setFilterMode(mode, isRestore = false) {
         filterMode = mode;
-        // JAVÍTÁS: A redundancia elkerülése végett fixen "Találatok" marad, mivel a főcím a top sávban (Headerben) van.
+        // 🚀 JAVÍTÁS: Mindig "Találatok" marad, mert a fejlécben már ott van a kontextus.
         document.getElementById('resultsTitleText').innerText = "Találatok";
         
         const omnibar = document.querySelector('.omnibar-wrapper');
         if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'offers') ? 'none' : 'flex';
-        applyFilters();
+        applyFilters(isRestore);
     }
 
     function toggleSaveJob(jobId, event) {
@@ -1921,9 +1958,6 @@ html {
         activeMagicFilter = (activeMagicFilter === type) ? "" : type;
         document.querySelectorAll('.magic-chip').forEach(chip => chip.classList.remove('active'));
         if (activeMagicFilter === 'today') document.getElementById('magicChipToday').classList.add('active');
-        if (activeMagicFilter === 'remote') document.getElementById('magicChipRemote').classList.add('active');
-        if (activeMagicFilter === 'it') document.getElementById('magicChipIt').classList.add('active');
-        if (activeMagicFilter === 'business') document.getElementById('magicChipBusiness').classList.add('active');
         applyFilters();
     }
 
@@ -2053,7 +2087,7 @@ html {
                 job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
                 job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
                 
-                // JAVÍTÁS: A pontos, naptári nap szerinti ellenőrzés bevezetése (Local Timezone alapú ISO dátum)
+                // 🚀 JAVÍTÁS: A pontos, naptári nap szerinti string mentése az időzónához igazítva
                 job._magicDateStr = getLocalDateStr(job._magicDate);
                 
                 job._companyNameLower = (job.company_name || "").toLowerCase();
@@ -2116,7 +2150,39 @@ html {
             }
 
             updateModalButtonsVisuals();
-            applyFilters();
+            
+            // 🚀 APP MEMÓRIA VISSZATÖLTÉSE (Állapot visszaállítása)
+            const savedStateStr = localStorage.getItem('unistart_app_state');
+            let savedAppState = null;
+            if (savedStateStr) {
+                try { savedAppState = JSON.parse(savedStateStr); } catch(e) {}
+            }
+
+            if (savedAppState) {
+                displayedCount = savedAppState.displayedCount || 15;
+                setFilterMode(savedAppState.filterMode || 'all', true); // isRestore = true
+
+                if (savedAppState.activeNavId === 'nav-info-mobile') {
+                    setExclusiveSupportMode(false);
+                    switchTab('infoTab', 'Információk', 'nav-info-mobile');
+                } else if (savedAppState.activeNavId === 'nav-offers') {
+                    switchTab('forumTab', 'Ajánlatok', 'nav-offers');
+                } else if (savedAppState.activeNavId === 'nav-saved') {
+                    switchTab('forumTab', 'Mentett Állások', 'nav-saved');
+                } else {
+                    switchTab('forumTab', 'Karrierfórum', 'nav-forum');
+                }
+
+                // Enyhe csúszással visszaállítjuk a görgetést, miután a DOM felépült
+                setTimeout(() => {
+                    if (dashboardMain && savedAppState.scrollPos) {
+                        dashboardMain.scrollTop = savedAppState.scrollPos;
+                    }
+                }, 150);
+            } else {
+                applyFilters();
+            }
+
             setupInfiniteScroll(); 
             
         } catch (error) {
@@ -2357,19 +2423,18 @@ html {
         }
     }
 
-    function applyFilters() {
+    function applyFilters(isRestore = false) {
         localStorage.setItem('unistart_active_companies', JSON.stringify(activeCompanies));
         localStorage.setItem('unistart_active_faculties', JSON.stringify(activeFaculties));
         localStorage.setItem('unistart_active_vibes', JSON.stringify(activeVibes));
         updateURLState(); 
         renderActiveFilterChips();
 
-        // JAVÍTÁS: Naptári nap szintű, String alapú dátum egyezés
+        // 🚀 JAVÍTÁS: A helyi időzónához igazított String alapú MAI nap megállapítása
         const todayStr = getLocalDateStr(Date.now());
 
         currentFilteredJobs = jobsData.filter(job => {
             if (filterMode === 'offers') return false; 
-            
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
 
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
@@ -2392,17 +2457,8 @@ html {
             
             let matchMagic = true;
             if (activeMagicFilter === 'today') {
-                // Szigorú naptári egyezés az időzónával konvertált "YYYY-MM-DD" szöveg alapján
+                // Szigorú String-alapú egyezés a Mai napra!
                 if (job._magicDateStr !== todayStr) matchMagic = false; 
-            }
-            else if (activeMagicFilter === 'remote') {
-                if (!job._locClean.includes("home office") && !job._locClean.includes("remote") && !(job._corpusClean || "").includes("home office") && !(job._corpusClean || "").includes("remote")) matchMagic = false;
-            }
-            else if (activeMagicFilter === 'it') {
-                if (!(job.faculty || "").includes("Informatika") && !(job.faculty || "").includes("Adattudomány")) matchMagic = false;
-            }
-            else if (activeMagicFilter === 'business') {
-                if (!(job.faculty || "").includes("Gazdaság") && !(job.faculty || "").includes("Pénzügy") && !(job.faculty || "").includes("Menedzsment")) matchMagic = false;
             }
 
             return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc && matchMagic;
@@ -2415,7 +2471,7 @@ html {
             return 0;
         });
 
-        displayedCount = 15; 
+        if (!isRestore) displayedCount = 15; 
         renderGrid();
     }
 
@@ -2446,9 +2502,9 @@ html {
         
         if (currentFilteredJobs.length === 0) {
             if (filterMode === 'saved') {
-                container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
+                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setExclusiveSupportMode(false); setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else if (filterMode === 'offers') {
-                container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🎁</span><h3 style="margin-top:0;">Még nincsenek ajánlataid</h3><p>Itt fognak megjelenni a profilodhoz illő, személyre szabott exkluzív karrier ajánlatok!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
+                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🎁</span><h3 style="margin-top:0;">Még nincsenek ajánlataid</h3><p>Itt fognak megjelenni a profilodhoz illő, személyre szabott exkluzív karrier ajánlatok!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setExclusiveSupportMode(false); setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else {
                 container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';
             }

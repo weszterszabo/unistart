@@ -463,7 +463,6 @@ html {
 
 .filter-badge { background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; font-weight: 800; display: none; }
 .filter-badge.active { display: inline-block; }
-.filter-divider { width: 1px; height: 28px; background: var(--card-border); flex-shrink: 0; margin: 0 8px; }
 
 .active-filters-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 .active-filter-chip { background: transparent; border: 1px solid var(--tag-border); color: var(--text-color); padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; animation: fadeIn 0.3s var(--ease-spring); }
@@ -1020,6 +1019,51 @@ html {
 }
 
 </style>
+
+<!-- 🚀 JAVÍTÁS: AETHER-CACHE BOOTLOADER (Villogás elleni védelem az oldal megjelenése előtt) -->
+<script>
+    (function restoreImmediateUIState() {
+        const savedStateStr = localStorage.getItem('unistart_app_state');
+        if (savedStateStr) {
+            try {
+                const state = JSON.parse(savedStateStr);
+                if (state && state.activeNavId) {
+                    window.initialNavId = state.activeNavId;
+                    window.initialFilterMode = state.filterMode || 'all';
+                    window.tabStates = state.tabStates || {};
+                }
+            } catch(e) {}
+        }
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            if (!window.initialNavId) return;
+            
+            document.querySelectorAll('.tab-content, .nav-item').forEach(el => el.classList.remove('active'));
+            
+            if (window.initialNavId === 'nav-info-mobile') {
+                document.getElementById('infoTab').classList.add('active');
+                document.getElementById('nav-info-mobile').classList.add('active');
+                document.getElementById('currentViewTitle').innerText = 'Információk';
+            } else if (window.initialNavId === 'nav-offers') {
+                document.getElementById('forumTab').classList.add('active');
+                document.getElementById('nav-offers').classList.add('active');
+                document.getElementById('currentViewTitle').innerText = 'Ajánlatok';
+                document.querySelector('.omnibar-wrapper').style.display = 'none';
+            } else if (window.initialNavId === 'nav-saved') {
+                document.getElementById('forumTab').classList.add('active');
+                document.getElementById('nav-saved').classList.add('active');
+                document.getElementById('currentViewTitle').innerText = 'Mentett Állások';
+                document.querySelector('.omnibar-wrapper').style.display = 'none';
+            } else {
+                document.getElementById('forumTab').classList.add('active');
+                document.getElementById('nav-forum').classList.add('active');
+                document.getElementById('currentViewTitle').innerText = 'Karrierfórum';
+                document.querySelector('.omnibar-wrapper').style.display = 'flex';
+            }
+        });
+    })();
+</script>
+
 </head>
 <body>
 
@@ -1037,7 +1081,6 @@ html {
 <!-- ========================================================================== -->
 <div id="filterModalOverlay" class="filter-modal-overlay">
     <div class="filter-modal-box">
-        <!-- FEJLÉC ÉS FÜLEK VÁLASZTÓJA -->
         <div class="filter-modal-header" style="flex-direction: column; align-items: stretch; gap: 20px; padding-bottom: 0;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <h2 style="font-size: 24px;">🎛️ Részletes szűrők</h2>
@@ -1060,7 +1103,6 @@ html {
             </div>
         </div>
 
-        <!-- TARTALMI SZEKCIÓK (Csak egy látszik egyszerre) -->
         <div class="filter-modal-body" style="display: block; padding-top: 32px;">
             <div class="filter-section" id="f-tab-faculty">
                 <h3 style="margin-bottom: 24px;">Válassz képzési területet</h3>
@@ -1130,7 +1172,6 @@ html {
     <aside class="sidebar">
         <div class="sidebar-top-section">
             
-            <!-- FEJLÉC ÉS LOGÓ -->
             <div class="sidebar-header">
                 <h2 class="sidebar-logo">
                     <span class="logo-icon">U</span>
@@ -1139,9 +1180,9 @@ html {
                 <button class="sidebar-theme-toggle" id="themeToggleDesktop" title="Téma váltása">☀️</button>
             </div>
             
-            <!-- NAVIGÁCIÓS MENÜ -->
             <ul class="nav-menu">
-                <li class="nav-item active" id="nav-forum" onclick="setExclusiveSupportMode(false); setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')">
+                <!-- A HTML 'active' osztályokat eltávolítottuk, a JS Bootloader állítja be azonnal -->
+                <li class="nav-item" id="nav-forum" onclick="setExclusiveSupportMode(false); setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum')">
                     <div class="nav-icon-box"><span class="nav-icon">💬</span></div> 
                     <span class="nav-text">Karrierfórum</span>
                 </li>
@@ -1149,12 +1190,10 @@ html {
                     <div class="nav-icon-box"><span class="nav-icon">🤍</span></div> 
                     <span class="nav-text">Kedvencek</span>
                 </li>
-                <!-- 🚀 ÚJ FÜL: Ajánlatok -->
                 <li class="nav-item" id="nav-offers" onclick="setExclusiveSupportMode(false); setFilterMode('offers'); switchTab('forumTab', 'Ajánlatok', 'nav-offers')">
                     <div class="nav-icon-box"><span class="nav-icon">🎁</span></div> 
                     <span class="nav-text">Ajánlatok</span>
                 </li>
-                <!-- 📱 Csak mobilon jelenik meg a 4. fül (Infó) -->
                 <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="setExclusiveSupportMode(false); switchTab('infoTab', 'Információk', 'nav-info-mobile'); switchInfoTab('about');">
                     <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div> 
                     <span class="nav-text">Infó</span>
@@ -1163,7 +1202,6 @@ html {
         </div>
         
         <div class="sidebar-bottom">
-            <!-- 💻 Asztali gépen itt van az Info ablak gombja -->
             <div class="sidebar-profile" id="nav-info-desktop" onclick="setExclusiveSupportMode(false); openInfoModal('about')">
                 <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div>
                 <span class="nav-text">Információ</span>
@@ -1171,7 +1209,6 @@ html {
         </div>
     </aside>
 
-    <!-- FŐ TARTALMI RÉSZ (DASHBOARD) -->
     <main class="dashboard-main" id="dashboardMainScroll">
         <header class="dashboard-header">
             <h1 class="dashboard-title" id="currentViewTitle">Karrierfórum</h1>
@@ -1180,7 +1217,7 @@ html {
         <div class="dashboard-content">
             
             <!-- ======================= 1. FÜL: FÓRUM / MENTETT / AJÁNLATOK ======================== -->
-            <div id="forumTab" class="tab-content active">
+            <div id="forumTab" class="tab-content">
 
                 <div class="omnibar-wrapper" id="mainOmnibar">
                     <div style="display: flex; flex-direction: column; gap: 16px;">
@@ -1219,9 +1256,8 @@ html {
                     </select>
                 </div>
 
-                <!-- JAVÍTÁS: DOM TÖREDÉK A TELJESÍTMÉNYÉRT -->
                 <div class="company-grid" id="jobGridContainer">
-                    <!-- Dinamikus Skeletons jön ide letöltéskor -->
+                    <!-- Skeletons -->
                 </div>
 
                 <div id="infiniteScrollAnchor" class="infinite-loader">Görgetés a továbbiakhoz...</div>
@@ -1232,15 +1268,13 @@ html {
             <div id="infoTab" class="tab-content">
                 <div style="display: flex; flex-direction: column; gap: 48px; max-width: 800px; margin: 0 auto; padding-top: 10px; padding-bottom: 40px;">
                     
-                    <!-- Megjelenés (Sötét/Világos mód) -->
-                    <div id="mobileThemeToggleCard" class="ios-menu-card" style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleTheme()">
+                    <div id="mobileThemeToggleCard" class="ios-menu-card" style="padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: background-color 0.2s;" onclick="toggleTheme()" onmousedown="this.style.backgroundColor='var(--tag-bg)'" onmouseup="this.style.backgroundColor='var(--card-bg)'" onmouseleave="this.style.backgroundColor='var(--card-bg)'">
                         <div style="display: flex; align-items: center; gap: 16px;">
                             <div class="ios-icon-box" style="background: #f59e0b; color: white;">🌓</div>
                             <span style="font-weight: 700; font-size: 18px;">Sötét / Világos mód</span>
                         </div>
                     </div>
 
-                    <!-- RÓLUNK & CSAPAT SZÖVEGES TARTALOM (HIÁNYTALANUL) -->
                     <div id="info-about" class="info-section">
                         <h2 class="section-title" style="margin-bottom: 24px;">🎓 Rólunk</h2>
                         
@@ -1293,7 +1327,6 @@ html {
                         </div>
                     </div>
 
-                    <!-- TÁMOGATÁS TARTALOM (HIÁNYTALANUL) -->
                     <div id="info-support" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">🚀 Támogatás</h2>
                         
@@ -1354,11 +1387,8 @@ html {
                             <div class="acc-row"><span class="acc-label">Közlemény:</span><span class="acc-val" style="color: var(--primary-color);">UniStart tamogatas</span></div>
                             <button class="apply-btn secondary copy-btn-dyn" onclick="copyIban()" style="width: 100%; margin-top: 24px; padding: 16px;">📋 Adatok másolása vágólapra</button>
                         </div>
-                        
-                        <p style="text-align: center; color: var(--subtitle-color); font-size: 15px; margin-top: 32px; font-weight: 600;">Hálásan köszönjük, hogy hozzájárulsz a jövőnkhöz! 🫶</p>
                     </div>
 
-                    <!-- KAPCSOLAT TARTALOM (HIÁNYTALANUL) -->
                     <div id="info-contact" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">✉️ Kapcsolat</h2>
                         
@@ -1385,7 +1415,6 @@ html {
                         </div>
                     </div>
 
-                    <!-- JOGI ÉS ADATVÉDELEM TARTALOM (HIÁNYTALANUL) -->
                     <div id="info-legal" class="info-section" style="display: none;">
                         <h2 class="section-title" style="margin-bottom: 24px;">⚖️ Impresszum & Adatvédelem</h2>
                         
@@ -1419,7 +1448,6 @@ html {
                         </div>
                     </div>
 
-                    <!-- Vízjel -->
                     <div style="text-align: center; font-size: 14px; color: var(--subtitle-color); opacity: 0.5; padding-top: 32px; font-weight: 600; letter-spacing: 0.5px;">
                         UniStart v1.0.0<br>Made with 🤍 in Budapest
                     </div>
@@ -1567,7 +1595,6 @@ html {
                 </div>
             </div>
 
-            <!-- KAPCSOLAT -->
             <div id="info-contact" class="info-section" style="display: none;">
                 <div style="text-align: center; margin-bottom: 40px;">
                     <div style="font-size: 56px; margin-bottom: 16px;">✉️</div>
@@ -1592,7 +1619,6 @@ html {
                 </div>
             </div>
 
-            <!-- JOGI & ADATVÉDELEM -->
             <div id="info-legal" class="info-section" style="display: none;">
                 <div class="about-card" style="margin-bottom: 24px; padding: 32px; background: var(--card-bg); border: 1px solid var(--card-border); box-shadow: var(--card-shadow-soft); border-radius: var(--radius-lg);">
                     <h2 style="font-size: 20px; font-weight: 800; margin: 0 0 20px 0; display: flex; align-items: center; gap: 12px; color: var(--text-color);"><span>⚖️</span> Impresszum (Üzemeltető)</h2>
@@ -1636,7 +1662,42 @@ html {
 
 <script>
 
-    // 🚀 DÁTUM MEGÁLLAPÍTÓ FÜGGVÉNY (LOCAL TIMEZONE ALAPJÁN A "MAI FRISS"-HEZ)
+    // 🚀 AETHER-CACHE: IndexedDB Alapú SWR Kvantum-Cache
+    const AetherCache = {
+        db: null,
+        async init() {
+            return new Promise((resolve) => {
+                const req = indexedDB.open("UniStart_Aether_V25", 1);
+                req.onupgradeneeded = (e) => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('quantum_state')) {
+                        db.createObjectStore('quantum_state');
+                    }
+                };
+                req.onsuccess = (e) => { this.db = e.target.result; resolve(true); };
+                req.onerror = () => { resolve(false); };
+            });
+        },
+        async get(key) {
+            if (!this.db) return null;
+            return new Promise((resolve) => {
+                const tx = this.db.transaction('quantum_state', 'readonly');
+                const req = tx.objectStore('quantum_state').get(key);
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => resolve(null);
+            });
+        },
+        async set(key, value) {
+            if (!this.db) return;
+            return new Promise((resolve) => {
+                const tx = this.db.transaction('quantum_state', 'readwrite');
+                const req = tx.objectStore('quantum_state').put(value, key);
+                req.onsuccess = () => resolve();
+                req.onerror = () => resolve();
+            });
+        }
+    };
+
     function getLocalDateStr(dateVal) {
         if (!dateVal) return "";
         const d = new Date(dateVal);
@@ -1677,13 +1738,27 @@ html {
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
-    // APP MEMÓRIA MENTÉSE (Zero-GC Debounce)
+    if (!window.tabStates) {
+        window.tabStates = {
+            'nav-forum': { scrollPos: 0, displayedCount: 15 },
+            'nav-saved': { scrollPos: 0, displayedCount: 15 },
+            'nav-offers': { scrollPos: 0, displayedCount: 15 },
+            'nav-info-mobile': { scrollPos: 0, displayedCount: 15 } 
+        };
+    }
+
     function saveAppState() {
+        if (!window.activeNavId) return;
+        
+        window.tabStates[window.activeNavId] = {
+            scrollPos: dashboardMain ? dashboardMain.scrollTop : 0,
+            displayedCount: displayedCount 
+        };
+
         const state = {
             filterMode: filterMode,
-            activeNavId: document.querySelector('.nav-item.active')?.id || 'nav-forum',
-            scrollPos: dashboardMain ? dashboardMain.scrollTop : 0,
-            displayedCount: displayedCount
+            activeNavId: window.activeNavId,
+            tabStates: window.tabStates
         };
         localStorage.setItem('unistart_app_state', JSON.stringify(state));
     }
@@ -1705,7 +1780,7 @@ html {
                 isScrolling = true;
             }
             clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(saveAppState, 500); // 🚀 Memória mentése görgetés után
+            scrollTimeout = setTimeout(saveAppState, 500); 
         }, { passive: true });
         
         window.addEventListener('scroll', () => { 
@@ -1729,9 +1804,12 @@ html {
             if (dashboardMain) dashboardMain.scrollTop = 0;
             window.scrollTo(0, 0);
         }
+        if (window.activeNavId && window.tabStates[window.activeNavId]) {
+            window.tabStates[window.activeNavId].scrollPos = 0;
+        }
+        setTimeout(saveAppState, 500);
     }
 
-    // 🚀 TÁMOGATÁS "EXCLUSIVE MODE" LOGIKÁJA
     function setExclusiveSupportMode(isActive) {
         const navContainers = document.querySelectorAll('.info-nav-container');
         const mobileThemeCard = document.getElementById('mobileThemeToggleCard');
@@ -1754,6 +1832,10 @@ html {
     }
 
     function switchTab(tabId, title, navItemId) {
+        saveAppState(); 
+
+        window.activeNavId = navItemId;
+
         document.getElementById('currentViewTitle').innerText = title;
         document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
         const targetTab = document.getElementById(tabId);
@@ -1765,12 +1847,16 @@ html {
             if (navItem) navItem.classList.add('active');
         }
         
-        try {
-            if (dashboardMain) dashboardMain.scrollTop = 0;
-            window.scrollTo(0, 0); 
-        } catch (err) {}
+        let targetScroll = 0;
+        if (window.tabStates && window.tabStates[navItemId]) {
+            targetScroll = window.tabStates[navItemId].scrollPos || 0;
+        }
         
-        setTimeout(saveAppState, 100); // 🚀 Lapváltás mentése
+        setTimeout(() => {
+            if (dashboardMain) dashboardMain.scrollTop = targetScroll;
+        }, 50);
+
+        saveAppState(); 
     }
 
     // ==========================================================================
@@ -1785,7 +1871,7 @@ html {
         const modal = document.getElementById(modalId);
         if (modal) { 
             modal.classList.remove('active'); document.body.classList.remove('modal-open');
-            if (modalId === 'infoOverlay') setExclusiveSupportMode(false); // Biztonsági visszaállítás
+            if (modalId === 'infoOverlay') setExclusiveSupportMode(false); 
         }
     }
 
@@ -1806,7 +1892,7 @@ html {
 
     function openSupportTab(event) {
         if(event) event.stopPropagation();
-        setExclusiveSupportMode(true); // 🚀 Bekapcsoljuk az exkluzív nézetet
+        setExclusiveSupportMode(true); 
         if (window.innerWidth <= 768) {
             switchTab('infoTab', 'Támogatás', 'nav-info-mobile');
             switchInfoTab('support');
@@ -1915,14 +2001,23 @@ html {
     // ==========================================================================
     // JS: 6. MŰVELETEK ÉS SZŰRŐ MOTOR
     // ==========================================================================
-    function setFilterMode(mode, isRestore = false) {
+    function setFilterMode(mode, isRestore = false, isInit = false) {
+        if (!isInit) saveAppState(); 
+
         filterMode = mode;
-        // 🚀 JAVÍTÁS: Mindig "Találatok" marad, mert a fejlécben már ott van a kontextus.
         document.getElementById('resultsTitleText').innerText = "Találatok";
         
         const omnibar = document.querySelector('.omnibar-wrapper');
         if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'offers') ? 'none' : 'flex';
-        applyFilters(isRestore);
+        
+        let nextNavId = mode === 'all' ? 'nav-forum' : (mode === 'saved' ? 'nav-saved' : 'nav-offers');
+        if (window.tabStates && window.tabStates[nextNavId]) {
+            displayedCount = window.tabStates[nextNavId].displayedCount || 15;
+        } else {
+            displayedCount = 15;
+        }
+
+        if (!isInit) applyFilters(true); 
     }
 
     function toggleSaveJob(jobId, event) {
@@ -2056,138 +2151,150 @@ html {
         </div>
     `;
 
+    // 🚀 AETHER-CACHE FELDOLGOZÓ MOTOR (Leválasztottuk a letöltéstől a kód tisztasága miatt)
+    function processRawFirestoreData(snapshot) {
+        const freshJobs = [];
+        const now = Date.now(); 
+
+        snapshot.forEach(doc => {
+            let data = doc.data();
+            let job = { id: doc.id, ...data };
+            
+            const tagsString = (job.tags || []).join(" ");
+            const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
+            job._corpusClean = removeAccents(jobCorpusRaw);
+            job._locClean = removeAccents((job.location || '').toLowerCase());
+            
+            let sDate = job.scraped_at || job.updated_at || 0;
+            if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
+            else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
+
+            let pDate = job.date_posted;
+            let postedTime = 0;
+            if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
+            else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
+
+            job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
+            job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
+            
+            job._magicDateStr = getLocalDateStr(job._magicDate);
+            job._companyNameLower = (job.company_name || "").toLowerCase();
+            
+            freshJobs.push(job);
+        });
+        return freshJobs;
+    }
+
+    function buildFilterButtons() {
+        const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
+        const facContainer = document.getElementById('modalFacultyButtons');
+        if(facContainer) {
+            try { facContainer.replaceChildren(); } catch(e) { facContainer.innerHTML = ''; }
+            faculties.forEach(fac => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = fac;
+                btn.onclick = () => { toggleModalFilter('faculty', fac, btn); };
+                facContainer.appendChild(btn);
+            });
+        }
+
+        let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
+        const compContainer = document.getElementById('modalCompanyButtons');
+        if(compContainer) {
+            try { compContainer.replaceChildren(); } catch(e) { compContainer.innerHTML = ''; }
+            uniqueCompanies.forEach(compName => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = compName;
+                btn.onclick = () => { toggleModalFilter('company', compName, btn); };
+                compContainer.appendChild(btn);
+            });
+        }
+
+        const uniqueVibes = Array.from(new Set(jobsData.map(j => j.work_style))).filter(v => v).sort();
+        const vibeContainer = document.getElementById('modalVibeButtons');
+        if(vibeContainer) {
+            try { vibeContainer.replaceChildren(); } catch(e) { vibeContainer.innerHTML = ''; }
+            uniqueVibes.forEach(vibe => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = vibe;
+                btn.onclick = () => { toggleModalFilter('vibe', vibe, btn); };
+                vibeContainer.appendChild(btn);
+            });
+        }
+
+        let tagCount = {};
+        jobsData.forEach(j => { if (j.tags) j.tags.forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; }); });
+        const topTags = Object.keys(tagCount).sort((a,b) => tagCount[b] - tagCount[a]).slice(0, 20);
+        const tagContainer = document.getElementById('modalTagButtons');
+        if(tagContainer) {
+            try { tagContainer.replaceChildren(); } catch(e) { tagContainer.innerHTML = ''; }
+            topTags.forEach(tag => {
+                const btn = document.createElement('button');
+                btn.className = 'f-btn';
+                btn.textContent = tag;
+                btn.onclick = () => { toggleModalFilter('tag', tag, btn); };
+                tagContainer.appendChild(btn);
+            });
+        }
+        updateModalButtonsVisuals();
+    }
+
+    // 🚀 AETHER-CACHE STALE-WHILE-REVALIDATE BETÖLTÉS
     async function loadJobsData() {
         readStateFromURL(); 
-        document.getElementById('jobGridContainer').innerHTML = skeletonHTML;
+        let isCacheUsed = false;
         
+        // 1. Kísérlet a memóriából (0.01s betöltés)
+        await AetherCache.init();
+        const cachedPayload = await AetherCache.get("master_jobs");
+        
+        if (cachedPayload && cachedPayload.jobs && cachedPayload.jobs.length > 0) {
+            jobsData = cachedPayload.jobs;
+            buildFilterButtons();
+            applyFilters(true); // Visszaállítja az app állapotot
+            isCacheUsed = true;
+            
+            // Finom görgetés visszaállítás
+            setTimeout(() => {
+                if (window.activeNavId && window.tabStates[window.activeNavId]) {
+                    const ts = window.tabStates[window.activeNavId].scrollPos || 0;
+                    if (dashboardMain) dashboardMain.scrollTop = ts;
+                }
+            }, 50);
+        } else {
+            document.getElementById('jobGridContainer').innerHTML = skeletonHTML;
+        }
+
+        // 2. Háttér Sync Firestore-ból
         try {
             const snapshot = await db.collection("jobs").get();
-            jobsData = [];
+            const freshJobs = processRawFirestoreData(snapshot);
             
-            const now = Date.now(); 
-
-            snapshot.forEach(doc => {
-                let data = doc.data();
-                let job = { id: doc.id, ...data };
-                
-                const tagsString = (job.tags || []).join(" ");
-                const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
-                job._corpusClean = removeAccents(jobCorpusRaw);
-                job._locClean = removeAccents((job.location || '').toLowerCase());
-                
-                let sDate = job.scraped_at || job.updated_at || 0;
-                if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
-                else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
-
-                let pDate = job.date_posted;
-                let postedTime = 0;
-                if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
-                else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
-
-                job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
-                job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
-                
-                // 🚀 JAVÍTÁS: A pontos, naptári nap szerinti string mentése az időzónához igazítva
-                job._magicDateStr = getLocalDateStr(job._magicDate);
-                
-                job._companyNameLower = (job.company_name || "").toLowerCase();
-                
-                jobsData.push(job);
-            });
-
-            const faculties = Array.from(new Set(jobsData.map(j => j.faculty))).filter(f => f && f !== "🔍 Egyéb / Általános").sort();
-            const facContainer = document.getElementById('modalFacultyButtons');
-            if(facContainer) {
-                try { facContainer.replaceChildren(); } catch(e) { facContainer.innerHTML = ''; }
-                faculties.forEach(fac => {
-                    const btn = document.createElement('button');
-                    btn.className = 'f-btn';
-                    btn.textContent = fac;
-                    btn.onclick = () => { toggleModalFilter('faculty', fac, btn); };
-                    facContainer.appendChild(btn);
-                });
-            }
-
-            let uniqueCompanies = Array.from(new Set(jobsData.map(j => j.company_name))).filter(c => c && c !== "Névtelen cég").sort();
-            const compContainer = document.getElementById('modalCompanyButtons');
-            if(compContainer) {
-                try { compContainer.replaceChildren(); } catch(e) { compContainer.innerHTML = ''; }
-                uniqueCompanies.forEach(compName => {
-                    const btn = document.createElement('button');
-                    btn.className = 'f-btn';
-                    btn.textContent = compName;
-                    btn.onclick = () => { toggleModalFilter('company', compName, btn); };
-                    compContainer.appendChild(btn);
-                });
-            }
-
-            const uniqueVibes = Array.from(new Set(jobsData.map(j => j.work_style))).filter(v => v).sort();
-            const vibeContainer = document.getElementById('modalVibeButtons');
-            if(vibeContainer) {
-                try { vibeContainer.replaceChildren(); } catch(e) { vibeContainer.innerHTML = ''; }
-                uniqueVibes.forEach(vibe => {
-                    const btn = document.createElement('button');
-                    btn.className = 'f-btn';
-                    btn.textContent = vibe;
-                    btn.onclick = () => { toggleModalFilter('vibe', vibe, btn); };
-                    vibeContainer.appendChild(btn);
-                });
-            }
-
-            let tagCount = {};
-            jobsData.forEach(j => { if (j.tags) j.tags.forEach(t => { tagCount[t] = (tagCount[t] || 0) + 1; }); });
-            const topTags = Object.keys(tagCount).sort((a,b) => tagCount[b] - tagCount[a]).slice(0, 20);
-            const tagContainer = document.getElementById('modalTagButtons');
-            if(tagContainer) {
-                try { tagContainer.replaceChildren(); } catch(e) { tagContainer.innerHTML = ''; }
-                topTags.forEach(tag => {
-                    const btn = document.createElement('button');
-                    btn.className = 'f-btn';
-                    btn.textContent = tag;
-                    btn.onclick = () => { toggleModalFilter('tag', tag, btn); };
-                    tagContainer.appendChild(btn);
-                });
-            }
-
-            updateModalButtonsVisuals();
+            // 0 latency update in background cache
+            await AetherCache.set("master_jobs", { jobs: freshJobs, timestamp: Date.now() });
             
-            // 🚀 APP MEMÓRIA VISSZATÖLTÉSE (Állapot visszaállítása)
-            const savedStateStr = localStorage.getItem('unistart_app_state');
-            let savedAppState = null;
-            if (savedStateStr) {
-                try { savedAppState = JSON.parse(savedStateStr); } catch(e) {}
-            }
-
-            if (savedAppState) {
-                displayedCount = savedAppState.displayedCount || 15;
-                setFilterMode(savedAppState.filterMode || 'all', true); // isRestore = true
-
-                if (savedAppState.activeNavId === 'nav-info-mobile') {
-                    setExclusiveSupportMode(false);
-                    switchTab('infoTab', 'Információk', 'nav-info-mobile');
-                } else if (savedAppState.activeNavId === 'nav-offers') {
-                    switchTab('forumTab', 'Ajánlatok', 'nav-offers');
-                } else if (savedAppState.activeNavId === 'nav-saved') {
-                    switchTab('forumTab', 'Mentett Állások', 'nav-saved');
-                } else {
-                    switchTab('forumTab', 'Karrierfórum', 'nav-forum');
-                }
-
-                // Enyhe csúszással visszaállítjuk a görgetést, miután a DOM felépült
+            // Ha első betöltés volt (nincs cache), akkor most frissítjük a UI-t
+            if (!isCacheUsed) {
+                jobsData = freshJobs;
+                buildFilterButtons();
+                applyFilters(true);
+                
                 setTimeout(() => {
-                    if (dashboardMain && savedAppState.scrollPos) {
-                        dashboardMain.scrollTop = savedAppState.scrollPos;
+                    if (window.activeNavId && window.tabStates[window.activeNavId]) {
+                        const ts = window.tabStates[window.activeNavId].scrollPos || 0;
+                        if (dashboardMain) dashboardMain.scrollTop = ts;
                     }
-                }, 150);
-            } else {
-                applyFilters();
+                }, 50);
             }
-
-            setupInfiniteScroll(); 
-            
+            setupInfiniteScroll();
         } catch (error) {
-            console.error(error);
-            document.getElementById('jobGridContainer').innerHTML = '<p style="color:var(--danger-color); text-align:center; padding: 40px 0;">Nem sikerült betölteni az állásokat.</p>';
+            console.error("Háttér szinkronizációs hiba:", error);
+            if (!isCacheUsed) {
+                document.getElementById('jobGridContainer').innerHTML = '<p style="color:var(--danger-color); text-align:center; padding: 40px 0;">Nem sikerült betölteni az állásokat.</p>';
+            }
         }
     }
 
@@ -2430,7 +2537,6 @@ html {
         updateURLState(); 
         renderActiveFilterChips();
 
-        // 🚀 JAVÍTÁS: A helyi időzónához igazított String alapú MAI nap megállapítása
         const todayStr = getLocalDateStr(Date.now());
 
         currentFilteredJobs = jobsData.filter(job => {
@@ -2457,7 +2563,6 @@ html {
             
             let matchMagic = true;
             if (activeMagicFilter === 'today') {
-                // Szigorú String-alapú egyezés a Mai napra!
                 if (job._magicDateStr !== todayStr) matchMagic = false; 
             }
 
@@ -2471,7 +2576,14 @@ html {
             return 0;
         });
 
-        if (!isRestore) displayedCount = 15; 
+        if (!isRestore) {
+            displayedCount = 15; 
+            if (window.activeNavId && window.tabStates[window.activeNavId]) {
+                window.tabStates[window.activeNavId].scrollPos = 0;
+            }
+            try { if (dashboardMain) dashboardMain.scrollTop = 0; window.scrollTo(0,0); } catch(e){}
+        } 
+
         renderGrid();
     }
 
@@ -2611,6 +2723,7 @@ html {
             if (entries[0].isIntersecting && displayedCount < currentFilteredJobs.length) {
                 displayedCount += 15; 
                 renderGrid(); 
+                saveAppState(); 
             }
         }, { rootMargin: "200px" }); 
         

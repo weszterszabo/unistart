@@ -152,7 +152,7 @@ button, a, .company-card, .magic-chip, .clickable-tag, .sort-select {
 }
 
 h1, h2, h3, h4, h5 { 
-    letter-spacing: -0.03em; /* Még feszesebb, modernebb betűköz */
+    letter-spacing: -0.03em;
     font-weight: 800; 
     text-wrap: balance; 
 }
@@ -708,7 +708,7 @@ html {
     background-color: var(--bg-color); 
 }
 
-/* Számítógépes Oldalsáv - Javított Margók és Paddingok a szétesés ellen */
+/* Számítógépes Oldalsáv */
 .sidebar { 
     width: var(--sidebar-width-collapsed); 
     background-color: var(--sidebar-bg); 
@@ -968,27 +968,21 @@ html {
     .sidebar-header, .secondary-nav-menu, .sidebar-divider, .sidebar-profile, .sidebar-bottom { display: none !important; } 
     .sidebar-top-section { width: 100%; display: flex; justify-content: center; }
 
-    .nav-menu { flex-direction: row; width: 100%; justify-content: space-between; align-items: center; gap: 4px; display: flex; margin: 0; padding: 0; }
+    .nav-menu { flex-direction: row; width: 100%; justify-content: space-around; align-items: center; display: flex; margin: 0; padding: 0; }
     
-    /* 🚀 JAVÍTÁS: A margókat nulláztuk, hogy biztosan elférjen 4 gomb is mobilon */
-    .nav-item { flex: none; margin: 0 !important; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 12px 16px !important; height: 52px; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: var(--radius-pill); position: relative; transition: all 0.4s var(--ease-spring); touch-action: manipulation; }
+    /* 🚀 ÚJ JAVÍTÁS: Csak az ikonok maradtak mobilon (szöveg nélkül), tökéletesen középre igazítva! */
+    .nav-item { flex: none; margin: 0 !important; width: 52px; height: 52px; display: flex; flex-direction: row; align-items: center; justify-content: center; padding: 0 !important; background: transparent !important; box-shadow: none !important; color: var(--subtitle-color); border-radius: 50% !important; position: relative; transition: all 0.4s var(--ease-spring); touch-action: manipulation; }
     .nav-item::before { display: none; } 
-    .nav-text { font-size: 0 !important; max-width: 0; opacity: 0; margin-left: 0; display: block; overflow: hidden; white-space: nowrap; transition: all 0.4s var(--ease-spring); }
-
-    /* Fórum, Mentve, Ajánlatok és Infó RÖVIDÍTÉSEK! */
-    #nav-forum .nav-text::after { content: "Fórum"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
-    #nav-saved .nav-text::after { content: "Mentve"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
-    #nav-offers .nav-text::after { content: "Ajánlatok"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
-    #nav-info-mobile .nav-text::after { content: "Infó"; font-size: 15px; font-weight: 800; letter-spacing: 0.3px; }
-
-    .nav-item.active { background: var(--text-color) !important; color: var(--bg-color); padding: 12px 20px !important; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); }
-    [data-theme="light"] .nav-item.active { background: var(--primary-color) !important; color: white; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3); }
-    .nav-item.active .nav-icon { transform: scale(1.1); color: var(--bg-color); filter: none; }
-    [data-theme="light"] .nav-item.active .nav-icon { color: white; }
-    .nav-item.active .nav-text { max-width: 80px; opacity: 1; margin-left: 8px; }
     
-    .nav-icon-box { width: 28px !important; }
-    .nav-icon { font-size: 22px; margin: 0; transition: transform var(--transition-fast); }
+    /* Szöveg teljes eltávolítása mobil nézetben */
+    .nav-text { display: none !important; }
+
+    .nav-item.active { background: var(--text-color) !important; color: var(--bg-color) !important; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2) !important; }
+    [data-theme="light"] .nav-item.active { background: var(--primary-color) !important; color: white !important; box-shadow: 0 8px 24px rgba(37, 99, 235, 0.3) !important; }
+    .nav-item.active .nav-icon { transform: scale(1.15); color: inherit; filter: none; }
+    
+    .nav-icon-box { width: auto !important; display: flex; align-items: center; justify-content: center; }
+    .nav-icon { font-size: 24px; margin: 0; transition: transform var(--transition-fast); }
     
     /* 🚀 MOST MÁR BIZTOSAN LÁTSZÓDIK AZ INFÓ GOMB */
     .mobile-only-nav { display: flex !important; }
@@ -2386,7 +2380,6 @@ html {
         const oneDayAgo = now - 86400000;
 
         currentFilteredJobs = jobsData.filter(job => {
-            // 🚀 ÚJ: Ha az "Ajánlatok" fülön vagyunk, ne töltsön be állásokat!
             if (filterMode === 'offers') return false; 
             
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
@@ -2466,7 +2459,6 @@ html {
             if (filterMode === 'saved') {
                 container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else if (filterMode === 'offers') {
-                // 🚀 ÚJ: Ajánlatok (Offers) Üres Állapota!
                 container.innerHTML = `<div class="empty-state" style="margin: 0 auto; padding: 40px 20px;"><span class="empty-state-icon">🎁</span><h3 style="margin-top:0;">Még nincsenek ajánlataid</h3><p>Itt fognak megjelenni a profilodhoz illő, személyre szabott exkluzív karrier ajánlatok!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="setFilterMode('all'); switchTab('forumTab', 'Karrierfórum', 'nav-forum');">Böngészek az állások között</button></div>`;
             } else {
                 container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 16px;">Nincs a keresésnek megfelelő állás a listában.</p>';

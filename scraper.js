@@ -39,6 +39,7 @@ const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true }); 
 
 const SYSTEM_SECRET = process.env.SYSTEM_SIGNING_SECRET || crypto.randomBytes(32).toString('hex');
+const OUTPUT_JSON_PATH = path.join(__dirname, "jobs.json"); // IDE MENTJÜK A GITHUB SZÁMÁRA AZ ADATOKAT
 
 // ------------------------------------------------------------------
 // 3. ENTERPRISE SEGÉDOSZTÁLYOK: TELEMETRIA, EVENT LOOP, BATCH
@@ -58,7 +59,6 @@ class TelemetryRegistry {
             this.nameToIndex.set(operation, idx);
             this.names[idx] = operation;
         }
-        // OPTIMALIZÁCIÓ: Bitwise Shift szorzás helyett
         const offset = idx << 2;
         this.buffer[offset]++; 
         this.buffer[offset + 1] += durationMs; 
@@ -242,148 +242,25 @@ class MultiDomainRateLimiter {
 }
 const globalRateLimiter = new MultiDomainRateLimiter(12, 4);
 
+// A Firestore Batch Managert meghagytuk a telemetria/DLQ logoláshoz, 
+// de az állásokat már nem ezen keresztül mentjük!
 class FirestoreBatchManager {
-    constructor(db, limit = 450, maxBytes = 8 * 1024 * 1024) { 
+    constructor(db, limit = 450) { 
         this.db = db; 
-        this.limit = Math.min(limit, 490); 
-        this.maxBytes = maxBytes;
+        this.limit = limit; 
         this.batch = db.batch(); 
         this.count = 0; 
-        this.currentSize = 0;
     }
-
-    _utf8ByteLength(str) {
-        if (!str) return 0;
-        let s = str.length;
-        let i = s - 1;
-        while (i >= 7) {
-            const c1 = str.charCodeAt(i);   const c2 = str.charCodeAt(i - 1);
-            const c3 = str.charCodeAt(i - 2); const c4 = str.charCodeAt(i - 3);
-            const c5 = str.charCodeAt(i - 4); const c6 = str.charCodeAt(i - 5);
-            const c7 = str.charCodeAt(i - 6); const c8 = str.charCodeAt(i - 7);
-            
-            if (c1 > 0x7f && c1 <= 0x7ff) s++; else if (c1 > 0x7ff && c1 <= 0xffff) s += 2;
-            if (c2 > 0x7f && c2 <= 0x7ff) s++; else if (c2 > 0x7ff && c2 <= 0xffff) s += 2;
-            if (c3 > 0x7f && c3 <= 0x7ff) s++; else if (c3 > 0x7ff && c3 <= 0xffff) s += 2;
-            if (c4 > 0x7f && c4 <= 0x7ff) s++; else if (c4 > 0x7ff && c4 <= 0xffff) s += 2;
-            if (c5 > 0x7f && c5 <= 0x7ff) s++; else if (c5 > 0x7ff && c5 <= 0xffff) s += 2;
-            if (c6 > 0x7f && c6 <= 0x7ff) s++; else if (c6 > 0x7ff && c6 <= 0xffff) s += 2;
-            if (c7 > 0x7f && c7 <= 0x7ff) s++; else if (c7 > 0x7ff && c7 <= 0xffff) s += 2;
-            if (c8 > 0x7f && c8 <= 0x7ff) s++; else if (c8 > 0x7ff && c8 <= 0xffff) s += 2;
-            
-            if (c1 >= 0xDC00 && c1 <= 0xDFFF) i--; if (c2 >= 0xDC00 && c2 <= 0xDFFF) i--;
-            if (c3 >= 0xDC00 && c3 <= 0xDFFF) i--; if (c4 >= 0xDC00 && c4 <= 0xDFFF) i--;
-            if (c5 >= 0xDC00 && c5 <= 0xDFFF) i--; if (c6 >= 0xDC00 && c6 <= 0xDFFF) i--;
-            if (c7 >= 0xDC00 && c7 <= 0xDFFF) i--; if (c8 >= 0xDC00 && c8 <= 0xDFFF) i--;
-            i -= 8;
-        }
-        while (i >= 0) {
-            const code = str.charCodeAt(i);
-            if (code > 0x7f && code <= 0x7ff) s++; else if (code > 0x7ff && code <= 0xffff) s += 2;
-            if (code >= 0xDC00 && code <= 0xDFFF) i--; 
-            i--;
-        }
-        return s;
-    }
-
-    // OPTIMALIZÁCIÓ 1: O(1) Static Monomorphic Shape Sizer
-    _estimateJobRecordBytes(job) {
-        let bytes = 64; // Firestore base overhead
-        
-        // Exact static field calculation for ProcessedJobRecord
-        bytes += 24 + this._utf8ByteLength(job.company_name);
-        bytes += 20 + this._utf8ByteLength(job.company_id);
-        bytes += 10 + this._utf8ByteLength(job.title);
-        bytes += 16 + this._utf8ByteLength(job.location);
-        bytes += 6 + this._utf8ByteLength(job.url);
-        bytes += 18 + this._utf8ByteLength(job.apply_url);
-        bytes += 22 + this._utf8ByteLength(job.date_posted);
-        bytes += 14 + this._utf8ByteLength(job.faculty);
-        bytes += 20 + this._utf8ByteLength(job.job_nature);
-        
-        bytes += 20 + 8; // salary_min (null or number)
-        bytes += 20 + 8; // salary_max
-        bytes += 30 + (job.salary_currency ? this._utf8ByteLength(job.salary_currency) : 0);
-        bytes += 28 + 4; // is_hourly_wage (boolean)
-        
-        bytes += 8 + (job.tags.length * 16);
-        for(let i=0; i<job.tags.length; i++) bytes += this._utf8ByteLength(job.tags[i]);
-        
-        bytes += 26 + (job.enriched_tags.length * 16);
-        for(let i=0; i<job.enriched_tags.length; i++) bytes += this._utf8ByteLength(job.enriched_tags[i]);
-        
-        bytes += 8 + (job.tldr ? this._utf8ByteLength(job.tldr) : 0);
-        bytes += 20 + (job.seo_schema ? 128 : 0); // Simplified estimate for embedded object
-        bytes += 26 + this._utf8ByteLength(job.semantic_hash);
-        bytes += 18 + this._utf8ByteLength(job.data_hash);
-        bytes += 28 + this._utf8ByteLength(job.data_signature);
-        bytes += 24 + 8; // health_score
-        bytes += 16 + this._utf8ByteLength(job.trace_id);
-        bytes += 18 + 4; // is_active
-        bytes += 20 + 8; // updated_at / scraped_at
-        
-        return bytes;
-    }
-
-    // Dynamic fallback for history diffs
-    _estimateDynamicPayloadBytes(data) {
-        if (!data) return 0;
-        let bytes = 64; 
-        for (const k in data) {
-            if (Object.prototype.hasOwnProperty.call(data, k)) {
-                bytes += this._utf8ByteLength(k); 
-                const v = data[k];
-                if (typeof v === 'string') bytes += this._utf8ByteLength(v); 
-                else if (typeof v === 'number') bytes += 8;
-                else if (typeof v === 'boolean') bytes += 4;
-                else if (Array.isArray(v)) bytes += (v.length * 16);
-                else if (typeof v === 'object' && v !== null) bytes += 128;
-            }
-        }
-        return bytes;
-    }
-
     async set(ref, data, opts = {}) { 
-        // Smart routing based on object shape
-        const docSize = (data instanceof ProcessedJobRecord || data.company_name !== undefined) 
-            ? this._estimateJobRecordBytes(data) 
-            : this._estimateDynamicPayloadBytes(data);
-
-        if (docSize > 950 * 1024) console.error(`🚨 Dokumentum méret kritikus (>950KB). Tömörítés szükséges.`);
-        if (this.currentSize + docSize > this.maxBytes || this.count >= this.limit) await this.flush(); 
+        if (this.count >= this.limit) await this.flush(); 
         this.batch.set(ref, data, opts); 
-        this.currentSize += docSize;
         this.count++;
-        await this.check(); 
     }
-
-    async delete(ref) { 
-        if (this.count >= this.limit) await this.flush();
-        this.batch.delete(ref); 
-        this.currentSize += 64; 
-        this.count++;
-        await this.check(); 
-    }
-
-    async check() { if (this.count >= this.limit) await this.flush(); }
-    
     async flush() {
         if (this.count === 0) return;
-        for (let i = 1; i <= 3; i++) {
-            try {
-                await sysMonitor.yieldIfNecessary();
-                await this.batch.commit();
-                this.batch = this.db.batch(); 
-                this.count = 0; 
-                this.currentSize = 0; 
-                return;
-            } catch (err) {
-                if (i === 3) throw err;
-                const jitter = Math.floor(Math.random() * 800);
-                console.warn(`⚠️ Batch commit hiba (Méret: ${(this.currentSize/1024).toFixed(1)}KB), újrapróbálkozás (${i}/3)... ${err.message}`);
-                await new Promise(res => setTimeout(res, (i * 1200) + jitter));
-            }
-        }
+        await this.batch.commit();
+        this.batch = this.db.batch(); 
+        this.count = 0; 
     }
 }
 
@@ -467,7 +344,6 @@ const ExecutionTimeoutGuard = {
 // 5. SCHEMAS, SANITIZATION, GEOGUARD & DATA PROVENANCE
 // ------------------------------------------------------------------
 
-// OPTIMALIZÁCIÓ 3: Arena Allocator Flat-Array LRU Cache (Zero Object Creation)
 class ArenaLRUCache {
     constructor(limit = 2000) {
         this.limit = limit;
@@ -593,7 +469,7 @@ const GeoGuard = {
         "germany", "nemetorszag", "berlin", "munchen", "frankfurt"
     ],
     compiledMatrix: null,
-    normalizationCache: new ArenaLRUCache(2000), // V22 Update
+    normalizationCache: new ArenaLRUCache(2000), 
 
     init: function() {
         if (!this.compiledMatrix) {
@@ -642,6 +518,7 @@ GeoGuard.init();
 
 class ProcessedJobRecord {
     constructor() {
+        this.id = ""; // A JSON-ben szükség van natív ID-ra
         this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
         this.job_nature = ""; this.salary_min = null; this.salary_max = null;
@@ -649,9 +526,10 @@ class ProcessedJobRecord {
         this.enriched_tags = []; this.tldr = null; this.seo_schema = null;
         this.semantic_hash = ""; this.data_hash = ""; this.data_signature = "";
         this.health_score = 0; this.trace_id = ""; this.is_active = true;
+        this.scraped_at = ""; this.updated_at = "";
     }
     reset() {
-        this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
+        this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
         this.job_nature = ""; this.salary_min = null; this.salary_max = null;
         this.salary_currency = null; this.is_hourly_wage = false; 
@@ -659,6 +537,7 @@ class ProcessedJobRecord {
         this.tldr = null; this.seo_schema = null; this.semantic_hash = ""; 
         this.data_hash = ""; this.data_signature = ""; this.health_score = 0; 
         this.trace_id = ""; this.is_active = true;
+        this.scraped_at = ""; this.updated_at = "";
         return this;
     }
 }
@@ -679,31 +558,6 @@ class JobRecordPool {
 }
 const globalJobPool = new JobRecordPool(5000);
 
-// OPTIMALIZÁCIÓ 4: 8-Way Unrolled 64-bit FNV-1a Hash
-function fnv1a64(str) {
-    let hval = 0xcbf29ce484222325n;
-    const prime = 0x100000001b3n;
-    let i = 0;
-    const len = str.length;
-    // 8-Way Unrolling
-    while (i <= len - 8) {
-        hval ^= BigInt(str.charCodeAt(i)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+1)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+2)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+3)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+4)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+5)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+6)); hval = BigInt.asUintN(64, hval * prime);
-        hval ^= BigInt(str.charCodeAt(i+7)); hval = BigInt.asUintN(64, hval * prime);
-        i += 8;
-    }
-    while (i < len) {
-        hval ^= BigInt(str.charCodeAt(i)); hval = BigInt.asUintN(64, hval * prime);
-        i++;
-    }
-    return hval;
-}
-
 function sanitizeAndScoreJob(rawJobInput, companyName) {
     const rawJob = DataSchemaGuard.validate(rawJobInput);
     if (!rawJob) return { health_score: 0 }; 
@@ -720,7 +574,7 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
     cleanJob.apply_url = rawJob.apply_url;
     cleanJob.date_posted = (!isNaN(Date.parse(rawJob.date_posted))) ? new Date(rawJob.date_posted).toISOString() : new Date().toISOString();
     cleanJob.faculty = rawJob.faculty || "Egyéb";
-    cleanJob.tags = [...new Set(rawJob.tags)].sort(); // Adatbázis Invariáns garantálása
+    cleanJob.tags = [...new Set(rawJob.tags)].sort();
 
     if (nlpEngine && cleanJob.title) {
         const nlpResult = nlpEngine.analyzeJob(cleanJob.title, rawJob.description, companyName);
@@ -737,7 +591,7 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
         }
     }
 
-    if(cleanJob.enriched_tags.length > 0) cleanJob.enriched_tags.sort(); // Adatbázis Invariáns garantálása
+    if(cleanJob.enriched_tags.length > 0) cleanJob.enriched_tags.sort(); 
 
     const tagsForHash = cleanJob.enriched_tags.length > 0 ? cleanJob.enriched_tags.join(",") : cleanJob.tags.join(",");
     const baseString = `${companyName}|${cleanJob.title.toLowerCase()}|${cleanJob.location.toLowerCase()}|${cleanJob.faculty}`;
@@ -754,48 +608,6 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
     
     cleanJob.health_score = Math.max(0, score);
     return cleanJob; 
-}
-
-// OPTIMALIZÁCIÓ 2: Zero-Allocation Array Diffing (Előzetes Invariánsokra Építve)
-function getJobDifferences(oldJob, newJob) {
-    const changes = {};
-
-    ['title', 'location', 'faculty', 'url', 'job_nature', 'salary_min', 'salary_max'].forEach(k => { 
-        if (newJob[k] !== undefined && oldJob[k] !== newJob[k]) {
-            changes[k] = { from: oldJob[k] || null, to: newJob[k] }; 
-        }
-    });
-
-    ['tags', 'enriched_tags'].forEach(k => {
-        const oldArr = Array.isArray(oldJob[k]) ? oldJob[k] : [];
-        const newArr = Array.isArray(newJob[k]) ? newJob[k] : [];
-        
-        if (oldArr.length === 0 && newArr.length === 0) return;
-
-        let oldXor = 0n, newXor = 0n;
-        for(let i=0; i<oldArr.length; i++) oldXor ^= fnv1a64(oldArr[i]);
-        for(let i=0; i<newArr.length; i++) newXor ^= fnv1a64(newArr[i]);
-
-        if (oldArr.length === newArr.length && oldXor === newXor) return;
-
-        // V22 Update: Nincs .slice().sort() mert a db-ben és a memóriában is garantáltan rendezettek
-        let i = 0, j = 0;
-        const added = [], removed = [];
-        
-        while (i < oldArr.length || j < newArr.length) {
-            if (i >= oldArr.length) { added.push(newArr[j++]); }
-            else if (j >= newArr.length) { removed.push(oldArr[i++]); }
-            else if (oldArr[i] === newArr[j]) { i++; j++; }
-            else if (oldArr[i] < newArr[j]) { removed.push(oldArr[i++]); }
-            else { added.push(newArr[j++]); }
-        }
-
-        if (added.length > 0 || removed.length > 0) {
-            changes[k] = { added, removed, total_new: newArr.length };
-        }
-    });
-
-    return Object.keys(changes).length > 0 ? changes : null;
 }
 
 class FastPointerQueue {
@@ -820,16 +632,34 @@ process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
     console.log("\n======================================================");
-    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.0 OMEGA-BAREMETAL)");
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.0 JSON EXPORT)");
     console.log("======================================================\n");
     
     const runTraceId = crypto.randomUUID().split('-')[0]; 
-    await sendAlert(`🚀 V22.0 BAREMETAL (Trace: ${runTraceId}) folyamat elindult...`);
+    await sendAlert(`🚀 V22.0 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
 
-    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, archived: 0, resurrected: 0, rejected: 0, anomalies: 0 };
+    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, anomalies: 0 };
     const dlqQueue = []; 
     const errorLogs = [];
     const marketPulse = new MarketPulseTracker();
+
+    // 1. KORÁBBI JSON BETÖLTÉSE A MEMÓRIÁBA (Azonosítók és statisztikák megőrzéséhez)
+    let localJobsMap = new Map();
+    let localSemanticMap = new Map();
+    if (fs.existsSync(OUTPUT_JSON_PATH)) {
+        try {
+            const raw = JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8'));
+            raw.forEach(j => {
+                localJobsMap.set(j.id, j);
+                if (j.semantic_hash) localSemanticMap.set(j.semantic_hash, j.id);
+            });
+            console.log(`📂 Korábbi jobs.json beolvasva (${raw.length} db állás).`);
+        } catch (e) {
+            console.warn("⚠️ A jobs.json sérült vagy nem olvasható. Tiszta lappal indulunk.");
+        }
+    }
+
+    const allNewJobsArray = []; // Ide gyűjtjük az összes sikeres állást
 
     try {
         const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
@@ -839,7 +669,6 @@ async function runScraper() {
         const CONCURRENCY_LIMIT = Math.min(os.cpus().length * 2, 10); 
         
         const processCompany = async (workerId, companyDoc, isReplay = false) => {
-            const batchManager = new FirestoreBatchManager(db); 
             await sysMonitor.yieldIfNecessary(); 
             memPredictor.checkVelocity(workerId);
 
@@ -847,17 +676,9 @@ async function runScraper() {
             const memRatio = memoryUsage.heapUsed / memoryUsage.heapTotal;
             
             if (memRatio > 0.95) {
-                console.error(`[W${workerId}] 🚨 KRITIKUS RAM (95%+)! Heap Snapshot mentése...`);
-                try {
-                    const fileName = `heap-${Date.now()}.heapsnapshot`; 
-                    v8.writeHeapSnapshot(fileName);
-                    await sendAlert(`🚨 Memória riasztás! Snapshot: ${fileName}. Trace: ${runTraceId}`, true);
-                } catch (e) {}
+                console.error(`[W${workerId}] 🚨 KRITIKUS RAM (95%+)! GC futtatása...`);
                 if (global.gc) global.gc(); 
                 await new Promise(res => setTimeout(res, 5000)); 
-            } else if (memRatio > 0.88) {
-                if (global.gc) global.gc(); 
-                await new Promise(res => setTimeout(res, 2500));
             }
 
             const company = companyDoc.data();
@@ -881,28 +702,6 @@ async function runScraper() {
             try {
                 if (!isReplay) stats.processed++;
                 
-                const existingJobsSnap = await db.collection("jobs")
-                    .where("company_id", "==", companyId)
-                    .select("data_hash", "semantic_hash", "title", "location", "faculty", "url", "tags", "enriched_tags", "job_nature", "salary_min", "salary_max")
-                    .get();
-
-                const existingMap = new Map(); 
-                const existingSemanticMap = new Map(); 
-                existingJobsSnap.forEach(d => { 
-                    const data = d.data(); 
-                    existingMap.set(d.id, data); 
-                    if (data.semantic_hash) existingSemanticMap.set(data.semantic_hash, d.id); 
-                });
-
-                const archSnap = await db.collection("jobs_archive")
-                    .where("company_id", "==", companyId)
-                    .select("data_hash", "semantic_hash")
-                    .get();
-                const archSemanticMap = new Map(); 
-                archSnap.forEach(d => { 
-                    if (d.data().semantic_hash) archSemanticMap.set(d.data().semantic_hash, d.id); 
-                });
-
                 let scrapedJobs = [];
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
@@ -918,21 +717,7 @@ async function runScraper() {
                     }
                 }
 
-                let skipDeletion = false;
-                const prevCount = existingJobsSnap.size;
-                if (prevCount >= 20 && scrapedJobs.length < (prevCount * 0.4)) {
-                    await sendAlert(`${logPrefix} 🚨 VÉDELEM: Extrém drop (${prevCount} -> ${scrapedJobs.length}). Archiválás letiltva!`, true);
-                    skipDeletion = true; 
-                    stats.anomalies++;
-                }
-
-                const validUrls = new Set(scrapedJobs.map(j => j?.url).filter(Boolean));
-                if (scrapedJobs.length > 10 && validUrls.size < (scrapedJobs.length * 0.4)) {
-                    throw new Error("URL Entrópia hiba (Adatmérgezés gyanúja)!");
-                }
-
-                let cAdded = 0, cUpdated = 0, cUntouched = 0, cArchived = 0, cResurrected = 0, cRejected = 0;
-                const freshJobIds = new Set(); 
+                let cAdded = 0, cUpdated = 0, cUntouched = 0, cRejected = 0;
 
                 for (const rawJob of scrapedJobs) {
                     await sysMonitor.yieldIfNecessary(); 
@@ -948,77 +733,39 @@ async function runScraper() {
                     cleanJobPoolObj.company_id = companyId; 
                     cleanJobPoolObj.trace_id = runTraceId; 
                     
-                    let jobId = existingSemanticMap.get(cleanJobPoolObj.semantic_hash) 
-                        || archSemanticMap.get(cleanJobPoolObj.semantic_hash) 
-                        || crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex');
+                    // ID megőrzése a korábbi JSON fájlból
+                    let jobId = localSemanticMap.get(cleanJobPoolObj.semantic_hash) 
+                        || 'job_' + crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex').substring(0,16);
 
-                    freshJobIds.add(jobId); 
+                    cleanJobPoolObj.id = jobId;
                     marketPulse.track(cleanJobPoolObj); 
 
-                    if (existingMap.has(jobId)) {
-                        const oldJob = existingMap.get(jobId);
+                    if (localJobsMap.has(jobId)) {
+                        const oldJob = localJobsMap.get(jobId);
                         if (cleanJobPoolObj.data_hash !== (oldJob.data_hash || "")) {
-                            const changes = getJobDifferences(oldJob, cleanJobPoolObj); 
-                            cleanJobPoolObj.updated_at = FieldValue.serverTimestamp();
-                            
-                            const savePayload = Object.assign({}, cleanJobPoolObj);
-                            await batchManager.set(db.collection("jobs").doc(jobId), savePayload, { merge: true });
-                            
-                            if (changes) { 
-                                const historyRef = db.collection("jobs").doc(jobId).collection("history").doc();
-                                await batchManager.set(historyRef, { 
-                                    changed_at: FieldValue.serverTimestamp(), 
-                                    changes, 
-                                    trace_id: runTraceId 
-                                });
-                            }
+                            cleanJobPoolObj.updated_at = new Date().toISOString();
+                            cleanJobPoolObj.scraped_at = oldJob.scraped_at || new Date().toISOString();
                             cUpdated++; 
                             stats.updated++;
                         } else { 
+                            cleanJobPoolObj.updated_at = oldJob.updated_at;
+                            cleanJobPoolObj.scraped_at = oldJob.scraped_at;
                             cUntouched++; 
                             stats.untouched++; 
                         }
-                    } else if (archSemanticMap.has(cleanJobPoolObj.semantic_hash)) {
-                        cleanJobPoolObj.updated_at = FieldValue.serverTimestamp(); 
-                        cleanJobPoolObj.is_active = true;
-                        const savePayload = Object.assign({}, cleanJobPoolObj);
-                        await batchManager.set(db.collection("jobs").doc(jobId), savePayload);
-                        await batchManager.delete(db.collection("jobs_archive").doc(jobId)); 
-                        cResurrected++; 
-                        stats.resurrected++;
                     } else {
-                        cleanJobPoolObj.scraped_at = FieldValue.serverTimestamp();
-                        cleanJobPoolObj.is_active = true;
-                        const savePayload = Object.assign({}, cleanJobPoolObj);
-                        await batchManager.set(db.collection("jobs").doc(jobId), savePayload);
+                        cleanJobPoolObj.scraped_at = new Date().toISOString();
+                        cleanJobPoolObj.updated_at = new Date().toISOString();
                         cAdded++; 
                         stats.added++;
                     }
                     
+                    // JSON kimentéshez klónozzuk a memóriaterületről
+                    allNewJobsArray.push(Object.assign({}, cleanJobPoolObj));
                     globalJobPool.release(cleanJobPoolObj); 
                 }
 
-                if (!skipDeletion) {
-                    for (const existingJobId of existingMap.keys()) {
-                        if (!freshJobIds.has(existingJobId)) {
-                            const oldDoc = await db.collection("jobs").doc(existingJobId).get();
-                            if (oldDoc.exists) {
-                                await batchManager.set(db.collection("jobs_archive").doc(existingJobId), { 
-                                    ...oldDoc.data(), 
-                                    archived_at: FieldValue.serverTimestamp(), 
-                                    is_active: false, 
-                                    trace_id: runTraceId 
-                                });
-                                await batchManager.delete(db.collection("jobs").doc(existingJobId));
-                                cArchived++; 
-                                stats.archived++;
-                            }
-                        }
-                    }
-                }
-
-                await batchManager.flush();
-                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Archív: ${cArchived} | Kiszűrve: ${cRejected}`);
+                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Kiszűrve: ${cRejected}`);
                 return true; 
             } catch (err) {
                 console.error(`${logPrefix} ❌ Hiba:`, err.message);
@@ -1061,30 +808,29 @@ async function runScraper() {
         }
 
         // ------------------------------------------------------------------
-        // 7. MARKET PULSE, TELEMETRIA MENTÉS & AUTO-VACUUM
+        // 7. VÉGSŐ JSON FÁJL MENTÉSE
         // ------------------------------------------------------------------
-        console.log("\n📈 Telemetria, Market Pulse & Vacuum...");
-        await db.collection("system_analytics").doc("latest_market_pulse").set(marketPulse.generateReport());
-        await db.collection("system_analytics").doc("history").collection("daily_pulses").add(marketPulse.generateReport());
-        
-        await db.collection("system_logs").doc(`telemetry_${runTraceId}`).set({ 
+        console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba...`);
+        fs.writeFileSync(OUTPUT_JSON_PATH, JSON.stringify(allNewJobsArray, null, 2), 'utf-8');
+
+        // ------------------------------------------------------------------
+        // 8. MARKET PULSE & TELEMETRIA MENTÉS FIREBASE-BE (Csak Analitika)
+        // ------------------------------------------------------------------
+        console.log("📈 Telemetria & Market Pulse mentése a Firebase-be...");
+        const logBatch = new FirestoreBatchManager(db);
+        await logBatch.set(db.collection("system_analytics").doc("latest_market_pulse"), marketPulse.generateReport());
+        await logBatch.set(db.collection("system_logs").doc(`telemetry_${runTraceId}`), { 
             timestamp: FieldValue.serverTimestamp(), 
             metrics: sysTelemetry.getReport() 
         });
 
-        const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000);
-        const vacuumSnap = await db.collection("jobs_archive").where("archived_at", "<", ninetyDaysAgo).limit(500).get();
-        const vacuumBatch = new FirestoreBatchManager(db);
-        vacuumSnap.forEach(doc => vacuumBatch.delete(doc.ref));
-        await vacuumBatch.flush();
-
         // ------------------------------------------------------------------
-        // 8. ZÁRÓJELENTÉS
+        // 9. ZÁRÓJELENTÉS
         // ------------------------------------------------------------------
         const execSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
         const usedMemMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
         
-        await db.collection("system_logs").doc("scraper_health").set({
+        await logBatch.set(db.collection("system_logs").doc("scraper_health"), {
             last_run: FieldValue.serverTimestamp(), 
             trace_id: runTraceId, 
             status: stats.failed > 0 || stats.anomalies > 0 ? "warning" : "healthy",
@@ -1092,15 +838,17 @@ async function runScraper() {
             recent_errors: errorLogs.slice(0, 10) 
         });
 
+        await logBatch.flush();
+
         console.log("\n======================================================");
-        console.log(`🏁 CHRONOS-NEXUS V22.0 OMEGA-BAREMETAL (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
+        console.log(`🏁 CHRONOS-NEXUS V22.0 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
         console.log("======================================================");
         console.log(`⏱️ Idő: ${execSec}s | 🧠 Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Végleges hiba: ${stats.failed})`);
-        console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated} | 🧟 Feltámadt: ${stats.resurrected}`);
-        console.log(`🗑️ Kiszűrve (Kuka): ${stats.rejected} | 🏛️ Archivált: ${stats.archived}`);
+        console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated}`);
+        console.log(`🗑️ Kiszűrve (Kuka): ${stats.rejected}`);
         console.log("======================================================\n");
         
-        await sendAlert(`✅ V22.0 BAREMETAL (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
+        await sendAlert(`✅ V22.0 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
         process.exit(0);
 
     } catch (err) {

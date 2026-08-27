@@ -16,6 +16,10 @@ jobs:
   run-scraper:
     runs-on: ubuntu-latest
     
+    # 🔐 Kifejezett írási jog a GitHub Actions számára, hogy fel tudja tölteni a JSON-t
+    permissions:
+      contents: write
+    
     # ⏱️ Költség- és Végtelen ciklus védelem (Hard Limit)
     timeout-minutes: 35 
 
@@ -41,6 +45,14 @@ jobs:
           TZ: 'Europe/Budapest'
         run: node scraper.js
 
+      - name: 💾 Friss jobs.json feltöltése a GitHubra
+        run: |
+          git config --global user.name 'UniStart Bot'
+          git config --global user.email 'bot@unistart.hu'
+          git add jobs.json
+          # A [skip ci] megakadályozza az Action esetleges végtelen újraindulását
+          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Automatikus állás frissítés [skip ci]" && git push)
+
       - name: 🚨 Vészjelzés küldése Discordra/Slackre (Csak ha Hiba történt)
         if: failure()
         env:
@@ -50,4 +62,3 @@ jobs:
             curl -H "Content-Type: application/json" \
             -d '{"content": "🚨 **KRITIKUS HIBA:** A napi GitHub Actions scraper (UniStart) összeomlott vagy időtúllépést okozott! Kérlek, nézd meg a logokat a GitHubon."}' \
             $DISCORD_WEBHOOK_URL
-          fi

@@ -1367,8 +1367,8 @@
                   <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
                 </div>
                 <div>
-                  <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
-                  <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
+                  <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color);">GitHub Pages</h3>
+                  <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: San Francisco, Kalifornia, USA.</p>
                 </div>
               </div>
 
@@ -1376,7 +1376,7 @@
                 <h2 style="font-size: 18px; font-weight: 800; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
                 <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.7; font-weight: 500;">
                   Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
-                  A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
+                  A rendszer működéséhez szükséges strukturált adatokat a <strong>GitHub</strong> globális szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
                 </p>
               </div>
             </div>
@@ -1563,8 +1563,8 @@
             <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Domain regisztrátor és webtárhely szolgáltató.<br>Székhely: 6722 Szeged, Tisza Lajos körút 41.</p>
           </div>
           <div>
-            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color);">Google Ireland Limited (Firebase)</h3>
-            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: Gordon House, Barrow Street, Dublin 4, Írország.</p>
+            <h3 style="font-size: 15px; font-weight: 700; margin: 0 0 4px 0; color: var(--text-color);">GitHub Pages</h3>
+            <p style="font-size: 13px; color: var(--subtitle-color); margin: 0; line-height: 1.6; font-weight: 500;">Adatbázis és biztonságos felhőalapú infrastruktúra biztosítása.<br>Székhely: San Francisco, Kalifornia, USA.</p>
           </div>
         </div>
 
@@ -1572,7 +1572,7 @@
           <h2 style="font-size: 18px; font-weight: 800; margin: 0 0 12px 0; display: flex; align-items: center; gap: 10px; color: var(--text-color);"><span>🛡️</span> Adatvédelmi Tájékoztató</h2>
           <p style="font-size: 14px; color: var(--subtitle-color); margin: 0; line-height: 1.7; font-weight: 500;">
             Az UniStart számára a felhasználók adatainak védelme kiemelten fontos. A platform böngészése során a böngésződ helyi memóriáját (<strong>Local Storage</strong>) használjuk a legutóbbi szűrők és a kedvenc állásaid gyors és biztonságos elmentésére. 
-            A rendszer működéséhez szükséges strukturált adatokat a <strong>Google Firebase</strong> globális, titkosított szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
+            A rendszer működéséhez szükséges strukturált adatokat a <strong>GitHub</strong> globális szerverein tároljuk. Személyes adatokat nem gyűjtünk, harmadik félnek nem értékesítünk.
           </p>
         </div>
       </div>
@@ -1580,12 +1580,7 @@
   </div>
 </div>
 
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-
 <script>
-
     // 🚀 AETHER-CACHE: IndexedDB Alapú SWR Kvantum-Cache
     const AetherCache = {
         db: null,
@@ -1656,9 +1651,6 @@
     function toggleTheme() { applyTheme(!body.hasAttribute('data-theme')); }
     if (themeToggleDesktop) themeToggleDesktop.addEventListener('click', toggleTheme);
 
-    // ==========================================================================
-    // JS: 2. GÖRGÉS, LAPFÜLEK, MEMÓRIA (APP STATE) ÉS NAVIGÁCIÓ
-    // ==========================================================================
     const dashboardMain = document.getElementById('dashboardMainScroll');
     const backToTopBtn = document.getElementById('backToTopBtn');
 
@@ -1758,7 +1750,6 @@
         }
     }
 
-    // 🚀 CHRONOS-PRECOGNITION: Unified O(1) Állapotgép (ZÉRÓ VILLOGÁS, VÉGTELEN MEMÓRIA)
     function switchNav(navItemId, mode, targetTabId, title) {
         if (window.activeNavId) {
             window.tabStates[window.activeNavId].scrollPos = (window.innerWidth <= 768) ? window.scrollY : (dashboardMain ? dashboardMain.scrollTop : 0);
@@ -1809,9 +1800,6 @@
         });
     }
 
-    // ==========================================================================
-    // JS: 3. MODÁLIS ABLAKOK LOGIKÁJA
-    // ==========================================================================
     function openModal(modalId) { 
         const modal = document.getElementById(modalId);
         if (modal) { modal.classList.add('active'); document.body.classList.add('modal-open'); }
@@ -1867,9 +1855,6 @@
         } 
     });
 
-    // ==========================================================================
-    // JS: 4. ÉRTESÍTÉSEK (TOAST) ÉS GOMBOK (MOBIL + ASZTALI)
-    // ==========================================================================
     let toastTimeout;
     function showToast(message, type = "info") {
         const toast = document.getElementById('toastContainer');
@@ -1880,7 +1865,6 @@
         msg.innerText = message;
         if (type === "success") { icon.innerText = "✅"; toast.style.borderColor = "var(--success-color)"; progress.style.background = "var(--success-color)";}
         else if (type === "heart") { icon.innerText = "❤️"; toast.style.borderColor = "#ef4444"; progress.style.background = "#ef4444";}
-        else if (type === "share") { icon.innerText = "📤"; toast.style.borderColor = "var(--primary-color)"; progress.style.background = "var(--primary-color)";}
         else { icon.innerText = "ℹ️"; toast.style.borderColor = "var(--card-border)"; progress.style.background = "var(--text-color)";}
         
         progress.style.animation = 'none';
@@ -1925,16 +1909,10 @@
     }
 
     // ==========================================================================
-    // JS: 5. FIREBASE INICIALIZÁLÁS ÉS VÁLTOZÓK
+    // JS: 5. GITHUB JSON INICIALIZÁLÁS ÉS VÁLTOZÓK
     // ==========================================================================
-    const firebaseConfig = {
-        apiKey: "AIzaSyD2efnd7QvT-ODZb3MOG4PaDfIRuvVqAxM", 
-        authDomain: "unistart-36fb6.firebaseapp.com",
-        projectId: "unistart-36fb6"
-    };
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
+    // CSERÉLD KI ezt a linket a saját GitHub Raw JSON linkedre! (A kód működéséhez kötelező!)
+    const GITHUB_JSON_URL = "https://raw.githubusercontent.com/weszterszabo/unistart/main/jobs.json";
 
     let jobsData = [];
     let currentFilteredJobs = [];
@@ -1944,7 +1922,6 @@
     let activeSearchTags = []; 
     let activeLocationTags = []; 
     let currentSortMode = "date_desc"; 
-    let activeMagicFilter = "";
     
     let activeCompanies = JSON.parse(localStorage.getItem('unistart_active_companies') || "[]");
     let activeFaculties = JSON.parse(localStorage.getItem('unistart_active_faculties') || "[]");
@@ -2011,32 +1988,28 @@
         </div>
     `;
 
-    function processRawFirestoreData(snapshot) {
+    function processRawJSONData(jsonArray) {
         const freshJobs = [];
         const now = Date.now(); 
 
-        snapshot.forEach(doc => {
-            let data = doc.data();
-            let job = { id: doc.id, ...data };
+        jsonArray.forEach((job, index) => {
+            // Ha nincs ID, készítünk egyet
+            if (!job.id) job.id = 'job_' + index + '_' + Math.random().toString(36).substring(2, 9);
             
             const tagsString = (job.tags || []).join(" ");
             const jobCorpusRaw = `${job.title || ''} ${job.company_name || ''} ${job.faculty || ''} ${job.work_style || ''} ${tagsString}`.toLowerCase();
             job._corpusClean = removeAccents(jobCorpusRaw);
             job._locClean = removeAccents((job.location || '').toLowerCase());
             
+            // Dátumok feldolgozása a nyers stringből (pl. "2026-08-27")
             let sDate = job.scraped_at || job.updated_at || 0;
-            if (sDate && sDate.toDate) sDate = sDate.toDate().getTime();
-            else if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
+            if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
 
             let pDate = job.date_posted;
             let postedTime = 0;
-            if (pDate && pDate.toDate) postedTime = pDate.toDate().getTime();
-            else if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
+            if (typeof pDate === 'string') postedTime = new Date(pDate).getTime() || 0;
 
             job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
-            job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
-            
-            job._magicDateStr = getLocalDateStr(job._magicDate);
             job._companyNameLower = (job.company_name || "").toLowerCase();
             
             freshJobs.push(job);
@@ -2112,7 +2085,6 @@
             jobsData = cachedPayload.jobs;
             buildFilterButtons();
             
-            // Ha cache-ből jön, a memóriát tölti vissza (isRestore=true)
             applyFilters(true); 
             isCacheUsed = true;
             
@@ -2132,8 +2104,12 @@
         }
 
         try {
-            const snapshot = await db.collection("jobs").get();
-            const freshJobs = processRawFirestoreData(snapshot);
+            // A Firebase hívás helyett a GitHub nyers JSON fájlját kérjük le
+            const response = await fetch(GITHUB_JSON_URL, { cache: "no-store" });
+            if (!response.ok) throw new Error("Hiba a GitHub fájl letöltésekor");
+            
+            const rawJsonData = await response.json();
+            const freshJobs = processRawJSONData(rawJsonData);
             
             await AetherCache.set("master_jobs", { jobs: freshJobs, timestamp: Date.now() });
             
@@ -2156,9 +2132,9 @@
             }
             setupInfiniteScroll();
         } catch (error) {
-            console.error("Háttér szinkronizációs hiba:", error);
+            console.error("Adatbetöltési hiba a GitHubról:", error);
             if (!isCacheUsed) {
-                document.getElementById('jobGridContainer').innerHTML = '<p style="color:var(--danger-color); text-align:center; padding: 40px 0;">Nem sikerült betölteni az állásokat.</p>';
+                document.getElementById('jobGridContainer').innerHTML = '<p style="color:var(--danger-color); text-align:center; padding: 40px 0;">Kérlek, cseréld ki a GITHUB_JSON_URL-t a kódban, hogy megjelenjenek az állások!</p>';
             }
         }
     }
@@ -2389,8 +2365,6 @@
         updateURLState(); 
         renderActiveFilterChips();
 
-        const todayStr = getLocalDateStr(Date.now());
-
         currentFilteredJobs = jobsData.filter(job => {
             if (filterMode === 'offers') return false; 
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
@@ -2412,22 +2386,8 @@
                     return job._locClean && job._locClean.includes(removeAccents(locTag.toLowerCase()));
                 });
             }
-            
-            let matchMagic = true;
-            if (activeMagicFilter === 'today') {
-                if (job._magicDateStr !== todayStr) matchMagic = false; 
-            }
-            else if (activeMagicFilter === 'remote') {
-                if (!job._locClean.includes("home office") && !job._locClean.includes("remote") && !(job._corpusClean || "").includes("home office") && !(job._corpusClean || "").includes("remote")) matchMagic = false;
-            }
-            else if (activeMagicFilter === 'it') {
-                if (!(job.faculty || "").includes("Informatika") && !(job.faculty || "").includes("Adattudomány")) matchMagic = false;
-            }
-            else if (activeMagicFilter === 'business') {
-                if (!(job.faculty || "").includes("Gazdaság") && !(job.faculty || "").includes("Pénzügy") && !(job.faculty || "").includes("Menedzsment")) matchMagic = false;
-            }
 
-            return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc && matchMagic;
+            return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc;
         });
 
         currentFilteredJobs.sort((a, b) => {
@@ -2531,6 +2491,9 @@
             const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightTextInline(tag)}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
+            
+            // ÚJ FUNKCIÓ: A kártyára kattintva a jelentkezési link nyílik meg
+            card.onclick = () => { if(applyLink) window.open(applyLink, '_blank'); };
 
             card.innerHTML = `
                 <div class="company-card-content">
@@ -2550,6 +2513,8 @@
             if ((i + 1) % 15 === 0) {
                 const supportCard = document.createElement('div'); 
                 supportCard.className = 'company-card support-ad-card';
+                // A kártya itt sem kattintható egészében, csak a benne lévő gomb
+                supportCard.style.cursor = 'default';
                 supportCard.style.animationDelay = `${(i - startIndex) * 0.05 + 0.05}s`;
 
                 supportCard.innerHTML = `
@@ -2595,7 +2560,8 @@
         infiniteObserver.observe(anchor);
     }
 
-    auth.onAuthStateChanged((user) => { loadJobsData(); });
+    // Firebase authentikáció helyett azonnal indul
+    document.addEventListener("DOMContentLoaded", loadJobsData);
 
 </script>
 </body>

@@ -95,16 +95,16 @@
     }
 
     /* 🚀 ANTI-FLICKER CLASS (Blokkolja az animációkat újratöltéskor) */
-    .no-animations * {
+    .no-animations, .no-animations * {
       animation: none !important;
       transition: none !important;
+      scroll-behavior: auto !important;
     }
 
     /* ==========================================================================
        CSS: 2. ALAPVETŐ STÍLUSOK ÉS TELJESÍTMÉNY OPTIMALIZÁLÁS
        ========================================================================== */
     html { 
-      scroll-behavior: smooth; 
       -webkit-text-size-adjust: 100%; 
     }
     
@@ -831,7 +831,7 @@
     .nav-icon { font-size: 20px; text-align: center; transition: transform 0.4s var(--ease-spring); }
     .nav-text { opacity: 0; transform: translateX(-10px); transition: all 0.3s var(--ease-smooth); white-space: nowrap; }
 
-    .dashboard-main { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-color); overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; position: relative; -webkit-overflow-scrolling: touch; }
+    .dashboard-main { flex: 1; display: flex; flex-direction: column; background-color: var(--bg-color); overflow-y: auto; overflow-x: hidden; position: relative; -webkit-overflow-scrolling: touch; }
     
     .dashboard-header { height: var(--header-height); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; background-color: var(--header-bg); backdrop-filter: var(--blur-heavy); -webkit-backdrop-filter: var(--blur-heavy); position: sticky; top: 0; z-index: var(--z-header); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.05), 0 12px 40px rgba(0, 0, 0, 0.2); transform: translate3d(0,0,0); }
     [data-theme="light"] .dashboard-header { box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05), 0 12px 40px rgba(0, 0, 0, 0.05); }

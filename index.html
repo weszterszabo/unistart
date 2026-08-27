@@ -142,7 +142,7 @@ body.modal-open {
     touch-action: none; 
 }
 
-button, a, .company-card, .magic-chip, .clickable-tag, .sort-select {
+button, a, .company-card, .clickable-tag, .sort-select {
     touch-action: manipulation;
 }
 
@@ -464,27 +464,6 @@ html {
 .filter-badge { background: var(--primary-color); color: white; border-radius: 50%; padding: 2px 8px; font-size: 11px; font-weight: 800; display: none; }
 .filter-badge.active { display: inline-block; }
 .filter-divider { width: 1px; height: 28px; background: var(--card-border); flex-shrink: 0; margin: 0 8px; }
-
-.magic-chip { 
-    flex-shrink: 0; 
-    background: var(--tag-bg); 
-    border: 1px solid var(--tag-border); 
-    color: var(--text-color); 
-    padding: 11px 20px; 
-    border-radius: var(--radius-pill); 
-    font-size: 14px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: all 0.4s var(--ease-spring); 
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-}
-@media (hover: hover) {
-    .magic-chip:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.08); transform: translateY(-2px); box-shadow: var(--card-shadow-soft); }
-}
-.magic-chip:active { transform: scale(0.96); transition: transform 0.1s; }
-.magic-chip.active { background: var(--primary-color); color: white; border-color: var(--primary-color); box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4); transform: translateY(-2px); }
 
 .active-filters-container { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
 .active-filter-chip { background: transparent; border: 1px solid var(--tag-border); color: var(--text-color); padding: 8px 16px; border-radius: var(--radius-pill); font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 10px; animation: fadeIn 0.3s var(--ease-spring); }
@@ -984,6 +963,14 @@ html {
     .nav-icon-box { width: auto !important; display: flex; align-items: center; justify-content: center; }
     .nav-icon { font-size: 24px; margin: 0; transition: transform var(--transition-fast); }
     
+    /* 🚀 JAVÍTVA: A téma váltó gomb (Nap/Hold) nagyobb lett mobilon, hogy könnyebben lehessen rányomni */
+    .ios-menu-card .sidebar-theme-toggle {
+        width: 52px !important;
+        height: 52px !important;
+        font-size: 24px !important;
+        border-radius: var(--radius-md) !important;
+    }
+
     /* 🚀 MOST MÁR BIZTOSAN LÁTSZÓDIK AZ INFÓ GOMB */
     .mobile-only-nav { display: flex !important; }
 
@@ -1168,12 +1155,10 @@ html {
                     <div class="nav-icon-box"><span class="nav-icon">🤍</span></div> 
                     <span class="nav-text">Kedvencek</span>
                 </li>
-                <!-- 🚀 ÚJ FÜL: Ajánlatok -->
                 <li class="nav-item" id="nav-offers" onclick="setFilterMode('offers'); switchTab('forumTab', 'Ajánlatok', 'nav-offers')">
                     <div class="nav-icon-box"><span class="nav-icon">🎁</span></div> 
                     <span class="nav-text">Ajánlatok</span>
                 </li>
-                <!-- 📱 Csak mobilon jelenik meg a 4. fül (Infó) -->
                 <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchTab('infoTab', 'Információk', 'nav-info-mobile')">
                     <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div> 
                     <span class="nav-text">Infó</span>
@@ -1182,7 +1167,6 @@ html {
         </div>
         
         <div class="sidebar-bottom">
-            <!-- 💻 Asztali gépen itt van az Info ablak gombja -->
             <div class="sidebar-profile" id="nav-info-desktop" onclick="openInfoModal('about')">
                 <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div>
                 <span class="nav-text">Információ</span>
@@ -1201,7 +1185,7 @@ html {
             <!-- ======================= 1. FÜL: FÓRUM / MENTETT / AJÁNLATOK ======================== -->
             <div id="forumTab" class="tab-content active">
 
-                <div class="omnibar-wrapper">
+                <div class="omnibar-wrapper" id="mainOmnibar">
                     <div style="display: flex; flex-direction: column; gap: 16px;">
                         <div class="search-inputs-row">
                             <div class="search-box-container keyword-search">
@@ -1220,11 +1204,7 @@ html {
                         <button class="main-filter-btn" onclick="openModal('filterModalOverlay')">
                             🎛️ Szűrők <span class="filter-badge" id="activeFilterBadge">0</span>
                         </button>
-                        <div class="filter-divider"></div>
-                        <button class="magic-chip" id="magicChipToday" onclick="toggleMagicFilter('today')">🔥 Mai friss</button>
-                        <button class="magic-chip" id="magicChipRemote" onclick="toggleMagicFilter('remote')">🏠 Home Office</button>
-                        <button class="magic-chip" id="magicChipIt" onclick="toggleMagicFilter('it')">💻 IT Terület</button>
-                        <button class="magic-chip" id="magicChipBusiness" onclick="toggleMagicFilter('business')">💼 Gazdaság</button>
+                        <!-- 🚀 JAVÍTVA: A "Mai friss", "Home office", "IT Terület" és "Gazdaság" gombok TÖRÖLVE lettek a kérésnek megfelelően! -->
                     </div>
 
                     <div class="active-filters-container" id="activeFiltersRow" style="display: none;"></div>
@@ -1232,6 +1212,7 @@ html {
                 
                 <div class="section-header-row" style="margin-bottom: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
                     <h2 class="section-title" style="display: flex; align-items: center; gap: 16px;">
+                        <!-- 🚀 JAVÍTVA: Mindig csak "Találatok" marad, ahogy kérted, nincs redundancia a Mentett állások/Ajánlatok fülön -->
                         <span id="resultsTitleText">Találatok</span>
                         <span id="jobCountBadge" style="font-size: 15px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 6px 16px; border-radius: var(--radius-pill); color: var(--subtitle-color); font-weight: 700;">0 db</span>
                     </h2>
@@ -1262,7 +1243,7 @@ html {
                             <div class="ios-icon-box" style="background: #f59e0b; color: white;">🌓</div>
                             <span style="font-weight: 700; font-size: 18px;">Sötét mód</span>
                         </div>
-                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 44px; height: 44px; font-size: 20px; background: var(--card-bg); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
+                        <button class="sidebar-theme-toggle" id="themeToggleMobileTabBtn" style="opacity: 1; pointer-events: auto; margin: 0; width: 52px; height: 52px; font-size: 24px; border-radius: var(--radius-md); background: var(--card-bg); border: 1px solid var(--card-border);" onclick="toggleTheme()">☀️</button>
                     </div>
 
                     <!-- RÓLUNK & CSAPAT SZÖVEGES TARTALOM (HIÁNYTALANUL) -->
@@ -1661,6 +1642,14 @@ html {
 
 <script>
 
+    // DÁTUM MEGÁLLAPÍTÓ FÜGGVÉNY (LOCAL TIMEZONE ALAPJÁN)
+    function getLocalDateStr(dateVal) {
+        if (!dateVal) return "";
+        const d = new Date(dateVal);
+        const offset = d.getTimezoneOffset() * 60000;
+        return new Date(d.getTime() - offset).toISOString().split('T')[0];
+    }
+
     function highlightText(text, query) {
         if (!query || !text) return text;
         const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -1891,13 +1880,8 @@ html {
     // ==========================================================================
     function setFilterMode(mode) {
         filterMode = mode;
-        if (mode === 'saved') {
-            document.getElementById('resultsTitleText').innerText = "Mentett Állások";
-        } else if (mode === 'offers') {
-            document.getElementById('resultsTitleText').innerText = "Ajánlatok";
-        } else {
-            document.getElementById('resultsTitleText').innerText = "Találatok";
-        }
+        // JAVÍTÁS: A redundancia elkerülése végett fixen "Találatok" marad, mivel a főcím a top sávban (Headerben) van.
+        document.getElementById('resultsTitleText').innerText = "Találatok";
         
         const omnibar = document.querySelector('.omnibar-wrapper');
         if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'offers') ? 'none' : 'flex';
@@ -2068,6 +2052,10 @@ html {
 
                 job._sortTime = (postedTime > now) ? (sDate || 0) : (postedTime || sDate || 0);
                 job._magicDate = (postedTime && postedTime <= now) ? postedTime : (sDate || now);
+                
+                // JAVÍTÁS: A pontos, naptári nap szerinti ellenőrzés bevezetése (Local Timezone alapú ISO dátum)
+                job._magicDateStr = getLocalDateStr(job._magicDate);
+                
                 job._companyNameLower = (job.company_name || "").toLowerCase();
                 
                 jobsData.push(job);
@@ -2376,8 +2364,8 @@ html {
         updateURLState(); 
         renderActiveFilterChips();
 
-        const now = Date.now();
-        const oneDayAgo = now - 86400000;
+        // JAVÍTÁS: Naptári nap szintű, String alapú dátum egyezés
+        const todayStr = getLocalDateStr(Date.now());
 
         currentFilteredJobs = jobsData.filter(job => {
             if (filterMode === 'offers') return false; 
@@ -2404,7 +2392,8 @@ html {
             
             let matchMagic = true;
             if (activeMagicFilter === 'today') {
-                if (job._magicDate < oneDayAgo) matchMagic = false; 
+                // Szigorú naptári egyezés az időzónával konvertált "YYYY-MM-DD" szöveg alapján
+                if (job._magicDateStr !== todayStr) matchMagic = false; 
             }
             else if (activeMagicFilter === 'remote') {
                 if (!job._locClean.includes("home office") && !job._locClean.includes("remote") && !(job._corpusClean || "").includes("home office") && !(job._corpusClean || "").includes("remote")) matchMagic = false;

@@ -62,7 +62,6 @@
       --z-sidebar: 40;
       --z-dropdown: 1000;
       --z-modal: 20000;
-      --z-preview: 25000;
       --z-toast: 99999;
 
       /* 🌁 Háttér elmosások */
@@ -244,7 +243,6 @@
     }
     
     .filter-modal-body::-webkit-scrollbar-thumb, 
-    .job-preview-body::-webkit-scrollbar-thumb, 
     .big-support-content::-webkit-scrollbar-thumb { 
       border-color: var(--modal-bg); 
     }
@@ -880,51 +878,31 @@
     .acc-val { font-weight: 700; font-family: 'Plus Jakarta Sans', monospace; font-size: 16px; text-align: right; letter-spacing: 0.5px; }
 
     /* ==========================================================================
-       CSS: 8. ÁLLÁS GYORSNÉZET (JOB PREVIEW) ÉS MEGA SZŰRŐ MODAL
+       CSS: 8. MEGA SZŰRŐ MODAL
        ========================================================================== */
-    .job-preview-overlay, .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 25000; display: flex; align-items: flex-end; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
-    .filter-modal-overlay { z-index: 20000; align-items: center; padding: 20px; }
-    .job-preview-overlay.active, .filter-modal-overlay.active { opacity: 1; visibility: visible; }
+    .filter-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; padding: 20px; }
+    .filter-modal-overlay.active { opacity: 1; visibility: visible; }
     
-    .job-preview-box, .filter-modal-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(40px); -webkit-backdrop-filter: saturate(180%) blur(40px); border-top: 1px solid var(--card-border); border-radius: 36px 36px 0 0; width: 100%; max-height: 90dvh; box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.6); transform: translateY(100%); transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1); display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
-    .filter-modal-box { border-radius: 32px; width: 95%; max-width: 1200px; height: 90dvh; transform: scale(0.95); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); border: 1px solid var(--card-border); }
-    .job-preview-box { max-width: 800px; }
-    
-    @media (min-width: 768px) { 
-      .job-preview-overlay { align-items: center; padding: 20px; } 
-      .job-preview-box { border-radius: 32px; border: 1px solid var(--card-border); transform: translateY(20px) scale(0.95); opacity: 0; } 
-      .job-preview-overlay.active .job-preview-box { transform: translateY(0) scale(1); opacity: 1; } 
-    }
-    
-    .job-preview-overlay.active .job-preview-box { transform: translateY(0); }
+    .filter-modal-box { background: var(--modal-bg); backdrop-filter: saturate(180%) blur(40px); -webkit-backdrop-filter: saturate(180%) blur(40px); border-top: 1px solid var(--card-border); border-radius: 32px; width: 95%; max-width: 1200px; height: 90dvh; transform: scale(0.95); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1); border: 1px solid var(--card-border); display: flex; flex-direction: column; overflow: hidden; padding: 0; overscroll-behavior: contain; }
     .filter-modal-overlay.active .filter-modal-box { transform: scale(1); opacity: 1; }
 
-    .job-preview-header, .filter-modal-header { padding: 48px 48px 32px 48px; border-bottom: 1px solid var(--card-border); position: relative; flex-shrink: 0; }
-    .filter-modal-header { padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; }
-    .job-preview-title { font-size: 32px; font-weight: 800; margin: 0 0 12px 0; color: var(--text-color); line-height: 1.2; padding-right: 48px; letter-spacing: -0.03em;}
-    .job-preview-company { font-size: 20px; color: var(--subtitle-color); font-weight: 600; margin: 0; }
+    .filter-modal-header { padding: 40px 48px; border-bottom: 1px solid var(--card-border); position: relative; flex-shrink: 0; display: flex; justify-content: space-between; align-items: center; }
     .filter-modal-header h2 { margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
     
-    .job-preview-close, .big-close-btn { position: absolute; top: 32px; right: 32px; background: var(--tag-bg); border: none; color: var(--text-color); width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
-    @media (hover: hover) { .job-preview-close:hover, .big-close-btn:hover { background: var(--card-border); transform: scale(1.1); } }
-    .job-preview-close:active, .big-close-btn:active { transform: scale(0.9); transition: transform 0.1s; }
-    .big-close-btn { position: static; margin: 0; } 
-
-    .job-preview-body, .filter-modal-body { padding: 48px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; }
-    .filter-modal-body { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px; align-content: start; }
+    .big-close-btn { position: static; margin: 0; background: var(--tag-bg); border: none; color: var(--text-color); width: 40px; height: 40px; border-radius: 50%; font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; z-index: 1000; }
+    @media (hover: hover) { .big-close-btn:hover { background: var(--card-border); transform: scale(1.1); } }
+    .big-close-btn:active { transform: scale(0.9); transition: transform 0.1s; }
     
-    .job-preview-section, .filter-section { margin-bottom: 40px; display: flex; flex-direction: column; }
-    .job-preview-section h4, .filter-section h3 { font-size: 16px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 1px; margin: 0 0 20px 0; font-weight: 800; }
-    .filter-section h3 { border-bottom: 1px solid var(--card-border); padding-bottom: 16px; margin-bottom: 24px;}
+    .filter-modal-body { padding: 48px; overflow-y: auto; flex: 1; -webkit-overflow-scrolling: touch; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 48px; align-content: start; }
     
-    .job-preview-tags { display: flex; flex-wrap: wrap; gap: 12px; }
-    .job-preview-tags .job-tag { font-size: 15px; padding: 12px 20px; border-radius: var(--radius-pill); }
+    .filter-section { margin-bottom: 40px; display: flex; flex-direction: column; }
+    .filter-section h3 { font-size: 16px; text-transform: uppercase; color: var(--subtitle-color); letter-spacing: 1px; margin: 0 0 24px 0; font-weight: 800; border-bottom: 1px solid var(--card-border); padding-bottom: 16px;}
+    
     .filter-group { display: flex; flex-wrap: wrap; gap: 12px; }
 
-    .job-preview-footer, .filter-modal-footer { padding: 32px 48px; border-top: 1px solid var(--card-border); background: rgba(0,0,0,0.3); display: flex; gap: 20px; align-items: center; justify-content: flex-end; flex-shrink: 0; }
-    .filter-modal-footer { position: sticky; bottom: 0; z-index: 10; gap: 24px; background: var(--modal-bg); border-top: 1px solid var(--card-border); }
-    [data-theme="light"] .job-preview-footer, [data-theme="light"] .filter-modal-footer { background: rgba(255,255,255,0.8); }
-    .job-preview-footer .apply-btn, .filter-modal-footer .apply-btn { padding: 18px 48px; font-size: 16px; width: auto; }
+    .filter-modal-footer { padding: 32px 48px; border-top: 1px solid var(--card-border); display: flex; align-items: center; justify-content: flex-end; flex-shrink: 0; position: sticky; bottom: 0; z-index: 10; gap: 24px; background: var(--modal-bg); }
+    [data-theme="light"] .filter-modal-footer { background: rgba(255,255,255,0.8); }
+    .filter-modal-footer .apply-btn { padding: 18px 48px; font-size: 16px; width: auto; }
 
     .f-btn { background: var(--card-bg); border: 1px solid var(--card-border); color: var(--text-color); padding: 12px 24px; border-radius: var(--radius-pill); font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     @media (hover: hover) { .f-btn:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); transform: translateY(-2px); box-shadow: var(--card-shadow-soft); } }
@@ -1007,8 +985,8 @@
       .sort-select { margin-left: 0 !important; width: 100%; padding: 0 20px; height: 52px; background-color: var(--card-bg); border: 1px solid var(--card-border); font-size: 15px; }
       
       /* MODÁLIS ABLAKOK MOBILRA */
-      .filter-modal-box, .job-preview-box, .big-support-box { border-radius: 32px 32px 0 0 !important; padding-top: 0 !important; position: relative; background: var(--modal-bg) !important; backdrop-filter: blur(40px) !important; -webkit-backdrop-filter: blur(40px) !important; box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.8) !important; border: 1px solid var(--card-border); border-bottom: none;}
-      .filter-modal-overlay, .job-preview-overlay, .big-support-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.8) !important; }
+      .filter-modal-box, .big-support-box { border-radius: 32px 32px 0 0 !important; padding-top: 0 !important; position: relative; background: var(--modal-bg) !important; backdrop-filter: blur(40px) !important; -webkit-backdrop-filter: blur(40px) !important; box-shadow: 0 -20px 60px rgba(0, 0, 0, 0.8) !important; border: 1px solid var(--card-border); border-bottom: none;}
+      .filter-modal-overlay, .big-support-overlay { align-items: flex-end; padding: 0; background: rgba(0, 0, 0, 0.8) !important; }
       
       .filter-modal-box { width: 100%; max-height: 92dvh; height: 92dvh; margin-top: auto; display: flex; flex-direction: column;}
       .filter-modal-header { padding: 24px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
@@ -1019,15 +997,6 @@
       
       .filter-modal-footer { flex-direction: row; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 16px)); gap: 16px; position: sticky; bottom: 0; background: var(--modal-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
       .filter-modal-footer .apply-btn, .filter-modal-footer .clear-all-filters-btn { width: 50%; text-align: center; padding: 16px; font-size: 16px; height: 56px;}
-      
-      .job-preview-box { margin-top: auto; max-height: 92dvh; display: flex; flex-direction: column;}
-      .job-preview-header { padding: 32px 24px 24px 24px; border-bottom: 1px solid var(--card-border); flex-shrink: 0;}
-      .job-preview-title { font-size: 26px; padding-right: 32px; }
-      .job-preview-body { padding: 24px; overflow-y: auto; -webkit-overflow-scrolling: touch; flex: 1;}
-      .job-preview-footer { flex-direction: column-reverse; padding: 20px; padding-bottom: calc(20px + env(safe-area-inset-bottom, 16px)); gap: 16px; background: var(--modal-bg); border-top: 1px solid var(--card-border); flex-shrink: 0; transform: translate3d(0,0,0); }
-      .job-preview-footer .apply-btn { width: 100%; padding: 16px; height: 56px; }
-      .job-preview-footer .action-icons-row { width: 100%; justify-content: space-between;}
-      .job-preview-footer .icon-action-btn { flex: 1; height: 56px; }
 
       .big-support-box { margin-top: auto; max-height: 92dvh; height: auto; padding-bottom: env(safe-area-inset-bottom, 16px); display: flex; flex-direction: column; }
       .big-close-btn { top: 20px; right: 20px; width: 40px; height: 40px; font-size: 18px; background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--card-border); position: absolute; margin: 0; }
@@ -1158,39 +1127,6 @@
       <div class="filter-modal-footer">
         <button class="clear-all-filters-btn" onclick="clearAllModalFilters()">Összes törlése</button>
         <button class="apply-btn" onclick="applyFiltersFromModal()">Mutasd a találatokat</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="jobPreviewOverlay" class="job-preview-overlay">
-    <div class="job-preview-box" id="jobPreviewBox">
-      <button class="job-preview-close" onclick="closeModal('jobPreviewOverlay')">✖</button>
-      <div class="job-preview-header">
-        <div>
-          <h2 class="job-preview-title" id="jpTitle">Betöltés...</h2>
-          <p class="job-preview-company" id="jpCompany">Cég neve</p>
-        </div>
-      </div>
-      <div class="job-preview-body">
-        <div class="job-preview-section">
-          <h4>Kategória & Munka Vibe</h4>
-          <div class="job-preview-tags"><span class="job-tag tag-faculty" id="jpFaculty">Kategória</span><span class="job-tag tag-vibe" id="jpVibe" style="display:none;">Vibe</span></div>
-        </div>
-        <div class="job-preview-section">
-          <h4>Helyszín & Dátum</h4>
-          <div class="job-preview-tags"><span class="job-tag" id="jpLocation">Helyszín</span><span class="job-tag" id="jpDate">Dátum</span></div>
-        </div>
-        <div class="job-preview-section" id="jpTagsSection">
-          <h4>Címkék & Technológiák</h4>
-          <div class="job-preview-tags" id="jpTags"></div>
-        </div>
-      </div>
-      <div class="job-preview-footer">
-        <div class="action-icons-row">
-          <button class="icon-action-btn" id="jpFavBtn" onclick="toggleSaveJobFromPreview(event)" title="Mentés">🤍</button>
-          <button class="icon-action-btn" id="jpShareBtn" onclick="shareJobFromPreview(event)" title="Megosztás">📤</button>
-        </div>
-        <a href="#" id="jpApplyBtn" target="_blank" class="apply-btn">Tovább a jelentkezésre ↗</a>
       </div>
     </div>
   </div>
@@ -1953,7 +1889,6 @@
 
     document.addEventListener('click', function(e) { 
         if (e.target.classList.contains('filter-modal-overlay') || 
-            e.target.classList.contains('job-preview-overlay') ||
             e.target.classList.contains('big-support-overlay')) { 
             closeModal(e.target.id); 
         } 
@@ -2060,12 +1995,6 @@
             showToast("Állás elmentve a Kedvencek közé!", "heart");
         }
         localStorage.setItem('unistart_saved_jobs', JSON.stringify(savedJobIds));
-        
-        const previewBtn = document.getElementById('jpFavBtn');
-        if (previewBtn && previewBtn.dataset.jobid === jobId) {
-            previewBtn.classList.toggle('fav-active', savedJobIds.includes(jobId));
-            previewBtn.innerText = savedJobIds.includes(jobId) ? '❤️' : '🤍';
-        }
     }
 
     function shareJob(jobId, title, company, event) {
@@ -2087,60 +2016,6 @@
         // ÚJ KERESÉS: nullázzuk a memóriát
         applyFilters(false);
     }
-
-    function openJobPreview(jobId) {
-        const job = jobsData.find(j => j.id === jobId);
-        if (!job) return;
-        
-        document.getElementById('jpTitle').innerText = job.title || 'Névtelen pozíció';
-        document.getElementById('jpCompany').innerText = job.company_name || 'Névtelen cég';
-        document.getElementById('jpFaculty').innerText = job.faculty || 'Egyéb';
-        
-        const vibeEl = document.getElementById('jpVibe');
-        if (job.work_style) { vibeEl.innerText = job.work_style; vibeEl.style.display = 'inline-block'; } 
-        else { vibeEl.style.display = 'none'; }
-        
-        document.getElementById('jpLocation').innerText = `📍 ${job.location || 'Nincs megadva'}`;
-        
-        let displayDate = "";
-        let isDeadline = false;
-        if (job.date_posted) {
-            let jobDateObj;
-            if (typeof job.date_posted === 'string') jobDateObj = new Date(job.date_posted);
-            else if (job.date_posted.toDate) jobDateObj = job.date_posted.toDate();
-
-            if (jobDateObj) {
-                displayDate = jobDateObj.toISOString().split('T')[0];
-                if (jobDateObj.getTime() > Date.now() + 86400000) { isDeadline = true; }
-            }
-        }
-        const dateTag = document.getElementById('jpDate');
-        dateTag.innerText = displayDate ? (isDeadline ? `⏳ Határidő: ${displayDate}` : `📅 Publikálva: ${displayDate}`) : 'Friss';
-        if (isDeadline) dateTag.classList.add('tag-deadline');
-        else dateTag.classList.remove('tag-deadline');
-        
-        const tagsContainer = document.getElementById('jpTags');
-        const tagsSection = document.getElementById('jpTagsSection');
-        if (job.tags && job.tags.length > 0) {
-            tagsContainer.innerHTML = job.tags.map(t => `<span class="job-tag tag-micro">${t}</span>`).join('');
-            tagsSection.style.display = 'block';
-        } else { tagsSection.style.display = 'none'; }
-        
-        document.getElementById('jpApplyBtn').href = job.apply_url || job.url || "#";
-        
-        const favBtn = document.getElementById('jpFavBtn');
-        favBtn.dataset.jobid = job.id;
-        const isSaved = savedJobIds.includes(job.id);
-        favBtn.classList.toggle('fav-active', isSaved);
-        favBtn.innerText = isSaved ? '❤️' : '🤍';
-        
-        const shareBtn = document.getElementById('jpShareBtn');
-        shareBtn.onclick = (e) => shareJob(job.id, job.title, job.company_name, e);
-        
-        openModal('jobPreviewOverlay');
-    }
-
-    function toggleSaveJobFromPreview(event) { toggleSaveJob(event.currentTarget.dataset.jobid, event); }
 
     function readStateFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -2677,7 +2552,6 @@
             const isSaved = savedJobIds.includes(job.id);
             const card = document.createElement('div'); 
             card.className = 'company-card';
-            card.onclick = () => openJobPreview(job.id);
             card.style.animationDelay = `${(i - startIndex) * 0.05}s`;
 
             const jobTitle = highlightTextInline(job.title || 'Névtelen pozíció');
@@ -2705,6 +2579,9 @@
             const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightTextInline(tag)}</span>`).join('');
 
             const applyLink = job.apply_url || job.url;
+            
+            // ÚJ FUNKCIÓ: A kártyára kattintva a jelentkezési link nyílik meg
+            card.onclick = () => { if(applyLink) window.open(applyLink, '_blank'); };
 
             card.innerHTML = `
                 <div class="company-card-content">
@@ -2717,7 +2594,7 @@
                 <div class="company-card-actions">
                     <button class="icon-action-btn ${isSaved ? 'fav-active' : ''}" onclick="toggleSaveJob('${job.id}', event)" title="Mentés későbbre">${isSaved ? '❤️' : '🤍'}</button>
                     <button class="icon-action-btn" onclick="shareJob('${job.id}', '${(job.title || '').replace(/'/g, "\\'")}', '${(job.company_name || '').replace(/'/g, "\\'")}', event)" title="Megosztás">📤</button>
-                    <a href="${applyLink}" onclick="event.stopPropagation();" target="_blank" class="apply-btn">Jelentkezés</a>
+                    <a href="${applyLink || '#'}" onclick="event.stopPropagation();" target="_blank" class="apply-btn">Jelentkezés</a>
                 </div>
             `;
             fragment.appendChild(card);

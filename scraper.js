@@ -11,7 +11,7 @@ const v8 = require("v8");
 // 1. DINAMIKUS MOTOROK BETÖLTÉSE (Auto-Discovery)
 // ------------------------------------------------------------------
 const engines = {};
-const scrapersPath = path.join(__dirname, "scrapers");
+const scrapersPath = path.join(process.cwd(), "scrapers");
 
 if (fs.existsSync(scrapersPath)) {
     const files = fs.readdirSync(scrapersPath).filter(f => f.endsWith('.js'));
@@ -22,24 +22,30 @@ if (fs.existsSync(scrapersPath)) {
 }
 
 let nlpEngine = null;
-if (fs.existsSync(path.join(__dirname, "analyzer.js"))) {
-    nlpEngine = require("./analyzer.js");
+if (fs.existsSync(path.join(process.cwd(), "analyzer.js"))) {
+    nlpEngine = require(path.join(process.cwd(), "analyzer.js"));
     console.log("🧠 [NLP] Quantum/Singularity nyelvi motor csatlakoztatva.");
 }
 
 // ------------------------------------------------------------------
-// 2. FIREBASE INICIALIZÁLÁS & TITKOS KULCSOK
+// 2. FIREBASE INICIALIZÁLÁS (Csak analitika és config miatt)
 // ------------------------------------------------------------------
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
     ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) 
-    : require("./serviceAccountKey.json");
+    : require(path.join(process.cwd(), "serviceAccountKey.json"));
 
 initializeApp({ credential: cert(serviceAccount) });
 const db = getFirestore();
 db.settings({ ignoreUndefinedProperties: true }); 
 
 const SYSTEM_SECRET = process.env.SYSTEM_SIGNING_SECRET || crypto.randomBytes(32).toString('hex');
-const OUTPUT_JSON_PATH = path.join(__dirname, "jobs.json"); // IDE MENTJÜK A GITHUB SZÁMÁRA AZ ADATOKAT
+const OUTPUT_JSON_PATH = path.join(process.cwd(), "jobs.json"); 
+
+// Biztosítjuk, hogy a jobs.json mindig létezzen a GitHub Actions környezetben!
+if (!fs.existsSync(OUTPUT_JSON_PATH)) {
+    console.log("⚠️ A jobs.json nem létezik a gyökérkönyvtárban. Létrehozok egy üres [] keretet...");
+    fs.writeFileSync(OUTPUT_JSON_PATH, "[]", "utf-8");
+}
 
 // ------------------------------------------------------------------
 // 3. ENTERPRISE SEGÉDOSZTÁLYOK: TELEMETRIA, EVENT LOOP, BATCH
@@ -242,7 +248,6 @@ class MultiDomainRateLimiter {
 }
 const globalRateLimiter = new MultiDomainRateLimiter(12, 4);
 
-// A Firestore Batch Managert meghagytuk a telemetria/DLQ logoláshoz
 class FirestoreBatchManager {
     constructor(db, limit = 450) { 
         this.db = db; 
@@ -333,7 +338,7 @@ const ExecutionTimeoutGuard = {
     run: (promise, ms, operationName) => {
         let timeoutId;
         const timeoutPromise = new Promise((_, reject) => {
-            timeoutId = setTimeout(() => reject(new Error(`[Timeout] ${operationName} túllépte a(z) ${ms}ms végrehajtási időt.`)), ms);
+            timeoutId = setTimeout(() => reject(new Error(`[Timeout] 🛑 ${operationName} megfagyott, túllépte a(z) ${ms/1000} másodpercet! A folyamatot kilőttük.`)), ms);
         });
         return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
     }
@@ -517,7 +522,7 @@ GeoGuard.init();
 
 class ProcessedJobRecord {
     constructor() {
-        this.id = ""; // A JSON-ben szükség van natív ID-ra
+        this.id = ""; 
         this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
         this.job_nature = ""; this.salary_min = null; this.salary_max = null;
@@ -623,7 +628,7 @@ class FastPointerQueue {
 }
 
 // ------------------------------------------------------------------
-// 6. ORCHESTRATOR FŐ CIKLUS (V22.1 JSON EXPORT GITHUB ACTIONS-RE)
+// 6. ORCHESTRATOR FŐ CIKLUS (V22.2 BIZTONSÁGOS JSON EXPORT)
 // ------------------------------------------------------------------
 let isShuttingDown = false;
 process.on('SIGINT', () => { isShuttingDown = true; console.log("\n⚠️ Biztonságos leállás folyamatban..."); });
@@ -631,31 +636,29 @@ process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
     console.log("\n======================================================");
-    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.1 JSON EXPORT)");
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.2 JSON EXPORT)");
     console.log("======================================================\n");
     
     const runTraceId = crypto.randomUUID().split('-')[0]; 
-    await sendAlert(`🚀 V22.1 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
+    await sendAlert(`🚀 V22.2 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
 
     const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, anomalies: 0 };
     const dlqQueue = []; 
     const errorLogs = [];
     const marketPulse = new MarketPulseTracker();
 
-    // 1. KORÁBBI JSON BETÖLTÉSE A MEMÓRIÁBA (Azonosítók és statisztikák megőrzéséhez)
+    // 1. KORÁBBI JSON BETÖLTÉSE A MEMÓRIÁBA (A Firebase kihagyásával!)
     let localJobsMap = new Map();
     let localSemanticMap = new Map();
-    if (fs.existsSync(OUTPUT_JSON_PATH)) {
-        try {
-            const raw = JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8'));
-            raw.forEach(j => {
-                localJobsMap.set(j.id, j);
-                if (j.semantic_hash) localSemanticMap.set(j.semantic_hash, j.id);
-            });
-            console.log(`📂 Korábbi jobs.json beolvasva (${raw.length} db állás).`);
-        } catch (e) {
-            console.warn("⚠️ A jobs.json sérült vagy nem olvasható. Tiszta lappal indulunk.");
-        }
+    try {
+        const raw = JSON.parse(fs.readFileSync(OUTPUT_JSON_PATH, 'utf8'));
+        raw.forEach(j => {
+            localJobsMap.set(j.id, j);
+            if (j.semantic_hash) localSemanticMap.set(j.semantic_hash, j.id);
+        });
+        console.log(`📂 jobs.json beolvasva (${raw.length} db állás a memóriában). A Firebase-t NEM használjuk a lekérdezéshez!`);
+    } catch (e) {
+        console.warn("⚠️ A jobs.json sérült vagy üres. Tiszta lappal indulunk.");
     }
 
     const allNewJobsArray = []; // Ide gyűjtjük az összes sikeres állást
@@ -666,9 +669,7 @@ async function runScraper() {
 
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
         
-        // ------------------------------------------------------------------
-        // KULCSFONTOSSÁGÚ MÓDOSÍTÁS: Fix 2 szál a GitHub Actions memória megóvására
-        // ------------------------------------------------------------------
+        // 🚥 Szigorú 2 szálas limit a memóriafagyás ellen a GitHub szerveren
         const CONCURRENCY_LIMIT = 2; 
         console.log(`🚥 Concurrency limit beállítva: ${CONCURRENCY_LIMIT} szál (GitHub Actions Optimalizáció).`);
         
@@ -679,7 +680,6 @@ async function runScraper() {
             const memoryUsage = process.memoryUsage();
             const memRatio = memoryUsage.heapUsed / memoryUsage.heapTotal;
             
-            // Kicsit szigorúbb GC a GitHub Actions szűk memóriája miatt
             if (memRatio > 0.85) {
                 console.error(`[W${workerId}] 🚨 Magas RAM (85%+)! Preventív GC futtatása...`);
                 if (global.gc) global.gc(); 
@@ -708,11 +708,17 @@ async function runScraper() {
                 if (!isReplay) stats.processed++;
                 
                 let scrapedJobs = [];
+                
+                // Kigyűjtjük a lokális JSON-ből a céghez tartozó már ismert URL-eket, hogy a motor tudja mihez viszonyítani!
+                const knownUrlsForCompany = Array.from(localJobsMap.values())
+                    .filter(j => j.company_id === companyId || j.company_name === company.name)
+                    .map(j => j.url);
+
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        // Megnövelt Timeout (90 másodperc), ha a cég tűzfala (Tarpit) lassítaná a kérést
-                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl), 90000, `Scrape_${company.name}`);
+                        // ⏱️ Brutális 60 másodperces fagyásvédelem!
+                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 60000, `Scrape_${company.name}`);
                         scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
@@ -771,7 +777,7 @@ async function runScraper() {
                     globalJobPool.release(cleanJobPoolObj); 
                 }
 
-                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Kiszűrve: ${cRejected}`);
+                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Változatlan: ${cUntouched} | Kiszűrve: ${cRejected}`);
                 return true; 
             } catch (err) {
                 console.error(`${logPrefix} ❌ Hiba:`, err.message);
@@ -847,14 +853,14 @@ async function runScraper() {
         await logBatch.flush();
 
         console.log("\n======================================================");
-        console.log(`🏁 CHRONOS-NEXUS V22.1 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
+        console.log(`🏁 CHRONOS-NEXUS V22.2 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
         console.log("======================================================");
         console.log(`⏱️ Idő: ${execSec}s | 🧠 Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Végleges hiba: ${stats.failed})`);
         console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated}`);
         console.log(`🗑️ Kiszűrve (Kuka): ${stats.rejected}`);
         console.log("======================================================\n");
         
-        await sendAlert(`✅ V22.1 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
+        await sendAlert(`✅ V22.2 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
         process.exit(0);
 
     } catch (err) {

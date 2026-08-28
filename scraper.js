@@ -242,8 +242,7 @@ class MultiDomainRateLimiter {
 }
 const globalRateLimiter = new MultiDomainRateLimiter(12, 4);
 
-// A Firestore Batch Managert meghagytuk a telemetria/DLQ logoláshoz, 
-// de az állásokat már nem ezen keresztül mentjük!
+// A Firestore Batch Managert meghagytuk a telemetria/DLQ logoláshoz
 class FirestoreBatchManager {
     constructor(db, limit = 450) { 
         this.db = db; 
@@ -624,7 +623,7 @@ class FastPointerQueue {
 }
 
 // ------------------------------------------------------------------
-// 6. ORCHESTRATOR FŐ CIKLUS (V22.0 OMEGA-BAREMETAL)
+// 6. ORCHESTRATOR FŐ CIKLUS (V22.1 JSON EXPORT GITHUB ACTIONS-RE)
 // ------------------------------------------------------------------
 let isShuttingDown = false;
 process.on('SIGINT', () => { isShuttingDown = true; console.log("\n⚠️ Biztonságos leállás folyamatban..."); });
@@ -632,11 +631,11 @@ process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
     console.log("\n======================================================");
-    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.0 JSON EXPORT)");
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.1 JSON EXPORT)");
     console.log("======================================================\n");
     
     const runTraceId = crypto.randomUUID().split('-')[0]; 
-    await sendAlert(`🚀 V22.0 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
+    await sendAlert(`🚀 V22.1 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
 
     const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, anomalies: 0 };
     const dlqQueue = []; 
@@ -666,7 +665,12 @@ async function runScraper() {
         if (companiesSnapshot.empty) { console.log("⚠️ Nincs aktív cég az adatbázisban."); return; }
 
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
-        const CONCURRENCY_LIMIT = Math.min(os.cpus().length * 2, 10); 
+        
+        // ------------------------------------------------------------------
+        // KULCSFONTOSSÁGÚ MÓDOSÍTÁS: Fix 2 szál a GitHub Actions memória megóvására
+        // ------------------------------------------------------------------
+        const CONCURRENCY_LIMIT = 2; 
+        console.log(`🚥 Concurrency limit beállítva: ${CONCURRENCY_LIMIT} szál (GitHub Actions Optimalizáció).`);
         
         const processCompany = async (workerId, companyDoc, isReplay = false) => {
             await sysMonitor.yieldIfNecessary(); 
@@ -675,10 +679,11 @@ async function runScraper() {
             const memoryUsage = process.memoryUsage();
             const memRatio = memoryUsage.heapUsed / memoryUsage.heapTotal;
             
-            if (memRatio > 0.95) {
-                console.error(`[W${workerId}] 🚨 KRITIKUS RAM (95%+)! GC futtatása...`);
+            // Kicsit szigorúbb GC a GitHub Actions szűk memóriája miatt
+            if (memRatio > 0.85) {
+                console.error(`[W${workerId}] 🚨 Magas RAM (85%+)! Preventív GC futtatása...`);
                 if (global.gc) global.gc(); 
-                await new Promise(res => setTimeout(res, 5000)); 
+                await new Promise(res => setTimeout(res, 3000)); 
             }
 
             const company = companyDoc.data();
@@ -706,7 +711,8 @@ async function runScraper() {
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl), 45000, `Scrape_${company.name}`);
+                        // Megnövelt Timeout (90 másodperc), ha a cég tűzfala (Tarpit) lassítaná a kérést
+                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl), 90000, `Scrape_${company.name}`);
                         scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
@@ -841,14 +847,14 @@ async function runScraper() {
         await logBatch.flush();
 
         console.log("\n======================================================");
-        console.log(`🏁 CHRONOS-NEXUS V22.0 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
+        console.log(`🏁 CHRONOS-NEXUS V22.1 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
         console.log("======================================================");
         console.log(`⏱️ Idő: ${execSec}s | 🧠 Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Végleges hiba: ${stats.failed})`);
         console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated}`);
         console.log(`🗑️ Kiszűrve (Kuka): ${stats.rejected}`);
         console.log("======================================================\n");
         
-        await sendAlert(`✅ V22.0 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
+        await sendAlert(`✅ V22.1 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
         process.exit(0);
 
     } catch (err) {

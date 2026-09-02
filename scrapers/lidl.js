@@ -13,7 +13,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   const allJobs = [];
   const seenUrls = new Set(); 
   
-  // 🔥 A ZSENIÁLIS TRÜKK: Nincs lapozás! Kérünk 800 állást egyszerre.
   const queryObj = { page: 1, resultsPerPage: 800, sortField: "", sortOrder: "asc" };
   const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
   const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
@@ -35,14 +34,11 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
     console.log(`   ✅ [LIDL] Szerver válaszolt: ${jobsList.length} db állás érkezett egyetlen kérésből!`);
 
-    // 🔥 CPU FAGYÁSVÉDELEM: Folyamatjelző és Event Loop lélegzetvétel
     for (let i = 0; i < jobsList.length; i++) {
         const job = jobsList[i];
         
-        // Minden 25. állásnál adunk egy kis pihenőt a processzornak, és kiírjuk, hol tartunk!
         if (i > 0 && i % 25 === 0) {
             console.log(`   ⏳ [LIDL] NLP Elemzés folyamatban... (${i} / ${jobsList.length} állás feldolgozva)`);
-            await new Promise(r => setTimeout(r, 15)); // Lélegzetvétel a CPU-nak
         }
 
         const title = job.title || "Névtelen pozíció";
@@ -58,16 +54,33 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         const department = job.employmentArea || job.jobCategory || "";
         const type = job.contractType || job.workingHours || "Teljes munkaidő";
         
-        // 🔥 REGEX/MEMÓRIA VÉDELEM: Max 3500 karaktert adunk át, nehogy végtelen hurokba fusson a string tisztítás!
         let rawDescription = [
             experience, department, type,
             job.description, job.profile, job.tasks, job.requirements, job.benefits
         ].filter(Boolean).join(" ");
         
-        rawDescription = rawDescription.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 3500);
+        rawDescription = rawDescription.substring(0, 4000).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-        // (Az await kulcsszó biztosítja, hogy ha az analyzer véletlenül async módon futna a háttérben, bevárja)
-        const analysis = await analyzer.analyzeJob(title, rawDescription);
+        // 🛡️ KRITIKUS JAVÍTÁS: NLP Watchdog (5 másodperces szigorú limit az AI API-nak)
+        let analysis = null;
+        try {
+            const analyzeTask = analyzer.analyzeJob(title, rawDescription);
+            const timeoutTask = new Promise((_, reject) => 
+                setTimeout(() => reject(new Error("API Rate Limit vagy Időtúllépés")), 5000)
+            );
+            
+            // Aki hamarabb végez (az AI válasza vagy az 5 mp-es megszakító), az nyer!
+            analysis = await Promise.race([analyzeTask, timeoutTask]);
+            
+            // Dinamikus fojtás (Throttling), hogy ne bombázzuk szét az AI API-t
+            await new Promise(r => setTimeout(r, 200)); 
+
+        } catch (e) {
+            console.warn(`   ⚠️ [LIDL] NLP Hiba a '${title.substring(0,25)}...' állásnál: ${e.message}`);
+            // Ha Rate Limit-et kaptunk (pl. a 100. állásnál), várunk 3 másodpercet, hogy a külső API megnyugodjon!
+            await new Promise(r => setTimeout(r, 3000));
+            continue; 
+        }
 
         if (analysis !== null) {
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";

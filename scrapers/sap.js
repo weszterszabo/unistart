@@ -1,4 +1,7 @@
 const cheerio = require("cheerio");
+const https = require("https");
+const http = require("http");
+const zlib = require("zlib");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
@@ -10,112 +13,175 @@ const HEADERS = {
   "Upgrade-Insecure-Requests": "1"
 };
 
-// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban (Concurrency Limit)
+// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH + ÁTIRÁNYÍTÁS (REDIRECT) KÖVETŐVEL!
+function fetchSafe(urlStr, options = {}, timeoutMs = 15000, redirectCount = 0) {
+    if (redirectCount > 5) return Promise.reject(new Error("Végtelen átirányítási hurok (Redirect Loop)!"));
+    
+    return new Promise((resolve, reject) => {
+        let req; let resStream; let unzipper; let isDone = false;
+
+        const safeResolve = (data) => {
+            if (isDone) return; isDone = true; clearTimeout(watchdog); resolve(data);
+        };
+        const safeReject = (err) => {
+            if (isDone) return; isDone = true; clearTimeout(watchdog);
+            if (req && !req.destroyed) req.destroy();
+            if (resStream && !resStream.destroyed) resStream.destroy();
+            if (unzipper && !unzipper.destroyed) unzipper.destroy();
+            reject(err);
+        };
+
+        const watchdog = setTimeout(() => {
+            safeReject(new Error(`Kátránygödör védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
+        }, timeoutMs);
+
+        try {
+            const parsedUrl = new URL(urlStr);
+            const client = parsedUrl.protocol === 'https:' ? https : http;
+            
+            req = client.request({
+                hostname: parsedUrl.hostname, port: parsedUrl.port,
+                path: parsedUrl.pathname + parsedUrl.search,
+                method: options.method || 'GET',
+                headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers }
+            }, (res) => {
+                resStream = res;
+                res.on('error', (e) => safeReject(new Error(`Response hiba: ${e.message}`)));
+
+                // 🔀 ÁTIRÁNYÍTÁS KÖVETÉSE (301, 302, 303, 307, 308)
+                if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                    clearTimeout(watchdog);
+                    const nextUrl = new URL(res.headers.location, urlStr).href;
+                    return resolve(fetchSafe(nextUrl, options, timeoutMs, redirectCount + 1));
+                }
+
+                if (res.statusCode < 200 || res.statusCode >= 400) {
+                    return safeReject(new Error(`HTTP hiba: ${res.statusCode}`));
+                }
+
+                let stream = res;
+                const encoding = (res.headers['content-encoding'] || "").toLowerCase();
+                if (encoding === 'gzip' || encoding === 'deflate') {
+                    unzipper = encoding === 'gzip' ? zlib.createGunzip() : zlib.createInflate();
+                    unzipper.on('error', (e) => safeReject(new Error(`Zlib hiba: ${e.message}`)));
+                    stream = res.pipe(unzipper);
+                }
+
+                let data = '';
+                stream.on('data', (chunk) => { data += chunk.toString('utf8'); });
+                stream.on('end', () => safeResolve(data));
+                stream.on('error', (e) => safeReject(new Error(`Stream hiba: ${e.message}`)));
+            });
+
+            req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
+            req.end();
+        } catch (err) { safeReject(err); }
+    });
+}
+
+// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    // 🛑 Anti-Bot Jitter a blokkok között (400-800ms)
     await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
   }
   return results;
 }
 
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY: Megkeresi a helyes SAP végpontot
+// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral)
 async function discoverSearchUrl(baseUrl) {
-    const base = baseUrl.trim().replace(/\/$/, '');
+    let base = baseUrl.trim().replace(/\/$/, '');
+    console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
+    
+    try {
+        const html = await fetchSafe(base, { headers: HEADERS }, 12000);
+        const $ = cheerio.load(html);
+        let bestLink = null;
+
+        // Keresünk minden form-ot és linket, ami a keresőre mutathat
+        $('a, form').each((i, el) => {
+            const href = $(el).attr('href') || $(el).attr('action');
+            if (href && (href.toLowerCase().includes('/search') || href.toLowerCase().includes('searchjobs') || href.toLowerCase().includes('jobsearch') || href.toLowerCase().includes('/jobs'))) {
+                // Biztosítjuk, hogy nem egy konkrét állás hivatkozása
+                if (!href.toLowerCase().includes('/job/') && !href.toLowerCase().includes('/position/')) {
+                    bestLink = href;
+                }
+            }
+        });
+
+        if (bestLink) {
+            let resolved = bestLink.startsWith('http') ? bestLink : new URL(bestLink, base).href;
+            resolved = resolved.split('?')[0]; 
+            console.log(`   💡 [SAP] Szonár találat: ${resolved}`);
+            return resolved;
+        }
+    } catch (e) {
+        console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot (${e.message}). Váltás bruteforce-ra...`);
+    }
+
+    // Ha a szonár elbukik, végigpróbáljuk a legnépszerűbb SAP végpontokat
     const pathsToTry = [
-        "", 
         "/search/", 
         "/hu_HU/careers/SearchJobs", 
         "/en_GB/careersmarketplace/SearchJobs", 
         "/search-jobs", 
-        "/jobs/" 
+        "/content/Kereses/"
     ];
 
     for (let path of pathsToTry) {
-        if (path !== "" && base.includes(path)) continue; 
-        
         let testUrl = base + path;
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 4000);
-            const res = await fetch(testUrl, { headers: HEADERS, signal: controller.signal });
-            clearTimeout(timeoutId);
-            
-            if (res.ok) {
-                return testUrl;
-            }
-        } catch (e) {
-            continue;
-        }
+            await fetchSafe(testUrl, { method: 'GET', headers: HEADERS }, 4000);
+            return testUrl; // Ha visszatér hibakód nélkül, ez lesz a jó
+        } catch (e) { continue; }
     }
-    return base; 
+
+    return base + "/search/"; // Default végső mentsvár
 }
 
-// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SAP] Phantom-DeepScrape letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set();
+  
+  knownUrls.forEach(url => seenUrls.add(url));
+  
   let startrow = 0;
   const step = 25; 
   let hasMore = true;
   let page = 1;
 
-  // 🌍 OMNI-SEARCH AUTO-DISCOVERY
-  console.log(`   🕵️ [SAP] Keresővégpont automatikus felderítése...`);
+  // 🌍 OMNI-SEARCH START
   const searchBaseUrl = await discoverSearchUrl(baseUrl);
-  console.log(`   🎯 [SAP] Megtalált végpont: ${searchBaseUrl}`);
-
+  
   while (hasMore) {
     let currentUrl;
     try {
         const urlObj = new URL(searchBaseUrl);
         if (!urlObj.searchParams.has('sortColumn')) urlObj.searchParams.append('sortColumn', 'referencedate');
         if (!urlObj.searchParams.has('sortDirection')) urlObj.searchParams.append('sortDirection', 'desc');
-        
         if (!urlObj.searchParams.has('locale')) urlObj.searchParams.append('locale', 'hu_HU');
-        if (!urlObj.searchParams.has('lang')) urlObj.searchParams.append('lang', 'hu-HU');
-        if (!urlObj.searchParams.has('language')) urlObj.searchParams.append('language', 'hu_HU');
         
         urlObj.searchParams.set('startrow', startrow.toString());
         currentUrl = urlObj.toString();
     } catch (e) {
         console.error(`   ❌ [SAP] Érvénytelen alap URL lett megadva: ${searchBaseUrl}`);
-        // 🔥 KRITIKUS JAVÍTÁS: Ha eleve az URL feldolgozása elhasal, dobjuk tovább a hibát!
         throw e;
     }
     
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000);
-
-      const response = await fetch(currentUrl, { headers: HEADERS, signal: controller.signal });
-      clearTimeout(timeoutId);
-
-      // 🔥 JAVÍTÁS: break helyett throw
-      if (!response.ok) {
-        throw new Error(`HTTP Hiba a lista lekérésekor (Status: ${response.status})`);
-      }
-
-      const html = await response.text();
+      const html = await fetchSafe(currentUrl, { headers: HEADERS }, 15000);
       const $ = cheerio.load(html);
 
-      // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
+      // WAF Ellenőrzés
       const pageTitle = $('title').text().toLowerCase();
-      if (
-          pageTitle.includes("just a moment") || 
-          pageTitle.includes("attention required") ||
-          pageTitle.includes("cloudflare") ||
-          html.includes('id="cf-wrapper"') ||
-          html.includes('data-ray')
-      ) {
-          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve az oldalon!");
+      if (pageTitle.includes("just a moment") || pageTitle.includes("cloudflare") || html.includes('id="cf-wrapper"')) {
+          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve!");
       }
       
       const pageLinks = [];
@@ -124,10 +190,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         let text = $(el).text().trim().replace(/\s+/g, ' ');
         text = text.replace(/\s*\([m|f|d|w|x|n|\/]+\)\s*/gi, ' ').trim();
 
-        if (href && (href.includes('/job/') || href.includes('/position/') || href.includes('/JobDetail/')) && text.length > 5) {
+        // 🔭 UNIVERZÁLIS REGEX: Bármi, ami nyomokban állásnak tűnik az SAP-ban
+        if (href && (href.match(/\/(job|position|career|JobDetail|opportunities|jobs)\//i) || href.match(/jobid=/i)) && text.length > 5) {
           let cleanHref = href.startsWith('http') ? href : new URL(href, currentUrl).href;
-          cleanHref = cleanHref.split('?')[0];
-
+          cleanHref = cleanHref.split('?')[0]; 
           pageLinks.push({ title: text, url: cleanHref });
         }
       });
@@ -136,7 +202,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       const newJobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
       if (newJobsToProcess.length === 0) {
-        console.log(`   ⏹️ [SAP] Nincs több ÚJ állás az oldalon, elértük a végét.`);
+        console.log(`   ⏹️ [SAP] Nincs több ÚJ állás az oldalon.`);
         hasMore = false;
         break;
       }
@@ -155,7 +221,16 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           process.stdout.write(`✔️ `);
 
           const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
-          const analysis = analyzer.analyzeJob(job.title, rawDescription);
+          let analysis = null;
+          
+          try {
+              const analyzeTask = analyzer.analyzeJob(job.title, rawDescription, companyName);
+              const timeoutTask = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 5000));
+              analysis = await Promise.race([analyzeTask, timeoutTask]);
+              await new Promise(r => setTimeout(r, 50)); 
+          } catch (e) {
+              return null; 
+          }
 
           if (analysis !== null) {
               const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -186,7 +261,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       const validJuniorJobs = processedJobs.filter(j => j !== null);
       allJobs.push(...validJuniorJobs);
 
-      // 🏎️ OKOS EARLY-EXIT
       if (uniqueOnPage.length < step) {
         hasMore = false;
         console.log(`   ⏹️ [SAP] Elértük az utolsó oldalt (${uniqueOnPage.length} db állás volt a listában).`);
@@ -196,14 +270,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       }
 
     } catch (err) {
-      console.error(`   ❌ [SAP] Végzetes lapozási hiba:`, err.message);
-      
-      // 🔥 KRITIKUS JAVÍTÁS:
-      // Ha az első oldalon megszakad a feldolgozás, dobjuk tovább a hibát az orchestrator felé!
-      if (page === 1) {
-          throw err;
-      }
-
+      console.error(`   ❌ [SAP] Hiba:`, err.message);
+      if (page === 1) throw err;
       hasMore = false;
     }
   }
@@ -212,48 +280,31 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY (Marad változatlan)
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY
 async function getDeepDetails(jobUrl) {
-  let res = null;
+  let resHtml = null;
   const maxRetries = 1;
 
   let finalJobUrl = jobUrl;
-  if (!finalJobUrl.includes('locale=')) {
-      finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
-  }
-  if (!finalJobUrl.includes('lang=')) {
-      finalJobUrl += '&lang=hu-HU';
-  }
-  if (!finalJobUrl.includes('language=')) {
-      finalJobUrl += '&language=hu_HU';
-  }
+  if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
-  // 🛡️ AUTO-RETRY LOGIKA
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 8000); 
-
-          res = await fetch(finalJobUrl, { headers: HEADERS, signal: controller.signal });
-          clearTimeout(timeoutId);
-
-          if (res.ok) break; 
+          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 10000);
+          break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
           await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
       }
   }
 
-  if (!res || !res.ok) return null;
+  if (!resHtml) return null;
   
   try {
-    const html = await res.text();
-    const $ = cheerio.load(html);
+    const $ = cheerio.load(resHtml);
     let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: "", salary: "", reqId: "", rawText: "" };
-
     let schemaDescription = "";
 
-    // 1. STRATÉGIA: Schema.org JSON
     $('script[type="application/ld+json"]').each((i, el) => {
         try {
             const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
@@ -262,21 +313,14 @@ async function getDeepDetails(jobUrl) {
                 if (item['@type'] === 'JobPosting') {
                     if (item.datePosted) details.datePosted = item.datePosted;
                     if (item.employmentType) details.employment_type = Array.isArray(item.employmentType) ? item.employmentType.join(", ") : item.employmentType;
-                    if (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality) {
-                        details.location = item.jobLocation.address.addressLocality;
-                    }
-                    if (item.baseSalary) {
-                        details.salary = JSON.stringify(item.baseSalary);
-                    }
-                    if (item.description) {
-                        schemaDescription = item.description; 
-                    }
+                    if (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality) details.location = item.jobLocation.address.addressLocality;
+                    if (item.baseSalary) details.salary = JSON.stringify(item.baseSalary);
+                    if (item.description) schemaDescription = item.description; 
                 }
             });
         } catch(e) {}
     });
 
-    // 1.5. STRATÉGIA: Rejtett Microdata és Meta
     if (!details.datePosted) {
         const metaDate = $('meta[itemprop="datePosted"]').attr('content');
         if (metaDate) details.datePosted = metaDate;
@@ -285,17 +329,11 @@ async function getDeepDetails(jobUrl) {
     if (details.datePosted) {
         try {
             const parsedDate = new Date(details.datePosted);
-            if (!isNaN(parsedDate.getTime())) {
-                details.datePosted = parsedDate.toISOString();
-            } else {
-                details.datePosted = new Date().toISOString(); 
-            }
-        } catch (e) {
-            details.datePosted = new Date().toISOString();
-        }
+            if (!isNaN(parsedDate.getTime())) details.datePosted = parsedDate.toISOString();
+            else details.datePosted = new Date().toISOString(); 
+        } catch (e) { details.datePosted = new Date().toISOString(); }
     }
 
-    // 2. STRATÉGIA: Fallback a DOM elemekre
     if (!details.location) {
         let locFound = $('.jobGeoLocation, .job-location, .location, span[itemprop="jobLocation"], span[itemprop="addressLocality"]').first().text().trim();
         if (locFound && locFound.length < 80) {
@@ -306,32 +344,16 @@ async function getDeepDetails(jobUrl) {
         }
     }
 
-    // 🚀 EXTRA 1: Department
     let depFound = $('.jobDepartment, .department, .category, .jobFacility, span[itemprop="occupationalCategory"]').first().text().trim();
-    if (depFound && depFound.length < 80) {
-        details.department = depFound;
-    }
+    if (depFound && depFound.length < 80) details.department = depFound;
 
-    // 🚀 EXTRA 2: Bér-Radar
     if (!details.salary) {
         let salaryFound = $('span[itemprop="baseSalary"], .jobSalary').first().text().trim();
         if (salaryFound && salaryFound.length < 50) details.salary = salaryFound;
     }
     
-    // 🚀 EXTRA 3: Job Requisition ID
     let reqIdFound = $('.jobReqId, .job-id, span[itemprop="value"]').first().text().trim();
-    if (reqIdFound && reqIdFound.length < 30) {
-        details.reqId = `Ref ID: ${reqIdFound}`;
-    }
-
-    // 🚀 EXTRA 4: Omni-Field Radar
-    let customFieldsText = "";
-    for (let i = 1; i <= 5; i++) {
-        let cf = $(`span.customField${i}, .customField${i}`).first().text().replace(/\s+/g, ' ').trim();
-        if (cf && cf.length < 100) {
-            customFieldsText += ` | HR kód ${i}: ${cf}`;
-        }
-    }
+    if (reqIdFound && reqIdFound.length < 30) details.reqId = `Ref ID: ${reqIdFound}`;
 
     $('span, p, div, li, b, strong').each((i, el) => {
       const txt = $(el).text().replace(/\s+/g, ' ').trim();
@@ -346,41 +368,22 @@ async function getDeepDetails(jobUrl) {
         if(val.length < 50) details.experience_level = val;
       }
     });
-    
-    if (!details.employment_type) {
-        let shiftFound = $('.jobShift').first().text().trim();
-        if (shiftFound && shiftFound.length < 50) details.employment_type = shiftFound;
-    }
 
-    // 🧠 3. ZAJTALANÍTÁS ÉS ANTI-MASHING
-    $('br, p, div, li, h1, h2, h3, h4').append(' '); 
-    $('script, style, nav, footer, header, svg, button, iframe, noscript').remove();
+    $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
     
-    // 🧠 4. OG Meta Description
     let metaDesc = $('meta[property="og:description"], meta[name="description"]').attr('content') || "";
-    
     details.rawText = $('body').text().replace(/\s+/g, ' ').trim();
 
-    // 🛡️ ZERO-DOM FALLBACK
-    if (details.rawText.length < 30) {
-        let fallbackHtml = schemaDescription || metaDesc;
-        if (fallbackHtml) {
-            details.rawText = cheerio.load(fallbackHtml).text().replace(/\s+/g, ' ').trim();
-        }
+    if (details.rawText.length < 30 && schemaDescription) {
+        details.rawText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim();
     }
 
-    // Context összeállítás
     let extraContext = "";
     if (details.department) extraContext += `Részleg/Kategória: ${details.department}`;
     if (details.salary && typeof details.salary === 'string') extraContext += ` | Fizetés: ${details.salary}`;
-    if (customFieldsText) extraContext += customFieldsText;
-    if (metaDesc && !details.rawText.includes(metaDesc.substring(0, 20))) {
-        extraContext += ` | Összefoglaló: ${metaDesc}`;
-    }
+    if (metaDesc && !details.rawText.includes(metaDesc.substring(0, 20))) extraContext += ` | Összefoglaló: ${metaDesc}`;
 
-    if (extraContext !== "") {
-        details.rawText = `${extraContext} | ` + details.rawText;
-    }
+    if (extraContext !== "") details.rawText = `${extraContext} | ` + details.rawText;
 
     return details;
   } catch (e) {

@@ -41,7 +41,6 @@ db.settings({ ignoreUndefinedProperties: true });
 const SYSTEM_SECRET = process.env.SYSTEM_SIGNING_SECRET || crypto.randomBytes(32).toString('hex');
 const OUTPUT_JSON_PATH = path.join(process.cwd(), "jobs.json"); 
 
-// Biztosítjuk, hogy a jobs.json mindig létezzen a GitHub Actions környezetben!
 if (!fs.existsSync(OUTPUT_JSON_PATH)) {
     console.log("⚠️ A jobs.json nem létezik a gyökérkönyvtárban. Létrehozok egy üres [] keretet...");
     fs.writeFileSync(OUTPUT_JSON_PATH, "[]", "utf-8");
@@ -117,7 +116,7 @@ class EventLoopMonitor {
             console.warn(`⏳ [CPU Throttling] EMA Event Loop Lag: ${this.emaLag.toFixed(2)}ms. Lassítás (${sleepTime}ms)...`);
             await new Promise(res => setTimeout(res, sleepTime)); 
         } else {
-            await new Promise(res => process.nextTick(res)); 
+            await new Promise(res => setTimeout(res, 0)); 
         }
     }
 }
@@ -222,10 +221,10 @@ class MultiDomainRateLimiter {
                 }
             }
 
-            if (activeQueues > 0) process.nextTick(tick);
+            if (activeQueues > 0) setTimeout(tick, 50);
             else this._tickActive = false;
         };
-        process.nextTick(tick);
+        setTimeout(tick, 50);
     }
 
     async consume(domain = "global", tokensNeeded = 1) {
@@ -631,7 +630,18 @@ class FastPointerQueue {
 // 6. ORCHESTRATOR FŐ CIKLUS (V22.2 BIZTONSÁGOS JSON EXPORT)
 // ------------------------------------------------------------------
 let isShuttingDown = false;
-process.on('SIGINT', () => { isShuttingDown = true; console.log("\n⚠️ Biztonságos leállás folyamatban..."); });
+let sigintCount = 0;
+
+// 🔥 KRITIKUS JAVÍTÁS: A Pánikgomb (Dupla Ctrl+C a kilövéshez)
+process.on('SIGINT', () => { 
+    sigintCount++;
+    if (sigintCount >= 2) {
+        console.log("\n🚨 ERŐSZAKOS KILÖVÉS! (Második Ctrl+C)");
+        process.exit(1); 
+    }
+    isShuttingDown = true; 
+    console.log("\n⚠️ Biztonságos leállás kérése... (Nyomd meg a Ctrl+C-t Még EGYSZER az azonnali leállításhoz!)"); 
+});
 process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
@@ -647,7 +657,6 @@ async function runScraper() {
     const errorLogs = [];
     const marketPulse = new MarketPulseTracker();
 
-    // 1. KORÁBBI JSON BETÖLTÉSE A MEMÓRIÁBA (A Firebase kihagyásával!)
     let localJobsMap = new Map();
     let localSemanticMap = new Map();
     try {
@@ -661,7 +670,7 @@ async function runScraper() {
         console.warn("⚠️ A jobs.json sérült vagy üres. Tiszta lappal indulunk.");
     }
 
-const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti duplikációk elkerülésére
+    const finalJobsMap = new Map();
 
     try {
         const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
@@ -669,8 +678,7 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
 
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
         
-        // 🚥 Szigorú 2 szálas limit a memóriafagyás ellen a GitHub szerveren
-        const CONCURRENCY_LIMIT = 2; 
+        const CONCURRENCY_LIMIT = 1; 
         console.log(`🚥 Concurrency limit beállítva: ${CONCURRENCY_LIMIT} szál (GitHub Actions Optimalizáció).`);
         
         const processCompany = async (workerId, companyDoc, isReplay = false) => {
@@ -709,7 +717,6 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
                 
                 let scrapedJobs = [];
                 
-                // Kigyűjtjük a lokális JSON-ből a céghez tartozó már ismert URL-eket, hogy a motor tudja mihez viszonyítani!
                 const knownUrlsForCompany = Array.from(localJobsMap.values())
                     .filter(j => j.company_id === companyId || j.company_name === company.name)
                     .map(j => j.url);
@@ -717,7 +724,6 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        // ⏱️ Brutális 60 másodperces fagyásvédelem!
                         const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 60000, `Scrape_${company.name}`);
                         scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
@@ -745,7 +751,6 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
                     cleanJobPoolObj.company_id = companyId; 
                     cleanJobPoolObj.trace_id = runTraceId; 
                     
-                    // ID megőrzése a korábbi JSON fájlból
                     let jobId = localSemanticMap.get(cleanJobPoolObj.semantic_hash) 
                         || 'job_' + crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex').substring(0,16);
 
@@ -772,7 +777,6 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
                         stats.added++;
                     }
                     
-                   // JSON kimentéshez klónozzuk a memóriaterületről (Map-be tesszük az ID alapján)
                     finalJobsMap.set(cleanJobPoolObj.id, Object.assign({}, cleanJobPoolObj));
                     globalJobPool.release(cleanJobPoolObj); 
                 }
@@ -786,12 +790,10 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
                     dlqQueue.push(companyDoc);
                     errorLogs.push({ company: company.name, error: err.message, traceId: runTraceId });
                     
-                    // 🔥 JAVÍTÁS: Mentsük meg a régi állásokat a Map-be!
                     const oldJobsForCompany = Array.from(localJobsMap.values())
                         .filter(j => j.company_id === companyId || j.company_name === company.name);
                     
                     oldJobsForCompany.forEach(oldJob => {
-                        // Ha a Replay később sikeres, simán felülírja ezt a kulcsot, így nem lesz duplikáció!
                         finalJobsMap.set(oldJob.id, oldJob); 
                     });
                     
@@ -832,15 +834,10 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
             }
         }
 
-        // ------------------------------------------------------------------
-        // 7. VÉGSŐ JSON FÁJL MENTÉSE
-        // ------------------------------------------------------------------
         console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba...`);
+        const allNewJobsArray = Array.from(finalJobsMap.values());
         fs.writeFileSync(OUTPUT_JSON_PATH, JSON.stringify(allNewJobsArray, null, 2), 'utf-8');
 
-        // ------------------------------------------------------------------
-        // 8. MARKET PULSE & TELEMETRIA MENTÉS FIREBASE-BE (Csak Analitika)
-        // ------------------------------------------------------------------
         console.log("📈 Telemetria & Market Pulse mentése a Firebase-be...");
         const logBatch = new FirestoreBatchManager(db);
         await logBatch.set(db.collection("system_analytics").doc("latest_market_pulse"), marketPulse.generateReport());
@@ -849,9 +846,6 @@ const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti dupliká
             metrics: sysTelemetry.getReport() 
         });
 
-        // ------------------------------------------------------------------
-        // 9. ZÁRÓJELENTÉS
-        // ------------------------------------------------------------------
         const execSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
         const usedMemMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
         

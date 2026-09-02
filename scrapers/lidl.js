@@ -1,6 +1,3 @@
-const https = require("https");
-const http = require("http");
-const zlib = require("zlib");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
@@ -11,113 +8,39 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH (Nincs több néma Node.js összeomlás!)
-function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
-    return new Promise((resolve, reject) => {
-        let req;
-        let resStream;
-        let unzipper;
-        let isDone = false;
-
-        const safeResolve = (data) => {
-            if (isDone) return;
-            isDone = true;
-            clearTimeout(watchdog);
-            resolve(data);
-        };
-
-        const safeReject = (err) => {
-            if (isDone) return;
-            isDone = true;
-            clearTimeout(watchdog);
-            // Minden adatfolyamot biztonságosan lezárunk
-            if (req && !req.destroyed) req.destroy();
-            if (resStream && !resStream.destroyed) resStream.destroy();
-            if (unzipper && !unzipper.destroyed) unzipper.destroy();
-            reject(err);
-        };
-
-        const watchdog = setTimeout(() => {
-            safeReject(new Error(`Kátránygödör védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
-        }, timeoutMs);
-
-        try {
-            const parsedUrl = new URL(urlStr);
-            const client = parsedUrl.protocol === 'https:' ? https : http;
-            
-            req = client.request({
-                hostname: parsedUrl.hostname,
-                port: parsedUrl.port,
-                path: parsedUrl.pathname + parsedUrl.search,
-                method: options.method || 'GET',
-                headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers }
-            }, (res) => {
-                resStream = res;
-                // 🔥 KULCSFONTOSSÁGÚ: Elkapjuk a megszakítás okozta sokk-hibát!
-                res.on('error', (e) => safeReject(new Error(`Response hiba: ${e.message}`)));
-
-                if (res.statusCode < 200 || res.statusCode >= 300) {
-                    return safeReject(new Error(`HTTP hiba: ${res.statusCode}`));
-                }
-
-                const contentType = (res.headers['content-type'] || "").toLowerCase();
-                if (contentType.includes("text/html") && type === 'json') {
-                    return safeReject(new Error("WAF/Captcha blokkolás érzékelve a JSON végponton!"));
-                }
-
-                let stream = res;
-                const encoding = (res.headers['content-encoding'] || "").toLowerCase();
-                if (encoding === 'gzip' || encoding === 'deflate') {
-                    unzipper = encoding === 'gzip' ? zlib.createGunzip() : zlib.createInflate();
-                    // 🔥 Szintén elkapjuk a kitömörítő összeomlását
-                    unzipper.on('error', (e) => safeReject(new Error(`Zlib hiba: ${e.message}`)));
-                    stream = res.pipe(unzipper);
-                }
-
-                let data = '';
-                stream.on('data', (chunk) => { data += chunk.toString('utf8'); });
-                stream.on('end', () => {
-                    try { safeResolve(type === 'json' ? JSON.parse(data) : data); } 
-                    catch (e) { safeReject(new Error("Parse hiba")); }
-                });
-                stream.on('error', (e) => safeReject(new Error(`Stream hiba: ${e.message}`)));
-            });
-
-            req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
-            
-            if (options.body) req.write(options.body);
-            req.end();
-        } catch (err) {
-            safeReject(err);
-        }
-    });
-}
-
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
-  console.log(`   ⬇️ [LIDL] Phantom-API letöltése indul...`);
+  console.log(`   ⬇️ [LIDL] Phantom-API (One-Shot módszer) letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); 
   
-  let page = 1; 
-  let hasMore = true;
-  const PAGE_SIZE = 100;
+  // 🔥 A ZSENIÁLIS TRÜKK: Nincs lapozás! Kérünk 800 állást egyszerre (az egész adatbázist).
+  const queryObj = { page: 1, resultsPerPage: 800, sortField: "", sortOrder: "asc" };
+  const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
+  const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
-  while (hasMore) {
-    console.log(`   ⬇️ [LIDL] Lapozás: ${page}. oldal...`);
-    
-    const queryObj = { page: page, resultsPerPage: PAGE_SIZE, sortField: "", sortOrder: "asc" };
-    const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
-    const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
+  try {
+    // A Node 20+ beépített, legtisztább időtúllépés-kezelője: AbortSignal.timeout
+    const response = await fetch(apiUrl, { 
+        method: "GET", 
+        headers: HEADERS,
+        signal: AbortSignal.timeout(15000) 
+    });
 
-    try {
-      const json = await fetchSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000, 'json');
+    if (!response.ok) {
+        throw new Error(`HTTP hiba: ${response.status}`);
+    }
 
-      const jobsList = json.jobs || [];
-      if (jobsList.length === 0) { hasMore = false; break; }
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("text/html")) {
+        throw new Error("WAF (Cloudflare) HTML blokkolás!");
+    }
 
-      let newJobsCount = 0;
+    const json = await response.json();
+    const jobsList = json.jobs || [];
 
-      for (const job of jobsList) {
+    console.log(`   ✅ [LIDL] Szerver válaszolt: ${jobsList.length} db állás érkezett egyetlen kérésből!`);
+
+    for (const job of jobsList) {
         const title = job.title || "Névtelen pozíció";
         
         let jobUrl = job.jobDetailUrl || job.url || "";
@@ -126,7 +49,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
         if (!jobUrl || seenUrls.has(jobUrl)) continue;
         seenUrls.add(jobUrl);
-        newJobsCount++;
 
         const experience = job.entryLevel || ""; 
         const department = job.employmentArea || job.jobCategory || "";
@@ -170,21 +92,11 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
               tags: tags
             });
         }
-      }
-
-      if (jobsList.length < PAGE_SIZE || newJobsCount === 0) {
-        console.log(`   ⏹️ [LIDL] Utolsó oldal (${jobsList.length} db).`);
-        hasMore = false;
-      } else {
-        page++;
-        await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
-      }
-
-    } catch (err) {
-      console.error(`   ❌ [LIDL] Hálózat hiba a ${page}. oldalon:`, err.message);
-      if (page === 1) throw err;
-      hasMore = false;
     }
+
+  } catch (err) {
+    console.error(`   ❌ [LIDL] Hálózat hiba:`, err.message);
+    throw err; // Dobjuk tovább az Orchestratornak, ahogy eddig
   }
 
   console.log(`   ✔️  [LIDL] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

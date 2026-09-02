@@ -37,13 +37,14 @@ jobs:
         # Ha van package.json, ez a legbiztonságosabb telepítés
         run: npm ci 
 
-      - name: 🚀 Run UniStart Scraper
+      - name: 🚀 Run UniStart Orchestrator
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           TZ: 'Europe/Budapest'
-        run: node scraper.js
+        # A fő vezérlő fájl futtatása (a kódod alapján orchestrator.js-nek hívtuk)
+        run: node orchestrator.js
 
       - name: 💾 Friss jobs.json feltöltése a GitHubra
         run: |
@@ -54,6 +55,7 @@ jobs:
           git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Automatikus állás frissítés [skip ci]" && git push)
 
       - name: 🚨 Vészjelzés küldése Discordra/Slackre (Csak ha Hiba történt)
+        # Ez a lépés csak akkor fut le, ha a korábbiak közül valamelyik elhasalt
         if: failure()
         env:
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
@@ -62,3 +64,4 @@ jobs:
             curl -H "Content-Type: application/json" \
             -d '{"content": "🚨 **KRITIKUS HIBA:** A napi GitHub Actions scraper (UniStart) összeomlott vagy időtúllépést okozott! Kérlek, nézd meg a logokat a GitHubon."}' \
             $DISCORD_WEBHOOK_URL
+          fi

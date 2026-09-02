@@ -1,3 +1,4 @@
+const cheerio = require("cheerio");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
@@ -9,8 +10,9 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-// 🛡️ GOLYÓÁLLÓ FETCH (Tarpit és TLS fagyás ellen erőszakos kiszakítás a TARTALOM letöltésére is!)
-async function fetchJsonSafe(url, options = {}, timeoutMs = 12000) {
+// ---------------- IDE KERÜL AZ UNIVERZÁLIS FÜGGVÉNY ----------------
+// 🛡️ UNIVERZÁLIS GOLYÓÁLLÓ FETCH (JSON és TEXT feldolgozása Kátránygödör védelemmel)
+async function fetchSafe(url, options = {}, timeoutMs = 12000, type = 'json') {
     const controller = new AbortController();
     options.signal = controller.signal;
     
@@ -23,33 +25,33 @@ async function fetchJsonSafe(url, options = {}, timeoutMs = 12000) {
     });
 
     try {
-        // A teljes hálózati folyamatot (fejléc + body letöltés + json parse) egybevonjuk!
         const networkTask = fetch(url, options).then(async (res) => {
-            if (!res.ok) throw new Error(`HTTP hiba! Státusz: ${res.status}`);
+            if (!res.ok) throw new Error(`HTTP hiba: ${res.status}`);
             
             const contentType = res.headers.get("content-type") || "";
-            if (contentType.includes("text/html")) {
-                throw new Error("WAF (Cloudflare) HTML blokkolás érzékelve a JSON végponton!");
+            // Csak akkor dobunk WAF hibát, ha JSON-t vártunk, de HTML (Captcha) jött!
+            if (contentType.includes("text/html") && type === 'json') {
+                throw new Error("WAF/Captcha blokkolás érzékelve a JSON végponton!");
             }
             
-            return await res.json(); // Ez is a race-ben van, így ez sem fagyhat ki!
+            return type === 'json' ? await res.json() : await res.text();
         });
 
-        // Aki hamarabb végez (a letöltés ÉS a feldolgozás VAGY a 12 mp-es hiba), az nyer!
-        const jsonData = await Promise.race([networkTask, timeoutPromise]);
+        const data = await Promise.race([networkTask, timeoutPromise]);
         clearTimeout(timeoutId);
-        return jsonData;
+        return data;
     } catch (err) {
         clearTimeout(timeoutId);
         throw err;
     }
 }
+// --------------------------------------------------------------------
 
 // 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [LIDL] Phantom-API letöltése indul...`);
   const allJobs = [];
-  const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
+  const seenUrls = new Set(); 
   
   let page = 1; 
   let hasMore = true;
@@ -63,9 +65,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
     try {
-      // 🚀 ERŐSZAKOS JSON FETCH HÍVÁSA
-      // Itt már maga a letöltött, tiszta JSON jön vissza. Ha be is fagy a Lidl, 12mp múlva hibára fut.
-      const json = await fetchJsonSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000);
+      // 🚀 ÍGY HÍVJUK MEG A GOLYÓÁLLÓ FETCH-ET JSON MÓDBAN:
+      const json = await fetchSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000, 'json');
 
       const jobsList = json.jobs || [];
 
@@ -145,7 +146,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     } catch (err) {
       console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
       
-      // Ha az 1. oldalon fagy be a rendszer, mentsük az eddigi adatokat
       if (page === 1) {
         throw err;
       }

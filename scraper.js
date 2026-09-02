@@ -724,8 +724,7 @@ async function runScraper() {
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 60000, `Scrape_${company.name}`);
-                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
+const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 300000, `Scrape_${company.name}`);                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
                         if (attempt === 3 || err.message.includes('zárolva') || isReplay) throw err; 

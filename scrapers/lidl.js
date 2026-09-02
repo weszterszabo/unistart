@@ -36,20 +36,26 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         signal: controller.signal,
         headers: HEADERS
       });
-      clearTimeout(timeoutId);
 
       // 🔥 JAVÍTÁS: break helyett throw, hogy a catch lekezelje!
       if (!response.ok) {
+        clearTimeout(timeoutId); // Hibánál memóriát takarítunk
         throw new Error(`HTTP hiba! Státusz: ${response.status}`);
       }
 
       // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy tényleg JSON-t kaptunk-e!
       const contentType = response.headers.get("content-type") || "";
       if (contentType.includes("text/html")) {
+          clearTimeout(timeoutId); // Hibánál memóriát takarítunk
           throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const json = await response.json();
+      
+      // 🔥 KÁTRÁNYGÖDÖR (TARPIT) VÉDELEM JAVÍTÁSA: 
+      // Csak a sikeres body (JSON) letöltés után töröljük a timeoutot!
+      clearTimeout(timeoutId);
+
       const jobsList = json.jobs || [];
 
       if (jobsList.length === 0) {

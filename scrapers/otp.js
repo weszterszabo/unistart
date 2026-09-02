@@ -34,14 +34,19 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           headers: HEADERS,
           signal: controller.signal
       });
-      clearTimeout(timeoutId);
 
       // 🔥 JAVÍTÁS: break helyett throw, hogy a catch le tudja kezelni az 1. oldalas hibát!
       if (!response.ok) {
+        clearTimeout(timeoutId); // Hibánál felszabadítjuk a memóriát
         throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
       }
 
       const html = await response.text();
+      
+      // 🔥 KÁTRÁNYGÖDÖR (TARPIT) VÉDELEM JAVÍTÁSA: 
+      // Csak a sikeres body (HTML) letöltés után töröljük a timeoutot!
+      clearTimeout(timeoutId);
+
       const $ = cheerio.load(html);
 
       // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
@@ -80,6 +85,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         const title = $(el).text().replace(/\s+/g, ' ').trim();
         
         // 🕵️ MÉLY-ADATBÁNYÁSZAT (Kártya szintű kontextus)
+        // Visszalépünk a szülő sorhoz (tr) vagy konténerhez (div), és kinyerjük az összes szöveget
         const parentCard = $(el).closest('tr, li, .searchResultItem, .job-row');
         const rawCardText = parentCard.length > 0 ? parentCard.text() : "";
 

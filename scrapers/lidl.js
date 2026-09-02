@@ -13,6 +13,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   const allJobs = [];
   const seenUrls = new Set(); 
   
+  // 🔥 A ZSENIÁLIS TRÜKK: Nincs lapozás! Kérünk 800 állást egyszerre.
   const queryObj = { page: 1, resultsPerPage: 800, sortField: "", sortOrder: "asc" };
   const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
   const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
@@ -61,26 +62,24 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         
         rawDescription = rawDescription.substring(0, 4000).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
 
-        // 🛡️ KRITIKUS JAVÍTÁS: NLP Watchdog (5 másodperces szigorú limit az AI API-nak)
         let analysis = null;
+        
+        // ---------------------------------------------------------
+        // 🧠 ÉLES AI HÍVÁS (VÉDŐHÁLÓVAL)
+        // ---------------------------------------------------------
         try {
             const analyzeTask = analyzer.analyzeJob(title, rawDescription);
             const timeoutTask = new Promise((_, reject) => 
                 setTimeout(() => reject(new Error("API Rate Limit vagy Időtúllépés")), 5000)
             );
-            
-            // Aki hamarabb végez (az AI válasza vagy az 5 mp-es megszakító), az nyer!
             analysis = await Promise.race([analyzeTask, timeoutTask]);
-            
-            // Dinamikus fojtás (Throttling), hogy ne bombázzuk szét az AI API-t
-            await new Promise(r => setTimeout(r, 200)); 
-
+            await new Promise(r => setTimeout(r, 100)); // Pici fojtás a biztonságért
         } catch (e) {
             console.warn(`   ⚠️ [LIDL] NLP Hiba a '${title.substring(0,25)}...' állásnál: ${e.message}`);
-            // Ha Rate Limit-et kaptunk (pl. a 100. állásnál), várunk 3 másodpercet, hogy a külső API megnyugodjon!
-            await new Promise(r => setTimeout(r, 3000));
+            await new Promise(r => setTimeout(r, 2000));
             continue; 
         }
+        // ---------------------------------------------------------
 
         if (analysis !== null) {
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -92,12 +91,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
             let location = "Magyarország";
             if (job.location && (job.location.city || job.location.name)) {
                 location = job.location.city || job.location.name;
-                if (job.location.zipCode && !location.includes(job.location.zipCode)) {
-                    location = `${job.location.zipCode} ${location}`;
-                }
-            } else if (job.city) {
-                location = job.city;
-            }
+                if (job.location.zipCode && !location.includes(job.location.zipCode)) location = `${job.location.zipCode} ${location}`;
+            } else if (job.city) location = job.city;
 
             allJobs.push({
               title: title.replace(/\s+/g, ' ').trim(),

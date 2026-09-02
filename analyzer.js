@@ -135,7 +135,7 @@ const bypassExperienceRegex = /(?:tapasztalat nem elvárás|tapasztalat nem felt
 const niceToHaveKeywords = ["előny", "plusz", "nice to have", "nem elvárás", "nem feltétel", "plussz", "örülünk", "bónusz", "kiváló, ha", "ideális", "advantage", "plus", "preferred", "optional", "welcome", "beneficial", "asset", "szívesen látjuk", "desirable", "not required", "nice-to-have"];
 const niceToHaveRegex = new RegExp(`(${niceToHaveKeywords.join('|')})`, 'gi'); 
 
-// 🔥 KRITIKUS JAVÍTÁS: A `/i` ZÁSZLÓK CSERÉJE `/gi`-re AZ INFINITE LOOP (VÉGTELEN CIKLUS) ELKERÜLÉSE ÉRDEKÉBEN!
+// 🔥 KRITIKUS JAVÍTÁS: A `/i` ZÁSZLÓK CSERÉJE `/gi`-re (Infinite Loop védelem az exec() while ciklushoz!)
 const compiledCategories = {
     "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops|üzemeltető|frontend|backend|fullstack|qa|tester|scrum|agile|kiberbiztonság|cybersecurity)/gi,
     "💼 Gazdasági & Üzleti": /(pénzügy|gazdaság|business|sales|marketing|hr|könyvelő|kontroller|értékesítő|emberi erőforrás|toborzó|beszerző|logisztika|projektmenedzser|közgazdász|finance|accounting|talent|ellátási lánc)/gi,

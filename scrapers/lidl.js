@@ -9,24 +9,36 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-// 🛡️ GOLYÓÁLLÓ FETCH (Tarpit és TLS fagyás ellen erőszakos kiszakítás)
-async function fetchSafe(url, options = {}, timeoutMs = 10000) {
+// 🛡️ GOLYÓÁLLÓ FETCH (Tarpit és TLS fagyás ellen erőszakos kiszakítás a TARTALOM letöltésére is!)
+async function fetchJsonSafe(url, options = {}, timeoutMs = 12000) {
     const controller = new AbortController();
     options.signal = controller.signal;
     
     let timeoutId;
     const timeoutPromise = new Promise((_, reject) => {
         timeoutId = setTimeout(() => {
-            controller.abort(); // Megpróbáljuk szépen bezárni
-            reject(new Error(`Hálózati időtúllépés (${timeoutMs}ms)`)); // Erőszakkal megszakítjuk a várakozást
+            controller.abort(); 
+            reject(new Error(`Hálózati időtúllépés (${timeoutMs}ms)`)); 
         }, timeoutMs);
     });
 
     try {
-        // Aki hamarabb végez (a fetch vagy a 10 mp-es hiba), az nyer!
-        const response = await Promise.race([fetch(url, options), timeoutPromise]);
+        // A teljes hálózati folyamatot (fejléc + body letöltés + json parse) egybevonjuk!
+        const networkTask = fetch(url, options).then(async (res) => {
+            if (!res.ok) throw new Error(`HTTP hiba! Státusz: ${res.status}`);
+            
+            const contentType = res.headers.get("content-type") || "";
+            if (contentType.includes("text/html")) {
+                throw new Error("WAF (Cloudflare) HTML blokkolás érzékelve a JSON végponton!");
+            }
+            
+            return await res.json(); // Ez is a race-ben van, így ez sem fagyhat ki!
+        });
+
+        // Aki hamarabb végez (a letöltés ÉS a feldolgozás VAGY a 12 mp-es hiba), az nyer!
+        const jsonData = await Promise.race([networkTask, timeoutPromise]);
         clearTimeout(timeoutId);
-        return response;
+        return jsonData;
     } catch (err) {
         clearTimeout(timeoutId);
         throw err;
@@ -51,23 +63,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
     try {
-      // 🚀 ERŐSZAKOS FETCH HÍVÁSA A SIMA FETCH HELYETT
-      const response = await fetchSafe(apiUrl, {
-        method: "GET",
-        headers: HEADERS
-      }, 10000);
+      // 🚀 ERŐSZAKOS JSON FETCH HÍVÁSA
+      // Itt már maga a letöltött, tiszta JSON jön vissza. Ha be is fagy a Lidl, 12mp múlva hibára fut.
+      const json = await fetchJsonSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000);
 
-      if (!response.ok) {
-        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
-      }
-
-      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy tényleg JSON-t kaptunk-e!
-      const contentType = response.headers.get("content-type") || "";
-      if (contentType.includes("text/html")) {
-          throw new Error("WAF (Cloudflare) HTML blokkolás érzékelve a JSON végponton!");
-      }
-
-      const json = await response.json();
       const jobsList = json.jobs || [];
 
       if (jobsList.length === 0) {
@@ -80,41 +79,32 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       for (const job of jobsList) {
         const title = job.title || "Névtelen pozíció";
         
-        // Link normalizálása
         let jobUrl = job.jobDetailUrl || job.url || "";
         if (!jobUrl && job.id) jobUrl = `/jobs/${job.id}`; 
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://jobs.lidl.hu" + (jobUrl.startsWith("/") ? "" : "/") + jobUrl;
 
-        // 🛑 KAPUŐR A DUPLIKÁCIÓK ELLEN
         if (!jobUrl || seenUrls.has(jobUrl)) continue;
         seenUrls.add(jobUrl);
         newJobsCount++;
 
-        // 🕵️ MÉLY-ADATBÁNYÁSZAT (Deep Extract)
         const experience = job.entryLevel || ""; 
         const department = job.employmentArea || job.jobCategory || "";
         const type = job.contractType || job.workingHours || "Teljes munkaidő";
         
-        // Összefűzzük és megtisztítjuk a HTML tagektől az összes releváns JSON mezőt
         const rawDescription = [
             experience, department, type,
             job.description, job.profile, job.tasks, job.requirements, job.benefits
         ].filter(Boolean).join(" ").replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
 
-        // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
         const analysis = analyzer.analyzeJob(title, rawDescription);
 
-        // 🛡️ 3. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
         if (analysis !== null) {
-            
-            // V17 / V16 Kompatibilis adatkinyerés
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
             const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
             const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
             let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
             if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
 
-            // 📍 INTELLIGENS HELYSZÍN: Irányítószám hozzáadása, ha létezik
             let location = "Magyarország";
             if (job.location && (job.location.city || job.location.name)) {
                 location = job.location.city || job.location.name;
@@ -131,12 +121,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
               apply_url: jobUrl,
               location: location.replace(/\s+/g, ' ').trim(),
               date_posted: job.onlineFrom || job.modifiedTime || new Date().toISOString(),
-              
               experience_level: jobNature, 
               subsidiary: department || "Lidl Magyarország",
               employment_type: type,
-              
-              // 🌟 A SZUPERERŐK:
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -144,7 +131,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         }
       }
 
-      // 🏎️ 4. OKOS EARLY-EXIT ÉS THROTTLING
       if (jobsList.length < PAGE_SIZE) {
         console.log(`   ⏹️ [LIDL] Utolsó oldal (${jobsList.length} db), vége a lapozásnak!`);
         hasMore = false;
@@ -153,19 +139,17 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         hasMore = false;
       } else {
         page++;
-        // 🛑 Anti-Bot Jitter: Véletlenszerű várakozás 600ms és 1000ms között
         await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
       }
 
     } catch (err) {
       console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
       
-      // 🔥 Ha a legelső oldalon megszakad, továbbdobjuk az Orchestratornak, hogy mentse az adatokat.
+      // Ha az 1. oldalon fagy be a rendszer, mentsük az eddigi adatokat
       if (page === 1) {
         throw err;
       }
-
-      // Ha már az 1. oldalon túl vagyunk, beérjük az eddig leszedett állásokkal
+      
       hasMore = false;
     }
   }

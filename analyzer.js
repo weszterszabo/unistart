@@ -135,24 +135,25 @@ const bypassExperienceRegex = /(?:tapasztalat nem elvárás|tapasztalat nem felt
 const niceToHaveKeywords = ["előny", "plusz", "nice to have", "nem elvárás", "nem feltétel", "plussz", "örülünk", "bónusz", "kiváló, ha", "ideális", "advantage", "plus", "preferred", "optional", "welcome", "beneficial", "asset", "szívesen látjuk", "desirable", "not required", "nice-to-have"];
 const niceToHaveRegex = new RegExp(`(${niceToHaveKeywords.join('|')})`, 'gi'); 
 
+// 🔥 KRITIKUS JAVÍTÁS: A `/i` ZÁSZLÓK CSERÉJE `/gi`-re AZ INFINITE LOOP (VÉGTELEN CIKLUS) ELKERÜLÉSE ÉRDEKÉBEN!
 const compiledCategories = {
-    "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops|üzemeltető|frontend|backend|fullstack|qa|tester|scrum|agile|kiberbiztonság|cybersecurity)/i,
-    "💼 Gazdasági & Üzleti": /(pénzügy|gazdaság|business|sales|marketing|hr|könyvelő|kontroller|értékesítő|emberi erőforrás|toborzó|beszerző|logisztika|projektmenedzser|közgazdász|finance|accounting|talent|ellátási lánc)/i,
-    "⚙️ Mérnöki & Műszaki": /(mérnök|engineer|villamosmérnök|gépészmérnök|mechatronika|minőségbiztosítás|quality|lean|tervező|építész|CAD|műszaki|architect)/i,
-    "📊 Elemző & Adattudomány": /(elemző|analyst|data scientist|adatelemző|business intelligence|riporter|statisztikus|kutató|research|bi|adattudomány)/i,
-    "🎨 Ügyfélszolgálat & Admin": /(adminisztrátor|ügyfélszolgálat|customer service|recepciós|asszisztens|támogatás|irodai|back office|helpdesk|assistant|clerk|secretary)/i,
-    "📚 Oktatás & Tudomány": /(tanár|oktató|pedagógus|kutató|mentor|tréner|tudományos munkatárs|asszisztens tanár|education|laboráns|teacher|tutor)/i
+    "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops|üzemeltető|frontend|backend|fullstack|qa|tester|scrum|agile|kiberbiztonság|cybersecurity)/gi,
+    "💼 Gazdasági & Üzleti": /(pénzügy|gazdaság|business|sales|marketing|hr|könyvelő|kontroller|értékesítő|emberi erőforrás|toborzó|beszerző|logisztika|projektmenedzser|közgazdász|finance|accounting|talent|ellátási lánc)/gi,
+    "⚙️ Mérnöki & Műszaki": /(mérnök|engineer|villamosmérnök|gépészmérnök|mechatronika|minőségbiztosítás|quality|lean|tervező|építész|CAD|műszaki|architect)/gi,
+    "📊 Elemző & Adattudomány": /(elemző|analyst|data scientist|adatelemző|business intelligence|riporter|statisztikus|kutató|research|bi|adattudomány)/gi,
+    "🎨 Ügyfélszolgálat & Admin": /(adminisztrátor|ügyfélszolgálat|customer service|recepciós|asszisztens|támogatás|irodai|back office|helpdesk|assistant|clerk|secretary)/gi,
+    "📚 Oktatás & Tudomány": /(tanár|oktató|pedagógus|kutató|mentor|tréner|tudományos munkatárs|asszisztens tanár|education|laboráns|teacher|tutor)/gi
 };
 
 const compiledAntiCategories = {
-    "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/i
+    "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/gi
 };
 
 const compiledVibes = {
-    "🚀 Innovatív / Startup": /(startup|innováció|agilis|scrum|modern|fejlődő|dinamikus|kreatív|innovative|cutting-edge|disruptive)/i,
-    "📊 Elemző / Adatvezérelt": /(analitikus|adatvezérelt|precíz|statisztika|kutatás|big data|data-driven|evidence-based)/i,
-    "🤝 Emberközpontú": /(támogató|csapatjátékos|emberközpontú|mentorálás|kellemes légkör|családias|friendly|team|inkluzív|inclusive)/i,
-    "🌍 Nemzetközi": /(multinacionális|nemzetközi|angol|külföldi|global|diverse|diverz|international|cross-border)/i
+    "🚀 Innovatív / Startup": /(startup|innováció|agilis|scrum|modern|fejlődő|dinamikus|kreatív|innovative|cutting-edge|disruptive)/gi,
+    "📊 Elemző / Adatvezérelt": /(analitikus|adatvezérelt|precíz|statisztika|kutatás|big data|data-driven|evidence-based)/gi,
+    "🤝 Emberközpontú": /(támogató|csapatjátékos|emberközpontú|mentorálás|kellemes légkör|családias|friendly|team|inkluzív|inclusive)/gi,
+    "🌍 Nemzetközi": /(multinacionális|nemzetközi|angol|külföldi|global|diverse|diverz|international|cross-border)/gi
 };
 
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba)/gi;
@@ -176,8 +177,6 @@ const PreCompiledEngines = {
     redFlag: Object.entries(redFlagDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') }))
 };
 
-// OPTIMALIZÁCIÓ 1: O(1) Bloom Filter Pre-Scanner
-// Csak azokat a regexeket futtatjuk le, amelyeknek a kulcsszava valószínűleg benne van a szövegben.
 class BloomFilter {
     constructor(size = 8192) {
         this.size = size;
@@ -205,12 +204,11 @@ class BloomFilter {
     }
 }
 
-// A szótárakhoz hozzárendeljük a "Root" (Tő) szavakat a Bloom ellenőrzéshez
 const compiledStructuredTags = {};
 for (const [group, tags] of Object.entries(structuredTagsDict)) {
     compiledStructuredTags[group] = tags.map(tag => {
         const cleanedTag = tag.replace(/\|/g, '').replace(/\*/g, '').trim();
-        const rootWord = cleanedTag.split(/\s+/)[0].toLowerCase(); // Az első szót használjuk tőnek
+        const rootWord = cleanedTag.split(/\s+/)[0].toLowerCase(); 
         const escapedTag = cleanedTag.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
         const baseRegex = new RegExp(huBoundaryStart + '(' + escapedTag + ')' + huBoundaryEnd, 'i');
         return { original: cleanedTag, root: rootWord, regex: baseRegex, globalRegex: new RegExp(baseRegex.source, 'gi') };
@@ -240,7 +238,6 @@ function correctTyposAdvanced(text) {
     return { correctedText, typosFixed: Array.from(typoLog) };
 }
 
-// OPTIMALIZÁCIÓ 2: Float64Array Memory Sizer & V8 Accurate
 class AdvancedLRUCache {
     constructor(limit = 2000, ttlMs = 3600000, maxBytes = 50 * 1024 * 1024) { 
         this.cache = new Map(); 
@@ -252,9 +249,6 @@ class AdvancedLRUCache {
     
     _exactSizeOfV8(obj) {
         const seen = new WeakSet();
-        // Zero-allocation dinamikus queue helyett pre-allokált stack szimuláció,
-        // de objektum referenciákat JS-ben muszáj tömbben tartani. 
-        // Optimalizálva elkerüljük az array.shift() O(N)-t.
         const queue = [obj];
         let head = 0; 
         let bytes = 0;
@@ -306,7 +300,6 @@ class AdvancedLRUCache {
 }
 const analysisCache = new AdvancedLRUCache(2000);
 
-// OPTIMALIZÁCIÓ 3: Zero-Copy CharCode FSM Lexer (Regex Nélkül!)
 function buildTextAST_FSM(text) {
     const clauses = [];
     const abbreviations = new Set(["pl", "stb", "ill", "kb", "kft", "zrt", "nyrt", "bt", "dr", "prof", "tel", "fax", "e.g", "i.e"]);
@@ -317,18 +310,15 @@ function buildTextAST_FSM(text) {
 
     while (i < len) {
         const code = text.charCodeAt(i);
-        // 40: (, 91: [, 41: ), 93: ]
         if (code === 40 || code === 91) bracketDepth++;
         else if (code === 41 || code === 93) bracketDepth = Math.max(0, bracketDepth - 1);
 
-        // 46: ., 33: !, 63: ?, 10: \n
         if ((code === 46 || code === 33 || code === 63 || code === 10) && bracketDepth === 0) {
             let wordStart = i - 1;
-            // Keresés visszafelé betűkre
             while (wordStart >= start && 
-                   ((text.charCodeAt(wordStart) >= 97 && text.charCodeAt(wordStart) <= 122) || // a-z
-                    (text.charCodeAt(wordStart) >= 48 && text.charCodeAt(wordStart) <= 57) || // 0-9
-                    text.charCodeAt(wordStart) > 127)) { // accented
+                   ((text.charCodeAt(wordStart) >= 97 && text.charCodeAt(wordStart) <= 122) ||
+                    (text.charCodeAt(wordStart) >= 48 && text.charCodeAt(wordStart) <= 57) || 
+                    text.charCodeAt(wordStart) > 127)) { 
                 wordStart--;
             }
             const lastWord = text.substring(wordStart + 1, i).toLowerCase();
@@ -361,7 +351,6 @@ function binarySearchAST(ast, targetIndex) {
     return null;
 }
 
-// OPTIMALIZÁCIÓ 4: Bitwise Zónatérképező (BitShift sűrűség számítás C++ bufferben)
 const MAX_DOC_LEN = 1048576; 
 const diffBuffer = new ArrayBuffer(MAX_DOC_LEN * 4); 
 const globalDiffView = new Int32Array(diffBuffer);
@@ -379,17 +368,14 @@ function populateNiceToHaveZonesBitwise(text) {
         foundAny = true;
         const start = Math.max(0, match.index - 60);
         const end = Math.min(textLen, match.index + match[0].length + 60);
-        // Bitwise logic: 1-et adunk hozzá (Density), amit binárisan eltolunk, ha további infót akarunk,
-        // de ide a gyors integer adíció a legjobb a Prefix-Sum miatt.
         globalDiffView[start] += 1;
         globalDiffView[end + 1] -= 1;
     }
     
     if (!foundAny) return false;
     
-    // Prefix sum O(N) sweep
     for(let i = 1; i <= textLen; i++) {
-        globalDiffView[i] = (globalDiffView[i] + globalDiffView[i - 1]) | 0; // Bitwise or to enforce 32-bit int
+        globalDiffView[i] = (globalDiffView[i] + globalDiffView[i - 1]) | 0; 
     }
     return true; 
 }
@@ -630,7 +616,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     fullText = typoFixResult.correctedText;
     const timePrep = measure('Prep_Time', 'prep_start');
 
-    // O(1) Bloom Filter betöltése az egész dokumentumra a regex futtatások előtt!
     const docWords = fullText.split(/[\s,.;!?()\n]+/);
     const docBloom = new BloomFilter(8192);
     for (let i=0; i<docWords.length; i++) {
@@ -645,7 +630,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     const isExplicitJunior = isExplicitJuniorTitle || isExplicitJuniorText;
     const isWhiteCollar = compiledWhiteCollarRoles.test(fullText) || compiledWhiteCollarRoles.test(safeTitle);
     
-    // Zárójel-tudatos CharCode FSM AST Lexer
     let isTooSenior = false;
     if (!bypassExperienceRegex.test(fullText)) {
         const expMatches = [...fullText.matchAll(compiledExperienceReject), ...fullText.matchAll(compiledExperienceRejectWords)];
@@ -765,7 +749,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     const timeExtract = measure('Extract_Time', 'extract_start');
 
     mark('tag_start');
-    // 🧬 4. FÁZIS: BLOOM FILTER + ZERO-ALLOCATION C++ LEVEL ZONING
     let extractedTags = { tech: [], languages: [], soft_skills: [], work_setup: [], benefits: [] };
     let niceToHaveTags = []; let allFlatTags = []; 
     
@@ -775,7 +758,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
         let groupTags = [];
         for (const tagObj of tagObjects) {
             
-            // O(1) Bloom Filter Pre-Scan (Brutális gyorsítás, a regex le sem fut, ha a tag nincs a szövegben!)
             if (!docBloom.mightContain(tagObj.root)) continue;
 
             let match; let matchCount = 0; let isNiceToHave = false;
@@ -805,7 +787,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     niceToHaveTags = [...new Set(niceToHaveTags)].filter(tag => !allFlatTags.includes(tag));
     const timeTag = measure('Tag_Time', 'tag_start');
 
-    // 🧠 4.5 FÁZIS: Szemantikai Következtetés & Pontozó algoritmus
     const inferredMetaTags = runSemanticInference(allFlatTags);
     const techStackTier = evaluateTechStack(extractedTags.tech); 
     
@@ -825,7 +806,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
 
     const timeTotal = measure('Total_Time', 'total_start');
 
-    // 🚀 5. FÁZIS: VÉGLEGES ADATSTRUKTÚRA ÖSSZEÁLLÍTÁSA
     const finalPayload = {
         metadata: {
             is_valid_entry_level: true,

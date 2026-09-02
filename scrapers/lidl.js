@@ -9,6 +9,30 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
+// 🛡️ GOLYÓÁLLÓ FETCH (Tarpit és TLS fagyás ellen erőszakos kiszakítás)
+async function fetchSafe(url, options = {}, timeoutMs = 10000) {
+    const controller = new AbortController();
+    options.signal = controller.signal;
+    
+    let timeoutId;
+    const timeoutPromise = new Promise((_, reject) => {
+        timeoutId = setTimeout(() => {
+            controller.abort(); // Megpróbáljuk szépen bezárni
+            reject(new Error(`Hálózati időtúllépés (${timeoutMs}ms)`)); // Erőszakkal megszakítjuk a várakozást
+        }, timeoutMs);
+    });
+
+    try {
+        // Aki hamarabb végez (a fetch vagy a 10 mp-es hiba), az nyer!
+        const response = await Promise.race([fetch(url, options), timeoutPromise]);
+        clearTimeout(timeoutId);
+        return response;
+    } catch (err) {
+        clearTimeout(timeoutId);
+        throw err;
+    }
+}
+
 // 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [LIDL] Phantom-API letöltése indul...`);
@@ -27,35 +51,23 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
     try {
-      // Időtúllépés kezelés (10 másodperc)
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-      const response = await fetch(apiUrl, {
+      // 🚀 ERŐSZAKOS FETCH HÍVÁSA A SIMA FETCH HELYETT
+      const response = await fetchSafe(apiUrl, {
         method: "GET",
-        signal: controller.signal,
         headers: HEADERS
-      });
+      }, 10000);
 
-      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch lekezelje!
       if (!response.ok) {
-        clearTimeout(timeoutId); // Hibánál memóriát takarítunk
         throw new Error(`HTTP hiba! Státusz: ${response.status}`);
       }
 
       // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy tényleg JSON-t kaptunk-e!
       const contentType = response.headers.get("content-type") || "";
       if (contentType.includes("text/html")) {
-          clearTimeout(timeoutId); // Hibánál memóriát takarítunk
-          throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
+          throw new Error("WAF (Cloudflare) HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const json = await response.json();
-      
-      // 🔥 KÁTRÁNYGÖDÖR (TARPIT) VÉDELEM JAVÍTÁSA: 
-      // Csak a sikeres body (JSON) letöltés után töröljük a timeoutot!
-      clearTimeout(timeoutId);
-
       const jobsList = json.jobs || [];
 
       if (jobsList.length === 0) {
@@ -148,13 +160,12 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     } catch (err) {
       console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
       
-      // 🔥 KRITIKUS JAVÍTÁS:
-      // Ha a legelső oldalon (page === 1) hibára fut (blokkolás, hálózat, stb.),
-      // továbbdobjuk a hibát az orchestratornak, hogy mentse meg a korábbi Lidl állásokat!
+      // 🔥 Ha a legelső oldalon megszakad, továbbdobjuk az Orchestratornak, hogy mentse az adatokat.
       if (page === 1) {
         throw err;
       }
 
+      // Ha már az 1. oldalon túl vagyunk, beérjük az eddig leszedett állásokkal
       hasMore = false;
     }
   }

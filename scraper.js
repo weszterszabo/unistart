@@ -28,7 +28,7 @@ if (fs.existsSync(path.join(process.cwd(), "analyzer.js"))) {
 }
 
 // ------------------------------------------------------------------
-// 2. FIREBASE INICIALIZÁLÁS (Csak analitika és config miatt)
+// 2. FIREBASE INICIALIZÁLÁS
 // ------------------------------------------------------------------
 const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT_KEY 
     ? JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY) 
@@ -344,7 +344,7 @@ const ExecutionTimeoutGuard = {
 };
 
 // ------------------------------------------------------------------
-// 5. SCHEMAS, SANITIZATION, GEOGUARD & DATA PROVENANCE
+// 5. SCHEMAS ÉS ADATSTRUKTÚRÁK (ÚJ: Passzív státusz és időbélyegek)
 // ------------------------------------------------------------------
 
 class ArenaLRUCache {
@@ -519,6 +519,7 @@ const GeoGuard = {
 };
 GeoGuard.init(); 
 
+// 🔥 ÚJÍTÁS: Hozzáadva a deactivated_at mező!
 class ProcessedJobRecord {
     constructor() {
         this.id = ""; 
@@ -528,8 +529,13 @@ class ProcessedJobRecord {
         this.salary_currency = null; this.is_hourly_wage = false; this.tags = [];
         this.enriched_tags = []; this.tldr = null; this.seo_schema = null;
         this.semantic_hash = ""; this.data_hash = ""; this.data_signature = "";
-        this.health_score = 0; this.trace_id = ""; this.is_active = true;
-        this.scraped_at = ""; this.updated_at = "";
+        this.health_score = 0; this.trace_id = ""; 
+        
+        // Státusz és Időbélyegek
+        this.is_active = true;
+        this.scraped_at = "";      // Mikor lett aktív
+        this.updated_at = "";      // Mikor láttuk utoljára aktívan
+        this.deactivated_at = null; // Mikor lett passzív (kiszűrt vagy levett)
     }
     reset() {
         this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
@@ -539,8 +545,13 @@ class ProcessedJobRecord {
         this.tags = []; this.enriched_tags = []; 
         this.tldr = null; this.seo_schema = null; this.semantic_hash = ""; 
         this.data_hash = ""; this.data_signature = ""; this.health_score = 0; 
-        this.trace_id = ""; this.is_active = true;
-        this.scraped_at = ""; this.updated_at = "";
+        this.trace_id = ""; 
+        
+        this.is_active = true;
+        this.scraped_at = ""; 
+        this.updated_at = "";
+        this.deactivated_at = null;
+        
         return this;
     }
 }
@@ -627,12 +638,11 @@ class FastPointerQueue {
 }
 
 // ------------------------------------------------------------------
-// 6. ORCHESTRATOR FŐ CIKLUS (V22.2 BIZTONSÁGOS JSON EXPORT)
+// 6. ORCHESTRATOR FŐ CIKLUS
 // ------------------------------------------------------------------
 let isShuttingDown = false;
 let sigintCount = 0;
 
-// 🔥 KRITIKUS JAVÍTÁS: A Pánikgomb (Dupla Ctrl+C a kilövéshez)
 process.on('SIGINT', () => { 
     sigintCount++;
     if (sigintCount >= 2) {
@@ -646,13 +656,13 @@ process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
     console.log("\n======================================================");
-    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V22.2 JSON EXPORT)");
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V23.0 HISTORICAL)");
     console.log("======================================================\n");
     
     const runTraceId = crypto.randomUUID().split('-')[0]; 
-    await sendAlert(`🚀 V22.2 JSON Export (Trace: ${runTraceId}) folyamat elindult...`);
+    await sendAlert(`🚀 V23.0 Historical (Trace: ${runTraceId}) folyamat elindult...`);
 
-    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, anomalies: 0 };
+    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, deactivated: 0, anomalies: 0 };
     const dlqQueue = []; 
     const errorLogs = [];
     const marketPulse = new MarketPulseTracker();
@@ -679,7 +689,6 @@ async function runScraper() {
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
         
         const CONCURRENCY_LIMIT = 1; 
-        console.log(`🚥 Concurrency limit beállítva: ${CONCURRENCY_LIMIT} szál (GitHub Actions Optimalizáció).`);
         
         const processCompany = async (workerId, companyDoc, isReplay = false) => {
             await sysMonitor.yieldIfNecessary(); 
@@ -724,7 +733,8 @@ async function runScraper() {
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 300000, `Scrape_${company.name}`);                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
+                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 300000, `Scrape_${company.name}`);
+                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
                         if (attempt === 3 || err.message.includes('zárolva') || isReplay) throw err; 
@@ -734,8 +744,9 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
                     }
                 }
 
-                let cAdded = 0, cUpdated = 0, cUntouched = 0, cRejected = 0;
+                let cAdded = 0, cUpdated = 0, cUntouched = 0, cRejected = 0, cDeactivated = 0;
 
+                // Friss/Új állások feldolgozása
                 for (const rawJob of scrapedJobs) {
                     await sysMonitor.yieldIfNecessary(); 
                     const cleanJobPoolObj = await measureTelemtry('SanitizeJob', async () => sanitizeAndScoreJob(rawJob, company.name));
@@ -754,33 +765,58 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
                         || 'job_' + crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex').substring(0,16);
 
                     cleanJobPoolObj.id = jobId;
-                    marketPulse.track(cleanJobPoolObj); 
-
+                    
+                    // 🔥 ÚJÍTÁS: Állapotok és Időbélyegek beállítása
                     if (localJobsMap.has(jobId)) {
                         const oldJob = localJobsMap.get(jobId);
+                        cleanJobPoolObj.scraped_at = oldJob.scraped_at || new Date().toISOString(); // Megőrizzük az eredeti rögzítést
+                        cleanJobPoolObj.updated_at = new Date().toISOString(); // A mai napon láttuk!
+                        cleanJobPoolObj.is_active = true; // Biztosan aktív
+                        cleanJobPoolObj.deactivated_at = null; // Lehet, hogy eddig passzív volt, most újra él!
+                        
                         if (cleanJobPoolObj.data_hash !== (oldJob.data_hash || "")) {
-                            cleanJobPoolObj.updated_at = new Date().toISOString();
-                            cleanJobPoolObj.scraped_at = oldJob.scraped_at || new Date().toISOString();
                             cUpdated++; 
                             stats.updated++;
                         } else { 
-                            cleanJobPoolObj.updated_at = oldJob.updated_at;
-                            cleanJobPoolObj.scraped_at = oldJob.scraped_at;
                             cUntouched++; 
                             stats.untouched++; 
                         }
                     } else {
+                        // Teljesen új állás
                         cleanJobPoolObj.scraped_at = new Date().toISOString();
                         cleanJobPoolObj.updated_at = new Date().toISOString();
+                        cleanJobPoolObj.is_active = true;
+                        cleanJobPoolObj.deactivated_at = null;
                         cAdded++; 
                         stats.added++;
                     }
                     
+                    marketPulse.track(cleanJobPoolObj); 
                     finalJobsMap.set(cleanJobPoolObj.id, Object.assign({}, cleanJobPoolObj));
                     globalJobPool.release(cleanJobPoolObj); 
                 }
 
-                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Változatlan: ${cUntouched} | Kiszűrve: ${cRejected}`);
+                // 🔥 ÚJÍTÁS: Passziváló Logika (Soft Delete)
+                // Kikeressük azokat az állásokat ebből a cégből, amik benne voltak a régi adatbázisban,
+                // de a scraper most NEM találta meg őket, VAGY az analyzer kiszűrte őket (nem kerültek a finalJobsMap-be).
+                const oldJobsForCompany = Array.from(localJobsMap.values())
+                    .filter(j => j.company_id === companyId || j.company_name === company.name);
+                
+                oldJobsForCompany.forEach(oldJob => {
+                    if (!finalJobsMap.has(oldJob.id)) {
+                        // Ha eddig aktív volt, most passziváljuk
+                        if (oldJob.is_active !== false) {
+                            oldJob.is_active = false;
+                            oldJob.deactivated_at = new Date().toISOString();
+                            cDeactivated++;
+                            stats.deactivated++;
+                        }
+                        // Visszatesszük a JSON-be, így megmarad a történeti adat!
+                        finalJobsMap.set(oldJob.id, oldJob); 
+                    }
+                });
+
+                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Változatlan: ${cUntouched} | Kiszűrve: ${cRejected} | 🔴 Passzív lett: ${cDeactivated}`);
                 return true; 
             } catch (err) {
                 console.error(`${logPrefix} ❌ Hiba:`, err.message);
@@ -789,6 +825,8 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
                     dlqQueue.push(companyDoc);
                     errorLogs.push({ company: company.name, error: err.message, traceId: runTraceId });
                     
+                    // Ha a cég teljesen lefagyott (hálózati hiba), nem passziváljuk a régi állásait,
+                    // hanem érintetlenül visszatöltjük a régi állapotot!
                     const oldJobsForCompany = Array.from(localJobsMap.values())
                         .filter(j => j.company_id === companyId || j.company_name === company.name);
                     
@@ -797,7 +835,7 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
                     });
                     
                     if (oldJobsForCompany.length > 0) {
-                        console.log(`${logPrefix} ♻️ [AUTO-MENTÉS] Visszatöltve ${oldJobsForCompany.length} db korábbi állás a memóriából.`);
+                        console.log(`${logPrefix} ♻️ [AUTO-MENTÉS] Hiba miatt érintetlenül visszatöltve ${oldJobsForCompany.length} db korábbi állás a memóriából.`);
                     }
                 }
                 return false;
@@ -859,14 +897,13 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
         await logBatch.flush();
 
         console.log("\n======================================================");
-        console.log(`🏁 CHRONOS-NEXUS V22.2 JSON EXPORT (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
+        console.log(`🏁 CHRONOS-NEXUS V23.0 (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
         console.log("======================================================");
-        console.log(`⏱️ Idő: ${execSec}s | 🧠 Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Végleges hiba: ${stats.failed})`);
-        console.log(`✨ Új: ${stats.added} | 🔄 Frissült: ${stats.updated}`);
-        console.log(`🗑️ Kiszűrve (Kuka): ${stats.rejected}`);
+        console.log(`⏱️ Idő: ${execSec}s | 🧠 Mem: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Hiba: ${stats.failed})`);
+        console.log(`✨ Új: ${stats.added} | 🔄 Friss: ${stats.updated} | 🔴 Passzív lett: ${stats.deactivated}`);
         console.log("======================================================\n");
         
-        await sendAlert(`✅ V22.2 JSON Export (Trace: ${runTraceId}) Kész. Új: ${stats.added}, Kiszűrve: ${stats.rejected}, Végleges Hiba: ${stats.failed}. Memória: ${usedMemMB}MB.`);
+        await sendAlert(`✅ V23.0 Kész. Új: ${stats.added}, Passzív lett: ${stats.deactivated}, Hiba: ${stats.failed}.`);
         process.exit(0);
 
     } catch (err) {

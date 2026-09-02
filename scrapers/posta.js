@@ -12,7 +12,8 @@ const HEADERS = {
   "Referer": "https://karrier.posta.hu/allasok"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [Magyar Posta] Phantom-JSBQ API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
@@ -37,9 +38,15 @@ exports.scrape = async function(companyName, baseUrl) {
     });
     clearTimeout(timeoutId);
 
+    // 🔥 JAVÍTÁS: return [] helyett throw, hogy az orchestrator megmentse a korábbi állásokat
     if (!response.ok) {
-      console.error(`   ❌ [Magyar Posta] HTTP Hiba a letöltés során (Status: ${response.status})`);
-      return [];
+      throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
+    }
+
+    // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy JSON-t kaptunk-e!
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("text/html")) {
+        throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
     }
 
     const json = await response.json();
@@ -72,7 +79,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
       // 2. Város kinyerése és letisztítása
       let location = $('.job_list_city').text().replace(/\s+/g, ' ').trim() || "Magyarország";
-      // Irányítószám és utca levágása (ugyanaz a remek üzleti logika, amit te írtál)
+      // Irányítószám és utca levágása
       if (location.includes(",")) {
           location = location.split(",")[0].replace(/\d{4}/g, "").trim();
       }
@@ -121,6 +128,10 @@ exports.scrape = async function(companyName, baseUrl) {
 
   } catch (err) {
     console.error(`   ❌ [Magyar Posta] Hálózat hiba vagy időtúllépés:`, err.message);
+    // 🔥 KRITIKUS JAVÍTÁS:
+    // Mivel a Postát "egy lövésből" intézzük, ha a catch ágba esünk, 
+    // azonnal tovább kell dobni a hibát, hogy megmentse a korábbi adatokat!
+    throw err;
   }
 
   console.log(`   ✔️  [Magyar Posta] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

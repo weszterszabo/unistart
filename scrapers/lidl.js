@@ -9,7 +9,8 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [LIDL] Phantom-API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
@@ -37,9 +38,15 @@ exports.scrape = async function(companyName, baseUrl) {
       });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch lekezelje!
       if (!response.ok) {
-        console.error(`   ❌ [LIDL] Szerver hiba (HTTP ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+      }
+
+      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy tényleg JSON-t kaptunk-e!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const json = await response.json();
@@ -134,6 +141,14 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon (page === 1) hibára fut (blokkolás, hálózat, stb.),
+      // továbbdobjuk a hibát az orchestratornak, hogy mentse meg a korábbi Lidl állásokat!
+      if (page === 1) {
+        throw err;
+      }
+
       hasMore = false;
     }
   }

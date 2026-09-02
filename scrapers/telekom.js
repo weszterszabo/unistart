@@ -10,7 +10,8 @@ const HEADERS = {
   "Origin": "https://www.telekom.hu"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [Telekom] Phantom-API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
@@ -29,9 +30,15 @@ exports.scrape = async function(companyName, baseUrl) {
     });
     clearTimeout(timeoutId);
 
+    // 🔥 JAVÍTÁS: return [] helyett throw, hogy az orchestrator tudjon az adatmentésről
     if (!response.ok) {
-      console.error(`   ❌ [Telekom] HTTP Hiba a letöltés során (Status: ${response.status})`);
-      return [];
+      throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
+    }
+
+    // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy JSON-t kaptunk-e!
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("text/html")) {
+        throw new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!");
     }
 
     const json = await response.json();
@@ -113,6 +120,11 @@ exports.scrape = async function(companyName, baseUrl) {
 
   } catch (err) {
     console.error(`   ❌ [Telekom] Hálózat hiba vagy időtúllépés:`, err.message);
+    
+    // 🔥 KRITIKUS JAVÍTÁS:
+    // Mivel a Telekomot egyetlen kéréssel húzzuk le, bármilyen hiba (timeout, WAF stb.) esetén
+    // azonnal továbbdobjuk a hibát, hogy a rendszer megmentse a tegnapi Telekomos állásokat!
+    throw err;
   }
 
   console.log(`   ✔️  [Telekom] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

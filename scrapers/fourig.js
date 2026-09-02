@@ -12,7 +12,8 @@ const HEADERS = {
   "Connection": "keep-alive"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [4iG / ONE] Phantom-SAP Scraper elindult...`);
   const allJobs = [];
   let startrow = 0;
@@ -27,17 +28,29 @@ exports.scrape = async function(companyName, baseUrl) {
     try {
       const response = await fetch(targetUrl, { headers: HEADERS });
       
+      // 🔥 JAVÍTÁS: break helyett throw, hogy az 1. oldalas hibát el tudjuk kapni a catch-ben!
       if (!response.ok) {
-        console.error(`   ❌ [4iG / ONE] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
       }
 
       const html = await response.text();
       const $ = cheerio.load(html);
       
+      // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
+      const pageTitle = $('title').text().toLowerCase();
+      if (
+          pageTitle.includes("just a moment") || 
+          pageTitle.includes("attention required") ||
+          pageTitle.includes("cloudflare") ||
+          html.includes('id="cf-wrapper"') ||
+          html.includes('data-ray')
+      ) {
+          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve az oldalon!");
+      }
+
       let newJobsCount = 0;
 
-      // 1. STRATÉGIA: Professzionális DOM bejárás (Keresünk minden állás-linket)
+      // 1. STRATÉGIA: Professzionális DOM bejárás
       let jobLinks = $('a.jobTitle-link');
       
       // VÉDŐHÁLÓ: Ha a 4iG megváltoztatná az osztály nevét, fallback a '/job/' linkekre
@@ -59,26 +72,22 @@ exports.scrape = async function(companyName, baseUrl) {
         const title = $(el).text().replace(/\s+/g, ' ').trim();
         
         // 🕵️ MÉLY-ADATBÁNYÁSZAT (Kártya szintű kontextus)
-        // Visszalépünk a szülő sorhoz (tr) vagy konténerhez (div), és kinyerjük az összes szöveget
         const parentCard = $(el).closest('tr, li, .searchResultItem, .job-row');
         const rawCardText = parentCard.length > 0 ? parentCard.text() : "";
 
-        // Helyszín tisztítása (SAP specifikus szemét kiszűrése)
+        // Helyszín tisztítása
         let location = parentCard.find('.jobLocation, .jobFacility').text().replace(/\s+/g, ' ').trim();
         if (!location) location = "Magyarország";
-        // Pl. "Budapest, HU, 1037" -> "Budapest"
         location = location.replace(/,?\s*HU\b/i, '').replace(/,\s*\d{4}/, '').trim(); 
 
         const department = parentCard.find('.jobDepartment').text().replace(/\s+/g, ' ').trim();
 
         // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-        // Odaadjuk az egész kártya szövegét (dátum, részleg, leírás-töredék), nem csak a részleget!
         const analysis = analyzer.analyzeJob(title, rawCardText);
 
         // 🛡️ 3. KAPUŐR: Csak a diák/junior állásokat engedjük át
         if (analysis !== null) {
             
-            // V17 és V16 kompatibilitás
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
             const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
             const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
@@ -90,14 +99,10 @@ exports.scrape = async function(companyName, baseUrl) {
               url: link,
               apply_url: link,
               location: location,
-              // Ha találunk dátumot a kártyán, azt mentjük, különben a mait
               date_posted: parentCard.find('.jobDate').text().trim() || new Date().toISOString(),
-              
               experience_level: jobNature,
               subsidiary: department || "4iG / ONE",
               employment_type: "Teljes munkaidő",
-
-              // 🌟 A SZUPERERŐK:
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -106,7 +111,6 @@ exports.scrape = async function(companyName, baseUrl) {
       });
 
       // 🏎️ 4. OKOS EARLY-EXIT (Lapozás logika)
-      // Ha kevesebb állást találtunk, mint a maximum (25), akkor tuti ez az utolsó oldal.
       if (newJobsCount === 0 || newJobsCount < (PAGE_SIZE * 0.5)) { 
         console.log(`   ⏹️ [4iG / ONE] Elértük az adatbázis végét (Új állások: ${newJobsCount}).`);
         hasMore = false;
@@ -118,6 +122,15 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [4iG / ONE] Végzetes Hiba a(z) ${startrow}. sornál:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon (startrow === 0) hibára fut (blokkolás, hálózat, stb.),
+      // továbbdobjuk a hibát, így az orchestrator visszatölti a 4iG régi állásait!
+      if (startrow === 0) {
+        throw err;
+      }
+      
+      // Későbbi oldalaknál elég megállítani a ciklust
       hasMore = false;
     }
   }

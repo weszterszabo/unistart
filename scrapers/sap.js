@@ -26,39 +26,37 @@ async function processInBatches(items, batchSize, asyncFn) {
 // 🌍 OMNI-SEARCH AUTO-DISCOVERY: Megkeresi a helyes SAP végpontot
 async function discoverSearchUrl(baseUrl) {
     const base = baseUrl.trim().replace(/\/$/, '');
-    // Különböző SAP CSB konfigurációk (A Tesco és a standard is benne van)
     const pathsToTry = [
-        "", // 1. Ha a user eleve a pontos linket adta meg
-        "/search/", // 2. Standard SAP (Richter, VW)
-        "/hu_HU/careers/SearchJobs", // 3. Tesco Magyar
-        "/en_GB/careersmarketplace/SearchJobs", // 4. Tesco Nemzetközi
-        "/search-jobs", // 5. Alternatív SAP
-        "/jobs/" // 6. Régi SAP
+        "", 
+        "/search/", 
+        "/hu_HU/careers/SearchJobs", 
+        "/en_GB/careersmarketplace/SearchJobs", 
+        "/search-jobs", 
+        "/jobs/" 
     ];
 
     for (let path of pathsToTry) {
-        if (path !== "" && base.includes(path)) continue; // Ne duplázzuk
+        if (path !== "" && base.includes(path)) continue; 
         
         let testUrl = base + path;
         try {
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 4000);
-            // Csak egy könnyű GET kérést küldünk a teszteléshez
             const res = await fetch(testUrl, { headers: HEADERS, signal: controller.signal });
             clearTimeout(timeoutId);
             
             if (res.ok) {
-                // Biztosra megyünk: Ha 200 OK, akkor ez lesz a jó URL!
                 return testUrl;
             }
         } catch (e) {
             continue;
         }
     }
-    return base; // Fallback, ha semmi sem sikerült
+    return base; 
 }
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SAP] Phantom-DeepScrape letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set();
@@ -76,21 +74,19 @@ exports.scrape = async function(companyName, baseUrl) {
     let currentUrl;
     try {
         const urlObj = new URL(searchBaseUrl);
-        // 🚀 Garantáljuk, hogy a legújabb állások jöjjenek előre!
         if (!urlObj.searchParams.has('sortColumn')) urlObj.searchParams.append('sortColumn', 'referencedate');
         if (!urlObj.searchParams.has('sortDirection')) urlObj.searchParams.append('sortDirection', 'desc');
         
-        // 🇭🇺 Erőszakos lokalizáció
         if (!urlObj.searchParams.has('locale')) urlObj.searchParams.append('locale', 'hu_HU');
         if (!urlObj.searchParams.has('lang')) urlObj.searchParams.append('lang', 'hu-HU');
         if (!urlObj.searchParams.has('language')) urlObj.searchParams.append('language', 'hu_HU');
         
-        // Dinamikus lapozás beállítása
         urlObj.searchParams.set('startrow', startrow.toString());
         currentUrl = urlObj.toString();
     } catch (e) {
         console.error(`   ❌ [SAP] Érvénytelen alap URL lett megadva: ${searchBaseUrl}`);
-        break;
+        // 🔥 KRITIKUS JAVÍTÁS: Ha eleve az URL feldolgozása elhasal, dobjuk tovább a hibát!
+        throw e;
     }
     
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
@@ -102,24 +98,33 @@ exports.scrape = async function(companyName, baseUrl) {
       const response = await fetch(currentUrl, { headers: HEADERS, signal: controller.signal });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw
       if (!response.ok) {
-        console.error(`   ❌ [SAP] HTTP Hiba a lista lekérésekor (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP Hiba a lista lekérésekor (Status: ${response.status})`);
       }
 
       const html = await response.text();
       const $ = cheerio.load(html);
+
+      // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
+      const pageTitle = $('title').text().toLowerCase();
+      if (
+          pageTitle.includes("just a moment") || 
+          pageTitle.includes("attention required") ||
+          pageTitle.includes("cloudflare") ||
+          html.includes('id="cf-wrapper"') ||
+          html.includes('data-ray')
+      ) {
+          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve az oldalon!");
+      }
       
       const pageLinks = [];
       $('a').each((i, el) => {
         const href = $(el).attr('href');
-        // 🧹 Multinacionális Címtisztító
         let text = $(el).text().trim().replace(/\s+/g, ' ');
         text = text.replace(/\s*\([m|f|d|w|x|n|\/]+\)\s*/gi, ' ').trim();
 
-        // 🚨 Itt is felkészítettem a kódodat a Tesco-féle JobDetail hivatkozásokra!
         if (href && (href.includes('/job/') || href.includes('/position/') || href.includes('/JobDetail/')) && text.length > 5) {
-          // 🧹 Kém-paraméter vágó
           let cleanHref = href.startsWith('http') ? href : new URL(href, currentUrl).href;
           cleanHref = cleanHref.split('?')[0];
 
@@ -127,7 +132,6 @@ exports.scrape = async function(companyName, baseUrl) {
         }
       });
 
-      // Duplikációk szűrése az adott oldalon belül
       const uniqueOnPage = pageLinks.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
       const newJobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
@@ -139,7 +143,7 @@ exports.scrape = async function(companyName, baseUrl) {
 
       newJobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS (Max 5 aloldal egyszerre)
+      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS
       console.log(`   ⚡ [SAP] ${newJobsToProcess.length} db aloldal feldolgozása párhuzamosan...`);
       
       const processedJobs = await processInBatches(newJobsToProcess, 5, async (job) => {
@@ -150,11 +154,9 @@ exports.scrape = async function(companyName, baseUrl) {
           }
           process.stdout.write(`✔️ `);
 
-          // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
           const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
           const analysis = analyzer.analyzeJob(job.title, rawDescription);
 
-          // 🛡️ 3. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
           if (analysis !== null) {
               const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
               const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
@@ -168,12 +170,9 @@ exports.scrape = async function(companyName, baseUrl) {
                 apply_url: job.url,
                 location: details.location || "Nincs megadva",
                 date_posted: details.datePosted || new Date().toISOString(),
-                
                 experience_level: jobNature, 
                 subsidiary: details.subsidiary || companyName,
                 employment_type: details.employment_type || "Teljes munkaidő",
-                
-                // 🌟 A SZUPERERŐK:
                 faculty: faculty,
                 work_style: workStyle,
                 tags: tags
@@ -182,9 +181,8 @@ exports.scrape = async function(companyName, baseUrl) {
           return null;
       });
 
-      console.log(""); // Sortörés a checkmarkok után
+      console.log(""); 
 
-      // Kiszűrjük a null értékeket
       const validJuniorJobs = processedJobs.filter(j => j !== null);
       allJobs.push(...validJuniorJobs);
 
@@ -199,6 +197,13 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [SAP] Végzetes lapozási hiba:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha az első oldalon megszakad a feldolgozás, dobjuk tovább a hibát az orchestrator felé!
+      if (page === 1) {
+          throw err;
+      }
+
       hasMore = false;
     }
   }
@@ -207,7 +212,7 @@ exports.scrape = async function(companyName, baseUrl) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY (Marad változatlan)
 async function getDeepDetails(jobUrl) {
   let res = null;
   const maxRetries = 1;
@@ -277,7 +282,6 @@ async function getDeepDetails(jobUrl) {
         if (metaDate) details.datePosted = metaDate;
     }
     
-    // ⏳ Biztonságos dátum normalizálás
     if (details.datePosted) {
         try {
             const parsedDate = new Date(details.datePosted);

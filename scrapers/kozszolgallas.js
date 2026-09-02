@@ -11,8 +11,8 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                     hostname: 'kozszolgallas.ksz.gov.hu',
                     path: '/JobAd/GetJobAdCountFilteredByCities',
                     method: 'POST',
-                    rejectUnauthorized: false, // <-- LOKÁLIS SSL BYPASS
-                    timeout: 10000, // 🛑 10 másodperc után bontja a kapcsolatot, nem fagy ki a script!
+                    rejectUnauthorized: false, // <-- LOKÁLIS SSL BYPASS (Gov.hu specifikus)
+                    timeout: 10000, // 🛑 10 másodperc után bontja a kapcsolatot
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -22,6 +22,13 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                 };
 
                 const req = https.request(options, (res) => {
+                    // 🔥 WAF / TŰZFAL VÉDELEM: Megnézzük, nem HTML hibaoldalt kaptunk-e!
+                    const contentType = res.headers['content-type'] || "";
+                    if (contentType.includes("text/html")) {
+                        reject(new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!"));
+                        return;
+                    }
+
                     let data = '';
                     res.on('data', chunk => data += chunk);
                     res.on('end', () => resolve(data));
@@ -44,7 +51,8 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
     }
 }
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [Közszolgállás] Phantom-Gov letöltés indul...`);
   const allJobs = [];
   const seenUrls = new Set();
@@ -91,7 +99,7 @@ exports.scrape = async function(companyName, baseUrl) {
       const rawDescription = `${department} ${workType} ${expLevel} ${job.JobCategoryName || ""} ${job.EmploymentTypeName || ""}`;
       const analysis = analyzer.analyzeJob(title, rawDescription);
 
-      // 🛡️ 3. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (Pályakezdő/Gyakornok)
+      // 🛡️ 3. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
       if (analysis !== null) {
           
           // V17 / V16 Kompatibilis kinyerés
@@ -101,8 +109,6 @@ exports.scrape = async function(companyName, baseUrl) {
           let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
           if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
 
-          // Dátum kezelés: Ha van publikálási dátum jó, de ha csak határidő (SubmissionDeadline) van,
-          // akkor is berakjuk egy érvényes ISO stringként, hogy a Firebase ne omlanak össze.
           let postedDate = new Date().toISOString();
           if (job.PublishDate) postedDate = new Date(job.PublishDate).toISOString();
 
@@ -127,6 +133,12 @@ exports.scrape = async function(companyName, baseUrl) {
 
   } catch (err) {
     console.error(`   ❌ [Közszolgállás] Végzetes Hiba:`, err.message);
+    
+    // 🔥 KRITIKUS JAVÍTÁS:
+    // Mivel ez a kód egyetlen adatcsomagban kéri le a dolgokat, ha bárhol hiba van
+    // (Timeout, WAF blokkolás, rossz válasz), azonnal továbbdobjuk a hibát,
+    // így az orchestrator automatikusan megmenti és visszatölti a korábbi állásokat!
+    throw err;
   }
 
   console.log(`   ✔️  [Közszolgállás] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

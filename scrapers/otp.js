@@ -12,7 +12,8 @@ const HEADERS = {
   "Connection": "keep-alive"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [OTP] Phantom-SAP Scraper elindult...`);
   const allJobs = [];
   let startrow = 0;
@@ -35,13 +36,25 @@ exports.scrape = async function(companyName, baseUrl) {
       });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch le tudja kezelni az 1. oldalas hibát!
       if (!response.ok) {
-        console.error(`   ❌ [OTP] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
       }
 
       const html = await response.text();
       const $ = cheerio.load(html);
+
+      // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
+      const pageTitle = $('title').text().toLowerCase();
+      if (
+          pageTitle.includes("just a moment") || 
+          pageTitle.includes("attention required") ||
+          pageTitle.includes("cloudflare") ||
+          html.includes('id="cf-wrapper"') ||
+          html.includes('data-ray')
+      ) {
+          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve az oldalon!");
+      }
       
       let newJobsCount = 0;
 
@@ -67,20 +80,17 @@ exports.scrape = async function(companyName, baseUrl) {
         const title = $(el).text().replace(/\s+/g, ' ').trim();
         
         // 🕵️ MÉLY-ADATBÁNYÁSZAT (Kártya szintű kontextus)
-        // Visszalépünk a szülő sorhoz (tr) vagy konténerhez (div), és kinyerjük az összes szöveget
         const parentCard = $(el).closest('tr, li, .searchResultItem, .job-row');
         const rawCardText = parentCard.length > 0 ? parentCard.text() : "";
 
         // Helyszín tisztítása (SAP specifikus szemét kiszűrése)
         let location = parentCard.find('.jobLocation, .jobFacility').text().replace(/\s+/g, ' ').trim();
         if (!location) location = "Budapest"; // OTP-nél az alapértelmezett központ
-        // Pl. "Budapest, HU, 1051" -> "Budapest"
         location = location.replace(/,?\s*HU\b/i, '').replace(/,\s*\d{4}/, '').trim(); 
 
         const department = parentCard.find('.jobDepartment').text().replace(/\s+/g, ' ').trim();
 
         // 🧠 2. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-        // Odaadjuk az egész kártya szövegét (dátum, részleg, leírás-töredék), nem csak a részleget!
         const analysis = analyzer.analyzeJob(title, rawCardText);
 
         // 🛡️ 3. KAPUŐR: Csak a diák/junior/pályakezdő állásokat engedjük át
@@ -114,7 +124,6 @@ exports.scrape = async function(companyName, baseUrl) {
       });
 
       // 🏎️ 4. OKOS EARLY-EXIT (Lapozás logika)
-      // Ha kevesebb állást találtunk, mint a maximum (25), akkor tuti ez az utolsó oldal.
       if (newJobsCount === 0 || newJobsCount < (PAGE_SIZE * 0.5)) { 
         console.log(`   ⏹️ [OTP] Elértük az adatbázis végét (Új állások ezen az oldalon: ${newJobsCount}).`);
         hasMore = false;
@@ -126,6 +135,15 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [OTP] Végzetes Hiba a(z) ${startrow}. sornál:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon (startrow === 0) hálózati/tűzfal hiba történik,
+      // továbbdobjuk a hibát, hogy az orchestrator megmentse az eddigi OTP-s állásokat!
+      if (startrow === 0) {
+        throw err;
+      }
+      
+      // Későbbi oldalaknál elég megállítani a lapozást.
       hasMore = false;
     }
   }

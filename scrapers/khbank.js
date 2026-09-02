@@ -12,7 +12,8 @@ const HEADERS = {
   "Origin": "https://karrier.kh.hu"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [K&H Bank] Phantom-JSBQ API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); 
@@ -39,9 +40,15 @@ exports.scrape = async function(companyName, baseUrl) {
         body: bodyParams
       });
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch ág lekezelje az első oldali hibát!
       if (!response.ok) {
-        console.error(`   ❌ [K&H Bank] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+      }
+
+      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy JSON-t kaptunk-e!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const json = await response.json();
@@ -63,10 +70,10 @@ exports.scrape = async function(companyName, baseUrl) {
             }
         }
 
-        // Töltsük be a nyers HTML-t a virtuális DOM-ba (Sokkal stabilabb, mint a RegEx)
+        // Töltsük be a nyers HTML-t a virtuális DOM-ba
         const $ = cheerio.load(htmlSnippet);
 
-        // 2. LINK NORMALIZÁLÁS (Kapuőr a duplikációk ellen)
+        // 2. LINK NORMALIZÁLÁS
         let jobUrl = jobRow.url || "";
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.kh.hu" + jobUrl;
         
@@ -75,10 +82,9 @@ exports.scrape = async function(companyName, baseUrl) {
         seenUrls.add(jobUrl);
         newJobsOnPage++;
 
-        // 3. ADATOK KINYERÉSE (CSS Szelektorokkal - Törhetetlen logika)
+        // 3. ADATOK KINYERÉSE (CSS Szelektorokkal)
         let title = $('h2, .title, [data-cy="title"]').first().text().trim();
         
-        // Védőháló a címhez (Ha a HTML-ből nem jött ki, megnézzük a JSON gyökerét)
         if (!title) {
             if (jobRow.title || jobRow.name) title = jobRow.title || jobRow.name;
             else if (jobUrl) {
@@ -91,23 +97,19 @@ exports.scrape = async function(companyName, baseUrl) {
         let experience = $('[data-cy="experiences"]').first().text().trim();
         let department = $('[data-cy="area"]').first().text().trim();
 
-        // Extra védelem: Hátha van ecommerceData (mint az Erste-nél)
         if (jobRow.ecommerceData) {
             department = department || jobRow.ecommerceData.item_category || "";
             experience = experience || jobRow.ecommerceData.item_category4 || "";
         }
 
         // 🧠 4. ELKÜLDJÜK AZ ADATOKAT AZ AGYNAK ELEMZÉSRE
-        // A Cheerio $.text() automatikusan lehámozza az összes HTML taget, tiszta szöveget ad!
         const cleanDescription = $.text().replace(/\s+/g, ' ').trim();
         const rawContext = `${department} ${experience} ${cleanDescription}`;
         
         const analysis = analyzer.analyzeJob(title, rawContext);
 
-        // 🛡️ 5. JUNIOR KAPUŐR: Csak a relevánsakat tartjuk meg
+        // 🛡️ 5. JUNIOR KAPUŐR
         if (analysis !== null) {
-            
-            // V17 / V16 Kompatibilitás
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
             const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
             const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
@@ -123,9 +125,8 @@ exports.scrape = async function(companyName, baseUrl) {
               
               experience_level: jobNature,
               subsidiary: department || "K&H Csoport",
-              employment_type: "Teljes munkaidő", // K&H-nál ritka a részmunkaidő, de ha kiderül, az NLP felülírja
+              employment_type: "Teljes munkaidő", 
 
-              // 🌟 A SZUPERERŐK:
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -145,12 +146,20 @@ exports.scrape = async function(companyName, baseUrl) {
         hasMore = false;
       } else {
         page++;
-        // 🛑 Anti-Bot Jitter (Véletlenszerű várakozás 400ms és 800ms között)
+        // 🛑 Anti-Bot Jitter
         await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
       }
 
     } catch (err) {
       console.error(`   ❌ [K&H Bank] Végzetes Hiba a(z) ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha az első oldalon hálózat/tűzfal hiba van, dobjuk tovább az orchestratornak, 
+      // hogy megmentse a korábbi K&H-s állásokat!
+      if (page === 1) {
+          throw err;
+      }
+      
       hasMore = false;
     }
   }

@@ -1,15 +1,15 @@
-const crypto = require("crypto");
-// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT
+// 🧠 1. BEHÚZZUK A KÖZPONTI AGYAT (A crypto import felesleges volt, törölve)
 const analyzer = require("../analyzer");
 
-exports.scrape = async function(companyName, baseUrl) {
+// Hozzáadva a knownUrls paraméter, hogy kompatibilis legyen az Orchestrator V22-vel
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [ALDI] REST API letöltése indul...`);
   const allJobs = [];
   let page = 1; 
   let hasMore = true;
   const seenUrls = new Set(); 
-  const PAGE_SIZE = 100; // Konstans a méretnek a logikához
-
+  const PAGE_SIZE = 100;
+  
   while (hasMore) {
     console.log(`   ⬇️ [ALDI] Lapozás: ${page}. oldal...`);
     const apiUrl = `https://karrier.aldi.hu/rest/jobs/search?page=${page}&size=${PAGE_SIZE}`;
@@ -27,8 +27,7 @@ exports.scrape = async function(companyName, baseUrl) {
       });
 
       if (!response.ok) {
-        console.error(`   ❌ [ALDI] Hiba a letöltés során (HTTP ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
       }
 
       const json = await response.json();
@@ -47,13 +46,12 @@ exports.scrape = async function(companyName, baseUrl) {
         let jobUrl = job.url || (job.job_id ? `job/${job.job_id}` : "");
         if (jobUrl && !jobUrl.startsWith("http")) jobUrl = "https://karrier.aldi.hu/" + jobUrl.replace(/^\//, '');
 
-        if (!jobUrl || seenUrls.has(jobUrl)) continue; // Ha nincs URL, vagy már láttuk, átugorjuk
+        if (!jobUrl || seenUrls.has(jobUrl)) continue;
         
         seenUrls.add(jobUrl);
         newJobsCount++;
 
         // 🧠 2. MÉLY ADATFÚRÁS (Deep Text Extraction)
-        // Kinyerjük a JSON-ból az összes olyan mezőt, amiben értékes szöveg lehet!
         const textParts = [
             job.career_level_title,
             job.area_of_activity_title,
@@ -62,7 +60,7 @@ exports.scrape = async function(companyName, baseUrl) {
             job.profile,
             job.offer,
             job.benefits
-        ].filter(Boolean).join(" | "); // A filter(Boolean) kiszűri a null/undefined értékeket
+        ].filter(Boolean).join(" | "); 
 
         // 📍 3. INTELLIGENS HELYSZÍN KINYERÉS
         let location = job.city || job.region || "Magyarország";
@@ -75,28 +73,22 @@ exports.scrape = async function(companyName, baseUrl) {
 
         // 🛡️ 5. KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT A JUNIOR TESZTEN
         if (analysis !== null) {
-            
-            // 🔄 Dinamikus adat-kikérés (Támogatja a V17 struktúrát és a régit is)
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
             const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
             const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
             
             let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
-            if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required; // Fallback
+            if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
 
             allJobs.push({
-              title: title.replace(/\s+/g, ' ').trim(), // Tisztítjuk a dupla szóközöket
+              title: title.replace(/\s+/g, ' ').trim(),
               url: jobUrl,
               apply_url: jobUrl,
               location: location.replace(/\s+/g, ' ').trim(),
-              // Megpróbáljuk kinyerni az eredeti publikálási dátumot, ha nincs, marad a mostani
               date_posted: job.publish_date || job.created_at || new Date().toISOString(),
-              
               experience_level: jobNature,
               subsidiary: job.area_of_activity_title || "ALDI Magyarország",
               employment_type: job.shift || job.working_hours || "Teljes munkaidő",
-              
-              // 🌟 A SZUPERERŐK:
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -113,13 +105,23 @@ exports.scrape = async function(companyName, baseUrl) {
         hasMore = false;
       } else {
         page++;
-        // Kicsit nagylelkűbb szünet, hogy ne tiltsa le a szerver az IP-t (Rate Limit védelem)
         await new Promise(r => setTimeout(r, 600)); 
       }
 
     } catch (err) {
       console.error(`   ❌ [ALDI] Végzetes Hálózat/JSON hiba a ${page}. oldalon:`, err.message);
-      hasMore = false; // Megtörjük a végtelen ciklust hiba esetén!
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha már rögtön az 1. oldalon elhasal a letöltés (pl. blokkol a tűzfal), 
+      // TOVÁBB KELL DOBNI (throw) a hibát az orchestrator felé! 
+      // Így az orchestrator tudni fogja, hogy hiba volt, és visszatölti a memóriából a korábbi ALDI állásokat.
+      if (page === 1) {
+        throw err;
+      }
+      
+      // Ha a 2. vagy későbbi oldalon történik a hiba, akkor megelégszünk annyi állással, 
+      // amennyit addig sikerült leszedni, és nem dobunk teljes hibát.
+      hasMore = false; 
     }
   }
 

@@ -11,7 +11,8 @@ const HEADERS = {
   "Referer": "https://karrier.erstebank.hu/allasok"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls paraméter kompatibilitás miatt
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [ERSTE] Titkos JSBQ API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); 
@@ -33,9 +34,15 @@ exports.scrape = async function(companyName, baseUrl) {
         body: bodyData
       });
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch ág lekezelje az 1. oldalas hibát
       if (!response.ok) {
-        console.error(`   ❌ [ERSTE] Hiba a letöltés során (HTTP ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+      }
+
+      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, véletlenül nem HTML-t (Captchát) kaptunk-e JSON helyett!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF (Cloudflare/F5) HTML blokkolás érzékelve a JSON végponton!");
       }
       
       const data = await response.json();
@@ -67,7 +74,6 @@ exports.scrape = async function(companyName, baseUrl) {
         const type = eco.item_category3 || item.employmentType || "";
 
         // 🧠 2. MÉLY-ADATBÁNYÁSZAT (Deep Text Extraction)
-        // Összeszedünk mindent a JSON-ből, ami leírás lehet (HTML snippetek is jöhetnek)
         const rawDescription = [
             department, 
             experience, 
@@ -103,12 +109,9 @@ exports.scrape = async function(companyName, baseUrl) {
               location: location,
               // Ha van a JSON-ben publish_date, azt használjuk
               date_posted: item.publish_date || item.created || new Date().toISOString(), 
-              
               experience_level: jobNature,
               subsidiary: department || "Erste Bank Hungary", 
               employment_type: type || "Teljes munkaidő",
-              
-              // 🌟 A SZUPERERŐK: 
               faculty: faculty,
               work_style: workStyle,
               tags: tags
@@ -131,6 +134,15 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [ERSTE] Végzetes Hálózat vagy JSON hiba a ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon hiba történik (pl. letilt az ERSTE tűzfala),
+      // azonnal megdobjuk az orchestratort, hogy a korábbi állásokat ne törölje ki!
+      if (page === 1) {
+          throw err;
+      }
+      
+      // Későbbi oldalakon már beérjük azzal, amit sikerült letölteni.
       hasMore = false;
     }
   }

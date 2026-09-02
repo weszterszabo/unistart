@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pestújhelyi Fórum - Hitelesített Közösségi Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Valós Térkép Integráció (Leaflet.js) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .modal { transition: opacity 0.25s ease; }
+        body.modal-active { overflow-x: hidden; overflow-y: hidden; }
+        /* A Leaflet térkép z-index javítása, hogy a menü ne csússzon alá */
+        .leaflet-container { z-index: 10; font-family: 'Inter', sans-serif; }
+        .leaflet-popup-content { font-size: 14px; font-weight: 600; color: #0f172a; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+    <!-- Értesítési rendszer (Toast) -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Navigáció -->
+    <nav class="bg-slate-900 text-white shadow-md sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="showTab('dashboard')">
+                    <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <span class="font-bold text-xl tracking-wide">Pestújhely<span class="text-emerald-400">Fórum</span></span>
+                </div>
+                
+                <div class="hidden md:flex space-x-2 text-sm font-medium">
+                    <button id="nav-dashboard" onclick="showTab('dashboard')" class="px-3 py-2 rounded-lg bg-slate-800 text-white transition">Áttekintés</button>
+                    <button id="nav-budget" onclick="showTab('budget')" class="px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition">Költségvetés</button>
+                    <button id="nav-consensus" onclick="showTab('consensus')" class="px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition">Konszenzus</button>
+                    <button id="nav-map" onclick="showTab('map')" class="px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition">Térkép</button>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 text-xs text-slate-400 bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700" title="Eszköz azonosítva a biztonságos szavazáshoz">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                        <span class="hidden sm:inline">Védett munkamenet</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        
+        <!-- 1. FŐOLDAL (Hiánytalanul visszaállítva) -->
+        <div id="tab-dashboard" class="tab-content space-y-8">
+            <header class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm text-center max-w-3xl mx-auto relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-1 bg-emerald-500"></div>
+                <h1 class="text-3xl font-extrabold text-slate-900 mb-4">Üdvözlünk a Pestújhelyi Fórumon!</h1>
+                <p class="text-slate-600 text-lg mb-6">Regisztráció nélkül, azonnal beleszólhatsz a helyi ügyekbe. Rendszerünk garantálja, hogy minden szavazat valódi, a moderátorok pedig vigyáznak a konstruktív vitára.</p>
+                <div class="flex flex-wrap justify-center gap-3">
+                    <button onclick="showTab('budget')" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-emerald-700 transition shadow-sm">Költségvetés elosztása</button>
+                    <button onclick="showTab('consensus')" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition shadow-sm">Részvétel a vitában</button>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Bal oldali kiemelt dobozok -->
+                <div class="lg:col-span-8 space-y-8">
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold uppercase">Közösségi Költségvetés</span>
+                                <h2 class="text-2xl font-bold mt-2">2026. Tavaszi Alapítványi Keret</h2>
+                            </div>
+                            <span class="text-emerald-600 font-bold text-xl">500 000 Ft</span>
+                        </div>
+                        <p class="text-slate-600 mb-4 text-sm">Állítsd össze a saját csomagodat a helyi fejlesztési ötletekből!</p>
+                        <button onclick="showTab('budget')" class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium px-5 py-2.5 rounded-xl transition text-sm">Költségvetés tervezése →</button>
+                    </section>
+
+                    <section class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-blue-500">
+                        <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-bold uppercase">Polis Konszenzuskeresés</span>
+                        <h2 class="text-2xl font-bold mt-2 mb-2">Parkolás és közlekedés Pestújhelyen</h2>
+                        <p class="text-slate-600 mb-4 text-sm">Értékeld a szomszédaid állításait, hogy megtaláljuk a közös egyetértési pontokat.</p>
+                        <button onclick="showTab('consensus')" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2.5 rounded-xl transition text-sm">Szavazás indítása →</button>
+                    </section>
+                </div>
+
+                <!-- Jobb oldali sáv -->
+                <div class="lg:col-span-4 space-y-8">
+                    <section class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl text-white p-6 shadow-sm">
+                        <span class="bg-white/20 text-xs px-3 py-1 rounded-full font-bold uppercase backdrop-blur-sm">Állampolgári Tanács</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">Helyi Zöld Stratégia</h3>
+                        <p class="text-slate-300 text-sm mb-4">A sorsolt 20 fős lakossági testület ezen a hétvégén ülésezik.</p>
+                        <div class="space-y-2">
+                            <button onclick="showToast('Szakértői anyagok letöltése elindult.', 'info')" class="w-full bg-white text-slate-900 py-2 rounded-lg font-bold text-xs hover:bg-slate-100 transition">Szakértői anyagok elolvasása</button>
+                        </div>
+                    </section>
+
+                    <section class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+                        <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold uppercase">Térképes Ötletelés</span>
+                        <h3 class="text-lg font-bold mt-2">Hol hiányzik fejlesztés?</h3>
+                        <p class="text-slate-600 text-xs my-2">Jelöld meg a térképen a padok, lámpák vagy szemetesek hiányát!</p>
+                        <button onclick="showTab('map')" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 rounded-xl text-sm transition">Térkép megnyitása</button>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. KÖZÖSSÉGI KÖLTSÉGVETÉS -->
+        <div id="tab-budget" class="tab-content hidden space-y-6">
+            <header class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="bg-emerald-100 text-emerald-800 text-xs px-3 py-1 rounded-full font-bold uppercase">PIN Hitelesített</span>
+                        <svg class="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    </div>
+                    <h1 class="text-3xl font-bold text-slate-900">2026. Tavaszi Alapítványi Keret</h1>
+                    <p class="text-slate-600 text-sm mt-1">A beküldéshez a postaládádba bedobott 6 karakteres azonosítóra lesz szükség.</p>
+                </div>
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-xl min-w-[240px]">
+                    <div class="flex justify-between text-xs font-bold mb-1">
+                        <span>Kiválasztott összeg:</span>
+                        <span id="budget-total-text" class="text-emerald-600">0 Ft</span>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
+                        <div id="budget-progress-bar" class="bg-emerald-500 h-3 transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                        <span>0 Ft</span>
+                        <span>Max: 500 000 Ft</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="budget-items-container"></div>
+
+            <div class="flex justify-end bg-white p-4 rounded-xl border border-slate-200 shadow-sm sticky bottom-4 z-30">
+                <button onclick="initiateBudgetSubmit()" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-8 py-3 rounded-xl transition flex items-center gap-2 shadow-lg">
+                    Szavazat véglegesítése <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. KONSZENZUSKERESÉS -->
+        <div id="tab-consensus" class="tab-content hidden space-y-6">
+            <header class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                <div>
+                    <span class="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full font-bold uppercase">Böngésző Azonosított</span>
+                    <h1 class="text-3xl font-bold text-slate-900 mt-2">Parkolás és közlekedés</h1>
+                    <p class="text-slate-600 text-sm mt-1">Az algoritmus valós időben szűri a többszörös szavazatokat az eszköz ujjlenyomata alapján.</p>
+                </div>
+            </header>
+
+            <div class="max-w-2xl mx-auto bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-center relative overflow-hidden">
+                <div class="flex justify-between items-center text-xs text-slate-400 font-semibold border-b pb-4">
+                    <span id="consensus-step">Állítás betöltése...</span>
+                    <span id="consensus-author"></span>
+                </div>
+
+                <div class="min-h-[140px] flex items-center justify-center relative my-6">
+                    <p id="consensus-statement" class="text-2xl font-medium text-slate-800 leading-snug">"Loading..."</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3 pt-6 border-t border-slate-100">
+                    <button onclick="voteConsensus('agree')" class="bg-emerald-100 text-emerald-800 hover:bg-emerald-200 font-bold px-6 py-4 rounded-xl transition flex-1 text-lg">👍 Egyetértek</button>
+                    <button onclick="voteConsensus('disagree')" class="bg-rose-100 text-rose-800 hover:bg-rose-200 font-bold px-6 py-4 rounded-xl transition flex-1 text-lg">👎 Nem</button>
+                    <button onclick="voteConsensus('pass')" class="bg-slate-100 text-slate-700 hover:bg-slate-200 font-bold px-6 py-4 rounded-xl transition flex-1 text-lg">⚪ Passz</button>
+                </div>
+                
+                <div class="mt-6">
+                    <button onclick="openModal('modal-new-statement')" class="text-slate-500 font-bold hover:text-blue-600 text-sm transition">
+                        + Van egy saját, jobb állításom
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. VALÓS TÉRKÉP (Leaflet.js + OpenStreetMap) -->
+        <div id="tab-map" class="tab-content hidden space-y-6">
+            <header class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="bg-amber-100 text-amber-800 text-xs px-3 py-1 rounded-full font-bold uppercase">Pre-moderált Felület</span>
+                    <h1 class="text-3xl font-bold text-slate-900 mt-2">Pestújhelyi Problématérkép</h1>
+                    <p class="text-slate-600 text-sm mt-1">Az új pontok a moderátorok jóváhagyása után válnak láthatóvá mindenki számára.</p>
+                </div>
+                <div class="bg-slate-100 text-slate-600 px-4 py-2 rounded-xl text-sm font-semibold border border-slate-200 shadow-inner">
+                    💡 Kattints bárhova a térképen új bejelentéshez!
+                </div>
+            </header>
+
+            <!-- Ide tölt be a Leaflet Térkép -->
+            <div id="real-map" class="w-full h-[500px] rounded-2xl shadow-inner border border-slate-300"></div>
+            
+        </div>
+
+    </main>
+
+    <!-- MODÁLIS ABLAKOK -->
+
+    <!-- Postaláda PIN Hitelesítés (Offline-Online) -->
+    <div id="modal-pin-auth" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl space-y-6 transform scale-100">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-2xl font-extrabold text-slate-900">Hitelesítés</h3>
+                <p class="text-sm text-slate-500 mt-2">Kérjük, add meg a postaládádba bedobott szórólapon található 6 karakteres egyedi azonosítót a beküldéshez.</p>
+            </div>
+            
+            <div>
+                <input id="pin-input" type="text" maxlength="6" class="w-full text-center text-3xl font-bold tracking-[0.3em] border-2 border-slate-300 rounded-xl p-4 uppercase focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/20 outline-none transition" placeholder="P-XXXX">
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="closeModal('modal-pin-auth')" class="flex-1 bg-slate-100 text-slate-700 py-3 rounded-xl font-bold hover:bg-slate-200 transition">Mégse</button>
+                <button onclick="verifyAndSubmitBudget()" class="flex-1 bg-emerald-600 text-white py-3 rounded-xl font-bold hover:bg-emerald-700 transition">Szavazat Leadása</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progresszív Elköteleződés (Email feliratkozás) -->
+    <div id="modal-subscribe" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl space-y-6 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-blue-100 rounded-bl-full -z-10"></div>
+            
+            <h3 class="text-2xl font-extrabold text-slate-900">Sikeres beküldés! 🎉</h3>
+            <p class="text-sm text-slate-600">Az ötleted a moderátorok ellenőrzése után megjelenik a térképen. <br><br><strong>Szeretnél értesítést kapni a fejleményekről?</strong></p>
+            
+            <input id="subscribe-email" type="email" class="w-full border-2 border-slate-200 rounded-xl p-3 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/20 outline-none transition" placeholder="pelda@email.hu">
+            
+            <div class="flex flex-col gap-2">
+                <button onclick="submitEmail()" class="w-full bg-blue-600 text-white py-3 rounded-xl font-bold hover:bg-blue-700 transition">Igen, kérek értesítést</button>
+                <button onclick="closeModal('modal-subscribe')" class="w-full text-slate-500 py-2 font-semibold hover:text-slate-800 transition">Nem kérek, köszönöm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Új állítás (Pre-moderáció magyarázat) -->
+    <div id="modal-new-statement" class="modal opacity-0 pointer-events-none fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl space-y-4">
+            <h3 class="text-xl font-bold text-slate-900">Új állítás beküldése</h3>
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded text-xs text-amber-800 font-medium">
+                Az oldal komolyságának megőrzése érdekében minden új állítás <strong>előzetes adminisztrátori jóváhagyáson</strong> (pre-moderáció) esik át, mielőtt a többiek szavazhatnának rá.
+            </div>
+            <textarea id="new-statement-text" rows="3" class="w-full border-2 border-slate-200 rounded-xl p-4 text-sm focus:border-slate-500 outline-none resize-none" placeholder="Fogalmazd meg röviden a javaslatod..."></textarea>
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closeModal('modal-new-statement')" class="bg-slate-100 text-slate-700 px-6 py-2.5 rounded-xl font-bold hover:bg-slate-200 transition">Mégse</button>
+                <button onclick="submitNewStatement()" class="bg-slate-900 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-slate-800 transition">Küldés moderálásra</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIKA -->
+    <script>
+        // --- 1. ALAP NAVIGÁCIÓ ÉS TÉRKÉP INICIALIZÁLÁS ---
+        let pestujhelyMap = null;
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+            document.querySelectorAll('nav button[id^="nav-"]').forEach(btn => {
+                btn.className = 'px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition';
+            });
+            const activeNav = document.getElementById('nav-' + tabName);
+            if (activeNav) {
+                activeNav.className = 'px-3 py-2 rounded-lg bg-slate-800 text-white transition';
+            }
+
+            // A térképet csak akkor töltjük be teljesen, amikor láthatóvá válik
+            if (tabName === 'map') {
+                setTimeout(initMap, 100);
+            }
+        }
+
+        // --- MODAL & TOAST ---
+        function openModal(id) {
+            const m = document.getElementById(id);
+            m.classList.remove('opacity-0', 'pointer-events-none');
+            document.body.classList.add('modal-active');
+        }
+        function closeModal(id) {
+            const m = document.getElementById(id);
+            m.classList.add('opacity-0', 'pointer-events-none');
+            document.body.classList.remove('modal-active');
+        }
+        function showToast(msg, type = 'success') {
+            const c = document.getElementById('toast-container');
+            const t = document.createElement('div');
+            const bg = type === 'error' ? 'bg-rose-600' : (type === 'info' ? 'bg-blue-600' : 'bg-emerald-600');
+            t.className = `${bg} text-white px-5 py-3 rounded-xl shadow-2xl font-bold text-sm transform translate-y-4 opacity-0 transition-all duration-300 z-50`;
+            t.innerText = msg;
+            c.appendChild(t);
+            setTimeout(() => t.classList.remove('translate-y-4', 'opacity-0'), 10);
+            setTimeout(() => {
+                t.classList.add('opacity-0', 'translate-y-4');
+                setTimeout(() => t.remove(), 300);
+            }, 4000);
+        }
+
+        // --- 2. KÖLTSÉGVETÉS ---
+        const budgetProjects = [
+            { id: 1, title: 'Pestújhelyi tér Zöldítése', cost: 150000, cat: 'Környezet' },
+            { id: 2, title: 'Könyvmegálló kabin', cost: 80000, cat: 'Kultúra' },
+            { id: 3, title: 'Játszótér kerítés javítás', cost: 120000, cat: 'Biztonság' },
+            { id: 4, title: 'Közösségi Szerszámbank', cost: 150000, cat: 'Összefogás' },
+            { id: 5, title: 'Új térfigyelő kamera', cost: 200000, cat: 'Biztonság' },
+            { id: 6, title: 'Helytörténeti sétatáblák', cost: 100000, cat: 'Oktatás' }
+        ];
+        let selectedBudgetIds = [];
+        const MAX_BUDGET = 500000;
+
+        function renderBudget() {
+            const c = document.getElementById('budget-items-container');
+            c.innerHTML = '';
+            budgetProjects.forEach(item => {
+                const sel = selectedBudgetIds.includes(item.id);
+                c.innerHTML += `
+                    <div class="bg-white rounded-2xl border-2 ${sel ? 'border-emerald-500 shadow-md' : 'border-slate-100'} p-6 transition flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between text-sm mb-2"><span class="bg-slate-100 px-2 py-1 rounded font-bold text-slate-500">${item.cat}</span><span class="font-extrabold text-emerald-600">${item.cost.toLocaleString()} Ft</span></div>
+                            <h3 class="font-bold text-lg mb-4 text-slate-800 mt-2">${item.title}</h3>
+                        </div>
+                        <button onclick="toggleBudget(${item.id})" class="w-full py-3 rounded-xl font-bold transition ${sel ? 'bg-rose-50 text-rose-600 hover:bg-rose-100' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'}">
+                            ${sel ? 'Kivétel a kosárból' : '+ Hozzáadás a kerethez'}
+                        </button>
+                    </div>`;
+            });
+            const total = selectedBudgetIds.reduce((sum, id) => sum + budgetProjects.find(p=>p.id===id).cost, 0);
+            document.getElementById('budget-total-text').innerText = total.toLocaleString() + ' Ft';
+            document.getElementById('budget-progress-bar').style.width = (total/MAX_BUDGET*100) + '%';
+        }
+        function toggleBudget(id) {
+            if (selectedBudgetIds.includes(id)) {
+                selectedBudgetIds = selectedBudgetIds.filter(i => i !== id);
+            } else {
+                const item = budgetProjects.find(p => p.id === id);
+                const total = selectedBudgetIds.reduce((sum, i) => sum + budgetProjects.find(p=>p.id===i).cost, 0);
+                if (total + item.cost > MAX_BUDGET) return showToast('Kerettúllépés! A maximum 500 000 Ft.', 'error');
+                selectedBudgetIds.push(id);
+            }
+            renderBudget();
+        }
+        function initiateBudgetSubmit() {
+            if(selectedBudgetIds.length === 0) return showToast('Válassz ki legalább egy projektet!', 'error');
+            openModal('modal-pin-auth');
+            document.getElementById('pin-input').focus();
+        }
+        function verifyAndSubmitBudget() {
+            const pin = document.getElementById('pin-input').value.toUpperCase();
+            if(pin.length < 5) return showToast('Érvénytelen formátumú PIN kód.', 'error');
+            closeModal('modal-pin-auth');
+            showToast('PIN elfogadva! Szavazatod rögzítve az adatbázisban.');
+            selectedBudgetIds = [];
+            renderBudget();
+            document.getElementById('pin-input').value = '';
+        }
+
+        // --- 3. KONSZENZUS ---
+        const statements = [
+            { id: 1, text: '"A Pestújhelyi utat egyirányúsítani kéne a hétvégi rendezvények alatt."', author: 'T. Miklós' },
+            { id: 2, text: '"Több zebra kellene az iskola és az óvoda környékére."', author: 'K. Anna' },
+            { id: 3, text: '"Szükség van egy bekerített kutyafuttatóra a kerület ezen részén is."', author: 'B. Judit' }
+        ];
+        let currStmt = 0;
+        let votedStatements = []; 
+        
+        function renderConsensus() {
+            if (currStmt >= statements.length) {
+                document.getElementById('consensus-statement').innerText = 'Minden aktuális állítást értékeltél! Köszönjük.';
+                document.getElementById('consensus-step').innerText = 'Kész';
+                document.getElementById('consensus-author').innerText = '';
+                return;
+            }
+            document.getElementById('consensus-statement').innerText = statements[currStmt].text;
+            document.getElementById('consensus-step').innerText = `Állítás: ${currStmt + 1} / ${statements.length}`;
+            document.getElementById('consensus-author').innerText = 'Beküldte: ' + statements[currStmt].author;
+        }
+        function voteConsensus(vote) {
+            if (currStmt >= statements.length) return;
+            if (votedStatements.includes(statements[currStmt].id)) {
+                return showToast('Erről az eszközről már szavaztak erre az állításra!', 'error');
+            }
+            votedStatements.push(statements[currStmt].id);
+            showToast('Szavazat rögzítve.', 'info');
+            currStmt++;
+            renderConsensus();
+        }
+        function submitNewStatement() {
+            const val = document.getElementById('new-statement-text').value;
+            if(!val) return;
+            closeModal('modal-new-statement');
+            document.getElementById('new-statement-text').value = '';
+            showToast('Sikeres beküldés! Az állítás a moderátorok jóváhagyására vár.', 'info');
+            setTimeout(() => openModal('modal-subscribe'), 1000);
+        }
+
+        // --- 4. TÉRKÉP LOGIKA (Leaflet.js) ---
+        function initMap() {
+            if (pestujhelyMap !== null) {
+                pestujhelyMap.invalidateSize();
+                return;
+            }
+
+            // Koordináták Pestújhely közepére
+            pestujhelyMap = L.map('real-map').setView([47.5427, 19.1356], 15);
+
+            // OpenStreetMap réteg betöltése
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '© OpenStreetMap hozzájárulók'
+            }).addTo(pestujhelyMap);
+
+            // Néhány alapértelmezett (demó) pont Pestújhelyen
+            L.marker([47.5435, 19.1360]).addTo(pestujhelyMap).bindPopup("Szemetes hiányzik a sarokról");
+            L.marker([47.5412, 19.1345]).addTo(pestujhelyMap).bindPopup("Sérült pad a téren");
+
+            // Kattintás eseménykezelő - Új pont hozzáadása
+            pestujhelyMap.on('click', function(e) {
+                const title = prompt('Milyen problémát vagy fejlesztést jelölsz ide?');
+                if(title && title.trim() !== "") {
+                    // Marker elhelyezése a kattintott koordinátán
+                    L.marker(e.latlng).addTo(pestujhelyMap).bindPopup(title + " (Moderálás alatt)").openPopup();
+                    showToast('Jelölés rögzítve! Moderátori jóváhagyás után lesz végleges.', 'info');
+                    
+                    // Késleltetve bedobjuk a feliratkozó ablakot
+                    setTimeout(() => openModal('modal-subscribe'), 1500);
+                }
+            });
+        }
+
+        // --- PROGRESSZÍV ELKÖTELEZŐDÉS ---
+        function submitEmail() {
+            const email = document.getElementById('subscribe-email').value;
+            if(!email.includes('@')) return showToast('Kérjük valós e-mail címet adj meg.', 'error');
+            closeModal('modal-subscribe');
+            showToast('Feliratkozás sikeres! Értesíteni fogunk a fejleményekről.');
+            document.getElementById('subscribe-email').value = '';
+        }
+
+        // Oldal betöltésekor inicializáljuk az adatokat
+        window.onload = () => { 
+            renderBudget(); 
+            renderConsensus(); 
+        };
+    </script>
+</body>
+</html>

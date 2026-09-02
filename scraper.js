@@ -661,7 +661,7 @@ async function runScraper() {
         console.warn("⚠️ A jobs.json sérült vagy üres. Tiszta lappal indulunk.");
     }
 
-    const allNewJobsArray = []; // Ide gyűjtjük az összes sikeres állást
+const finalJobsMap = new Map(); // 🔥 Map-et használunk a DLQ miatti duplikációk elkerülésére
 
     try {
         const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
@@ -772,8 +772,8 @@ async function runScraper() {
                         stats.added++;
                     }
                     
-                    // JSON kimentéshez klónozzuk a memóriaterületről
-                    allNewJobsArray.push(Object.assign({}, cleanJobPoolObj));
+                   // JSON kimentéshez klónozzuk a memóriaterületről (Map-be tesszük az ID alapján)
+                    finalJobsMap.set(cleanJobPoolObj.id, Object.assign({}, cleanJobPoolObj));
                     globalJobPool.release(cleanJobPoolObj); 
                 }
 
@@ -785,6 +785,19 @@ async function runScraper() {
                     stats.failed++; 
                     dlqQueue.push(companyDoc);
                     errorLogs.push({ company: company.name, error: err.message, traceId: runTraceId });
+                    
+                    // 🔥 JAVÍTÁS: Mentsük meg a régi állásokat a Map-be!
+                    const oldJobsForCompany = Array.from(localJobsMap.values())
+                        .filter(j => j.company_id === companyId || j.company_name === company.name);
+                    
+                    oldJobsForCompany.forEach(oldJob => {
+                        // Ha a Replay később sikeres, simán felülírja ezt a kulcsot, így nem lesz duplikáció!
+                        finalJobsMap.set(oldJob.id, oldJob); 
+                    });
+                    
+                    if (oldJobsForCompany.length > 0) {
+                        console.log(`${logPrefix} ♻️ [AUTO-MENTÉS] Visszatöltve ${oldJobsForCompany.length} db korábbi állás a memóriából.`);
+                    }
                 }
                 return false;
             }

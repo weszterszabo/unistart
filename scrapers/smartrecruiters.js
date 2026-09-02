@@ -10,7 +10,8 @@ const HEADERS = {
   "Origin": "https://jobs.smartrecruiters.com"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SmartRecruiters] Phantom-API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ÉS VÉGTELEN CIKLUS ELLEN ON-THE-FLY
@@ -36,9 +37,15 @@ exports.scrape = async function(companyName, baseUrl) {
       const response = await fetch(currentUrl, { headers: HEADERS, signal: controller.signal });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw
       if (!response.ok) {
-        console.error(`   ❌ [SmartRecruiters] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+      }
+
+      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy JSON-t kaptunk-e!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const rawText = await response.text();
@@ -46,8 +53,7 @@ exports.scrape = async function(companyName, baseUrl) {
       try {
           data = JSON.parse(rawText);
       } catch (parseError) {
-          console.error(`   ❌ [SmartRecruiters] Érvénytelen JSON válasz kapott az API-tól.`);
-          break;
+          throw new Error(`Érvénytelen JSON válasz kapott az API-tól.`);
       }
       
       let jobArray = [];
@@ -151,10 +157,18 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [SmartRecruiters] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon (page === 1) megszakad a feldolgozás, dobjuk tovább a hibát az orchestrator felé!
+      // Így a rendszer nem törli ki a korábbi adatokat egy WAF timeout esetén.
+      if (page === 1) {
+          throw err;
+      }
+
       hasMore = false;
     }
   }
 
   console.log(`   ✔️  [SmartRecruiters] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);
-  return allJobs; // Itt már nem kell a .filter(), mert a seenUrls Set garantálja az egyediséget!
+  return allJobs;
 };

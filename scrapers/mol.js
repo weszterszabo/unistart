@@ -12,7 +12,8 @@ const HEADERS = {
   "tzname": "Europe/Budapest"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [MOL Group] Phantom-Taleo API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
@@ -56,9 +57,15 @@ exports.scrape = async function(companyName, baseUrl) {
       });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch lekezelje az első oldalas hibát
       if (!response.ok) {
-        console.error(`   ❌ [MOL] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP hiba! Státusz: ${response.status}`);
+      }
+
+      // 🔥 WAF / CLOUDFLARE / ORACLE VÉDELEM: Megnézzük, hogy tényleg JSON-t kaptunk-e!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!");
       }
 
       const json = await response.json();
@@ -87,7 +94,6 @@ exports.scrape = async function(companyName, baseUrl) {
         let rawLocation = columns[1] || "";
         let location = "Magyarország";
         
-        // Megtartottuk a keménykódolt üzleti logikádat, mert tökéletes!
         if (rawLocation.includes("Budapest") || rawLocation.includes("Dombóvári")) location = "Budapest";
         else if (rawLocation.includes("Tiszaújváros")) location = "Tiszaújváros";
         else if (rawLocation.includes("Százhalombatta")) location = "Százhalombatta";
@@ -169,6 +175,14 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [MOL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha az első oldalon megszakad a letöltés (Timeout vagy Oracle WAF hiba), 
+      // továbbítjuk a hibát, hogy megmentse az orchestrator a régi adatokat!
+      if (page === 1) {
+          throw err;
+      }
+
       hasMore = false;
     }
   }

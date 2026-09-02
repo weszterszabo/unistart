@@ -17,14 +17,15 @@ const stripHtml = (html) => {
     return html.toString().replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// Hozzáadva a knownUrls paraméter kompatibilitás miatt
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   const allJobs = [];
   const seenUrls = new Set();
   
   let currentUrl = baseUrl;
   let hasNextPage = true;
   let pageCount = 1;
-  const MAX_PAGES = 15; // Kicsit megemelve, de továbbra is védi a végtelen ciklust
+  const MAX_PAGES = 15;
 
   console.log(`   🌐 [CUSTOM Omni-Parser] Indulás: ${companyName}`);
 
@@ -34,12 +35,25 @@ exports.scrape = async function(companyName, baseUrl) {
       const response = await fetch(currentUrl, { headers: HEADERS });
       
       if (!response.ok) {
-        console.error(`   ❌ [CUSTOM] HTTP Hiba: ${response.status} - ${currentUrl}`);
-        break; // Ha 404 vagy 403, leállunk a lapozással
+        // HTTP Hiba (pl. 403 Forbidden, 404, 500)
+        throw new Error(`HTTP Hiba: ${response.status} - ${currentUrl}`);
       }
 
       const html = await response.text();
       const $ = cheerio.load(html);
+
+      // 🔥 WAF / CLOUDFLARE CAPTCHA ELLENŐRZÉS 🔥
+      // Megnézzük, hogy az oldal címe vagy tartalma gyanús-e.
+      const pageTitle = $('title').text().toLowerCase();
+      if (
+          pageTitle.includes("just a moment") || 
+          pageTitle.includes("attention required") ||
+          pageTitle.includes("cloudflare") ||
+          html.includes('id="cf-wrapper"') ||
+          html.includes('data-ray')
+      ) {
+          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve az oldalon!");
+      }
       
       let jobsFoundOnPage = 0;
 
@@ -47,13 +61,11 @@ exports.scrape = async function(companyName, baseUrl) {
       $('script[type="application/ld+json"]').each((i, el) => {
         try {
           const rawContent = $(el).html();
-          // Néha a cégek rosszul formázzák a JSON-t, ezen segít egy kis try-catch
           const data = JSON.parse(rawContent.replace(/[\u0000-\u0019]+/g,"")); 
           const items = Array.isArray(data) ? data : (data["@graph"] || [data]);
           
           items.forEach((item) => {
             if (item["@type"] === "JobPosting") {
-              // URL normalizálása
               const jobUrl = item.url ? (item.url.startsWith('http') ? item.url : new URL(item.url, currentUrl).href) : currentUrl;
               
               if (!seenUrls.has(jobUrl)) {
@@ -62,7 +74,6 @@ exports.scrape = async function(companyName, baseUrl) {
                 const title = item.title || "Névtelen pozíció";
                 
                 // 🕵️ MÉLY-ADATBÁNYÁSZAT AZ NLP SZÁMÁRA
-                // Összeszedjük a leírást, elvárásokat, hogy az agy tudjon miből dolgozni
                 const rawDescription = stripHtml(`
                     ${item.description || ""} 
                     ${item.qualifications || ""} 
@@ -73,11 +84,10 @@ exports.scrape = async function(companyName, baseUrl) {
                 // 🧠 ELKÜLDJÜK AZ ADATOKAT AZ NLP AGYNAK
                 const analysis = analyzer.analyzeJob(title, rawDescription);
 
-                // 🛡️ KAPUŐR: Csak a diák/junior/pályakezdő állásokat engedjük át!
+                // 🛡️ KAPUŐR
                 if (analysis !== null) {
                     jobsFoundOnPage++;
 
-                    // Biztonságos helyszín kinyerés a kusza Schema JSON-ből
                     let location = "Magyarország";
                     if (item.jobLocation) {
                         const loc = Array.isArray(item.jobLocation) ? item.jobLocation[0] : item.jobLocation;
@@ -87,7 +97,6 @@ exports.scrape = async function(companyName, baseUrl) {
                         }
                     }
 
-                    // V17 / V16 Kompatibilis adatkinyerés az elemzésből
                     const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
                     const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
                     const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
@@ -100,12 +109,9 @@ exports.scrape = async function(companyName, baseUrl) {
                       apply_url: jobUrl,
                       location: location.replace(/\s+/g, ' ').trim(),
                       date_posted: item.datePosted || new Date().toISOString(),
-                      
                       experience_level: jobNature,
                       subsidiary: item.hiringOrganization?.name || companyName,
                       employment_type: Array.isArray(item.employmentType) ? item.employmentType.join(", ") : (item.employmentType || "Teljes munkaidő"),
-                      
-                      // 🌟 SZUPERERŐK:
                       faculty: faculty,
                       work_style: workStyle,
                       tags: tags
@@ -115,11 +121,11 @@ exports.scrape = async function(companyName, baseUrl) {
             }
           });
         } catch (e) {
-            // Csendes hiba, ha egy specifikus LD+JSON blokk hibás, megyünk a következőre
+            // Csendes hiba ezen a konkrét JSON blokkon
         }
       });
 
-      // 🔄 3. LAPOZÁS SZIMULÁLÁSA (Okosabb URL és Gomb felismerés)
+      // 🔄 3. LAPOZÁS SZIMULÁLÁSA
       let nextUrl = "";
       $('a').each((i, el) => {
         const text = $(el).text().toLowerCase().trim();
@@ -127,11 +133,9 @@ exports.scrape = async function(companyName, baseUrl) {
         const rel = $(el).attr('rel');
         const ariaLabel = ($(el).attr('aria-label') || "").toLowerCase();
         
-        // Kibővített felismerés: rel="next", aria-label="next page", text matches
         if (href && href !== "#" && !href.startsWith("javascript:")) {
             if (rel === 'next' || text === 'next' || text === 'következő' || text === 'tovább' || text === '>' || text === '»' || ariaLabel.includes('next') || ariaLabel.includes('következő')) {
                 const candidateUrl = href.startsWith('http') ? href : new URL(href, currentUrl).href;
-                // Védjük magunkat a végtelen ciklustól (ne mutasson ugyanoda a gomb)
                 if (candidateUrl.split('#')[0] !== currentUrl.split('#')[0]) {
                     nextUrl = candidateUrl;
                 }
@@ -144,8 +148,6 @@ exports.scrape = async function(companyName, baseUrl) {
         hasNextPage = false;
         console.log(`   ⏹️ [CUSTOM] Nincs több lapozó gomb. Vége.`);
       } else if (jobsFoundOnPage === 0) {
-        // Ha van lapozó gomb, de egyetlen JUNIOR/DIÁK állást sem találtunk az oldalon...
-        // Érdemes még 1-2 oldalt megnézni (hátha később vannak), de ha egyáltalán nincs JobPosting, leállunk.
         if (allJobs.length === 0 && pageCount > 2) {
              console.log(`   ⏹️ [CUSTOM] 3 oldal óta zéró releváns állás. Felesleges tovább lapozni.`);
              hasNextPage = false;
@@ -155,15 +157,22 @@ exports.scrape = async function(companyName, baseUrl) {
             await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
         }
       } else {
-        // Találtunk állást és van következő gomb -> Lapozunk
         currentUrl = nextUrl;
         pageCount++;
-        // Véletlenszerű Jitter (késleltetés) az Anti-Bot védelem miatt (800ms - 1300ms)
         await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
       }
 
     } catch (err) {
       console.error(`   ❌ [CUSTOM] Hiba az oldal olvasásakor:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon (pageCount === 1) hiba történik (blokkolás, rossz URL, 404),
+      // továbbdobjuk a hibát az orchestratornak, hogy megmentse a korábbi állásokat.
+      if (pageCount === 1) {
+        throw err;
+      }
+      
+      // Ha már a második vagy sokadik oldalnál kapunk hibát, beérjük annyival, amit eddig leszedtünk.
       hasNextPage = false;
     }
   }

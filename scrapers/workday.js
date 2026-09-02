@@ -10,7 +10,8 @@ const HEADERS = {
   "Origin": "https://myworkdayjobs.com"
 };
 
-exports.scrape = async function(companyName, baseUrl) {
+// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
+exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [Workday] Phantom-API letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set(); // 🛑 VÉDELEM A DUPLIKÁCIÓK ELLEN
@@ -52,11 +53,17 @@ exports.scrape = async function(companyName, baseUrl) {
       });
       clearTimeout(timeoutId);
 
+      // 🔥 JAVÍTÁS: break helyett throw, hogy a catch lekezelje az első oldalas hibát!
       if (!response.ok) {
-        console.error(`   ❌ [Workday] HTTP Hiba a letöltés során (Status: ${response.status})`);
-        break;
+        throw new Error(`HTTP Hiba a letöltés során (Status: ${response.status})`);
       }
       
+      // 🔥 WAF / CLOUDFLARE VÉDELEM: Megnézzük, hogy JSON-t kaptunk-e!
+      const contentType = response.headers.get("content-type") || "";
+      if (contentType.includes("text/html")) {
+          throw new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!");
+      }
+
       const data = await response.json();
       const jobs = data.jobPostings || [];
       
@@ -83,7 +90,6 @@ exports.scrape = async function(companyName, baseUrl) {
         const location = job.locationsText || "Magyarország";
 
         // 🕵️ MÉLY-ADATBÁNYÁSZAT (Kibővített JSON Extrakció)
-        // Sok Workday verzió visszaadja a kategóriát vagy a részleget is
         const jobCategory = job.jobFamilyGroup || job.jobCategory || "";
         const workerSubType = job.workerSubType || "";
         const postedOn = job.postedOn || ""; // Workday gyakran stringet ad, pl: "Posted 2 Days Ago"
@@ -107,7 +113,7 @@ exports.scrape = async function(companyName, baseUrl) {
             let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
             if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
 
-            // Workday dátum normalizálás (Ha "Posted 2 days ago" a szöveg, a mai napot mentjük)
+            // Workday dátum normalizálás
             let finalDate = new Date().toISOString();
             if (postedOn && !postedOn.includes("Ago") && !postedOn.includes("Today") && !isNaN(Date.parse(postedOn))) {
                 finalDate = new Date(postedOn).toISOString();
@@ -121,7 +127,7 @@ exports.scrape = async function(companyName, baseUrl) {
               date_posted: finalDate,
               
               experience_level: jobNature, 
-              subsidiary: jobCategory || companyName, // Részleg híján használjuk a Család/Kategóriát, vagy a Cégnév fallback-et
+              subsidiary: jobCategory || companyName, 
               employment_type: timeType,
               
               // 🌟 A SZUPERERŐK:
@@ -148,6 +154,14 @@ exports.scrape = async function(companyName, baseUrl) {
 
     } catch (err) {
       console.error(`   ❌ [Workday] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
+      
+      // 🔥 KRITIKUS JAVÍTÁS:
+      // Ha a legelső oldalon megszakad a feldolgozás, dobjuk tovább a hibát az orchestrator felé!
+      // Ezzel megóvjuk az adatbázisban lévő állásokat a lenullázástól.
+      if (page === 1) {
+          throw err;
+      }
+
       hasMore = false;
     }
   }

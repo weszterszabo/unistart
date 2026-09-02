@@ -13,34 +13,38 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   const allJobs = [];
   const seenUrls = new Set(); 
   
-  // 🔥 A ZSENIÁLIS TRÜKK: Nincs lapozás! Kérünk 800 állást egyszerre (az egész adatbázist).
+  // 🔥 A ZSENIÁLIS TRÜKK: Nincs lapozás! Kérünk 800 állást egyszerre.
   const queryObj = { page: 1, resultsPerPage: 800, sortField: "", sortOrder: "asc" };
   const encodedQuery = encodeURIComponent(JSON.stringify(queryObj));
   const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
   try {
-    // A Node 20+ beépített, legtisztább időtúllépés-kezelője: AbortSignal.timeout
     const response = await fetch(apiUrl, { 
         method: "GET", 
         headers: HEADERS,
         signal: AbortSignal.timeout(15000) 
     });
 
-    if (!response.ok) {
-        throw new Error(`HTTP hiba: ${response.status}`);
-    }
-
+    if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
+    
     const contentType = response.headers.get("content-type") || "";
-    if (contentType.includes("text/html")) {
-        throw new Error("WAF (Cloudflare) HTML blokkolás!");
-    }
+    if (contentType.includes("text/html")) throw new Error("WAF (Cloudflare) HTML blokkolás!");
 
     const json = await response.json();
     const jobsList = json.jobs || [];
 
     console.log(`   ✅ [LIDL] Szerver válaszolt: ${jobsList.length} db állás érkezett egyetlen kérésből!`);
 
-    for (const job of jobsList) {
+    // 🔥 CPU FAGYÁSVÉDELEM: Folyamatjelző és Event Loop lélegzetvétel
+    for (let i = 0; i < jobsList.length; i++) {
+        const job = jobsList[i];
+        
+        // Minden 25. állásnál adunk egy kis pihenőt a processzornak, és kiírjuk, hol tartunk!
+        if (i > 0 && i % 25 === 0) {
+            console.log(`   ⏳ [LIDL] NLP Elemzés folyamatban... (${i} / ${jobsList.length} állás feldolgozva)`);
+            await new Promise(r => setTimeout(r, 15)); // Lélegzetvétel a CPU-nak
+        }
+
         const title = job.title || "Névtelen pozíció";
         
         let jobUrl = job.jobDetailUrl || job.url || "";
@@ -54,12 +58,16 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         const department = job.employmentArea || job.jobCategory || "";
         const type = job.contractType || job.workingHours || "Teljes munkaidő";
         
-        const rawDescription = [
+        // 🔥 REGEX/MEMÓRIA VÉDELEM: Max 3500 karaktert adunk át, nehogy végtelen hurokba fusson a string tisztítás!
+        let rawDescription = [
             experience, department, type,
             job.description, job.profile, job.tasks, job.requirements, job.benefits
-        ].filter(Boolean).join(" ").replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
+        ].filter(Boolean).join(" ");
+        
+        rawDescription = rawDescription.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 3500);
 
-        const analysis = analyzer.analyzeJob(title, rawDescription);
+        // (Az await kulcsszó biztosítja, hogy ha az analyzer véletlenül async módon futna a háttérben, bevárja)
+        const analysis = await analyzer.analyzeJob(title, rawDescription);
 
         if (analysis !== null) {
             const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -96,7 +104,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
   } catch (err) {
     console.error(`   ❌ [LIDL] Hálózat hiba:`, err.message);
-    throw err; // Dobjuk tovább az Orchestratornak, ahogy eddig
+    throw err;
   }
 
   console.log(`   ✔️  [LIDL] Siker: A szűrőn fennmaradt ${allJobs.length} db DIÁK/JUNIOR állás!`);

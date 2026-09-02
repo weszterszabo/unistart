@@ -4,7 +4,6 @@ const zlib = require("zlib");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🛡️ Stealth Headers: Valódi böngésző szimulálása
 const HEADERS = {
   "Accept": "application/json, text/plain, */*",
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -12,19 +11,13 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-// 🛡️ ABSZOLÚT WATCHDOG FETCH (Tarpit-gyilkos megoldás)
+// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH (Nincs több néma Node.js összeomlás!)
 function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
     return new Promise((resolve, reject) => {
         let req;
+        let resStream;
+        let unzipper;
         let isDone = false;
-
-        // 🔥 AZ ABSZOLÚT WATCHDOG: Nem érdekli a hálózati forgalom. Ha letelik az idő, gyilkol.
-        const watchdog = setTimeout(() => {
-            if (isDone) return;
-            isDone = true;
-            if (req && !req.destroyed) req.destroy(); // ✂️ Kábel elvágása
-            reject(new Error(`Kátránygödör (Tarpit) védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
-        }, timeoutMs);
 
         const safeResolve = (data) => {
             if (isDone) return;
@@ -37,23 +30,32 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
             if (isDone) return;
             isDone = true;
             clearTimeout(watchdog);
+            // Minden adatfolyamot biztonságosan lezárunk
             if (req && !req.destroyed) req.destroy();
+            if (resStream && !resStream.destroyed) resStream.destroy();
+            if (unzipper && !unzipper.destroyed) unzipper.destroy();
             reject(err);
         };
+
+        const watchdog = setTimeout(() => {
+            safeReject(new Error(`Kátránygödör védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
+        }, timeoutMs);
 
         try {
             const parsedUrl = new URL(urlStr);
             const client = parsedUrl.protocol === 'https:' ? https : http;
             
-            const reqOptions = {
+            req = client.request({
                 hostname: parsedUrl.hostname,
                 port: parsedUrl.port,
                 path: parsedUrl.pathname + parsedUrl.search,
                 method: options.method || 'GET',
                 headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers }
-            };
+            }, (res) => {
+                resStream = res;
+                // 🔥 KULCSFONTOSSÁGÚ: Elkapjuk a megszakítás okozta sokk-hibát!
+                res.on('error', (e) => safeReject(new Error(`Response hiba: ${e.message}`)));
 
-            req = client.request(reqOptions, (res) => {
                 if (res.statusCode < 200 || res.statusCode >= 300) {
                     return safeReject(new Error(`HTTP hiba: ${res.statusCode}`));
                 }
@@ -65,16 +67,20 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
 
                 let stream = res;
                 const encoding = (res.headers['content-encoding'] || "").toLowerCase();
-                if (encoding === 'gzip') stream = res.pipe(zlib.createGunzip());
-                else if (encoding === 'deflate') stream = res.pipe(zlib.createInflate());
+                if (encoding === 'gzip' || encoding === 'deflate') {
+                    unzipper = encoding === 'gzip' ? zlib.createGunzip() : zlib.createInflate();
+                    // 🔥 Szintén elkapjuk a kitömörítő összeomlását
+                    unzipper.on('error', (e) => safeReject(new Error(`Zlib hiba: ${e.message}`)));
+                    stream = res.pipe(unzipper);
+                }
 
                 let data = '';
                 stream.on('data', (chunk) => { data += chunk.toString('utf8'); });
                 stream.on('end', () => {
                     try { safeResolve(type === 'json' ? JSON.parse(data) : data); } 
-                    catch (e) { safeReject(new Error("Érvénytelen válasz formátum (Parse hiba)")); }
+                    catch (e) { safeReject(new Error("Parse hiba")); }
                 });
-                stream.on('error', (e) => safeReject(new Error(`Adatfolyam hiba: ${e.message}`)));
+                stream.on('error', (e) => safeReject(new Error(`Stream hiba: ${e.message}`)));
             });
 
             req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
@@ -87,7 +93,6 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
     });
 }
 
-// 🔥 JAVÍTÁS: Hozzáadva a knownUrls = [] paraméter
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [LIDL] Phantom-API letöltése indul...`);
   const allJobs = [];
@@ -105,15 +110,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
     try {
-      // 🚀 WATCHDOG HÍVÁS (12 mp)
       const json = await fetchSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000, 'json');
 
       const jobsList = json.jobs || [];
-
-      if (jobsList.length === 0) {
-        hasMore = false;
-        break;
-      }
+      if (jobsList.length === 0) { hasMore = false; break; }
 
       let newJobsCount = 0;
 
@@ -172,11 +172,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         }
       }
 
-      if (jobsList.length < PAGE_SIZE) {
-        console.log(`   ⏹️ [LIDL] Utolsó oldal (${jobsList.length} db), vége a lapozásnak!`);
-        hasMore = false;
-      } else if (newJobsCount === 0) {
-        console.log(`   ⏹️ [LIDL] Csak ismétlődő állások érkeztek, leállunk!`);
+      if (jobsList.length < PAGE_SIZE || newJobsCount === 0) {
+        console.log(`   ⏹️ [LIDL] Utolsó oldal (${jobsList.length} db).`);
         hasMore = false;
       } else {
         page++;
@@ -184,9 +181,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       }
 
     } catch (err) {
-      console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
-      
-      // Ha a 2. oldalon fagy be (mint nálad), akkor befejezi a lapozást és megtartja a 100 állást az 1. oldalról!
+      console.error(`   ❌ [LIDL] Hálózat hiba a ${page}. oldalon:`, err.message);
       if (page === 1) throw err;
       hasMore = false;
     }

@@ -1,4 +1,3 @@
-const cheerio = require("cheerio");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
@@ -11,7 +10,7 @@ const HEADERS = {
 };
 
 // ---------------- IDE KERÜL AZ UNIVERZÁLIS FÜGGVÉNY ----------------
-// 🛡️ UNIVERZÁLIS GOLYÓÁLLÓ FETCH (JSON és TEXT feldolgozása Kátránygödör védelemmel)
+// 🛡️ UNIVERZÁLIS GOLYÓÁLLÓ FETCH (Node.js Crash védelemmel!)
 async function fetchSafe(url, options = {}, timeoutMs = 12000, type = 'json') {
     const controller = new AbortController();
     options.signal = controller.signal;
@@ -36,6 +35,9 @@ async function fetchSafe(url, options = {}, timeoutMs = 12000, type = 'json') {
             
             return type === 'json' ? await res.json() : await res.text();
         });
+
+        // 🔥 KRITIKUS JAVÍTÁS: Csendben lenyeljük az elárvult Abort hibát, hogy a Node.js ne omoljon össze!
+        networkTask.catch(() => {});
 
         const data = await Promise.race([networkTask, timeoutPromise]);
         clearTimeout(timeoutId);
@@ -140,7 +142,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         hasMore = false;
       } else {
         page++;
-        await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+        // 🔥 WAF VÉDELEM JAVÍTÁSA: Megemeltük a várakozást 2-3 másodpercre, hogy ne tűnjön botnak a 2. oldal betöltése!
+        await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
       }
 
     } catch (err) {

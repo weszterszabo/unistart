@@ -12,10 +12,35 @@ const HEADERS = {
   "Referer": "https://jobs.lidl.hu/kereses-es-jelentkezes/allasok"
 };
 
-// 🛡️ UNIVERZÁLIS GOLYÓÁLLÓ NATÍV HTTPS HÍVÁS (Nincs többé fetch és undici összeomlás!)
+// 🛡️ ABSZOLÚT WATCHDOG FETCH (Tarpit-gyilkos megoldás)
 function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
     return new Promise((resolve, reject) => {
         let req;
+        let isDone = false;
+
+        // 🔥 AZ ABSZOLÚT WATCHDOG: Nem érdekli a hálózati forgalom. Ha letelik az idő, gyilkol.
+        const watchdog = setTimeout(() => {
+            if (isDone) return;
+            isDone = true;
+            if (req && !req.destroyed) req.destroy(); // ✂️ Kábel elvágása
+            reject(new Error(`Kátránygödör (Tarpit) védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
+        }, timeoutMs);
+
+        const safeResolve = (data) => {
+            if (isDone) return;
+            isDone = true;
+            clearTimeout(watchdog);
+            resolve(data);
+        };
+
+        const safeReject = (err) => {
+            if (isDone) return;
+            isDone = true;
+            clearTimeout(watchdog);
+            if (req && !req.destroyed) req.destroy();
+            reject(err);
+        };
+
         try {
             const parsedUrl = new URL(urlStr);
             const client = parsedUrl.protocol === 'https:' ? https : http;
@@ -25,23 +50,19 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
                 port: parsedUrl.port,
                 path: parsedUrl.pathname + parsedUrl.search,
                 method: options.method || 'GET',
-                headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers },
-                timeout: timeoutMs // 🔥 Fizikai TCP socket időtúllépés
+                headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers }
             };
 
             req = client.request(reqOptions, (res) => {
                 if (res.statusCode < 200 || res.statusCode >= 300) {
-                    req.destroy();
-                    return reject(new Error(`HTTP hiba: ${res.statusCode}`));
+                    return safeReject(new Error(`HTTP hiba: ${res.statusCode}`));
                 }
 
                 const contentType = (res.headers['content-type'] || "").toLowerCase();
                 if (contentType.includes("text/html") && type === 'json') {
-                    req.destroy();
-                    return reject(new Error("WAF/Captcha blokkolás érzékelve a JSON végponton!"));
+                    return safeReject(new Error("WAF/Captcha blokkolás érzékelve a JSON végponton!"));
                 }
 
-                // Tömörítés kezelése (Gzip/Deflate)
                 let stream = res;
                 const encoding = (res.headers['content-encoding'] || "").toLowerCase();
                 if (encoding === 'gzip') stream = res.pipe(zlib.createGunzip());
@@ -50,23 +71,18 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 12000, type = 'json') {
                 let data = '';
                 stream.on('data', (chunk) => { data += chunk.toString('utf8'); });
                 stream.on('end', () => {
-                    try { resolve(type === 'json' ? JSON.parse(data) : data); } 
-                    catch (e) { reject(new Error("Érvénytelen válasz formátum (Parse hiba)")); }
+                    try { safeResolve(type === 'json' ? JSON.parse(data) : data); } 
+                    catch (e) { safeReject(new Error("Érvénytelen válasz formátum (Parse hiba)")); }
                 });
-                stream.on('error', (e) => reject(new Error(`Adatfolyam hiba: ${e.message}`)));
+                stream.on('error', (e) => safeReject(new Error(`Adatfolyam hiba: ${e.message}`)));
             });
 
-            req.on('error', (e) => reject(new Error(`Hálózati hiba: ${e.message}`)));
-            req.on('timeout', () => {
-                req.destroy(); // ✂️ Fizikailag bezárjuk a TCP kapcsolatot
-                reject(new Error(`Hálózati időtúllépés (${timeoutMs}ms)`));
-            });
-
+            req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
+            
             if (options.body) req.write(options.body);
             req.end();
         } catch (err) {
-            if (req) req.destroy();
-            reject(err);
+            safeReject(err);
         }
     });
 }
@@ -89,7 +105,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const apiUrl = `https://jobs.lidl.hu/api/v1/search?general=${encodedQuery}`;
 
     try {
-      // 🚀 NATÍV HÍVÁS (JSON mód)
+      // 🚀 WATCHDOG HÍVÁS (12 mp)
       const json = await fetchSafe(apiUrl, { method: "GET", headers: HEADERS }, 12000, 'json');
 
       const jobsList = json.jobs || [];
@@ -164,13 +180,14 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         hasMore = false;
       } else {
         page++;
-        // 🔥 WAF VÉDELEM: Megemeltük a várakozást 2 másodpercre
         await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
       }
 
     } catch (err) {
       console.error(`   ❌ [LIDL] Hálózat hiba vagy időtúllépés a ${page}. oldalon:`, err.message);
-      if (page === 1) throw err; // Auto-Save
+      
+      // Ha a 2. oldalon fagy be (mint nálad), akkor befejezi a lapozást és megtartja a 100 állást az 1. oldalról!
+      if (page === 1) throw err;
       hasMore = false;
     }
   }

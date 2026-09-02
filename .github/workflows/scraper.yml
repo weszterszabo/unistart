@@ -37,14 +37,14 @@ jobs:
         # Ha van package.json, ez a legbiztonságosabb telepítés
         run: npm ci 
 
-      - name: 🚀 Run UniStart Orchestrator
+      - name: 🚀 Run UniStart scraper
         env:
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           TZ: 'Europe/Budapest'
-        # A fő vezérlő fájl futtatása (a kódod alapján orchestrator.js-nek hívtuk)
-        run: node orchestrator.js
+        # A fő vezérlő fájl futtatása (a kódod alapján scraper.js-nek hívtuk)
+        run: node scraper.js
 
       - name: 💾 Friss jobs.json feltöltése a GitHubra
         run: |

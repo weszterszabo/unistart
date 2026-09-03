@@ -42,7 +42,7 @@ const SYSTEM_SECRET = process.env.SYSTEM_SIGNING_SECRET || crypto.randomBytes(32
 const OUTPUT_JSON_PATH = path.join(process.cwd(), "jobs.json"); 
 
 if (!fs.existsSync(OUTPUT_JSON_PATH)) {
-    console.log("⚠️ A jobs.json nem létezik a gyökérkönyvtárban. Létrehozok egy üres [] keretet...");
+    console.log("⚠️ A jobs.json nem létezik. Létrehozok egy üres [] keretet...");
     fs.writeFileSync(OUTPUT_JSON_PATH, "[]", "utf-8");
 }
 
@@ -52,21 +52,16 @@ if (!fs.existsSync(OUTPUT_JSON_PATH)) {
 
 class TelemetryRegistry {
     constructor() { 
-        this.names = [];
-        this.nameToIndex = new Map();
-        this.buffer = new Float64Array(100 * 4); 
-        this.currentIndex = 0;
+        this.names = []; this.nameToIndex = new Map();
+        this.buffer = new Float64Array(100 * 4); this.currentIndex = 0;
     }
     record(operation, durationMs) {
         let idx = this.nameToIndex.get(operation);
         if (idx === undefined) {
-            idx = this.currentIndex++;
-            this.nameToIndex.set(operation, idx);
-            this.names[idx] = operation;
+            idx = this.currentIndex++; this.nameToIndex.set(operation, idx); this.names[idx] = operation;
         }
         const offset = idx << 2;
-        this.buffer[offset]++; 
-        this.buffer[offset + 1] += durationMs; 
+        this.buffer[offset]++; this.buffer[offset + 1] += durationMs; 
         if (durationMs > this.buffer[offset + 2]) this.buffer[offset + 2] = durationMs; 
         this.buffer[offset + 3] = this.buffer[offset + 1] / this.buffer[offset]; 
     }
@@ -74,38 +69,22 @@ class TelemetryRegistry {
         const report = {};
         for (let i = 0; i < this.currentIndex; i++) {
             const offset = i << 2;
-            report[this.names[i]] = {
-                count: this.buffer[offset],
-                totalTime: this.buffer[offset + 1],
-                maxTime: this.buffer[offset + 2],
-                avgTime: this.buffer[offset + 3]
-            };
+            report[this.names[i]] = { count: this.buffer[offset], totalTime: this.buffer[offset + 1], maxTime: this.buffer[offset + 2], avgTime: this.buffer[offset + 3] };
         }
         return report;
     }
 }
 const sysTelemetry = new TelemetryRegistry();
-
-const measureTelemtry = async (operationName, asyncFn) => {
-    const start = performance.now();
-    try { return await asyncFn(); } 
-    finally { sysTelemetry.record(operationName, performance.now() - start); }
-};
+const measureTelemtry = async (operationName, asyncFn) => { const start = performance.now(); try { return await asyncFn(); } finally { sysTelemetry.record(operationName, performance.now() - start); } };
 
 class EventLoopMonitor {
-    constructor() { 
-        this.lag = 0; 
-        this.emaLag = 0;
-        this.alpha = 0.2; 
-        this.startMonitoring(); 
-    }
+    constructor() { this.lag = 0; this.emaLag = 0; this.alpha = 0.2; this.startMonitoring(); }
     startMonitoring() {
         setInterval(() => {
             const startNanos = process.hrtime.bigint();
             process.nextTick(() => { 
                 const lagNanos = process.hrtime.bigint() - startNanos;
-                this.lag = Number(lagNanos) / 1e6; 
-                this.emaLag = (this.alpha * this.lag) + ((1 - this.alpha) * this.emaLag);
+                this.lag = Number(lagNanos) / 1e6; this.emaLag = (this.alpha * this.lag) + ((1 - this.alpha) * this.emaLag);
             });
         }, 300).unref(); 
     }
@@ -115,33 +94,20 @@ class EventLoopMonitor {
             const sleepTime = Math.min(1000, Math.round(this.emaLag * 4));
             console.warn(`⏳ [CPU Throttling] EMA Event Loop Lag: ${this.emaLag.toFixed(2)}ms. Lassítás (${sleepTime}ms)...`);
             await new Promise(res => setTimeout(res, sleepTime)); 
-        } else {
-            await new Promise(res => setTimeout(res, 0)); 
-        }
+        } else { await new Promise(res => setTimeout(res, 0)); }
     }
 }
 const sysMonitor = new EventLoopMonitor();
 
 class MemoryVelocityPredictor {
-    constructor() { 
-        this.lastHeap = process.memoryUsage().heapUsed; 
-        this.lastCheck = performance.now();
-    }
+    constructor() { this.lastHeap = process.memoryUsage().heapUsed; this.lastCheck = performance.now(); }
     checkVelocity(workerId) {
-        const currentHeap = process.memoryUsage().heapUsed;
-        const now = performance.now();
-        const timeDelta = (now - this.lastCheck) / 1000; 
-        const delta = currentHeap - this.lastHeap;
-        this.lastHeap = currentHeap;
-        this.lastCheck = now;
-
-        if (timeDelta > 0) {
-            const mbPerSec = (delta / 1024 / 1024) / timeDelta;
-            if (mbPerSec > 40) { 
-                console.warn(`[W${workerId}] 📈 Veszélyes memórianövekedési (+${mbPerSec.toFixed(1)} MB/s)! Preventív GC...`);
-                if (global.gc) global.gc();
-                return true;
-            }
+        const currentHeap = process.memoryUsage().heapUsed; const now = performance.now();
+        const timeDelta = (now - this.lastCheck) / 1000; const delta = currentHeap - this.lastHeap;
+        this.lastHeap = currentHeap; this.lastCheck = now;
+        if (timeDelta > 0 && (delta / 1024 / 1024) / timeDelta > 40) { 
+            console.warn(`[W${workerId}] 📈 Veszélyes memórianövekedés! Preventív GC...`);
+            if (global.gc) global.gc(); return true;
         }
         return false;
     }
@@ -150,29 +116,19 @@ const memPredictor = new MemoryVelocityPredictor();
 
 class ParallelRingBufferQueue {
     constructor(powerOfTwo = 4096) {
-        if ((powerOfTwo & (powerOfTwo - 1)) !== 0) throw new Error("Capacity must be a power of 2");
-        this.capacity = powerOfTwo;
-        this.mask = powerOfTwo - 1; 
-        this.resolveBuffer = new Array(powerOfTwo);
-        this.tokenBuffer = new Int32Array(powerOfTwo); 
-        this.head = 0;
-        this.tail = 0;
-        this.size = 0;
+        this.capacity = powerOfTwo; this.mask = powerOfTwo - 1; 
+        this.resolveBuffer = new Array(powerOfTwo); this.tokenBuffer = new Int32Array(powerOfTwo); 
+        this.head = 0; this.tail = 0; this.size = 0;
     }
     enqueue(resolveFn, tokensNeeded) {
         if (this.size === this.capacity) throw new Error("RingBuffer Overflow");
-        this.resolveBuffer[this.tail] = resolveFn;
-        this.tokenBuffer[this.tail] = tokensNeeded;
-        this.tail = (this.tail + 1) & this.mask; 
-        this.size++;
+        this.resolveBuffer[this.tail] = resolveFn; this.tokenBuffer[this.tail] = tokensNeeded;
+        this.tail = (this.tail + 1) & this.mask; this.size++;
     }
     dequeueResolve() {
         if (this.size === 0) return null;
-        const res = this.resolveBuffer[this.head];
-        this.resolveBuffer[this.head] = null; 
-        this.head = (this.head + 1) & this.mask; 
-        this.size--;
-        return res;
+        const res = this.resolveBuffer[this.head]; this.resolveBuffer[this.head] = null; 
+        this.head = (this.head + 1) & this.mask; this.size--; return res;
     }
     peekTokens() { return this.size === 0 ? null : this.tokenBuffer[this.head]; }
     get length() { return this.size; }
@@ -180,90 +136,53 @@ class ParallelRingBufferQueue {
 
 class MultiDomainRateLimiter {
     constructor(defaultCapacity = 10, defaultFillRate = 3) {
-        this.defaultCapacity = defaultCapacity;
-        this.defaultFillRate = defaultFillRate;
-        this.buckets = new Map();
-        this._tickActive = false; 
+        this.defaultCapacity = defaultCapacity; this.defaultFillRate = defaultFillRate;
+        this.buckets = new Map(); this._tickActive = false; 
     }
-
     _getBucket(domain) {
-        if (!this.buckets.has(domain)) {
-            this.buckets.set(domain, {
-                tokens: this.defaultCapacity,
-                lastRefill: performance.now(),
-                waitQueue: new ParallelRingBufferQueue(4096) 
-            });
-        }
+        if (!this.buckets.has(domain)) this.buckets.set(domain, { tokens: this.defaultCapacity, lastRefill: performance.now(), waitQueue: new ParallelRingBufferQueue(4096) });
         return this.buckets.get(domain);
     }
-
     _processMicroTasks() {
         if (this._tickActive) return;
         this._tickActive = true;
-        
         const tick = () => {
-            let activeQueues = 0;
-            const now = performance.now();
-
+            let activeQueues = 0; const now = performance.now();
             for (const [domain, bucket] of this.buckets.entries()) {
                 if (bucket.waitQueue.length === 0) continue;
                 activeQueues++;
-
                 const elapsed = (now - bucket.lastRefill) / 1000;
                 bucket.tokens = Math.min(this.defaultCapacity, bucket.tokens + elapsed * this.defaultFillRate);
                 bucket.lastRefill = now;
-
                 const nextTokens = bucket.waitQueue.peekTokens();
                 if (nextTokens !== null && bucket.tokens >= nextTokens) {
-                    const resolveFn = bucket.waitQueue.dequeueResolve(); 
-                    bucket.tokens -= nextTokens;
-                    resolveFn();
+                    const resolveFn = bucket.waitQueue.dequeueResolve(); bucket.tokens -= nextTokens; resolveFn();
                 }
             }
-
-            if (activeQueues > 0) setTimeout(tick, 50);
-            else this._tickActive = false;
+            if (activeQueues > 0) setTimeout(tick, 50); else this._tickActive = false;
         };
         setTimeout(tick, 50);
     }
-
     async consume(domain = "global", tokensNeeded = 1) {
-        const bucket = this._getBucket(domain);
-        const now = performance.now();
+        const bucket = this._getBucket(domain); const now = performance.now();
         const elapsed = (now - bucket.lastRefill) / 1000;
         bucket.tokens = Math.min(this.defaultCapacity, bucket.tokens + elapsed * this.defaultFillRate);
         bucket.lastRefill = now;
-
-        if (bucket.tokens >= tokensNeeded) {
-            bucket.tokens -= tokensNeeded;
-            return;
-        }
-
-        return new Promise((resolve) => {
-            bucket.waitQueue.enqueue(resolve, tokensNeeded); 
-            this._processMicroTasks(); 
-        });
+        if (bucket.tokens >= tokensNeeded) { bucket.tokens -= tokensNeeded; return; }
+        return new Promise((resolve) => { bucket.waitQueue.enqueue(resolve, tokensNeeded); this._processMicroTasks(); });
     }
 }
 const globalRateLimiter = new MultiDomainRateLimiter(12, 4);
 
 class FirestoreBatchManager {
-    constructor(db, limit = 450) { 
-        this.db = db; 
-        this.limit = limit; 
-        this.batch = db.batch(); 
-        this.count = 0; 
-    }
+    constructor(db, limit = 450) { this.db = db; this.limit = limit; this.batch = db.batch(); this.count = 0; }
     async set(ref, data, opts = {}) { 
         if (this.count >= this.limit) await this.flush(); 
-        this.batch.set(ref, data, opts); 
-        this.count++;
+        this.batch.set(ref, data, opts); this.count++;
     }
     async flush() {
         if (this.count === 0) return;
-        await this.batch.commit();
-        this.batch = this.db.batch(); 
-        this.count = 0; 
+        await this.batch.commit(); this.batch = this.db.batch(); this.count = 0; 
     }
 }
 
@@ -278,11 +197,8 @@ class MarketPulseTracker {
     track(job) {
         this.totalJobs++;
         if (job.faculty) this.faculties[job.faculty] = (this.faculties[job.faculty] || 0) + 1;
-        if (job.enriched_tags && Array.isArray(job.enriched_tags)) {
-            job.enriched_tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1);
-        } else if (job.tags && Array.isArray(job.tags)) {
-            job.tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1);
-        }
+        if (job.enriched_tags && Array.isArray(job.enriched_tags)) { job.enriched_tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1); } 
+        else if (job.tags && Array.isArray(job.tags)) { job.tags.forEach(tag => this.skills[tag] = (this.skills[tag] || 0) + 1); }
     }
     generateReport() {
         const topSkills = Object.entries(this.skills).sort((a, b) => b[1] - a[1]).slice(0, 20).map(e => ({ skill: e[0], count: e[1] }));
@@ -292,39 +208,27 @@ class MarketPulseTracker {
 
 class CircuitBreaker {
     constructor(failureThreshold = 3, baseCooldownMs = 5 * 60 * 1000) { 
-        this.states = new Map(); 
-        this.failureThreshold = failureThreshold;
-        this.baseCooldownMs = baseCooldownMs;
+        this.states = new Map(); this.failureThreshold = failureThreshold; this.baseCooldownMs = baseCooldownMs;
     }
-
     async execute(companyName, asyncFn) {
-        if (!this.states.has(companyName)) {
-            this.states.set(companyName, { failures: 0, state: 'CLOSED', nextTry: 0, penaltyMultiplier: 0 });
-        }
+        if (!this.states.has(companyName)) this.states.set(companyName, { failures: 0, state: 'CLOSED', nextTry: 0, penaltyMultiplier: 0 });
         const breaker = this.states.get(companyName);
 
         if (breaker.state === 'OPEN') {
-            if (Date.now() > breaker.nextTry) {
-                breaker.state = 'HALF_OPEN';
-                console.log(`🟡 [CircuitBreaker] ${companyName} próbafázisban (HALF_OPEN)...`);
-            } else {
-                throw new Error(`[CircuitBreaker] ${companyName} hálózata zárolva van (${Math.round((breaker.nextTry - Date.now())/1000)}s maradt).`);
-            }
+            if (Date.now() > breaker.nextTry) { breaker.state = 'HALF_OPEN'; console.log(`🟡 [CircuitBreaker] ${companyName} próbafázisban (HALF_OPEN)...`); } 
+            else { throw new Error(`[CircuitBreaker] ${companyName} hálózata zárolva van (${Math.round((breaker.nextTry - Date.now())/1000)}s maradt).`); }
         }
 
         try {
             const result = await asyncFn();
-            breaker.failures = 0; 
-            breaker.penaltyMultiplier = 0; 
-            breaker.state = 'CLOSED'; 
+            breaker.failures = 0; breaker.penaltyMultiplier = 0; breaker.state = 'CLOSED'; 
             return result;
         } catch (err) {
             breaker.failures++;
             if (breaker.failures >= this.failureThreshold) {
                 breaker.penaltyMultiplier++;
                 const penaltyTime = this.baseCooldownMs * Math.pow(1.5, breaker.penaltyMultiplier);
-                breaker.state = 'OPEN'; 
-                breaker.nextTry = Date.now() + penaltyTime; 
+                breaker.state = 'OPEN'; breaker.nextTry = Date.now() + penaltyTime; 
                 console.error(`🚨 [CircuitBreaker] ${companyName} KIOLDOTT! (${breaker.failures} hiba. Büntetés: ${Math.round(penaltyTime/60000)}p)`);
             }
             throw err;
@@ -336,85 +240,46 @@ const breakerInstance = new CircuitBreaker(3, 4 * 60 * 1000);
 const ExecutionTimeoutGuard = {
     run: (promise, ms, operationName) => {
         let timeoutId;
-        const timeoutPromise = new Promise((_, reject) => {
-            timeoutId = setTimeout(() => reject(new Error(`[Timeout] 🛑 ${operationName} megfagyott, túllépte a(z) ${ms/1000} másodpercet! A folyamatot kilőttük.`)), ms);
-        });
+        const timeoutPromise = new Promise((_, reject) => { timeoutId = setTimeout(() => reject(new Error(`[Timeout] 🛑 ${operationName} megfagyott, túllépte a(z) ${ms/1000} másodpercet! A folyamatot kilőttük.`)), ms); });
         return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeoutId));
     }
 };
 
 // ------------------------------------------------------------------
-// 5. SCHEMAS ÉS ADATSTRUKTÚRÁK (ÚJ: Passzív státusz és időbélyegek)
+// 4. SCHEMAS, SANITIZATION & HYPER-PRECISION GEOGUARD
 // ------------------------------------------------------------------
 
 class ArenaLRUCache {
     constructor(limit = 2000) {
-        this.limit = limit;
-        this.keys = new Array(limit);
-        this.values = new Array(limit);
-        this.prev = new Int32Array(limit);
-        this.next = new Int32Array(limit);
-        this.map = new Map(); 
-        
-        this.head = -1;
-        this.tail = -1;
-        this.freeHead = 0;
-        
-        for (let i = 0; i < limit - 1; i++) this.next[i] = i + 1;
-        this.next[limit - 1] = -1;
+        this.limit = limit; this.keys = new Array(limit); this.values = new Array(limit);
+        this.prev = new Int32Array(limit); this.next = new Int32Array(limit); this.map = new Map(); 
+        this.head = -1; this.tail = -1; this.freeHead = 0;
+        for (let i = 0; i < limit - 1; i++) this.next[i] = i + 1; this.next[limit - 1] = -1;
     }
-    
     get(k) {
-        const idx = this.map.get(k);
-        if (idx === undefined) return null;
-        this._moveToHead(idx);
-        return this.values[idx];
+        const idx = this.map.get(k); if (idx === undefined) return null;
+        this._moveToHead(idx); return this.values[idx];
     }
-    
     set(k, v) {
         let idx = this.map.get(k);
-        if (idx !== undefined) {
-            this.values[idx] = v;
-            this._moveToHead(idx);
-            return;
-        }
-        
+        if (idx !== undefined) { this.values[idx] = v; this._moveToHead(idx); return; }
         if (this.freeHead === -1) {
-            const tailIdx = this.tail;
-            this.map.delete(this.keys[tailIdx]);
-            this._removeNode(tailIdx);
-            
-            this.next[tailIdx] = this.freeHead;
-            this.freeHead = tailIdx;
+            const tailIdx = this.tail; this.map.delete(this.keys[tailIdx]); this._removeNode(tailIdx);
+            this.next[tailIdx] = this.freeHead; this.freeHead = tailIdx;
         }
-        
-        const newIdx = this.freeHead;
-        this.freeHead = this.next[this.freeHead];
-        
-        this.keys[newIdx] = k;
-        this.values[newIdx] = v;
-        this.map.set(k, newIdx);
-        this._addHead(newIdx);
+        const newIdx = this.freeHead; this.freeHead = this.next[this.freeHead];
+        this.keys[newIdx] = k; this.values[newIdx] = v; this.map.set(k, newIdx); this._addHead(newIdx);
     }
-    
-    _moveToHead(idx) {
-        this._removeNode(idx);
-        this._addHead(idx);
-    }
-    
+    _moveToHead(idx) { this._removeNode(idx); this._addHead(idx); }
     _removeNode(idx) {
-        const p = this.prev[idx];
-        const n = this.next[idx];
+        const p = this.prev[idx]; const n = this.next[idx];
         if (p !== -1) this.next[p] = n; else this.head = n;
         if (n !== -1) this.prev[n] = p; else this.tail = p;
     }
-    
     _addHead(idx) {
-        this.prev[idx] = -1;
-        this.next[idx] = this.head;
+        this.prev[idx] = -1; this.next[idx] = this.head;
         if (this.head !== -1) this.prev[this.head] = idx;
-        this.head = idx;
-        if (this.tail === -1) this.tail = idx;
+        this.head = idx; if (this.tail === -1) this.tail = idx;
     }
 }
 
@@ -424,28 +289,14 @@ const paramsToStripArray = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_ter
 const DataSchemaGuard = {
     canonicalizeUrl: (rawUrl) => {
         if (!rawUrl) return "";
-        const cached = urlCache.get(rawUrl);
-        if (cached) return cached;
-        
+        const cached = urlCache.get(rawUrl); if (cached) return cached;
         try {
             const parsed = new URL(rawUrl.startsWith('http') ? rawUrl : `https://${rawUrl}`);
-            
-            const pLen = paramsToStripArray.length;
-            for (let i = 0; i < pLen; i++) {
-                parsed.searchParams.delete(paramsToStripArray[i]);
-            }
-            
-            parsed.searchParams.sort();
-            parsed.hash = ""; 
-            const finalUrl = parsed.href;
-            
-            urlCache.set(rawUrl, finalUrl);
-            return finalUrl;
-        } catch {
-            return String(rawUrl).trim();
-        }
+            for (let i = 0; i < paramsToStripArray.length; i++) parsed.searchParams.delete(paramsToStripArray[i]);
+            parsed.searchParams.sort(); parsed.hash = ""; 
+            const finalUrl = parsed.href; urlCache.set(rawUrl, finalUrl); return finalUrl;
+        } catch { return String(rawUrl).trim(); }
     },
-
     validate: (rawJob) => {
         if (!rawJob || typeof rawJob !== 'object') return null;
         return {
@@ -469,45 +320,42 @@ const GeoGuard = {
         "romania", "romania", "cluj", "kolozsvar", "timisoara", "temesvar", "bucharest", "bukarest", "oradea", "nagyvarad",
         "poland", "lengyelorszag", "warsaw", "varsó", "krakow", "krakko", 
         "austria", "ausztria", "wien", "becs", "graz", "linz", "salzburg", 
-        "germany", "nemetorszag", "berlin", "munchen", "frankfurt"
+        "germany", "nemetorszag", "berlin", "munchen", "frankfurt",
+        "croatia", "horvatorszag", "hrvatska", "zagreb", "split", "rijeka", "osijek", "dalmacija", "slavonija",
+        "slovenia", "szlovenia", "slovenija", "ljubljana", "koper", "maribor", "celje", "logatec",
+        "serbia", "szerbia", "srbija", "beograd", "belgrade", "novi sad", "niš",
+        "italy", "italia", "olaszorszag", "milano", "roma", "napoli", "torino",
+        "bulgaria", "bulgaria", "sofia", "szofia"
     ],
     compiledMatrix: null,
     normalizationCache: new ArenaLRUCache(2000), 
 
     init: function() {
-        if (!this.compiledMatrix) {
-            this.compiledMatrix = new RegExp(`\\b(${this.blacklist.join('|')})\\b`, 'i');
-        }
+        if (!this.compiledMatrix) { this.compiledMatrix = new RegExp(`\\b(${this.blacklist.join('|')})\\b`, 'i'); }
     },
-
     normalizeString: function(str) {
-        const cached = this.normalizationCache.get(str);
-        if (cached) return cached;
+        const cached = this.normalizationCache.get(str); if (cached) return cached;
         const norm = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        this.normalizationCache.set(str, norm);
-        return norm;
+        this.normalizationCache.set(str, norm); return norm;
     },
-
     processLocation: function(rawLocation) {
         if (!rawLocation) return { isValid: true, cleanLoc: "Nincs megadva" };
         
         const rawNormalized = this.normalizeString(rawLocation);
-        if (this.compiledMatrix.test(rawNormalized)) {
-            return { isValid: false, cleanLoc: rawLocation, reason: "Foreign location detected by Master Matrix" };
-        }
+        if (this.compiledMatrix.test(rawNormalized)) return { isValid: false, cleanLoc: rawLocation, reason: "Foreign location detected" };
 
         let cleanLoc = rawLocation;
         const isRemote = /remote|távmunka|tavmunka|home office|wfh/i.test(cleanLoc);
         const isHybrid = /hybrid|hibrid/i.test(cleanLoc);
 
+        cleanLoc = cleanLoc.replace(/\b\d{4}\b/g, ''); 
+        cleanLoc = cleanLoc.replace(/\b([IVXLCDM]+)\.?\s*ker(?:ület)?\.?/gi, ''); 
+        cleanLoc = cleanLoc.replace(/(Hungary|Magyarország|Magyarorszag|\bHU\b)/gi, ''); 
+
         if (isRemote && isHybrid) cleanLoc = "Hibrid / Távmunka";
         else if (isRemote) cleanLoc = "Távmunka";
-        else if (isHybrid) { 
-            cleanLoc = cleanLoc.replace(/hybrid|hibrid/gi, '').trim(); 
-            cleanLoc = cleanLoc ? `${cleanLoc} (Hibrid)` : "Hibrid"; 
-        }
+        else if (isHybrid) { cleanLoc = cleanLoc.replace(/hybrid|hibrid/gi, '').trim(); cleanLoc = cleanLoc ? `${cleanLoc} (Hibrid)` : "Hibrid"; }
 
-        cleanLoc = cleanLoc.replace(/\b[1-9]\d{3}\b/g, '').replace(/(Hungary|Magyarország|Magyarorszag)/gi, '');
         if (/budapest/i.test(cleanLoc)) cleanLoc = cleanLoc.includes("Hibrid") ? "Budapest (Hibrid)" : "Budapest";
         cleanLoc = cleanLoc.replace(/^[,.\s\-–/]+|[,.\s\-–/]+$/g, '').replace(/\s{2,}/g, ' ').trim();
         
@@ -519,39 +367,34 @@ const GeoGuard = {
 };
 GeoGuard.init(); 
 
-// 🔥 ÚJÍTÁS: Hozzáadva a deactivated_at mező!
+// 🔥 ÚJ: Zajtalan Szemantikus Hash (Deep Normalize)
+function generateSemanticHash(companyName, title, location, faculty) {
+    const normalize = (str) => String(str).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    const baseString = `${normalize(companyName)}|${normalize(title)}|${normalize(location)}|${normalize(faculty)}`;
+    return crypto.createHash('md5').update(baseString).digest('hex');
+}
+
 class ProcessedJobRecord {
     constructor() {
-        this.id = ""; 
-        this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
+        this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
         this.job_nature = ""; this.salary_min = null; this.salary_max = null;
         this.salary_currency = null; this.is_hourly_wage = false; this.tags = [];
         this.enriched_tags = []; this.tldr = null; this.seo_schema = null;
         this.semantic_hash = ""; this.data_hash = ""; this.data_signature = "";
         this.health_score = 0; this.trace_id = ""; 
-        
-        // Státusz és Időbélyegek
-        this.is_active = true;
-        this.scraped_at = "";      // Mikor lett aktív
-        this.updated_at = "";      // Mikor láttuk utoljára aktívan
-        this.deactivated_at = null; // Mikor lett passzív (kiszűrt vagy levett)
+        this.is_active = true; this.is_zombie = false;
+        this.scraped_at = ""; this.last_seen_at = ""; this.last_modified_at = ""; this.deactivated_at = null; 
     }
     reset() {
         this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
         this.job_nature = ""; this.salary_min = null; this.salary_max = null;
         this.salary_currency = null; this.is_hourly_wage = false; 
-        this.tags = []; this.enriched_tags = []; 
-        this.tldr = null; this.seo_schema = null; this.semantic_hash = ""; 
-        this.data_hash = ""; this.data_signature = ""; this.health_score = 0; 
-        this.trace_id = ""; 
-        
-        this.is_active = true;
-        this.scraped_at = ""; 
-        this.updated_at = "";
-        this.deactivated_at = null;
-        
+        this.tags = []; this.enriched_tags = []; this.tldr = null; this.seo_schema = null; this.semantic_hash = ""; 
+        this.data_hash = ""; this.data_signature = ""; this.health_score = 0; this.trace_id = ""; 
+        this.is_active = true; this.is_zombie = false;
+        this.scraped_at = ""; this.last_seen_at = ""; this.last_modified_at = ""; this.deactivated_at = null;
         return this;
     }
 }
@@ -562,79 +405,93 @@ class JobRecordPool {
         for(let i=0; i<size; i++) this.pool[i] = new ProcessedJobRecord();
         this.freeIndex = size - 1;
     }
-    acquire() {
-        if (this.freeIndex >= 0) return this.pool[this.freeIndex--].reset();
-        return new ProcessedJobRecord(); 
-    }
-    release(record) {
-        this.pool[++this.freeIndex] = record;
-    }
+    acquire() { if (this.freeIndex >= 0) return this.pool[this.freeIndex--].reset(); return new ProcessedJobRecord(); }
+    release(record) { this.pool[++this.freeIndex] = record; }
 }
 const globalJobPool = new JobRecordPool(5000);
 
 function sanitizeAndScoreJob(rawJobInput, companyName) {
-    const rawJob = DataSchemaGuard.validate(rawJobInput);
-    if (!rawJob) return { health_score: 0 }; 
+    try {
+        const rawJob = DataSchemaGuard.validate(rawJobInput);
+        if (!rawJob) return { health_score: 0 }; 
 
-    const stripHtml = (str) => str.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
-    const rawLocStr = stripHtml(rawJob.location);
-    const geoResult = GeoGuard.processLocation(rawLocStr);
+        const stripHtml = (str) => str.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
+        const rawLocStr = stripHtml(rawJob.location);
+        const geoResult = GeoGuard.processLocation(rawLocStr);
 
-    const cleanJob = globalJobPool.acquire();
-    cleanJob.company_name = companyName;
-    cleanJob.title = stripHtml(rawJob.title) || "";
-    cleanJob.location = geoResult.cleanLoc;
-    cleanJob.url = rawJob.url;
-    cleanJob.apply_url = rawJob.apply_url;
-    cleanJob.date_posted = (!isNaN(Date.parse(rawJob.date_posted))) ? new Date(rawJob.date_posted).toISOString() : new Date().toISOString();
-    cleanJob.faculty = rawJob.faculty || "Egyéb";
-    cleanJob.tags = [...new Set(rawJob.tags)].sort();
+        const cleanJob = globalJobPool.acquire();
+        cleanJob.company_name = companyName;
+        cleanJob.title = stripHtml(rawJob.title) || "";
+        cleanJob.location = geoResult.cleanLoc;
+        cleanJob.url = rawJob.url;
+        cleanJob.apply_url = rawJob.apply_url;
+        cleanJob.date_posted = (!isNaN(Date.parse(rawJob.date_posted))) ? new Date(rawJob.date_posted).toISOString() : new Date().toISOString();
+        cleanJob.faculty = rawJob.faculty || "Egyéb";
+        cleanJob.tags = [...new Set(rawJob.tags)].sort();
 
-    if (nlpEngine && cleanJob.title) {
-        const nlpResult = nlpEngine.analyzeJob(cleanJob.title, rawJob.description, companyName);
-        if (nlpResult) {
-            cleanJob.faculty = nlpResult.airtable_ready?.faculty || cleanJob.faculty;
-            cleanJob.job_nature = nlpResult.airtable_ready?.job_nature || cleanJob.job_nature;
-            cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
-            cleanJob.salary_min = nlpResult.airtable_ready?.salary_min || null;
-            cleanJob.salary_max = nlpResult.airtable_ready?.salary_max || null;
-            cleanJob.salary_currency = nlpResult.airtable_ready?.salary_currency || null;
-            cleanJob.is_hourly_wage = nlpResult.airtable_ready?.is_hourly_wage || false;
-            cleanJob.tldr = nlpResult.airtable_ready?.tldr || null;
-            cleanJob.seo_schema = nlpResult.seo_schema || null;
+        if (nlpEngine && cleanJob.title) {
+            const nlpResult = nlpEngine.analyzeJob(cleanJob.title, rawJob.description, companyName);
+            if (nlpResult) {
+                cleanJob.faculty = nlpResult.airtable_ready?.faculty || cleanJob.faculty;
+                cleanJob.job_nature = nlpResult.airtable_ready?.job_nature || cleanJob.job_nature;
+                cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
+                cleanJob.salary_min = nlpResult.airtable_ready?.salary_min || null;
+                cleanJob.salary_max = nlpResult.airtable_ready?.salary_max || null;
+                cleanJob.salary_currency = nlpResult.airtable_ready?.salary_currency || null;
+                cleanJob.is_hourly_wage = nlpResult.airtable_ready?.is_hourly_wage || false;
+                cleanJob.tldr = nlpResult.airtable_ready?.tldr || null;
+                cleanJob.seo_schema = nlpResult.seo_schema || null;
+            }
         }
+
+        if(cleanJob.enriched_tags.length > 0) cleanJob.enriched_tags.sort(); 
+
+        cleanJob.semantic_hash = generateSemanticHash(companyName, cleanJob.title, cleanJob.location, cleanJob.faculty);
+        
+        const tagsForHash = cleanJob.enriched_tags.length > 0 ? cleanJob.enriched_tags.join(",") : cleanJob.tags.join(",");
+        cleanJob.data_hash = crypto.createHash('md5').update(cleanJob.semantic_hash + `|${tagsForHash}`).digest('hex');
+        cleanJob.data_signature = crypto.createHmac('sha256', SYSTEM_SECRET).update(cleanJob.data_hash).digest('hex');
+
+        let score = 100;
+        if (!geoResult.isValid) score -= 100; 
+        if (!cleanJob.title || cleanJob.title.toLowerCase().includes("teszt") || cleanJob.title.toLowerCase().includes("test")) score -= 100; 
+        if (!cleanJob.url) score -= 100; 
+        if (cleanJob.title === cleanJob.title.toUpperCase()) { cleanJob.title = cleanJob.title.charAt(0) + cleanJob.title.slice(1).toLowerCase(); score -= 10; }
+        
+        cleanJob.health_score = Math.max(0, score);
+        return cleanJob; 
+    } catch (e) {
+        console.warn(`⚠️ [Sanitizer] Hiba az állás feldolgozása közben: ${e.message}`);
+        return { health_score: 0 };
     }
-
-    if(cleanJob.enriched_tags.length > 0) cleanJob.enriched_tags.sort(); 
-
-    const tagsForHash = cleanJob.enriched_tags.length > 0 ? cleanJob.enriched_tags.join(",") : cleanJob.tags.join(",");
-    const baseString = `${companyName}|${cleanJob.title.toLowerCase()}|${cleanJob.location.toLowerCase()}|${cleanJob.faculty}`;
-    
-    cleanJob.semantic_hash = crypto.createHash('md5').update(baseString).digest('hex');
-    cleanJob.data_hash = crypto.createHash('md5').update(baseString + `|${tagsForHash}`).digest('hex');
-    cleanJob.data_signature = crypto.createHmac('sha256', SYSTEM_SECRET).update(cleanJob.data_hash).digest('hex');
-
-    let score = 100;
-    if (!geoResult.isValid) score -= 100; 
-    if (!cleanJob.title || cleanJob.title.toLowerCase().includes("teszt") || cleanJob.title.toLowerCase().includes("test")) score -= 100; 
-    if (!cleanJob.url) score -= 100; 
-    if (cleanJob.title === cleanJob.title.toUpperCase()) { cleanJob.title = cleanJob.title.charAt(0) + cleanJob.title.slice(1).toLowerCase(); score -= 10; }
-    
-    cleanJob.health_score = Math.max(0, score);
-    return cleanJob; 
 }
 
 class FastPointerQueue {
     constructor(items) { this.items = items; this.head = 0; }
     shift() { 
         if (this.head < this.items.length) {
-            const item = this.items[this.head];
-            this.items[this.head++] = null; 
-            return item;
+            const item = this.items[this.head]; this.items[this.head++] = null; return item;
         }
         return undefined;
     }
     get length() { return this.items.length - this.head; }
+}
+
+// 🔥 ÚJ: Stream-alapú RAM-kímélő JSON mentés
+async function writeJsonStream(filePath, dataArray) {
+    return new Promise((resolve, reject) => {
+        const stream = fs.createWriteStream(filePath, { encoding: 'utf8' });
+        stream.on('error', reject);
+        stream.write('[\n');
+        let isFirst = true;
+        for (let i = 0; i < dataArray.length; i++) {
+            if (!isFirst) stream.write(',\n');
+            stream.write(JSON.stringify(dataArray[i], null, 2));
+            isFirst = false;
+        }
+        stream.write('\n]\n');
+        stream.end(() => resolve());
+    });
 }
 
 // ------------------------------------------------------------------
@@ -645,10 +502,7 @@ let sigintCount = 0;
 
 process.on('SIGINT', () => { 
     sigintCount++;
-    if (sigintCount >= 2) {
-        console.log("\n🚨 ERŐSZAKOS KILÖVÉS! (Második Ctrl+C)");
-        process.exit(1); 
-    }
+    if (sigintCount >= 2) { console.log("\n🚨 ERŐSZAKOS KILÖVÉS! (Második Ctrl+C)"); process.exit(1); }
     isShuttingDown = true; 
     console.log("\n⚠️ Biztonságos leállás kérése... (Nyomd meg a Ctrl+C-t Még EGYSZER az azonnali leállításhoz!)"); 
 });
@@ -656,13 +510,13 @@ process.on('SIGTERM', () => { isShuttingDown = true; });
 
 async function runScraper() {
     console.log("\n======================================================");
-    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V23.0 HISTORICAL)");
+    console.log("🚀 UniStart CHRONOS-NEXUS Orchestrator (V25.0 TITAN)");
     console.log("======================================================\n");
     
     const runTraceId = crypto.randomUUID().split('-')[0]; 
-    await sendAlert(`🚀 V23.0 Historical (Trace: ${runTraceId}) folyamat elindult...`);
+    await sendAlert(`🚀 V25.0 Titan (Trace: ${runTraceId}) folyamat elindult...`);
 
-    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, deactivated: 0, anomalies: 0 };
+    const stats = { startTime: Date.now(), processed: 0, failed: 0, added: 0, updated: 0, untouched: 0, rejected: 0, deactivated: 0, anomalies: 0, zombies: 0 };
     const dlqQueue = []; 
     const errorLogs = [];
     const marketPulse = new MarketPulseTracker();
@@ -675,7 +529,7 @@ async function runScraper() {
             localJobsMap.set(j.id, j);
             if (j.semantic_hash) localSemanticMap.set(j.semantic_hash, j.id);
         });
-        console.log(`📂 jobs.json beolvasva (${raw.length} db állás a memóriában). A Firebase-t NEM használjuk a lekérdezéshez!`);
+        console.log(`📂 jobs.json beolvasva (${raw.length} db állás a memóriában).`);
     } catch (e) {
         console.warn("⚠️ A jobs.json sérült vagy üres. Tiszta lappal indulunk.");
     }
@@ -688,7 +542,16 @@ async function runScraper() {
 
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
         
-        const CONCURRENCY_LIMIT = 1; 
+        // 🔥 AUTO-SCALING HARDWARE ANALYZER 🔥
+        const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+        let CONCURRENCY_LIMIT = 1;
+        if (!isGitHubActions) {
+            const freeMemMB = os.freemem() / (1024 * 1024);
+            const cpus = os.cpus().length;
+            // 350MB szabad memória kell minden egyes extra szálhoz, max annyi szál ahány mag van - 1.
+            CONCURRENCY_LIMIT = Math.max(1, Math.min(cpus - 1, Math.floor(freeMemMB / 350)));
+        }
+        console.log(`🚥 Környezet: ${isGitHubActions ? 'Cloud' : 'Local'} | Dinamikus Szálak: ${CONCURRENCY_LIMIT} (Szabad RAM: ${Math.round(os.freemem()/(1024*1024))}MB)`);
         
         const processCompany = async (workerId, companyDoc, isReplay = false) => {
             await sysMonitor.yieldIfNecessary(); 
@@ -696,7 +559,6 @@ async function runScraper() {
 
             const memoryUsage = process.memoryUsage();
             const memRatio = memoryUsage.heapUsed / memoryUsage.heapTotal;
-            
             if (memRatio > 0.85) {
                 console.error(`[W${workerId}] 🚨 Magas RAM (85%+)! Preventív GC futtatása...`);
                 if (global.gc) global.gc(); 
@@ -725,10 +587,8 @@ async function runScraper() {
                 if (!isReplay) stats.processed++;
                 
                 let scrapedJobs = [];
-                
-                const knownUrlsForCompany = Array.from(localJobsMap.values())
-                    .filter(j => j.company_id === companyId || j.company_name === company.name)
-                    .map(j => j.url);
+                const oldJobsForCompany = Array.from(localJobsMap.values()).filter(j => j.company_id === companyId || j.company_name === company.name);
+                const knownUrlsForCompany = oldJobsForCompany.map(j => j.url);
 
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
@@ -744,16 +604,24 @@ async function runScraper() {
                     }
                 }
 
-                let cAdded = 0, cUpdated = 0, cUntouched = 0, cRejected = 0, cDeactivated = 0;
+                const previousActiveCount = oldJobsForCompany.filter(j => j.is_active !== false).length;
+                if (previousActiveCount >= 5 && scrapedJobs.length === 0) {
+                    console.warn(`${logPrefix} ⚠️ ANOMÁLIA: A cég korábban ${previousActiveCount} aktív állással rendelkezett, most 0 lett! Biztonsági okokból NEM passziváljuk őket!`);
+                    oldJobsForCompany.forEach(oldJob => { finalJobsMap.set(oldJob.id, oldJob); });
+                    stats.anomalies++;
+                    return false; 
+                }
 
-                // Friss/Új állások feldolgozása
+                let cAdded = 0, cUpdated = 0, cUntouched = 0, cRejected = 0, cDeactivated = 0, cZombies = 0;
+                const nowIso = new Date().toISOString();
+                const nowMs = Date.now();
+
                 for (const rawJob of scrapedJobs) {
                     await sysMonitor.yieldIfNecessary(); 
                     const cleanJobPoolObj = await measureTelemtry('SanitizeJob', async () => sanitizeAndScoreJob(rawJob, company.name));
                     
                     if (cleanJobPoolObj.health_score < 50) { 
-                        cRejected++; 
-                        stats.rejected++; 
+                        cRejected++; stats.rejected++; 
                         globalJobPool.release(cleanJobPoolObj); 
                         continue; 
                     }
@@ -761,34 +629,32 @@ async function runScraper() {
                     cleanJobPoolObj.company_id = companyId; 
                     cleanJobPoolObj.trace_id = runTraceId; 
                     
-                    let jobId = localSemanticMap.get(cleanJobPoolObj.semantic_hash) 
-                        || 'job_' + crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex').substring(0,16);
-
+                    let jobId = localSemanticMap.get(cleanJobPoolObj.semantic_hash) || 'job_' + crypto.createHash('md5').update(cleanJobPoolObj.url).digest('hex').substring(0,16);
                     cleanJobPoolObj.id = jobId;
                     
-                    // 🔥 ÚJÍTÁS: Állapotok és Időbélyegek beállítása
                     if (localJobsMap.has(jobId)) {
                         const oldJob = localJobsMap.get(jobId);
-                        cleanJobPoolObj.scraped_at = oldJob.scraped_at || new Date().toISOString(); // Megőrizzük az eredeti rögzítést
-                        cleanJobPoolObj.updated_at = new Date().toISOString(); // A mai napon láttuk!
-                        cleanJobPoolObj.is_active = true; // Biztosan aktív
-                        cleanJobPoolObj.deactivated_at = null; // Lehet, hogy eddig passzív volt, most újra él!
+                        cleanJobPoolObj.scraped_at = oldJob.scraped_at || nowIso; 
+                        cleanJobPoolObj.last_seen_at = nowIso;
+                        cleanJobPoolObj.is_active = true; 
+                        cleanJobPoolObj.deactivated_at = null; 
                         
-                        if (cleanJobPoolObj.data_hash !== (oldJob.data_hash || "")) {
-                            cUpdated++; 
-                            stats.updated++;
+                        const ageMs = nowMs - new Date(cleanJobPoolObj.scraped_at).getTime();
+                        if (ageMs > (60 * 24 * 60 * 60 * 1000)) { cleanJobPoolObj.is_zombie = true; cZombies++; stats.zombies++; }
+
+                        if (cleanJobPoolObj.data_hash !== (oldJob.data_hash || "")) { 
+                            cleanJobPoolObj.last_modified_at = nowIso;
+                            cUpdated++; stats.updated++; 
                         } else { 
-                            cUntouched++; 
-                            stats.untouched++; 
+                            cleanJobPoolObj.last_modified_at = oldJob.last_modified_at || cleanJobPoolObj.scraped_at;
+                            cUntouched++; stats.untouched++; 
                         }
                     } else {
-                        // Teljesen új állás
-                        cleanJobPoolObj.scraped_at = new Date().toISOString();
-                        cleanJobPoolObj.updated_at = new Date().toISOString();
-                        cleanJobPoolObj.is_active = true;
-                        cleanJobPoolObj.deactivated_at = null;
-                        cAdded++; 
-                        stats.added++;
+                        cleanJobPoolObj.scraped_at = nowIso;
+                        cleanJobPoolObj.last_seen_at = nowIso;
+                        cleanJobPoolObj.last_modified_at = nowIso;
+                        cleanJobPoolObj.is_active = true; cleanJobPoolObj.deactivated_at = null; cleanJobPoolObj.is_zombie = false;
+                        cAdded++; stats.added++;
                     }
                     
                     marketPulse.track(cleanJobPoolObj); 
@@ -796,47 +662,27 @@ async function runScraper() {
                     globalJobPool.release(cleanJobPoolObj); 
                 }
 
-                // 🔥 ÚJÍTÁS: Passziváló Logika (Soft Delete)
-                // Kikeressük azokat az állásokat ebből a cégből, amik benne voltak a régi adatbázisban,
-                // de a scraper most NEM találta meg őket, VAGY az analyzer kiszűrte őket (nem kerültek a finalJobsMap-be).
-                const oldJobsForCompany = Array.from(localJobsMap.values())
-                    .filter(j => j.company_id === companyId || j.company_name === company.name);
-                
                 oldJobsForCompany.forEach(oldJob => {
                     if (!finalJobsMap.has(oldJob.id)) {
-                        // Ha eddig aktív volt, most passziváljuk
                         if (oldJob.is_active !== false) {
-                            oldJob.is_active = false;
-                            oldJob.deactivated_at = new Date().toISOString();
-                            cDeactivated++;
-                            stats.deactivated++;
+                            oldJob.is_active = false; oldJob.deactivated_at = nowIso;
+                            cDeactivated++; stats.deactivated++;
                         }
-                        // Visszatesszük a JSON-be, így megmarad a történeti adat!
                         finalJobsMap.set(oldJob.id, oldJob); 
                     }
                 });
 
-                console.log(`${logPrefix} ✅ Új: ${cAdded} | Friss: ${cUpdated} | Változatlan: ${cUntouched} | Kiszűrve: ${cRejected} | 🔴 Passzív lett: ${cDeactivated}`);
+                console.log(`${logPrefix} ✅ Új: ${cAdded} | Frissült: ${cUpdated} | Érintetlen: ${cUntouched} (Zombi: ${cZombies}) | Kiszűrve: ${cRejected} | 🔴 Passzív: ${cDeactivated}`);
                 return true; 
             } catch (err) {
                 console.error(`${logPrefix} ❌ Hiba:`, err.message);
                 if (!isReplay) {
-                    stats.failed++; 
-                    dlqQueue.push(companyDoc);
+                    stats.failed++; dlqQueue.push(companyDoc);
                     errorLogs.push({ company: company.name, error: err.message, traceId: runTraceId });
                     
-                    // Ha a cég teljesen lefagyott (hálózati hiba), nem passziváljuk a régi állásait,
-                    // hanem érintetlenül visszatöltjük a régi állapotot!
-                    const oldJobsForCompany = Array.from(localJobsMap.values())
-                        .filter(j => j.company_id === companyId || j.company_name === company.name);
-                    
-                    oldJobsForCompany.forEach(oldJob => {
-                        finalJobsMap.set(oldJob.id, oldJob); 
-                    });
-                    
-                    if (oldJobsForCompany.length > 0) {
-                        console.log(`${logPrefix} ♻️ [AUTO-MENTÉS] Hiba miatt érintetlenül visszatöltve ${oldJobsForCompany.length} db korábbi állás a memóriából.`);
-                    }
+                    const oldJobsForCompany = Array.from(localJobsMap.values()).filter(j => j.company_id === companyId || j.company_name === company.name);
+                    oldJobsForCompany.forEach(oldJob => { finalJobsMap.set(oldJob.id, oldJob); });
+                    if (oldJobsForCompany.length > 0) console.log(`${logPrefix} ♻️ [AUTO-MENTÉS] Hiba miatt érintetlenül visszatöltve ${oldJobsForCompany.length} db állás.`);
                 }
                 return false;
             }
@@ -854,56 +700,44 @@ async function runScraper() {
         if (dlqQueue.length > 0 && !isShuttingDown) {
             console.log(`\n🔄 [AUTO-HEAL] DLQ Replay indítása ${dlqQueue.length} sikertelen cégen...`);
             await new Promise(res => setTimeout(res, 4000)); 
-            
             for (const doc of dlqQueue) {
                 const success = await processCompany("REPLAY", doc, true);
-                if (success) {
-                    stats.failed--; 
-                    console.log(`🔄 [AUTO-HEAL] ${doc.data().name} sikeresen feltámasztva!`);
-                } else {
-                    await db.collection("system_dlq").add({ 
-                        company_id: doc.id, 
-                        company_name: doc.data().name, 
-                        trace_id: runTraceId, 
-                        timestamp: FieldValue.serverTimestamp() 
-                    });
-                }
+                if (success) { stats.failed--; console.log(`🔄 [AUTO-HEAL] ${doc.data().name} sikeresen feltámasztva!`); } 
+                else { await db.collection("system_dlq").add({ company_id: doc.id, company_name: doc.data().name, trace_id: runTraceId, timestamp: FieldValue.serverTimestamp() }); }
             }
         }
 
-        console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba...`);
+        console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba (Stream módban)...`);
         const allNewJobsArray = Array.from(finalJobsMap.values());
-        fs.writeFileSync(OUTPUT_JSON_PATH, JSON.stringify(allNewJobsArray, null, 2), 'utf-8');
+        
+        // 🔥 ÚJ: Memóriakímélő Stream mentés
+        await writeJsonStream(OUTPUT_JSON_PATH, allNewJobsArray);
 
         console.log("📈 Telemetria & Market Pulse mentése a Firebase-be...");
         const logBatch = new FirestoreBatchManager(db);
         await logBatch.set(db.collection("system_analytics").doc("latest_market_pulse"), marketPulse.generateReport());
-        await logBatch.set(db.collection("system_logs").doc(`telemetry_${runTraceId}`), { 
-            timestamp: FieldValue.serverTimestamp(), 
-            metrics: sysTelemetry.getReport() 
-        });
+        await logBatch.set(db.collection("system_logs").doc(`telemetry_${runTraceId}`), { timestamp: FieldValue.serverTimestamp(), metrics: sysTelemetry.getReport() });
 
         const execSec = parseFloat(((Date.now() - stats.startTime) / 1000).toFixed(1));
         const usedMemMB = Math.round(process.memoryUsage().heapUsed / 1024 / 1024);
         
         await logBatch.set(db.collection("system_logs").doc("scraper_health"), {
-            last_run: FieldValue.serverTimestamp(), 
-            trace_id: runTraceId, 
+            last_run: FieldValue.serverTimestamp(), trace_id: runTraceId, 
             status: stats.failed > 0 || stats.anomalies > 0 ? "warning" : "healthy",
-            metrics: { ...stats, execSec, peakMemoryMB: usedMemMB }, 
-            recent_errors: errorLogs.slice(0, 10) 
+            metrics: { ...stats, execSec, peakMemoryMB: usedMemMB }, recent_errors: errorLogs.slice(0, 10) 
         });
 
         await logBatch.flush();
 
         console.log("\n======================================================");
-        console.log(`🏁 CHRONOS-NEXUS V23.0 (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
+        console.log(`🏁 CHRONOS-NEXUS V25.0 TITAN (Trace: ${runTraceId}) BEFEJEZŐDÖTT`);
         console.log("======================================================");
-        console.log(`⏱️ Idő: ${execSec}s | 🧠 Mem: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Hiba: ${stats.failed})`);
+        console.log(`⏱️ Idő: ${execSec}s | 🧠 Max Memória: ${usedMemMB}MB | 🏢 Cégek: ${stats.processed} (Hiba: ${stats.failed})`);
         console.log(`✨ Új: ${stats.added} | 🔄 Friss: ${stats.updated} | 🔴 Passzív lett: ${stats.deactivated}`);
+        console.log(`⚠️ Anomália (Védve): ${stats.anomalies} | 🧟 Zombi állások (>60 nap): ${stats.zombies}`);
         console.log("======================================================\n");
-        
-        await sendAlert(`✅ V23.0 Kész. Új: ${stats.added}, Passzív lett: ${stats.deactivated}, Hiba: ${stats.failed}.`);
+         
+        await sendAlert(`✅ V25.0 Kész. Új: ${stats.added}, Passzív lett: ${stats.deactivated}, Hiba/Anomália: ${stats.failed + stats.anomalies}.`);
         process.exit(0);
 
     } catch (err) {

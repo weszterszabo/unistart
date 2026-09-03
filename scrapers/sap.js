@@ -13,8 +13,8 @@ const HEADERS = {
   "Upgrade-Insecure-Requests": "1"
 };
 
-// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH + ÁTIRÁNYÍTÁS (REDIRECT) KÖVETŐVEL!
-function fetchSafe(urlStr, options = {}, timeoutMs = 15000, redirectCount = 0) {
+// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH + ÁTIRÁNYÍTÁS KÖVETŐ
+function fetchSafe(urlStr, options = {}, timeoutMs = 20000, redirectCount = 0) {
     if (redirectCount > 5) return Promise.reject(new Error("Végtelen átirányítási hurok (Redirect Loop)!"));
     
     return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 15000, redirectCount = 0) {
                 resStream = res;
                 res.on('error', (e) => safeReject(new Error(`Response hiba: ${e.message}`)));
 
-                // 🔀 ÁTIRÁNYÍTÁS KÖVETÉSE (301, 302, 303, 307, 308)
+                // 🔀 ÁTIRÁNYÍTÁS KÖVETÉSE
                 if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
                     clearTimeout(watchdog);
                     const nextUrl = new URL(res.headers.location, urlStr).href;
@@ -86,7 +86,7 @@ async function processInBatches(items, batchSize, asyncFn) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    await new Promise(r => setTimeout(r, 400 + Math.random() * 400));
+    await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
   }
   return results;
 }
@@ -97,15 +97,13 @@ async function discoverSearchUrl(baseUrl) {
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
     
     try {
-        const html = await fetchSafe(base, { headers: HEADERS }, 12000);
+        const html = await fetchSafe(base, { headers: HEADERS }, 15000);
         const $ = cheerio.load(html);
         let bestLink = null;
 
-        // Keresünk minden form-ot és linket, ami a keresőre mutathat
         $('a, form').each((i, el) => {
             const href = $(el).attr('href') || $(el).attr('action');
             if (href && (href.toLowerCase().includes('/search') || href.toLowerCase().includes('searchjobs') || href.toLowerCase().includes('jobsearch') || href.toLowerCase().includes('/jobs'))) {
-                // Biztosítjuk, hogy nem egy konkrét állás hivatkozása
                 if (!href.toLowerCase().includes('/job/') && !href.toLowerCase().includes('/position/')) {
                     bestLink = href;
                 }
@@ -122,7 +120,6 @@ async function discoverSearchUrl(baseUrl) {
         console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot (${e.message}). Váltás bruteforce-ra...`);
     }
 
-    // Ha a szonár elbukik, végigpróbáljuk a legnépszerűbb SAP végpontokat
     const pathsToTry = [
         "/search/", 
         "/hu_HU/careers/SearchJobs", 
@@ -134,20 +131,18 @@ async function discoverSearchUrl(baseUrl) {
     for (let path of pathsToTry) {
         let testUrl = base + path;
         try {
-            await fetchSafe(testUrl, { method: 'GET', headers: HEADERS }, 4000);
-            return testUrl; // Ha visszatér hibakód nélkül, ez lesz a jó
+            await fetchSafe(testUrl, { method: 'GET', headers: HEADERS }, 5000);
+            return testUrl; 
         } catch (e) { continue; }
     }
 
-    return base + "/search/"; // Default végső mentsvár
+    return base + "/search/"; 
 }
 
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SAP] Phantom-DeepScrape letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set();
-  
-  knownUrls.forEach(url => seenUrls.add(url));
   
   let startrow = 0;
   const step = 25; 
@@ -175,7 +170,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const html = await fetchSafe(currentUrl, { headers: HEADERS }, 15000);
+      const html = await fetchSafe(currentUrl, { headers: HEADERS }, 20000);
       const $ = cheerio.load(html);
 
       // WAF Ellenőrzés
@@ -190,7 +185,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         let text = $(el).text().trim().replace(/\s+/g, ' ');
         text = text.replace(/\s*\([m|f|d|w|x|n|\/]+\)\s*/gi, ' ').trim();
 
-        // 🔭 UNIVERZÁLIS REGEX: Bármi, ami nyomokban állásnak tűnik az SAP-ban
+        // 🔭 UNIVERZÁLIS REGEX
         if (href && (href.match(/\/(job|position|career|JobDetail|opportunities|jobs)\//i) || href.match(/jobid=/i)) && text.length > 5) {
           let cleanHref = href.startsWith('http') ? href : new URL(href, currentUrl).href;
           cleanHref = cleanHref.split('?')[0]; 
@@ -198,21 +193,23 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         }
       });
 
+      // Duplikációk szűrése az oldalon belül
       const uniqueOnPage = pageLinks.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
-      const newJobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
+      const jobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
-      if (newJobsToProcess.length === 0) {
-        console.log(`   ⏹️ [SAP] Nincs több ÚJ állás az oldalon.`);
+      // HA NINCS TÖBB VALID LINK AZ OLDALON, AKKOR ÁLLUNK MEG
+      if (jobsToProcess.length === 0) {
+        console.log(`   ⏹️ [SAP] Nincs több érvényes állás az oldalon.`);
         hasMore = false;
         break;
       }
 
-      newJobsToProcess.forEach(job => seenUrls.add(job.url));
+      jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS
-      console.log(`   ⚡ [SAP] ${newJobsToProcess.length} db aloldal feldolgozása párhuzamosan...`);
+      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS LOPAKODÓ ÜZEMMÓDBAN (3 szálon)
+      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (3 szálon)...`);
       
-      const processedJobs = await processInBatches(newJobsToProcess, 5, async (job) => {
+      const processedJobs = await processInBatches(jobsToProcess, 3, async (job) => {
           const details = await getDeepDetails(job.url);
           if (!details) {
               process.stdout.write(`❌ `);
@@ -225,7 +222,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           
           try {
               const analyzeTask = analyzer.analyzeJob(job.title, rawDescription, companyName);
-              const timeoutTask = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 5000));
+              const timeoutTask = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 6000));
               analysis = await Promise.race([analyzeTask, timeoutTask]);
               await new Promise(r => setTimeout(r, 50)); 
           } catch (e) {
@@ -280,21 +277,23 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TITÁNIUM VÉDELEMMEL
 async function getDeepDetails(jobUrl) {
   let resHtml = null;
-  const maxRetries = 1;
+  const maxRetries = 3; // 🔥 3 újrapróbálkozás!
 
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 10000);
+          // 🔥 20 másodperces maximális türelmi idő aloldalanként!
+          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 20000);
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
-          await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
+          // 🔥 Hosszú pihenő újrapróbálkozás előtt (2-3.5 másodperc)
+          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
       }
   }
 

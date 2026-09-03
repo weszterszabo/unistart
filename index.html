@@ -2495,8 +2495,8 @@
 
             const applyLink = job.apply_url || job.url;
             
-            // ÚJ FUNKCIÓ: A kártyára kattintva a jelentkezési link nyílik meg
-            card.onclick = () => { if(applyLink) window.open(applyLink, '_blank'); };
+            // A kártya kattinthatóságát kikapcsoltuk:
+            // card.onclick = () => { if(applyLink) window.open(applyLink, '_blank'); };
 
             card.innerHTML = `
                 <div class="company-card-content">

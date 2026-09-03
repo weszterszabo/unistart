@@ -2,7 +2,7 @@ const crypto = require("crypto");
 const { performance } = require("perf_hooks"); 
 
 // ============================================================================
-// 🧠 1. KOGNITÍV SZÓTÁRAK (V51.0 AHO-CORASICK CORE)
+// 🧠 1. KOGNITÍV SZÓTÁRAK (V52.0 ACADEMIC GUARD CORE)
 // ============================================================================
 
 const structuredTagsDict = {
@@ -112,13 +112,9 @@ const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])
 const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
 const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es)?";
 
-// 🔥 BŐVÍTETT SZÓTÁRAK INNENTŐL LEFELÉ 🔥
-
-// Hozzáadva: medior, mid-level, csapatvezető, team lead, tech lead, osztályvezető, vezető ápoló, manager, supervisor, lead, főállatorvos
 const seniorWords = "senior|szenior|snr|sr\\.|medior|mid-level|mid level|mid\\b|head of|director|igazgató|expert|architect|chief|principal|főosztályvezető|osztályvezető|csapatvezető|team lead|tech lead|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|sme|subject matter expert|dékán|rektor|főorvos|főállatorvos|vezető ápoló|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer|manager\\b|supervisor|lead\\b";
 const compiledFatalSenior = new RegExp(huBoundaryStart + '(' + seniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
-// Hozzáadva: bolti dolgozó, összekészítő, szárazáru, hűtőraktári, göngyölegraktári, áruösszekészítő, és az összes orvosi/kórházi szakma
 const physicalWords = "bolti dolgozó|összekészítő|szárazáru|hűtőraktári|göngyölegraktári|göngyöleg|áruösszekészítő|ápoló|ápolónő|szakápoló|gondozó|orvosírnok|orvos|rezidens|szakorvos|mentőtiszt|terapeuta|védőnő|szülésznő|kardiológiai|angiológiai|sebkezelő|dializáló|csecsemő|kórházi|műtős|takarító|biztonsági őr|rakodó|sofőr|futár|pénztáros|árufeltöltő|targoncás|betanított|csomagoló|bolti eladó|villanyszerelő|hegesztő|lakatos|szakács|pincér|felszolgáló|pultos|kőműves|asztalos|festő|gépkocsivezető|gyári munkás|portás|vagyonőr|takarítónő|esztergályos|marós|vízszerelő|gázszerelő|bádogos|cleaner|security guard|loader|driver|courier|cashier|shelf stacker|forklift|packer|shop assistant|electrician|welder|locksmith|cook|chef|waiter|waitress|bartender|barista|mason|carpenter|painter|factory worker|janitor|plumber|maid|housekeeper|gondnok|caretaker|kamionsofőr|truck driver|delivery|postás|postman|sori munkás|segédmunkás|gyártósori|assembly|manual labor|laborer|mezőgazdasági|traktoros|állatgondozó|mészáros|hentes|ács|állványozó|tetőfedő|burkoló|gépszerelő|fényező|pék|cukrász|húsipari|varrónő|textilipari|nyomdász|anyagmozgató|konyhai|mosogató|udvaros|cnc|gépkezelő|gépüzemeltető|fémipari|faipari|production line|higiénia|higénia|higiéniai|higéniai|hygiene|tisztító|tisztítás|mosodai|komissiózó|raktári dolgozó";
 const compiledFatalPhysical = new RegExp(huBoundaryStart + '(' + physicalWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -128,7 +124,6 @@ const compiledDubiousPhysical = new RegExp(huBoundaryStart + '(' + dubiousWords 
 const juniorWords = "diák|diákmunka|gyakornok|gyakornoki|intern|internship|trainee|traineeship|co-op|pályakezdő|pályakezdőket|pályaindító|karrierstart|kezdő|junior|entry-level|entry level|frissdiplomás|friss diplomás|diplomás|student|apprentice|graduate|fresh graduate|tanuló|szövetkezet|iskolaszövetkezet|diákszövetkezet|undergrad|undergraduate|pályakezdőknek|hallgató|ösztöndíjas|scholar|mentee|melo-diak|mind-diak|eudiakok|working student|werkstudent|student worker|career starter|young professional|management trainee|graduate program|rotational program";
 const compiledExplicitJunior = new RegExp(huBoundaryStart + '(' + juniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
-// Kivéve a tiltólistás egészségügyi szakmák (orvos, ápoló, gyógyszerész stb.), hogy ne minősüljenek irodainak
 const whiteCollarWords = "asszisztens|adminisztrátor|referens|munkatárs|tanácsadó|szakértő|specialista|koordinátor|tervező|fejlesztő|mérnök|elemző|kutató|tanár|oktató|pedagógus|ügyintéző|képviselő|támogatás|ügyfélszolgálat|szerkesztő|író|könyvelő|kontroller|auditor|értékesítő|marketinges|hr|toborzó|programozó|jogász|ügyvéd|építész|animátor|grafikus|készítő|felelős|ügyvédjelölt|oktatásszervező|menedzser|assistant|administrator|clerk|representative|associate|advisor|consultant|specialist|coordinator|designer|developer|engineer|analyst|researcher|teacher|educator|instructor|tutor|agent|support|customer service|editor|writer|copywriter|accountant|controller|auditor|sales|marketing|recruiter|programmer|architect|animator|graphic|creator|officer|executive|planner|buyer|purchaser|strategist|scientist|lawyer|legal|counsel|személyügyi|pénzügyi|bookkeeper|paralegal|sourcer|talent acquisition|ux|ui|seo|ppc|vlogger|blogger|social media|pr|szóvivő|spokesperson|jogtanácsos|pszichológus|gépészmérnök|villamosmérnök|vegyészmérnök|mechatronikai|építőmérnök|építészmérnök|laboráns|data scientist|adatelemző|business analyst|üzleti elemző|financial analyst|kockázatelemző|underwriter|actuarial|aktuárius|újságíró|riporter|tudósító|tolmács|fordító|logisztikus|fuvarszervező|beszerző|journalist|reporter|translator|interpreter|logistician|scrum master|product owner|agile coach|product manager|project manager|projektmenedzser|tesztelő|tester|qa|quality assurance|minőségbiztosítás|helpdesk|üzemeltető|sysadmin|rendszergazda|titkár|secretary|recepciós|receptionist|front office|back office|front-office|back-office|bankár|banker|teller|szervező|organizer|könyvtáros|librarian|modellező|modeler|statisztikus|statistician|ügyfélkapcsolati|térképész|urbanista|szociológus|múzeológus|kurátor|producer|rendező|operatőr|vágó|hangmérnök|világosító|stewardess|légiutaskísérő|meteorológus|geológus|biológus|vegyész|fizikus|matematikus|csillagász|régész|történész|filozófus|nyelvész|irodalmár|teológus|prompt engineer|ai engineer|data engineer|cloud engineer|devops|vámügyintéző|speditőr|vállalkozó|freelancer|bérszámfejtő|számlázó|vámszakértő|adatbázis|telemarketing|piackutató|biztosítás|hitelbíráló|data annotator|ai trainer|kárrendező|payroll|billing|claims|pricing|árazási|purchasing|supply chain|ellátási lánc|compliance|megfelelőségi|attorney|alkalmazott|sdr|bdr|sales development|key account|kam|customer success|ügyfélélmény|köztisztviselő|kormánytisztviselő|ügykezelő|business developer|sales support|sales operations|employer branding|content creator|rendszerszervező|network engineer|biztonsági elemző|clinical research|klinikai kutató|mlops|secops|biztonságtechnikai|hálózat|network administrator|systems engineer|growth hacker|demand generation|seo specialist|ppc specialist|motion designer|video editor|content manager";
 const compiledWhiteCollarRoles = new RegExp(huBoundaryStart + '(' + whiteCollarWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -139,6 +134,14 @@ const bypassExperienceRegex = /(?:tapasztalat nem elvárás|tapasztalat nem felt
 
 const niceToHaveKeywords = ["előny", "plusz", "nice to have", "nem elvárás", "nem feltétel", "plussz", "örülünk", "bónusz", "kiváló, ha", "ideális", "advantage", "plus", "preferred", "optional", "welcome", "beneficial", "asset", "szívesen látjuk", "desirable", "not required", "nice-to-have"];
 const niceToHaveRegex = new RegExp(`(${niceToHaveKeywords.join('|')})`, 'gi'); 
+
+// 🔥 ÚJ: EDUKÁCIÓS VÉDVONAL (Academic Guard) SZÓTÁRAI 🔥
+const lowEduWords = "8 általános|nyolc általános|alapfokú végzettség|végzettség nem elvárás|iskolai végzettség nélkül|szakképzettséget nem|képzettséget nem|betanított|érettségi nem feltétel";
+const compiledFatalLowEdu = new RegExp(huBoundaryStart + '(' + lowEduWords + ')' + huSuffixes + huBoundaryEnd, 'i');
+
+const academicWords = "diploma|diplomás|felsőfokú|egyetem|egyetemi|főiskola|főiskolai|bachelor|master|alapképzés|mesterképzés|phd|szakirány|szakirányú|szakképzettség|technikum|okj|hallgatói jogviszony|megkezdett tanulmányok|folyamatban lévő|felsőoktatási|szakképesítés|szakképzés|hallgató|student|degree|university|college|higher education|qualification|certification";
+const compiledAcademicReq = new RegExp(huBoundaryStart + '(' + academicWords + ')' + huSuffixes + huBoundaryEnd, 'i');
+const compiledStrictDegrees = /\b(bsc|msc|ba|ma|phd)\b/i;
 
 const compiledCategories = {
     "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops|üzemeltető|frontend|backend|fullstack|qa|tester|scrum|agile|kiberbiztonság|cybersecurity)/gi,
@@ -163,7 +166,7 @@ const compiledVibes = {
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba)/gi;
 
 // ============================================================================
-// 🚀 2. V51.0 AHO-CORASICK OMNI-TRIE ENGINE (ALGORITHMIC APEX)
+// 🚀 2. V52.0 AHO-CORASICK OMNI-TRIE ENGINE
 // ============================================================================
 
 const PreCompiledEngines = {
@@ -401,7 +404,7 @@ function initBM25IDF() {
 initBM25IDF(); 
 
 // ----------------------------------------------------------------------------
-// SEGÉDFÜGGVÉNYEK (Érintetlen kimeneti logika)
+// SEGÉDFÜGGVÉNYEK
 // ----------------------------------------------------------------------------
 function parseSalary(text) {
     const salaryRegex = /(?:(bruttó|br\.|nettó|net\.|gross|net)\s*)?(?:€|eur\s*)?(\d{1,3}(?:[\s\.]\d{3})*|\d{1,4}[kmM])(?:\s*-\s*(?:€|eur\s*)?(\d{1,3}(?:[\s\.]\d{3})*|\d{1,4}[kmM]))?\s*(ft|huf|eur|€|euro)?(?:\s*\/\s*(óra|hó|hónap|év|hour|month|year))?/i;
@@ -593,7 +596,7 @@ function generateTLDR(companyName, jobNature, faculty, locationArray, workSetupA
 }
 
 // ============================================================================
-// 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA (V51.0 AHO-CORASICK)
+// 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA 
 // ============================================================================
 exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen Cég") {
     const perfMarks = {};
@@ -628,6 +631,20 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
 
     mark('guard_start');
     if (detectScamAndMLM(fullText)) return null; 
+
+    // 🔥 EDUKÁCIÓS VÉDVONAL START 🔥
+    if (compiledFatalLowEdu.test(fullText)) return null; // 8 általános, nincs elvárás -> KUKA
+
+    const isExplicitStudentOrIntern = /\b(diák|diákmunka|gyakornok|intern|internship|trainee|hallgató|student|diákszövetkezet|iskolaszövetkezet|melo-diak|mind-diak|eudiakok)\b/i.test(fullText) || 
+                                      /kötelező (szakmai )?gyakorlat|gyakorlat( le)?igazolás|mandatory internship/i.test(fullText) || 
+                                      /aktív( nappali)? (hallgatói )?jogviszony|nappali tagozat|active student/i.test(fullText);
+
+    const hasAcademicDegree = compiledAcademicReq.test(fullText) || compiledStrictDegrees.test(fullText);
+
+    if (!isExplicitStudentOrIntern && !hasAcademicDegree) {
+        return null; // Nem diák/gyakornok, és nincs egyetemi/szakirányú elvárás -> KUKA
+    }
+    // 🔥 EDUKÁCIÓS VÉDVONAL END 🔥
 
     const isExplicitJuniorTitle = compiledExplicitJunior.test(cleanTitle);
     const isExplicitJuniorText = compiledExplicitJunior.test(fullText);

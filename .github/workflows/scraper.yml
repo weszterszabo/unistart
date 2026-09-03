@@ -2,16 +2,21 @@ name: 🚀 Omni-Sentient Scraper & AI Training
 
 on:
   schedule:
-    # Minden hajnalban 3:00-kor fut le (UTC idő szerint)
-    - cron: '0 3 * * *'
+    # ---------------------------------------------------------------------------------
+    # VÁLASZD KI AZ IDEÁLIS TEMPÓT (Most a 2 óránkénti van beállítva):
+    # - cron: '*/30 * * * *'       <-- Félóránként (NEM AJÁNLOTT, tiltást okozhat!)
+    # - cron: '0 */2 * * *'        <-- Minden 2. órában (Intenzív Tréning, napi 12x)
+    # - cron: '0 */4 * * *'        <-- Minden 4. órában (A Legjobb Balansz, napi 6x)
+    # - cron: '0 6,12,18,22 * * *' <-- Napi 4x célzottan (Reggel, Délben, Este, Éjjel)
+    # ---------------------------------------------------------------------------------
+    - cron: '0 */2 * * *'
   workflow_dispatch: 
-    # Ez tesz be egy "Run workflow" gombot a GitHubra, hogy kézzel is el tudd indítani!
 
 jobs:
   scrape_and_train:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Szükséges, hogy a robot tudjon pusholni a repódba!
+      contents: write 
 
     steps:
       - name: 📥 Kód és AI Memória letöltése
@@ -23,12 +28,10 @@ jobs:
           node-version: '20'
 
       - name: 📦 Függőségek telepítése
-        # Csak azokat a csomagokat telepíti, amik kellenek a scrapernek és az analyzernek
         run: npm install cheerio firebase-admin
 
       - name: 🧠 Scraper futtatása és AI Tréning
         env:
-          # A Firebase kulcsot biztonságosan adjuk át (lásd 2. lépés)
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
         run: node scraper.js
 
@@ -37,9 +40,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Hozzáadjuk a megváltozott fájlokat (az AI agyát és a kimenetet)
           git add jobs.json brain.json AI_TUDASBAZIS_JAVASLATOK.md kiszurt_allasok.txt
           
-          # A [skip ci] fontos, hogy a push ne indítson el egy végtelen láncreakciót!
-          git commit -m "🤖 AI Napi Tanulás & Adatbázis Frissítés [skip ci]" || echo "Nincs új megtanult adat, nincs mit menteni."
+          git commit -m "🤖 AI Intenzív Tanulás & Adatbázis Frissítés [skip ci]" || echo "Nincs új megtanult adat, nincs mit menteni."
           git push

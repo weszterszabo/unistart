@@ -1,67 +1,45 @@
-name: Napi Allasszinkronizacio
+name: 🚀 Omni-Sentient Scraper & AI Training
 
 on:
   schedule:
-    # 🕒 Figyelem: A cron UTC időzónában fut! 
-    # UTC 02:00 = Magyarországon (CET) télen 03:00, nyáron (CEST) 04:00.
-    - cron: '0 2 * * *'
-  workflow_dispatch:
-
-# 🛑 Konkurencia védelem: Megakadályozza, hogy két scraper egyszerre fusson
-concurrency:
-  group: scraper-pipeline
-  cancel-in-progress: false
+    # Minden hajnalban 3:00-kor fut le (UTC idő szerint)
+    - cron: '0 3 * * *'
+  workflow_dispatch: 
+    # Ez tesz be egy "Run workflow" gombot a GitHubra, hogy kézzel is el tudd indítani!
 
 jobs:
-  run-scraper:
+  scrape_and_train:
     runs-on: ubuntu-latest
-    
-    # 🔐 Kifejezett írási jog a GitHub Actions számára, hogy fel tudja tölteni a JSON-t
     permissions:
-      contents: write
-    
-    # ⏱️ Költség- és Végtelen ciklus védelem (Hard Limit)
-    timeout-minutes: 35 
+      contents: write # Szükséges, hogy a robot tudjon pusholni a repódba!
 
     steps:
-      - name: 📥 Checkout repository
+      - name: 📥 Kód és AI Memória letöltése
         uses: actions/checkout@v4
 
-      - name: ⚙️ Setup Node.js
+      - name: 🟢 Node.js beállítása
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # ⚡ Csomagok gyorsítótárazása
 
-      - name: 📦 Install dependencies
-        # Ha van package.json, ez a legbiztonságosabb telepítés
-        run: npm ci 
+      - name: 📦 Függőségek telepítése
+        # Csak azokat a csomagokat telepíti, amik kellenek a scrapernek és az analyzernek
+        run: npm install cheerio firebase-admin
 
-      - name: 🚀 Run UniStart scraper
+      - name: 🧠 Scraper futtatása és AI Tréning
         env:
+          # A Firebase kulcsot biztonságosan adjuk át (lásd 2. lépés)
           FIREBASE_SERVICE_ACCOUNT_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_KEY }}
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          TZ: 'Europe/Budapest'
-        # A fő vezérlő fájl futtatása (a kódod alapján scraper.js-nek hívtuk)
         run: node scraper.js
 
-      - name: 💾 Friss jobs.json feltöltése a GitHubra
+      - name: 💾 AI Memória és Eredmények mentése (Auto-Push)
         run: |
-          git config --global user.name 'UniStart Bot'
-          git config --global user.email 'bot@unistart.hu'
-          git add jobs.json
-          # A [skip ci] megakadályozza az Action esetleges végtelen újraindulását
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🤖 Automatikus állás frissítés [skip ci]" && git push)
-
-      - name: 🚨 Vészjelzés küldése Discordra/Slackre (Csak ha Hiba történt)
-        # Ez a lépés csak akkor fut le, ha a korábbiak közül valamelyik elhasalt
-        if: failure()
-        env:
-          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        run: |
-          if [ -n "$DISCORD_WEBHOOK_URL" ]; then
-            curl -H "Content-Type: application/json" \
-            -d '{"content": "🚨 **KRITIKUS HIBA:** A napi GitHub Actions scraper (UniStart) összeomlott vagy időtúllépést okozott! Kérlek, nézd meg a logokat a GitHubon."}' \
-            $DISCORD_WEBHOOK_URL
-          fi
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Hozzáadjuk a megváltozott fájlokat (az AI agyát és a kimenetet)
+          git add jobs.json brain.json AI_TUDASBAZIS_JAVASLATOK.md kiszurt_allasok.txt
+          
+          # A [skip ci] fontos, hogy a push ne indítson el egy végtelen láncreakciót!
+          git commit -m "🤖 AI Napi Tanulás & Adatbázis Frissítés [skip ci]" || echo "Nincs új megtanult adat, nincs mit menteni."
+          git push

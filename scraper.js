@@ -333,7 +333,7 @@ const GeoGuard = {
     init: function() {
         if (!this.compiledMatrix) { this.compiledMatrix = new RegExp(`\\b(${this.blacklist.join('|')})\\b`, 'i'); }
     },
-    normalizeString: function(str) {
+   normalizeString: function(str) {
         const cached = this.normalizationCache.get(str); if (cached) return cached;
         const norm = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
         this.normalizationCache.set(str, norm); return norm;
@@ -348,15 +348,36 @@ const GeoGuard = {
         const isRemote = /remote|távmunka|tavmunka|home office|wfh/i.test(cleanLoc);
         const isHybrid = /hybrid|hibrid/i.test(cleanLoc);
 
+        // 🔥 EXTRA TISZTÍTÁS: Emojik, Cégformák és Zavaró szavak törlése
+        cleanLoc = cleanLoc.replace(/📍|🏢|📌|[\u200B-\u200D\uFEFF]/g, '');
+        cleanLoc = cleanLoc.replace(/\b(Zrt\.?|Kft\.?|Nyrt\.?|Bt\.?|Inc\.?|Ltd\.?|GmbH|Kutatás és fejlesztés|Központ|Részleg|Osztály|Group)\b/gi, '');
         cleanLoc = cleanLoc.replace(/\b\d{4}\b/g, ''); 
         cleanLoc = cleanLoc.replace(/\b([IVXLCDM]+)\.?\s*ker(?:ület)?\.?/gi, ''); 
         cleanLoc = cleanLoc.replace(/(Hungary|Magyarország|Magyarorszag|\bHU\b)/gi, ''); 
 
+        // 🔥 DARABOLÁS ÉS DUPLIKÁCIÓ SZŰRÉS (Győr, , , Győr -> Győr)
+        let locParts = cleanLoc.split(',')
+            .map(p => p.trim())
+            .filter(p => p.length > 1); // Csak értelmes szavakat hagy meg (az üres vesszők kiesnek)
+            
+        // Kiszűrjük a cégneveket a helyszínből, ha bent maradtak volna
+        locParts = locParts.filter(p => !/audi|bosch|telekom|otp|lidl|bonafarm/i.test(p));
+        
+        locParts = [...new Set(locParts)]; // Egyedi értékek megtartása (Deduplikáció)
+        cleanLoc = locParts.join(', ');
+
+        // Hibrid / Távmunka logikák beállítása
         if (isRemote && isHybrid) cleanLoc = "Hibrid / Távmunka";
         else if (isRemote) cleanLoc = "Távmunka";
-        else if (isHybrid) { cleanLoc = cleanLoc.replace(/hybrid|hibrid/gi, '').trim(); cleanLoc = cleanLoc ? `${cleanLoc} (Hibrid)` : "Hibrid"; }
+        else if (isHybrid) { 
+            cleanLoc = cleanLoc.replace(/hybrid|hibrid/gi, '').trim(); 
+            cleanLoc = cleanLoc.replace(/^[,.\s\-–/]+|[,.\s\-–/]+$/g, '').trim();
+            cleanLoc = cleanLoc ? `${cleanLoc} (Hibrid)` : "Hibrid"; 
+        }
 
         if (/budapest/i.test(cleanLoc)) cleanLoc = cleanLoc.includes("Hibrid") ? "Budapest (Hibrid)" : "Budapest";
+        
+        // Végső vessző és szóköz takarítás
         cleanLoc = cleanLoc.replace(/^[,.\s\-–/]+|[,.\s\-–/]+$/g, '').replace(/\s{2,}/g, ' ').trim();
         
         if (!cleanLoc || cleanLoc.length === 0) cleanLoc = "Magyarország";

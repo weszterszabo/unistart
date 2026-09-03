@@ -91,10 +91,14 @@ async function processInBatches(items, batchSize, asyncFn) {
   return results;
 }
 
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral)
+// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral + URL PARAMÉTER MEGŐRZÉS)
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
+    
+    // 🔥 ÚJ: URL Paraméterek kimentése (pl. ?locationsearch=Hungary)
+    let originalParams = new URLSearchParams();
+    try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
         const html = await fetchSafe(base, { headers: HEADERS }, 15000);
@@ -112,9 +116,13 @@ async function discoverSearchUrl(baseUrl) {
 
         if (bestLink) {
             let resolved = bestLink.startsWith('http') ? bestLink : new URL(bestLink, base).href;
-            resolved = resolved.split('?')[0]; 
-            console.log(`   💡 [SAP] Szonár találat: ${resolved}`);
-            return resolved;
+            const resolvedUrlObj = new URL(resolved.split('?')[0]);
+            
+            // 🔥 Visszafűzzük a letépett keresési paramétereket az új végpontra!
+            originalParams.forEach((val, key) => resolvedUrlObj.searchParams.set(key, val));
+            
+            console.log(`   💡 [SAP] Szonár találat: ${resolvedUrlObj.toString()}`);
+            return resolvedUrlObj.toString();
         }
     } catch (e) {
         console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot (${e.message}). Váltás bruteforce-ra...`);
@@ -129,20 +137,30 @@ async function discoverSearchUrl(baseUrl) {
     ];
 
     for (let path of pathsToTry) {
-        let testUrl = base + path;
+        let testUrlObj;
+        try {
+            testUrlObj = new URL(base.split('?')[0] + path);
+            originalParams.forEach((val, key) => testUrlObj.searchParams.set(key, val));
+        } catch(e) { continue; }
+        
+        let testUrl = testUrlObj.toString();
         try {
             await fetchSafe(testUrl, { method: 'GET', headers: HEADERS }, 5000);
             return testUrl; 
         } catch (e) { continue; }
     }
 
-    return base + "/search/"; 
+    const defaultUrlObj = new URL(base.split('?')[0] + "/search/");
+    originalParams.forEach((val, key) => defaultUrlObj.searchParams.set(key, val));
+    return defaultUrlObj.toString();
 }
 
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SAP] Phantom-DeepScrape letöltése indul...`);
   const allJobs = [];
   const seenUrls = new Set();
+  
+  knownUrls.forEach(url => seenUrls.add(url));
   
   let startrow = 0;
   const step = 25; 
@@ -158,6 +176,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         const urlObj = new URL(searchBaseUrl);
         if (!urlObj.searchParams.has('sortColumn')) urlObj.searchParams.append('sortColumn', 'referencedate');
         if (!urlObj.searchParams.has('sortDirection')) urlObj.searchParams.append('sortDirection', 'desc');
+        // Kiemelten fontos a magyar lokalizáció kérése:
         if (!urlObj.searchParams.has('locale')) urlObj.searchParams.append('locale', 'hu_HU');
         
         urlObj.searchParams.set('startrow', startrow.toString());
@@ -185,11 +204,19 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         let text = $(el).text().trim().replace(/\s+/g, ' ');
         text = text.replace(/\s*\([m|f|d|w|x|n|\/]+\)\s*/gi, ' ').trim();
 
+        // 🔥 ELŐ-LOKÁTOR: Megkeressük a link melletti spant a helyszínnel
+        let preLoc = $(el).closest('tr, li, .job-tile').find('.jobFacility, .jobLocation, .location, span.jobLocation').text().trim();
+
         // 🔭 UNIVERZÁLIS REGEX
         if (href && (href.match(/\/(job|position|career|JobDetail|opportunities|jobs)\//i) || href.match(/jobid=/i)) && text.length > 5) {
+          
+          // 🔥 GYÖKÉR-SZŰRŐ: Ha balkáni szó van a címben vagy a helyszínben, AZONNAL ELDOBJUK
+          if (/\b(m\/ž|za|odnose|mjesto|klijentima|poslovalnici|persoane|serviciu|prihvatom|svetovalec|radno|suradnik)\b/i.test(text)) return;
+          if (/(croatia|slovenia|romania|italy|slovakia|serbia|hrvatska)/i.test(preLoc)) return;
+
           let cleanHref = href.startsWith('http') ? href : new URL(href, currentUrl).href;
           cleanHref = cleanHref.split('?')[0]; 
-          pageLinks.push({ title: text, url: cleanHref });
+          pageLinks.push({ title: text, url: cleanHref, preLoc: preLoc });
         }
       });
 
@@ -197,9 +224,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       const uniqueOnPage = pageLinks.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
       const jobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
-      // HA NINCS TÖBB VALID LINK AZ OLDALON, AKKOR ÁLLUNK MEG
       if (jobsToProcess.length === 0) {
-        console.log(`   ⏹️ [SAP] Nincs több érvényes állás az oldalon.`);
+        console.log(`   ⏹️ [SAP] Nincs több érvényes/új állás az oldalon.`);
         hasMore = false;
         break;
       }
@@ -210,7 +236,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (3 szálon)...`);
       
       const processedJobs = await processInBatches(jobsToProcess, 3, async (job) => {
-          const details = await getDeepDetails(job.url);
+          // 🔥 ÁTADJUK AZ ELŐ-LOKÁTORT A RÉSZLETEZŐ FÜGGVÉNYNEK
+          const details = await getDeepDetails(job.url, job.preLoc);
           if (!details) {
               process.stdout.write(`❌ `);
               return null;
@@ -278,21 +305,20 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 };
 
 // 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TITÁNIUM VÉDELEMMEL
-async function getDeepDetails(jobUrl) {
+// 🔥 ELFOGADJA AZ ELŐ-LOKÁTORT (preLoc)
+async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
-  const maxRetries = 3; // 🔥 3 újrapróbálkozás!
+  const maxRetries = 3; 
 
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          // 🔥 20 másodperces maximális türelmi idő aloldalanként!
           resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 20000);
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
-          // 🔥 Hosszú pihenő újrapróbálkozás előtt (2-3.5 másodperc)
           await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
       }
   }
@@ -304,6 +330,7 @@ async function getDeepDetails(jobUrl) {
     let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: "", salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
+    // 1. Megpróbáljuk kinyerni a JSON-LD-ből a helyszínt!
     $('script[type="application/ld+json"]').each((i, el) => {
         try {
             const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
@@ -312,7 +339,21 @@ async function getDeepDetails(jobUrl) {
                 if (item['@type'] === 'JobPosting') {
                     if (item.datePosted) details.datePosted = item.datePosted;
                     if (item.employmentType) details.employment_type = Array.isArray(item.employmentType) ? item.employmentType.join(", ") : item.employmentType;
-                    if (item.jobLocation && item.jobLocation.address && item.jobLocation.address.addressLocality) details.location = item.jobLocation.address.addressLocality;
+                    
+                    // JSON-LD Helyszín kivonás
+                    if (item.jobLocation) {
+                        const locs = Array.isArray(item.jobLocation) ? item.jobLocation : [item.jobLocation];
+                        const locParts = [];
+                        locs.forEach(l => {
+                            if (l.address) {
+                                if (l.address.addressLocality) locParts.push(l.address.addressLocality);
+                                if (l.address.addressRegion) locParts.push(l.address.addressRegion);
+                                if (l.address.addressCountry) locParts.push(l.address.addressCountry);
+                            }
+                        });
+                        if (locParts.length > 0) details.location = locParts.join(", ");
+                    }
+                    
                     if (item.baseSalary) details.salary = JSON.stringify(item.baseSalary);
                     if (item.description) schemaDescription = item.description; 
                 }
@@ -333,14 +374,32 @@ async function getDeepDetails(jobUrl) {
         } catch (e) { details.datePosted = new Date().toISOString(); }
     }
 
+    // 2. Ha nincs JSON-LD, megpróbáljuk a HTML-t
     if (!details.location) {
         let locFound = $('.jobGeoLocation, .job-location, .location, span[itemprop="jobLocation"], span[itemprop="addressLocality"]').first().text().trim();
         if (locFound && locFound.length < 80) {
             locFound = locFound.replace(/\n/g, ' ').replace(/\s+/g, ' ');
             locFound = locFound.replace(/\bHU\b/gi, '').replace(/\bHungary\b/gi, '').replace(/\bMagyarország\b/gi, '').replace(/\b\d{4}\b/g, '');
             details.location = locFound.replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim();
-            if (details.location === "") details.location = "Magyarország";
         }
+    }
+
+    // 3. Ha még mindig nincs, használjuk a Keresőből kimentett Elő-Lokátort!
+    if (!details.location && preLoc) {
+        details.location = preLoc;
+    }
+
+    // 🔥 VÉGSŐ GYÖKÉR-SZŰRŐ: Ha a megtalált helyszín külföldi, AZONNAL ELDOBJUK!
+    if (details.location && /(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) {
+        return null; 
+    }
+
+    // Takarítás a szövegen (de az országnevet MEGHAGYJUK a fő scraper.js GeoGuard-ja miatt!)
+    if (details.location) {
+        details.location = details.location.replace(/\n/g, ', ').replace(/\s+/g, ' ').trim();
+        if (details.location === "") details.location = "Magyarország";
+    } else {
+        details.location = "Magyarország"; // Ha végképp semmi sincs
     }
 
     let depFound = $('.jobDepartment, .department, .category, .jobFacility, span[itemprop="occupationalCategory"]').first().text().trim();

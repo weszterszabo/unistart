@@ -409,7 +409,6 @@ class JobRecordPool {
     release(record) { this.pool[++this.freeIndex] = record; }
 }
 const globalJobPool = new JobRecordPool(5000);
-
 function sanitizeAndScoreJob(rawJobInput, companyName) {
     try {
         const rawJob = DataSchemaGuard.validate(rawJobInput);
@@ -417,11 +416,29 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
 
         const stripHtml = (str) => str.replace(/<[^>]*>?/gm, '').replace(/\s+/g, ' ').trim();
         const rawLocStr = stripHtml(rawJob.location);
-        const geoResult = GeoGuard.processLocation(rawLocStr);
+        const rawTitleStr = stripHtml(rawJob.title);
+        
+        let geoResult = GeoGuard.processLocation(rawLocStr);
+
+        // 🔥 ÚJ: 3D Külföld-Szkenner (Cím, URL és Nyelv alapján is ellenőriz)
+        let isForeign = !geoResult.isValid;
+        
+        if (!isForeign) {
+            // 1. Megnézzük a címet és az URL-t a tiltott városok/országok listájával
+            const checkStr = GeoGuard.normalizeString(rawTitleStr + " " + rawJob.url.replace(/[-_]/g, ' '));
+            if (GeoGuard.compiledMatrix.test(checkStr)) {
+                isForeign = true;
+            }
+            
+            // 2. Kiszűrjük a balkáni/román speciális toborzási szavakat a címből
+            if (/\b(m\/ž|za|odnose|radno|mjesto|klijentima|poslovalnici|persoane|serviciu|prihvatom|svetovalec|suradnik)\b/i.test(rawTitleStr)) {
+                isForeign = true;
+            }
+        }
 
         const cleanJob = globalJobPool.acquire();
         cleanJob.company_name = companyName;
-        cleanJob.title = stripHtml(rawJob.title) || "";
+        cleanJob.title = rawTitleStr || "";
         cleanJob.location = geoResult.cleanLoc;
         cleanJob.url = rawJob.url;
         cleanJob.apply_url = rawJob.apply_url;
@@ -453,7 +470,7 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
         cleanJob.data_signature = crypto.createHmac('sha256', SYSTEM_SECRET).update(cleanJob.data_hash).digest('hex');
 
         let score = 100;
-        if (!geoResult.isValid) score -= 100; 
+        if (isForeign) score -= 100; // 💥 Ha külföldi, azonnal nullázza a pontot!
         if (!cleanJob.title || cleanJob.title.toLowerCase().includes("teszt") || cleanJob.title.toLowerCase().includes("test")) score -= 100; 
         if (!cleanJob.url) score -= 100; 
         if (cleanJob.title === cleanJob.title.toUpperCase()) { cleanJob.title = cleanJob.title.charAt(0) + cleanJob.title.slice(1).toLowerCase(); score -= 10; }

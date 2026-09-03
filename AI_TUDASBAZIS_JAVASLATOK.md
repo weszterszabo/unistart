@@ -1,13 +1,13 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 03. 22:09:33
+🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 03. 22:10:23
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
 - Dinamikus Szigorúság (Threshold): **50.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.5000** (Evolúciós ráta: 0.01)
-- Piac Elutasítási Aránya (Rejection Rate): **1075.0%**
+- Piac Elutasítási Aránya (Rejection Rate): **1101.0%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
 - **Ismeretlen Cég** (Kiírt állások: 174) | HR Zsargon Átlag: 0.0 | ✅ Egészséges

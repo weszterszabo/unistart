@@ -9821,3 +9821,240 @@
 🏢 Ismeretlen Cég | 📌 csőszerelő, előszerelés csoportvezető
    ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
 
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - barcs, erkel ferenc utca 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siklós, szent istván tér 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- szigetvár , almás patak utca 5.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagyatád és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, málomi út 3.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, siklósi út 52/a.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lázár vilmos utca 10.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagykanizsa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, puskin tér 22.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - baja, balcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, platán sor 6/a
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, átkötő u. 3.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, sopron u. 43.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, tapolcai u. 45/a.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - körmend, remetei filep u. 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - körmend, dr. remetei filep utca 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes-fonyód , ady endre utca 57-59.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- fonyód és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fonyód, ady endre u. 57-59.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tamási, deák ferenc u. 10/a.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tamási, deák ferenc u. 10/a
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - tapolca, veszprémi út 1.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tapolca
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, kenyérvíz u. 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, zanati u. 42.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kalocsa, pataji út 31.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, verseny u. 30.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siófok, zamárdi u. 1-2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - ajka, hársfa utca 1/a
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - ajka, hársfa u. 1/a.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - ajka és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - makó, f184 szegedi u. 63.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kiskőrös, kossuth utca 13.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - sárbogárd, ady e. utca 232-236.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - balatonfűzfő, vízmű u. 1.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - solt, kossuth lajos utca 4.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - pápa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pápa, jókai mór u. 57.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - várpalota, hétvezér út 3.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, velinszky utca 1.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, magyar út 11.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - sopron, lófuttató utca 4.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - sopron és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, bánfalvi u. 12.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, lófuttató u. 4.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó  kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - hűtött területen - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - baranya-tolna megye
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - csongrád-csanád megye
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - békés megye
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kapuvár, győri u. 60.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - székesfehérvár, farkasvermi köz 1.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - székesfehérvár és környéke 60 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - székesfehérvár
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő hűtött területen - székesfehérvár
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs, friss hús áruösszekészítő - székesfehérvár
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- székesfehérvár és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőkovácsháza, árpád u. 135.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes agárd, akácfa utca 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- agárd, akácfa utca 2.
+   ❌ OK: Nem diákmunka, és nem kér se diplomát, se érettségit (Túl laza feltételek)
+

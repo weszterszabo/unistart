@@ -681,10 +681,7 @@
       line-height: 1.5; 
       pointer-events: auto; 
       font-weight: 600; 
-      transition: color var(--transition-fast); 
     }
-    
-    @media (hover: hover) { .company-short-desc:hover { color: var(--text-color); } }
 
     .job-tags { display: flex; flex-wrap: wrap; gap: 8px; pointer-events: auto; }
     .job-tag { background: var(--tag-bg); color: var(--text-color); border: 1px solid var(--tag-border); padding: 6px 12px; border-radius: var(--radius-pill); font-size: 12px; font-weight: 700; transition: all var(--transition-fast); }
@@ -2501,7 +2498,7 @@
             card.innerHTML = `
                 <div class="company-card-content">
                     <h3 class="company-name">${jobTitle}</h3>
-                    <p class="company-short-desc" onclick="addTagToSearch('${job.company_name || ''}', event)" title="Cég összes állása">${companyName}</p>
+                    <p class="company-short-desc">${companyName}</p>
                     <div class="job-tags">
                         ${locTag}${dPosted}${facultyTag}${vibeTag}${microTags}
                     </div>

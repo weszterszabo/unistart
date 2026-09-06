@@ -1,19 +1,12 @@
 const https = require('https');
-const dns = require('dns');
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🔥 A VARÁZSLAT: ERŐLTETETT IPv4 AGENT
-// Mivel az állami (gov.hu) szerverek IPv6 beállítása hibás (ez okozza az ECONNRESET-et Mac-en),
-// arra kényszerítjük a kapcsolatot, hogy szigorúan IPv4-en kommunikáljon!
-const ipv4Agent = new https.Agent({
+// 🔥 TISZTÍTOTT AGENT (Nincs hibás DNS felülírás, csak sima Keep-Alive)
+const secureAgent = new https.Agent({
     keepAlive: true,
     maxSockets: 10,
-    rejectUnauthorized: false, // Állami lejárt SSL ignorálása
-    lookup: (hostname, options, callback) => {
-        // Szigorúan { family: 4 } = Csakis IPv4 IP címet kérünk a DNS-től!
-        dns.lookup(hostname, { family: 4 }, callback);
-    }
+    rejectUnauthorized: false // Állami lejárt SSL ignorálása
 });
 
 // 🛡️ BIZTONSÁGOS ÉS ÖNGYÓGYÍTÓ HTTPS KÉRÉS
@@ -25,8 +18,9 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                     hostname: 'kozszolgallas.ksz.gov.hu',
                     path: '/JobAd/GetJobAdCountFilteredByCities',
                     method: 'POST',
-                    agent: ipv4Agent,   // <-- Bevetjük az IPv4 Pajzsot
-                    timeout: 20000,     // 20 másodperc türelmi idő
+                    agent: secureAgent,
+                    family: 4, // <-- A MÁGIA ITT VAN: Natívan letiltja az IPv6-ot, ez megoldja az ECONNRESET-et!
+                    timeout: 20000, // 20 másodperc türelmi idő
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -41,7 +35,7 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                 const req = https.request(options, (res) => {
                     let data = '';
                     res.on('data', chunk => data += chunk);
-                    res.on('end', () => resolve({ status: res.statusCode, data }));
+                    res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, data }));
                 });
 
                 req.on('error', e => reject(e));
@@ -75,8 +69,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     const response = await fetchGovApiWithRetry(postData);
     
     // Tűzfal hibaoldal detektálása
-    if (response.data.includes("text/html") || response.data.includes("<html")) {
-        throw new Error("WAF / Tűzfal HTML blokkolás érzékelve!");
+    const contentType = response.headers['content-type'] || "";
+    if (contentType.includes("text/html") || response.data.includes("<html")) {
+        throw new Error("WAF / Tűzfal HTML blokkolás érzékelve! A szerver nem engedte be a kérést.");
     }
 
     const json = JSON.parse(response.data);
@@ -114,7 +109,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
       const rawDescription = `${department} ${workType} ${expLevel} ${job.JobCategoryName || ""} ${job.EmploymentTypeName || ""}`;
       
-      // Küldés a V84.0 OMNI-MASTER Agyba
+      // Küldés a V84-es OMNI-MASTER Agyba
       const analysis = analyzer.analyzeJob(title, rawDescription, companyName);
 
       // SZELLEMI KAPUŐR (health_score > 0)

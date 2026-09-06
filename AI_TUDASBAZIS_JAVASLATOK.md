@@ -1,20 +1,20 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 06. 8:05:06
+🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 06. 10:05:27
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
 - Dinamikus Szigorúság (Threshold): **70.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.9338** (Evolúciós ráta: 0.01)
-- Piac Elutasítási Aránya (Rejection Rate): **1044.4%**
+- Piac Elutasítási Aránya (Rejection Rate): **1034.3%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 5091) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **OTP Bank** (Kiírt állások: 116) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Telekom** (Kiírt állások: 93) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Aldi** (Kiírt állások: 155) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **K&H Bank** (Kiírt állások: 124) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 5215) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **OTP Bank** (Kiírt állások: 119) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Telekom** (Kiírt állások: 96) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Aldi** (Kiírt állások: 160) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **K&H Bank** (Kiírt állások: 128) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
 - **RÉSZVÉNY** (Sebesség mutató: +510.0%) 🔥
@@ -29,7 +29,7 @@ Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai param
 - **KÉPZÉS** (Sebesség mutató: +300.6%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
-- **ÖSSZES CÉG** (Látta: 64x)  | 🔗 Asszoc: [english, french, sap, home office] -> ⏳ Elemzés...
+- **ÖSSZES CÉG** (Látta: 66x)  | 🔗 Asszoc: [english, french, sap, home office] -> ⏳ Elemzés...
 - **II** (Látta: 50x)  -> ⏳ Elemzés...
 - **ÖSSZEFOGLALÓ** (Látta: 12x)  | 🔗 Asszoc: [english, sap, nyugdíjpénztár, cafeteria] -> ⏳ Elemzés...
 - **DOROG SZAKTERÜLET** (Látta: 4x)  | 🔗 Asszoc: [english, cafeteria, részvény, nyugdíjpénztár] -> ⏳ Elemzés...

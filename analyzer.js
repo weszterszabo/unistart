@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ============================================================================
-// 🧠 0. V81.0 OMNI-PROFESSION (PREDICTIVE AGI & UNIVERSAL WHITE-COLLAR CORE)
+// 🧠 0. V81.1 OMNI-PROFESSION (PREDICTIVE AGI & UNIVERSAL WHITE-COLLAR CORE)
 // ============================================================================
 const BRAIN_FILE_PATH = path.join(process.cwd(), "brain.json");
 const DISCOVERY_MD_PATH = path.join(process.cwd(), "AI_TUDASBAZIS_JAVASLATOK.md");
@@ -14,7 +14,7 @@ let brainDB = {
         total_parsed_jobs: 0, 
         total_rejected: 0,
         last_calibration: Date.now(), 
-        version: "81.0_OMNI_PROFESSION",
+        version: "81.1_OMNI_PROFESSION",
         avg_doc_length: 400,
         bm25_k1: 1.5,
         bm25_b: 0.75,
@@ -80,7 +80,7 @@ try {
 process.on('exit', () => {
     try {
         fs.writeFileSync(BRAIN_FILE_PATH, JSON.stringify(brainDB, null, 2), 'utf8');
-        let report = `\n======================================================\n🧠 UNI-START AI TUDÁSBÁZIS (V81.0 OMNI-PROFESSION) - ${new Date().toLocaleString('hu-HU')}\n======================================================\n`;
+        let report = `\n======================================================\n🧠 UNI-START AI TUDÁSBÁZIS (V81.1 OMNI-PROFESSION) - ${new Date().toLocaleString('hu-HU')}\n======================================================\n`;
         report += `Az MI prediktív elemzéseket futtatott, optimalizálta matematikai paramétereit, és frissítette a kognitív immunrendszerét.\n\n`;
 
         report += `### ⚙️ Auto-Tuning (Stochastic Gradient Descent)\n`;
@@ -274,7 +274,6 @@ const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])
 const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
 const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es|ja|je)?(?:val|vel)?(?:t|k)?";
 
-// 🔥 JAVÍTÁS: A 'manager' eltávolítva a senior szótárból
 const seniorWords = "senior|szenior|snr|sr\\.|medior|mid-level|mid level|mid\\b|head of|director|igazgató|expert|architect|chief|principal|főosztályvezető|osztályvezető|csapatvezető|team lead|tech lead|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|sme|subject matter expert|dékán|rektor|főorvos|főállatorvos|vezető ápoló|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer|supervisor|lead\\b";
 const compiledFatalSenior = new RegExp(huBoundaryStart + '(' + seniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -287,7 +286,7 @@ const compiledDubiousPhysical = new RegExp(huBoundaryStart + '(' + dubiousWords 
 const juniorWords = "diák|diákmunka|gyakornok|gyakornoki|intern|internship|trainee|traineeship|co-op|pályakezdő|pályakezdőket|pályaindító|karrierstart|kezdő|junior|entry-level|entry level|frissdiplomás|friss diplomás|diplomás|student|apprentice|graduate|fresh graduate|tanuló|szövetkezet|iskolaszövetkezet|diákszövetkezet|undergrad|undergraduate|pályakezdőknek|hallgató|ösztöndíjas|scholar|mentee|melo-diak|mind-diak|eudiakok|working student|werkstudent|student worker|career starter|young professional|management trainee|graduate program|rotational program|talent program";
 const compiledExplicitJunior = new RegExp(huBoundaryStart + '(' + juniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
-// 🔥 JAVÍTÁS: Univerzális Szellemi Munka kiterjesztés (Orvosok, Pedagógusok, Managerek is itt vannak!)
+// 🔥 JAVÍTÁS: Széleskörű Szellemi Munka kiterjesztés (Orvosok, Pedagógusok, Managerek is itt vannak!)
 const whiteCollarWords = "asszisztens|adminisztrátor|referens|munkatárs|tanácsadó|szakértő|specialista|koordinátor|intézményi koordinátor|szakmai munkatárs|szakügyintéző|tervező|fejlesztő|mérnök|elemző|kutató|tanár|tanító|oktató|pedagógus|óvodapedagógus|ügyintéző|képviselő|támogatás|ügyfélszolgálat|szerkesztő|író|könyvelő|kontroller|auditor|értékesítő|marketinges|hr|toborzó|programozó|orvos|szakorvos|háziorvos|ápoló|szakápoló|diplomás ápoló|gyógyszerész|jogász|ügyvéd|építész|animátor|grafikus|készítő|felelős|ügyvédjelölt|oktatásszervező|menedzser|manager|assistant|administrator|clerk|representative|associate|advisor|consultant|specialist|coordinator|designer|developer|engineer|analyst|researcher|teacher|educator|instructor|tutor|agent|support|customer service|editor|writer|copywriter|accountant|controller|auditor|sales|marketing|recruiter|programmer|architect|animator|graphic|creator|officer|executive|planner|buyer|purchaser|strategist|scientist|lawyer|legal|counsel|személyügyi|pénzügyi|bookkeeper|paralegal|sourcer|talent acquisition|ux|ui|seo|ppc|vlogger|blogger|social media|pr|szóvivő|spokesperson|jogtanácsos|pszichológus|terapeuta|laboráns|rezidens|mentőtiszt|védőnő|szülésznő|gépészmérnök|villamosmérnök|vegyészmérnök|mechatronikai|építőmérnök|építészmérnök|data scientist|adatelemző|business analyst|üzleti elemző|financial analyst|kockázatelemző|underwriter|actuarial|aktuárius|újságíró|riporter|tudósító|tolmács|fordító|logisztikus|fuvarszervező|beszerző|journalist|reporter|translator|interpreter|logistician|scrum master|product owner|agile coach|product manager|project manager|projektmenedzser|tesztelő|tester|qa|quality assurance|minőségbiztosítás|helpdesk|üzemeltető|sysadmin|rendszergazda|titkár|secretary|recepciós|receptionist|front office|back office|front-office|back-office|bankár|banker|teller|szervező|organizer|könyvtáros|librarian|modellező|modeler|statisztikus|statistician|ügyfélkapcsolati|térképész|urbanista|szociológus|múzeológus|kurátor|producer|rendező|operatőr|vágó|hangmérnök|világosító|stewardess|légiutaskísérő|meteorológus|geológus|biológus|vegyész|fizikus|matematikus|csillagász|régész|történész|filozófus|nyelvész|irodalmár|teológus|prompt engineer|ai engineer|data engineer|cloud engineer|devops|vámügyintéző|speditőr|vállalkozó|freelancer|bérszámfejtő|számlázó|vámszakértő|adatbázis|telemarketing|piackutató|biztosítás|hitelbíráló|data annotator|ai trainer|kárrendező|payroll|billing|claims|pricing|árazási|purchasing|supply chain|ellátási lánc|compliance|megfelelőségi|attorney|alkalmazott|sdr|bdr|sales development|key account|kam|customer success|ügyfélélmény|köztisztviselő|kormánytisztviselő|ügykezelő|business developer|sales support|sales operations|employer branding|content creator|rendszerszervező|network engineer|biztonsági elemző|clinical research|klinikai kutató|mlops|secops|biztonságtechnikai|hálózat|network administrator|systems engineer|growth hacker|demand generation|seo specialist|ppc specialist|motion designer|video editor|content manager|cloud architect|data protection officer|dpo";
 const compiledWhiteCollarRoles = new RegExp(huBoundaryStart + '(' + whiteCollarWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -319,9 +318,26 @@ const compiledCategories = {
 const compiledAntiCategories = { "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/gi };
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba|dunaújváros|hódmezővásárhely|salgótarján|baja|cegléd|esztergom|pápa|vác|váci|gödöllő|dunakeszi|budaörs|szigetszentmiklós|gyula|hajdúböszörmény|kiskunfélegyháza|orosháza|szentes|kazincbarcika|jászberény|kiskunhalas|hatvan|mosonmagyaróvár|tata|komárom|békés|szarvas|csongrád|tiszaújváros|kisvárda|törökszentmiklós|karcag|bonyhád|paks|szekszárd|esztergom)/gi;
 
+
 // ============================================================================
-// 🚀 2. OMNI-SENTIENT ENGINE & PERFORMANCE CACHE
+// 🚀 2. OMNI-SENTIENT ENGINE & FORDÍTÓ MÁTRIX (ÚJRA ITT)
 // ============================================================================
+
+// 🔥 ITT A HIÁNYZÓ FORDÍTÓ MÁTRIX 🔥
+const PreCompiledEngines = {
+    tone: Object.entries(toneDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    appFriction: Object.entries(appFrictionDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    careerPath: Object.entries(careerPathDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    transit: Object.entries(transitDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    interview: Object.entries(interviewDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    equipment: Object.entries(equipmentDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    relocation: Object.entries(relocationDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    hiddenReqs: Object.entries(hiddenReqsDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    urgency: Object.entries(urgencyDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    onboarding: Object.entries(onboardingDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    scam: Object.entries(scamDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    redFlag: Object.entries(redFlagDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') }))
+};
 
 class BloomFilter {
     constructor(size = 8192) { this.size = size; this.bitset = new Uint32Array(Math.ceil(size / 32)); }
@@ -581,7 +597,6 @@ function runQuantumTranscendenceDiscovery(text, companyName, knownTagsInJob, ass
         if (cleanWord.length < 2 || cleanWord.length > 40) return;
         const lowerWord = cleanWord.toLowerCase();
         
-        // 🚨 VÉDELEM: Immunrendszer és Beépített szótár ellenőrzése
         let isKnown = false;
         for (const tags of Object.values(structuredTagsDict)) {
             if (tags.some(t => t.toLowerCase() === lowerWord)) { isKnown = true; break; }

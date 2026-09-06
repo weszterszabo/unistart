@@ -1,75 +1,55 @@
 const cheerio = require("cheerio");
-const https = require("https");
-const http = require("http");
 const analyzer = require("../analyzer");
 
 const HEADERS = {
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
   "Upgrade-Insecure-Requests": "1",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  "Connection": "close" // 🔥 NINCS TÖBB KEEP-ALIVE ZOMBI SOCKET!
 };
 
-const secureAgent = new https.Agent({ keepAlive: true, maxSockets: 10, rejectUnauthorized: false });
+// ☢️ NUKLEÁRIS IZOLÁLT FETCH (MINDEN EDDIGINÉL ERŐSEBB)
+async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
+    const controller = new AbortController();
+    const id = setTimeout(() => controller.abort(), timeoutMs);
 
-// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ ÉS EXTRÉM RAM PAJZS
-async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
-    return new Promise((resolve, reject) => {
-        let isDone = false;
-        let req;
+    try {
+        const response = await fetch(targetUrl, { 
+            headers: HEADERS, 
+            signal: controller.signal,
+            redirect: 'follow' 
+        });
         
-        const watchdog = setTimeout(() => {
-            if (!isDone) {
-                isDone = true;
-                if (req && !req.destroyed) req.destroy(new Error('Hard Socket Timeout'));
-                reject(new Error('Kátránygödör Timeout'));
-            }
-        }, timeoutMs);
+        clearTimeout(id);
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        
+        // Letöltjük a teljes szöveget, de ha a szerver Tarpit támadást indít közben,
+        // a Promise.race kíméletlenül elvágja a torkát 5 másodperc után!
+        const textPromise = response.text();
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error('Body Stream Timeout')), 5000)
+        );
+        
+        const html = await Promise.race([textPromise, timeoutPromise]);
+        
+        // 🔥 RAM PAJZS: Azonnal levágjuk a VW 3 Megabájtos szemétkódját!
+        return html.length > 150000 ? html.substring(0, 150000) : html;
 
-        try {
-            const urlObj = new URL(targetUrl);
-            const client = urlObj.protocol === 'http:' ? http : https;
-            const options = { hostname: urlObj.hostname, path: urlObj.pathname + urlObj.search, method: 'GET', agent: secureAgent, headers: HEADERS };
-
-            req = client.request(options, (res) => {
-                if (res.statusCode >= 400) {
-                    if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); reject(new Error(`HTTP ${res.statusCode}`)); }
-                    return;
-                }
-
-                let data = '';
-                res.on('data', chunk => {
-                    data += chunk;
-                    // 🔥 EXTRÉM RAM VÉDELEM: 150 KB-nál könyörtelenül elvágjuk a letöltést!
-                    // A VW oldalak alján több MB felesleges JSON van, ezt sosem engedjük a memóriába!
-                    if (data.length > 150000) {
-                        if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
-                    }
-                });
-                res.on('end', () => {
-                    if (!isDone) { isDone = true; clearTimeout(watchdog); resolve(data); }
-                });
-            });
-
-            req.on('error', e => { if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); } });
-            req.end();
-        } catch (e) {
-            if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); }
-        }
-    });
+    } catch (error) {
+        clearTimeout(id);
+        throw error;
+    }
 }
 
-// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás + GC
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    
-    // Kényszerített GC minden batch után a memóriaszivárgás ellen!
     if (global.gc) global.gc();
-    await new Promise(r => setTimeout(r, 1000 + Math.random() * 500));
+    await new Promise(r => setTimeout(r, 1000));
   }
   return results;
 }
@@ -83,7 +63,7 @@ async function discoverSearchUrl(baseUrl) {
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        const html = await unbreakableFetchText(base, 10000);
+        const html = await unbreakableFetchText(base, 8000);
         const $ = cheerio.load(html);
         let bestLink = null;
 
@@ -139,11 +119,11 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const html = await unbreakableFetchText(currentUrl, 15000);
+      const html = await unbreakableFetchText(currentUrl, 10000);
       const $ = cheerio.load(html);
 
       if (html.toLowerCase().includes("just a moment") || html.toLowerCase().includes("cloudflare") || html.includes('id="cf-wrapper"')) {
-          throw new Error("WAF (Cloudflare/F5) Captcha blokkolás!");
+          throw new Error("WAF Captcha blokkolás!");
       }
       
       const pageLinks = [];
@@ -167,7 +147,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       if (jobsToProcess.length === 0) { console.log(`   ⏹️ [SAP] Nincs több új állás az oldalon.`); hasMore = false; break; }
       jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      // 🔥 RAM VÉDELEM 2: KIZÁRÓLAG 1 SZÁLON MEGYÜNK, hogy ne duplázzuk a memóriaterhelést!
       console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (1 szálon)...`);
       
       const processedJobs = await processInBatches(jobsToProcess, 1, async (job) => {
@@ -179,7 +158,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           
           let analysis = null;
           try {
-              // Egyszerű és biztos hívás. Az analyzer nem fagy le, mert a szöveget már 6000 karakternél levágtuk!
               analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
           } catch(e) { return null; }
 
@@ -216,22 +194,17 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - MEMÓRIABIZTOS, CPU-VÉDETT VERZIÓ
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TELJESEN BIZTONSÁGOS VERZIÓ
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
 
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
-  for (let attempt = 0; attempt <= 1; attempt++) {
-      try {
-          resHtml = await unbreakableFetchText(finalJobUrl, 10000);
-          break;
-      } catch (e) {
-          if (attempt === 1) return null; 
-          process.stdout.write(`⏳ `);
-          await new Promise(r => setTimeout(r, 1000));
-      }
+  try {
+      resHtml = await unbreakableFetchText(finalJobUrl, 6000); // Kőkemény 6 másodperces limit minden állásra!
+  } catch (e) {
+      return null; // Nincs retry. Ha a VW fagyaszt, azonnal kidobjuk az állást!
   }
 
   if (!resHtml) return null;
@@ -240,12 +213,10 @@ async function getDeepDetails(jobUrl, preLoc) {
     let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
-    // Mivel a resHtml már garantáltan KISEBB mint 150KB, a Cheerio biztonságosan és memóriaszivárgás nélkül le tud futni!
-    const $ = cheerio.load(resHtml);
-
-    $('script[type="application/ld+json"]').each((i, el) => {
+    const jsonLdMatches = [...resHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+    for (const match of jsonLdMatches) {
         try {
-            const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
+            const data = JSON.parse(match[1].replace(/[\u0000-\u0019]+/g,""));
             const items = Array.isArray(data) ? data : (data["@graph"] || [data]);
             items.forEach(item => {
                 if (item['@type'] === 'JobPosting') {
@@ -263,17 +234,18 @@ async function getDeepDetails(jobUrl, preLoc) {
                 }
             });
         } catch(e) {}
-    });
+    }
 
     details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
     if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) return null; 
 
-    // Eltávolítjuk a felesleges tag-eket, hogy csak a tiszta szöveg maradjon
-    $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
-    let cleanText = $('body').text().replace(/\s+/g, ' ').trim();
+    let cleanText = resHtml.replace(/<script[^>]*>[\s\S]*?(<\/script>|$)/gi, ' ')
+                           .replace(/<style[^>]*>[\s\S]*?(<\/style>|$)/gi, ' ')
+                           .replace(/<!--[\s\S]*?(-->|$)/gi, ' ')
+                           .replace(/<[^>]+>/g, ' ')
+                           .replace(/\s+/g, ' ')
+                           .trim();
                            
-    // 🔥 CPU VÉDELEM: A tiszta szöveget KŐKEMÉNYEN levágjuk 6000 karakternél!
-    // Így az analyzer.js szinkron Regex-motorja 0.001 másodperc alatt lefut, a fagyás lehetetlen.
     cleanText = cleanText.substring(0, 6000);
 
     if (!details.employment_type) {
@@ -286,7 +258,7 @@ async function getDeepDetails(jobUrl, preLoc) {
     }
 
     if (cleanText.length < 30 && schemaDescription) {
-        cleanText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim().substring(0, 6000);
+        cleanText = schemaDescription.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000);
     }
 
     details.rawText = cleanText;

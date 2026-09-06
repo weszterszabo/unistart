@@ -2111,13 +2111,15 @@
             const rawJsonData = await response.json();
             const freshJobs = processRawJSONData(rawJsonData);
             
-            await AetherCache.set("master_jobs", { jobs: freshJobs, timestamp: Date.now() });
+           await AetherCache.set("master_jobs", { jobs: freshJobs, timestamp: Date.now() });
             
+            // 🔥 JAVÍTÁS: A memóriát és a képernyőt MINDIG frissítjük az új adattal a háttérből!
+            jobsData = freshJobs;
+            buildFilterButtons();
+            applyFilters(true); // A 'true' paraméter megakadályozza, hogy a képernyő felugorjon a tetejére frissítéskor
+            
+            // A görgetési pozíciót viszont csak akkor erőltetjük rá a böngészőre, ha ez volt az első letöltés
             if (!isCacheUsed) {
-                jobsData = freshJobs;
-                buildFilterButtons();
-                applyFilters(true);
-                
                 window.requestAnimationFrame(() => {
                     if (window.activeNavId && window.tabStates[window.activeNavId]) {
                         void dashboardMain.offsetHeight;

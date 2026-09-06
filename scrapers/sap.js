@@ -1,28 +1,90 @@
 const cheerio = require("cheerio");
-// 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
+const https = require("https");
+const http = require("http");
 const analyzer = require("../analyzer");
 
-// 🛡️ Stealth Headers: SAP SuccessFactors WAF elleni védelem
 const HEADERS = {
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
-  "Upgrade-Insecure-Requests": "1"
+  "Upgrade-Insecure-Requests": "1",
+  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 };
 
-// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban
+const secureAgent = new https.Agent({
+    keepAlive: true,
+    maxSockets: 10,
+    rejectUnauthorized: false
+});
+
+// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ (OS Szintű Socket Killer)
+async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
+    return new Promise((resolve, reject) => {
+        let isDone = false;
+        let req;
+        
+        // Kőkemény fizikai megszakító
+        const watchdog = setTimeout(() => {
+            if (!isDone) {
+                isDone = true;
+                if (req && !req.destroyed) req.destroy(new Error('Hard Socket Timeout'));
+                reject(new Error('Kátránygödör Timeout'));
+            }
+        }, timeoutMs);
+
+        try {
+            const urlObj = new URL(targetUrl);
+            const client = urlObj.protocol === 'http:' ? http : https;
+            const options = {
+                hostname: urlObj.hostname,
+                path: urlObj.pathname + urlObj.search,
+                method: 'GET',
+                agent: secureAgent,
+                headers: HEADERS
+            };
+
+            req = client.request(options, (res) => {
+                if (res.statusCode >= 400) {
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); reject(new Error(`HTTP ${res.statusCode}`)); }
+                    return;
+                }
+
+                let data = '';
+                res.on('data', chunk => {
+                    data += chunk;
+                    // 🔥 RAM VÉDELEM: Ha 1 Megabájtnál nagyobb a fájl, azonnal levágjuk, hogy ne egye meg a RAM-ot!
+                    if (data.length > 1000000) {
+                        if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
+                    }
+                });
+                res.on('end', () => {
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); resolve(data); }
+                });
+            });
+
+            req.on('error', e => {
+                if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); }
+            });
+
+            req.end();
+        } catch (e) {
+            if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); }
+        }
+    });
+}
+
+// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    // Extra pihenőidő, hogy az SAP ne érezze DDoS támadásnak (Tarpit elkerülése)
     await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
   }
   return results;
 }
 
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral)
+// 🌍 OMNI-SEARCH AUTO-DISCOVERY
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
@@ -31,16 +93,7 @@ async function discoverSearchUrl(baseUrl) {
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        // 🔥 JAVÍTÁS 1: Hozzáadtuk a 10 másodperces AbortController-t!
-        const controller = new AbortController();
-        const watchdog = setTimeout(() => controller.abort(), 10000);
-        
-        const response = await fetch(base, { headers: HEADERS, signal: controller.signal });
-        clearTimeout(watchdog);
-        
-        if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
-        const html = await response.text();
-        
+        const html = await unbreakableFetchText(base, 10000);
         const $ = cheerio.load(html);
         let bestLink = null;
 
@@ -75,11 +128,8 @@ async function discoverSearchUrl(baseUrl) {
         
         let testUrl = testUrlObj.toString();
         try {
-            const controller = new AbortController();
-            const watchdog = setTimeout(() => controller.abort(), 5000);
-            const testRes = await fetch(testUrl, { method: 'GET', headers: HEADERS, signal: controller.signal });
-            clearTimeout(watchdog);
-            if (testRes.ok) return testUrl; 
+            await unbreakableFetchText(testUrl, 5000);
+            return testUrl; 
         } catch (e) { continue; }
     }
 
@@ -118,18 +168,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      // 🔥 JAVÍTÁS 2: Hozzáadtuk a 15 másodperces AbortController-t a lapozáshoz is!
-      const controller = new AbortController();
-      const watchdog = setTimeout(() => controller.abort(), 15000);
-      const response = await fetch(currentUrl, { headers: HEADERS, signal: controller.signal });
-      clearTimeout(watchdog);
-      
-      if (!response.ok) throw new Error(`HTTP Hiba: ${response.status}`);
-      const html = await response.text();
-      
+      const html = await unbreakableFetchText(currentUrl, 15000);
       const $ = cheerio.load(html);
 
-      // WAF Ellenőrzés
       const pageTitle = $('title').text().toLowerCase();
       if (pageTitle.includes("just a moment") || pageTitle.includes("cloudflare") || html.includes('id="cf-wrapper"')) {
           throw new Error("WAF (Cloudflare/F5) Captcha blokkolás érzékelve!");
@@ -174,11 +215,17 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           }
           process.stdout.write(`✔️ `);
 
-          // 🔥 JAVÍTÁS 3: Levágjuk a túl hosszú szövegeket, mielőtt az Analyzer megkapja, hogy ne kapjon szívrohamot a processzor (ReDoS védelem)!
-          const safeText = details.rawText ? details.rawText.substring(0, 9000) : "";
-          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
+          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
           
-          const analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
+          let analysis = null;
+          try {
+              // 🧠 100% CPU ReDoS védelem
+              const analyzePromise = Promise.resolve(analyzer.analyzeJob(job.title, rawDescription, companyName));
+              const timeoutPromise = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 5000));
+              analysis = await Promise.race([analyzePromise, timeoutPromise]);
+          } catch(e) {
+              return null;
+          }
 
           if (analysis !== null) {
               const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -238,20 +285,13 @@ async function getDeepDetails(jobUrl, preLoc) {
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          // 🔥 JAVÍTÁS 4: Itt is ott a 12 másodperces AbortController (Tarpit védelem)!
-          const controller = new AbortController();
-          const watchdog = setTimeout(() => controller.abort(), 12000);
-          
-          const response = await fetch(finalJobUrl, { headers: HEADERS, signal: controller.signal });
-          clearTimeout(watchdog);
-          
-          if (!response.ok) throw new Error(`HTTP ${response.status}`);
-          resHtml = await response.text();
+          // ☢️ A Fizikai Socket Killer hívása
+          resHtml = await unbreakableFetchText(finalJobUrl, 10000);
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
           process.stdout.write(`⏳ `);
-          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
+          await new Promise(r => setTimeout(r, 1500));
       }
   }
 
@@ -334,13 +374,11 @@ async function getDeepDetails(jobUrl, preLoc) {
     let reqIdFound = $('.jobReqId, .job-id, span[itemprop="value"]').first().text().trim();
     if (reqIdFound && reqIdFound.length < 30) details.reqId = `Ref ID: ${reqIdFound}`;
 
-    // 🔥 JAVÍTÁS 5: Kigyomláltuk a CPU gyilkos cheerio ciklust! ($('span, p...').each() törölve)
-    // Helyette egyszeri, villámgyors Regexet használunk a megtisztított szövegen!
     $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
     
-    let rawBodyText = $('body').text().replace(/\s+/g, ' ').trim();
+    // 🔥 CPU PAJZS: Maximáljuk a regexelni kívánt szöveghosszt 15 ezer karakterre!
+    let rawBodyText = $('body').text().replace(/\s+/g, ' ').trim().substring(0, 15000);
     
-    // Tapasztalat és típus kinyerése regex-el:
     if (!details.employment_type) {
         const empMatch = rawBodyText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
         if (empMatch) details.employment_type = empMatch[1].trim();
@@ -354,7 +392,7 @@ async function getDeepDetails(jobUrl, preLoc) {
     details.rawText = rawBodyText;
 
     if (details.rawText.length < 30 && schemaDescription) {
-        details.rawText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim();
+        details.rawText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim().substring(0, 15000);
     }
 
     let extraContext = "";

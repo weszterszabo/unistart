@@ -2,6 +2,13 @@ const https = require('https');
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
+// 🔥 PÁNCÉLOZOTT AGENT: Nem engedi eldobni a kapcsolatot (Keep-Alive) és ignorálja a lejárt állami SSL-t.
+const secureAgent = new https.Agent({
+    keepAlive: true,
+    maxSockets: 20,
+    rejectUnauthorized: false
+});
+
 // 🛡️ BIZTONSÁGOS ÉS ÖNGYÓGYÍTÓ HTTPS KÉRÉS (Timeout + Exponenciális Újrapróbálkozás)
 async function fetchGovApiWithRetry(postData, maxRetries = 3) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
@@ -11,12 +18,17 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                     hostname: 'kozszolgallas.ksz.gov.hu',
                     path: '/JobAd/GetJobAdCountFilteredByCities',
                     method: 'POST',
-                    rejectUnauthorized: false, // <-- LOKÁLIS SSL BYPASS (Gov.hu specifikus)
-                    timeout: 10000, // 🛑 10 másodperc után bontja a kapcsolatot
+                    agent: secureAgent, // <-- A Keep-Alive pajzs aktiválása
+                    timeout: 20000,     // 🛑 Feltoltuk 20 mp-re, mert a Gov.hu szerverei lassúak
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
                         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                        'Accept-Language': 'hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7', // Emberibb ujjlenyomat
+                        'Origin': 'https://kozszolgallas.ksz.gov.hu',
+                        'Referer': 'https://kozszolgallas.ksz.gov.hu/',
+                        'Connection': 'keep-alive',
+                        'X-Requested-With': 'XMLHttpRequest', // Ezt a fejlécet küldi egy igazi böngészős AJAX hívás
                         'Content-Length': Buffer.byteLength(postData)
                     }
                 };
@@ -37,7 +49,7 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                 req.on('error', e => reject(e));
                 req.on('timeout', () => { 
                     req.destroy(); 
-                    reject(new Error('Közszolgállás Szerver Timeout (10s)')); 
+                    reject(new Error('Közszolgállás Szerver Timeout (20s)')); 
                 });
                 
                 req.write(postData);
@@ -46,7 +58,7 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
         } catch (err) {
             if (attempt === maxRetries) throw err;
             console.log(`      ⚠️ [Közszolgállás] Szerver hiba, újrapróbálkozás (${attempt}/3)...`);
-            await new Promise(r => setTimeout(r, 1500 * attempt)); // Exponenciális csúsztatás
+            await new Promise(r => setTimeout(r, 2000 * attempt)); // Exponenciális csúsztatás
         }
     }
 }
@@ -97,10 +109,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
       // 🕵️ MÉLY-KONTEXTUS AZ NLP-NEK
       const rawDescription = `${department} ${workType} ${expLevel} ${job.JobCategoryName || ""} ${job.EmploymentTypeName || ""}`;
-      const analysis = analyzer.analyzeJob(title, rawDescription);
+      const analysis = analyzer.analyzeJob(title, rawDescription, companyName); // Átadjuk a CompanyName-et is a V84.0-nak!
 
       // 🛡️ 3. JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT
-      if (analysis !== null) {
+      if (analysis !== null && analysis.health_score > 0) { // A V84-es motor is_rejected helyett null-t vagy 0 health_score-t ad
           
           // V17 / V16 Kompatibilis kinyerés
           const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";

@@ -186,24 +186,157 @@
           "Volkswagen Group"
         ],
         "context_vectors": {
-          "english": 2,
-          "french": 2,
-          "jenkins": 1,
-          "sap": 2,
-          "analitikus": 1,
-          "agile": 1,
-          "home office": 2,
-          "szép-kártya": 2,
-          "mozgóbér": 1,
-          "német": 1,
-          "angol": 1
+          "english": 68,
+          "french": 68,
+          "jenkins": 33,
+          "sap": 68,
+          "analitikus": 34,
+          "agile": 34,
+          "home office": 68,
+          "szép-kártya": 68,
+          "mozgóbér": 34,
+          "német": 35,
+          "angol": 35,
+          "problémamegoldó": 1,
+          "kritikus gondolkodás": 1
         },
         "examples": [
           "töltés... helyszín összes cég összes osztály összes karrier"
         ]
+      },
+      "összefoglaló": {
+        "count": 12,
+        "last_seen": 1788667438769,
+        "auto_promoted": false,
+        "companies": [
+          "Richter Gedeon"
+        ],
+        "context_vectors": {
+          "angol": 4,
+          "english": 12,
+          "excel": 1,
+          "power bi": 2,
+          "sap": 11,
+          "csapatmunka": 1,
+          "medicover": 1,
+          "nyugdíjpénztár": 9,
+          "cafeteria": 9,
+          "megbízható": 1,
+          "részvény": 8,
+          "analitikus": 1,
+          "home office": 3,
+          "önálló": 1,
+          "képzés": 1
+        },
+        "examples": [
+          "nc elemző város      | összefoglaló: budapest ellátási lánc",
+          "re diák 1 város      | összefoglaló: budapest minőségbiztosí"
+        ]
+      },
+      "törlés": {
+        "count": 2,
+        "last_seen": 1788537837136,
+        "auto_promoted": false,
+        "companies": [
+          "CIB Bank"
+        ],
+        "context_vectors": {
+          "english": 2,
+          "olasz": 2,
+          "sap": 2,
+          "bónusz": 2,
+          "cafeteria": 2,
+          "képzés": 2
+        },
+        "examples": [
+          "aug. 10. helyszín törlés      | összefoglaló: budapest kiem",
+          "szept. 4. helyszín törlés      | összefoglaló: budapest lako"
+        ]
+      },
+      "dorog szakterület": {
+        "count": 4,
+        "last_seen": 1788653129539,
+        "auto_promoted": false,
+        "companies": [
+          "Richter Gedeon"
+        ],
+        "context_vectors": {
+          "english": 4,
+          "sap": 3,
+          "megbízható": 1,
+          "cafeteria": 4,
+          "részvény": 4,
+          "nyugdíjpénztár": 4,
+          "home office": 2
+        },
+        "examples": [
+          "mintavevő város: dorog szakterület: logistics/supply chain t",
+          "ordinátor város: dorog szakterület: pénzügy, számvitel, kont"
+        ]
+      },
+      "none": {
+        "count": 4,
+        "last_seen": 1788653129539,
+        "auto_promoted": false,
+        "companies": [
+          "Richter Gedeon"
+        ],
+        "context_vectors": {
+          "angol": 1,
+          "english": 4,
+          "sap": 4,
+          "power bi": 1,
+          "analitikus": 1,
+          "home office": 3,
+          "cafeteria": 4,
+          "részvény": 4,
+          "nyugdíjpénztár": 4,
+          "önálló": 1,
+          "képzés": 1
+        },
+        "examples": [
+          "yi fókusz város none; } internal auditor - pénzügyi fókusz v",
+          "szisztens város none; } üzemi analitikai laborasszisztens vá"
+        ]
+      },
+      "dorog ezek": {
+        "count": 2,
+        "last_seen": 1788653129539,
+        "auto_promoted": false,
+        "companies": [
+          "Richter Gedeon"
+        ],
+        "context_vectors": {
+          "english": 2,
+          "sap": 2,
+          "home office": 2,
+          "cafeteria": 2,
+          "részvény": 2,
+          "nyugdíjpénztár": 2
+        },
+        "examples": [
+          "at keres. munkavégzés helye: dorog ezek lesznek a feladataid"
+        ]
       }
     },
-    "💻 SZOFTVER/TECH": {},
+    "💻 SZOFTVER/TECH": {
+      "sa#": {
+        "count": 1,
+        "last_seen": 1788530673547,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "szép kártya": 1,
+          "nyugdíjpénztár": 1,
+          "önkéntes nyugdíjpénztár": 1
+        },
+        "examples": [
+          "yelvtanulás támogatása#li-dnimegértjük - és értékeljük -, ho"
+        ]
+      }
+    },
     "🎁 JUTTATÁS": {},
     "🧠 SOFT-SKILL": {},
     "🌍 NYELV": {},
@@ -467,14 +600,7 @@
       "momentum": 1
     },
     "french": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "jenkins": {
-      "recent_count": 1,
-      "historical_count": 1,
-      "momentum": 1
+      "összes cég": 58
     },
     "agile": {
       "recent_count": 1,
@@ -482,14 +608,87 @@
       "momentum": 1
     },
     "szép-kártya": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
+      "összes cég": 58
+    },
+    "cafeteria": {
+      "összefoglaló": 1
+    },
+    "nyugdíjpénztár": {
+      "összefoglaló": 1
+    }
+  },
+  "eigen_centrality": {
+    "english": 0.15,
+    "french": 0.15,
+    "sap": 0.15,
+    "home office": 0.15,
+    "szép-kártya": 0.15
+  },
+  "skill_velocity": {
+    "communication": {
+      "recent_count": 16,
+      "historical_count": 9.600000000000001,
+      "momentum": 4.1
+    },
+    "angol": {
+      "recent_count": 11,
+      "historical_count": 10.280000000000001,
+      "momentum": 3.8878787878787877
+    },
+    "home office": {
+      "recent_count": 34,
+      "historical_count": 19.480000000000004,
+      "momentum": 4.49655172413793
+    },
+    "hibrid": {
+      "recent_count": 17,
+      "historical_count": 9.600000000000001,
+      "momentum": 4.1
+    },
+    "irodai": {
+      "recent_count": 16,
+      "historical_count": 9.600000000000001,
+      "momentum": 4.1
+    },
+    "english": {
+      "recent_count": 21,
+      "historical_count": 12.360000000000001,
+      "momentum": 4.683333333333333
+    },
+    "french": {
+      "recent_count": 16,
+      "historical_count": 9.920000000000002,
+      "momentum": 3.85
+    },
+    "jenkins": {
+      "recent_count": 8,
+      "historical_count": 5.120000000000001,
+      "momentum": 3.629411764705882
+    },
+    "sap": {
+      "recent_count": 21,
+      "historical_count": 12.16,
+      "momentum": 4.544444444444444
+    },
+    "analitikus": {
+      "recent_count": 8,
+      "historical_count": 5.48,
+      "momentum": 3.711111111111111
+    },
+    "agile": {
+      "recent_count": 8,
+      "historical_count": 5.280000000000001,
+      "momentum": 3.433333333333333
+    },
+    "szép-kártya": {
+      "recent_count": 16,
+      "historical_count": 9.920000000000002,
+      "momentum": 3.85
     },
     "mozgóbér": {
-      "recent_count": 1,
-      "historical_count": 1,
-      "momentum": 1
+      "recent_count": 8,
+      "historical_count": 5.280000000000001,
+      "momentum": 3.433333333333333
     },
     "német": {
       "recent_count": 1,

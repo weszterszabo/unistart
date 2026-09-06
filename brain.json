@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 5154,
-    "total_rejected": 1258,
+    "total_parsed_jobs": 9713,
+    "total_rejected": 2489,
     "last_calibration": 1788696825245,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 18.615588736345863,
+    "avg_doc_length": 27.663636631990617,
     "bm25_k1": 1.5,
     "bm25_b": 0.75,
     "adaptive_threshold": 40,
@@ -13,8 +13,8 @@
   "categories": {
     "📍 HELYSZÍN": {
       "kiskőrös": {
-        "count": 6,
-        "last_seen": 1788697243680,
+        "count": 9,
+        "last_seen": 1788727212882,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 12,
-        "last_seen": 1788697263851,
+        "count": 18,
+        "last_seen": 1788727301437,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -49,8 +49,8 @@
         ]
       },
       "csenger": {
-        "count": 6,
-        "last_seen": 1788697248941,
+        "count": 9,
+        "last_seen": 1788727217338,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -61,8 +61,8 @@
         ]
       },
       "pozíció megnevezése": {
-        "count": 2,
-        "last_seen": 1788697248947,
+        "count": 3,
+        "last_seen": 1788727217343,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -73,8 +73,8 @@
         ]
       },
       "vállalat": {
-        "count": 6,
-        "last_seen": 1788697248947,
+        "count": 9,
+        "last_seen": 1788727217343,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -85,8 +85,8 @@
         ]
       },
       "balmazújváros": {
-        "count": 6,
-        "last_seen": 1788697248947,
+        "count": 9,
+        "last_seen": 1788727217343,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -109,8 +109,8 @@
         ]
       },
       "nagykanizsa": {
-        "count": 6,
-        "last_seen": 1788697268515,
+        "count": 9,
+        "last_seen": 1788727306475,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -121,8 +121,8 @@
         ]
       },
       "cím": {
-        "count": 2,
-        "last_seen": 1788697270075,
+        "count": 3,
+        "last_seen": 1788727307925,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -133,8 +133,8 @@
         ]
       },
       "város": {
-        "count": 6,
-        "last_seen": 1788697270075,
+        "count": 9,
+        "last_seen": 1788727307925,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -145,8 +145,8 @@
         ]
       },
       "tapasztalati szint": {
-        "count": 6,
-        "last_seen": 1788697270075,
+        "count": 9,
+        "last_seen": 1788727307925,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -184,26 +184,38 @@
         ]
       },
       "összes cég": {
-        "count": 4,
-        "last_seen": 1788697286202,
+        "count": 13,
+        "last_seen": 1788727384728,
         "auto_promoted": false,
         "companies": [
           "Volkswagen Group"
         ],
         "context_vectors": {
-          "english": 70,
-          "french": 70,
+          "english": 79,
+          "french": 77,
           "jenkins": 34,
           "sap": 70,
-          "analitikus": 35,
-          "agile": 35,
-          "home office": 70,
-          "szép-kártya": 70,
-          "mozgóbér": 35,
-          "német": 36,
-          "angol": 36,
-          "problémamegoldó": 1,
-          "kritikus gondolkodás": 1
+          "analitikus": 37,
+          "agile": 36,
+          "home office": 76,
+          "szép-kártya": 73,
+          "mozgóbér": 36,
+          "német": 42,
+          "angol": 41,
+          "problémamegoldó": 4,
+          "kritikus gondolkodás": 2,
+          "r": 9,
+          "önálló": 4,
+          "jira": 1,
+          "egészségbiztosítás": 2,
+          "excel": 1,
+          "gyümölcsnap": 1,
+          "aws": 1,
+          "azure": 1,
+          "docker": 1,
+          "kubernetes": 1,
+          "kafka": 1,
+          "proaktív": 1
         },
         "examples": [
           "töltés... helyszín összes cég összes osztály összes karrier"
@@ -297,6 +309,287 @@
         "examples": [
           "at keres. munkavégzés helye: dorog ezek lesznek a feladataid"
         ]
+      },
+      "fehérgyarmat": {
+        "count": 3,
+        "last_seen": 1788727217328,
+        "auto_promoted": false,
+        "companies": [
+          "Ismeretlen Cég"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "város                                      fehérgy"
+        ]
+      },
+      "szakorvosi rendelőintézete": {
+        "count": 9,
+        "last_seen": 1788727255221,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "ráckeve város szakorvosi rendelőintézete részmunkaidős fog",
+          "ráckeve város szakorvosi rendelőintézete teljes munkaidő"
+        ]
+      },
+      "önkormányzata teljes": {
+        "count": 8,
+        "last_seen": 1788727255211,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "devecser város önkormányzata teljes munkaidő",
+          "enying város önkormányzata teljes munkaidő"
+        ]
+      },
+      "kormányhivatala teljes": {
+        "count": 26,
+        "last_seen": 1788727255221,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {
+          "linux": 1
+        },
+        "examples": [
+          "udapest főváros kormányhivatala teljes munkaidő",
+          "udapest főváros kormányhivatala teljes munkaidő 0 év tapaszt"
+        ]
+      },
+      "vii": {
+        "count": 1,
+        "last_seen": 1788727255077,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros vii. kerület erzsébetvárosi polgármesteri hi"
+        ]
+      },
+      "xi": {
+        "count": 4,
+        "last_seen": 1788727255187,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xi. kerület újbudai polgármesteri hivatal te",
+          "udapest főváros xi. kerület újbudai polgármesteri hivatal ré"
+        ]
+      },
+      "xvii": {
+        "count": 1,
+        "last_seen": 1788727255094,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xvii. kerület rákosmente önkormányzata telje"
+        ]
+      },
+      "xv": {
+        "count": 6,
+        "last_seen": 1788727255216,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xv. kerületi rákospalota, pestújhely, újpalo",
+          "udapest főváros xv. kerületi önkormányzat újpalotai összevon"
+        ]
+      },
+      "xiv": {
+        "count": 1,
+        "last_seen": 1788727255119,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xiv. kerület zuglói polgármesteri hivatal te"
+        ]
+      },
+      "xii": {
+        "count": 3,
+        "last_seen": 1788727255199,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xii. kerület hegyvidéki polgármesteri hivata"
+        ]
+      },
+      "xviii": {
+        "count": 1,
+        "last_seen": 1788727255122,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xviii. kerület pestszentlőrinc-pestszentimre"
+        ]
+      },
+      "lipótváros egészségügyi": {
+        "count": 2,
+        "last_seen": 1788727255152,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "rvos   belváros-lipótváros egészségügyi szolgálat teljes mun",
+          "tens   belváros-lipótváros egészségügyi szolgálat teljes mun"
+        ]
+      },
+      "önkormányzatának szivárvány": {
+        "count": 1,
+        "last_seen": 1788727255137,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "s   tököl város önkormányzatának szivárvány napközi otthonos"
+        ]
+      },
+      "polgármesteri hivatala": {
+        "count": 1,
+        "last_seen": 1788727255142,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "gyei jogú város polgármesteri hivatala teljes munkaidő"
+        ]
+      },
+      "önkormányzat dr": {
+        "count": 5,
+        "last_seen": 1788727255214,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {
+          "analitikus": 1
+        },
+        "examples": [
+          "dunavecse város önkormányzat dr. kolozs gergely kistérségi e"
+        ]
+      },
+      "ix": {
+        "count": 2,
+        "last_seen": 1788727255147,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros ix. kerület ferencvárosi polgármesteri hivat"
+        ]
+      },
+      "önkormányzat városgondnokság": {
+        "count": 2,
+        "last_seen": 1788727255205,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "ó   komló város önkormányzat városgondnokság teljes munkaidő",
+          "ő   komló város önkormányzat városgondnokság teljes munkaidő"
+        ]
+      },
+      "viii": {
+        "count": 1,
+        "last_seen": 1788727255199,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros viii. kerület józsefvárosi polgármesteri hiv"
+        ]
+      },
+      "xix kerület": {
+        "count": 2,
+        "last_seen": 1788727255216,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xix kerület önkormányzat segítő kéz kispesti"
+        ]
+      },
+      "városi szociális": {
+        "count": 1,
+        "last_seen": 1788727255214,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "gyei jogú város városi szociális szolgálat teljes munkaidő"
+        ]
+      },
+      "önkormányzat teljes": {
+        "count": 2,
+        "last_seen": 1788727255217,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "os   ócsa város önkormányzat teljes munkaidő",
+          "ző   vaja város önkormányzat teljes munkaidő"
+        ]
+      },
+      "porsche hungaria": {
+        "count": 2,
+        "last_seen": 1788727377185,
+        "auto_promoted": false,
+        "companies": [
+          "Volkswagen Group"
+        ],
+        "context_vectors": {
+          "english": 2,
+          "r": 2,
+          "home office": 2,
+          "egészségbiztosítás": 2
+        },
+        "examples": [
+          "programok munkavégzés helye: porsche hungaria parts center,"
+        ]
       }
     },
     "💻 SZOFTVER/TECH": {
@@ -325,105 +618,112 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 1752,
+      "jobs": 2460,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Lidl": {
-      "jobs": 12,
+      "jobs": 18,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "OTP Bank": {
-      "jobs": 148,
+      "jobs": 221,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Magyar Posta Zrt.": {
-      "jobs": 60,
+      "jobs": 89,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Telekom": {
-      "jobs": 24,
+      "jobs": 36,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Aldi": {
-      "jobs": 164,
+      "jobs": 246,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "MVM Csoport": {
-      "jobs": 4,
+      "jobs": 6,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "K&H Bank": {
-      "jobs": 314,
+      "jobs": 471,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Spar": {
-      "jobs": 4,
+      "jobs": 5,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "ERSTE Bank": {
-      "jobs": 46,
+      "jobs": 67,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "4iG": {
-      "jobs": 168,
+      "jobs": 243,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Bosch": {
-      "jobs": 332,
+      "jobs": 486,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Richter Gedeon": {
-      "jobs": 4,
+      "jobs": 6,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Volkswagen Group": {
-      "jobs": 8,
+      "jobs": 25,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "MOL Group": {
-      "jobs": 252,
+      "jobs": 491,
+      "bs_total": 0,
+      "anomalies": 0,
+      "toxicity_index": 0,
+      "churn_probability": 15
+    },
+    "Közszolgállás (Állami Szféra)": {
+      "jobs": 1196,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -436,7 +736,29 @@
   "auto_typos": {},
   "idf_stats": {},
   "anomalies": [],
-  "ontology_graph": {},
+  "ontology_graph": {
+    "english": {
+      "összes cég": 3
+    },
+    "home office": {
+      "összes cég": 2
+    },
+    "angol": {
+      "összes cég": 2
+    },
+    "német": {
+      "összes cég": 2
+    },
+    "french": {
+      "összes cég": 2
+    },
+    "analitikus": {
+      "összes cég": 1
+    },
+    "szép-kártya": {
+      "összes cég": 1
+    }
+  },
   "eigen_centrality": {
     "english": 0.15,
     "french": 0.15,
@@ -446,37 +768,37 @@
   },
   "skill_velocity": {
     "communication": {
-      "recent_count": 18,
+      "recent_count": 20,
       "historical_count": 9.600000000000001,
       "momentum": 4.1
     },
     "angol": {
-      "recent_count": 13,
+      "recent_count": 27,
       "historical_count": 10.280000000000001,
       "momentum": 3.8878787878787877
     },
     "home office": {
-      "recent_count": 45,
+      "recent_count": 58,
       "historical_count": 19.480000000000004,
       "momentum": 4.49655172413793
     },
     "hibrid": {
-      "recent_count": 27,
+      "recent_count": 35,
       "historical_count": 9.600000000000001,
       "momentum": 4.1
     },
     "irodai": {
-      "recent_count": 31,
+      "recent_count": 46,
       "historical_count": 9.600000000000001,
       "momentum": 4.1
     },
     "english": {
-      "recent_count": 36,
+      "recent_count": 58,
       "historical_count": 12.360000000000001,
       "momentum": 4.683333333333333
     },
     "french": {
-      "recent_count": 18,
+      "recent_count": 25,
       "historical_count": 9.920000000000002,
       "momentum": 3.85
     },
@@ -486,97 +808,97 @@
       "momentum": 3.629411764705882
     },
     "sap": {
-      "recent_count": 32,
+      "recent_count": 42,
       "historical_count": 12.16,
       "momentum": 4.544444444444444
     },
     "analitikus": {
-      "recent_count": 10,
+      "recent_count": 17,
       "historical_count": 5.48,
       "momentum": 3.711111111111111
     },
     "agile": {
-      "recent_count": 9,
+      "recent_count": 10,
       "historical_count": 5.280000000000001,
       "momentum": 3.433333333333333
     },
     "szép-kártya": {
-      "recent_count": 18,
+      "recent_count": 21,
       "historical_count": 9.920000000000002,
       "momentum": 3.85
     },
     "mozgóbér": {
-      "recent_count": 9,
+      "recent_count": 10,
       "historical_count": 5.280000000000001,
       "momentum": 3.433333333333333
     },
     "német": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "c#": {
-      "recent_count": 4,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "sql": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "javascript": {
-      "recent_count": 6,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "node.js": {
-      "recent_count": 4,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "german": {
       "recent_count": 12,
       "historical_count": 1,
       "momentum": 1
     },
-    "italian": {
+    "c#": {
+      "recent_count": 8,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "sql": {
       "recent_count": 4,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "javascript": {
+      "recent_count": 12,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "node.js": {
+      "recent_count": 8,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "german": {
+      "recent_count": 24,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "italian": {
+      "recent_count": 8,
       "historical_count": 1,
       "momentum": 1
     },
     "java": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "dotnet": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "prémium": {
-      "recent_count": 20,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "remote": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "linux": {
-      "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "képzés": {
       "recent_count": 4,
       "historical_count": 1,
       "momentum": 1
     },
+    "dotnet": {
+      "recent_count": 4,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "prémium": {
+      "recent_count": 40,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "remote": {
+      "recent_count": 4,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "linux": {
+      "recent_count": 5,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "képzés": {
+      "recent_count": 6,
+      "historical_count": 1,
+      "momentum": 1
+    },
     "távmunka": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 1,
       "momentum": 1
     },
@@ -586,31 +908,101 @@
       "momentum": 1
     },
     "jira": {
-      "recent_count": 1,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "önálló": {
       "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
+    "önálló": {
+      "recent_count": 10,
+      "historical_count": 1,
+      "momentum": 1
+    },
     "cafeteria": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1,
       "momentum": 1
     },
     "részvény": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1,
       "momentum": 1
     },
     "nyugdíjpénztár": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1,
       "momentum": 1
     },
     "hibrid (2 nap ho)": {
+      "recent_count": 2,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "kreatív": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "szlovák": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "r": {
+      "recent_count": 10,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "problémamegoldó": {
+      "recent_count": 3,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "kritikus gondolkodás": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "egészségbiztosítás": {
+      "recent_count": 2,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "excel": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "gyümölcsnap": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "aws": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "azure": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "docker": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "kubernetes": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "kafka": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "proaktív": {
       "recent_count": 1,
       "historical_count": 1,
       "momentum": 1

@@ -267,7 +267,6 @@ class CircuitBreaker {
 const breakerInstance = new CircuitBreaker(3, 4 * 60 * 1000);
 
 const ExecutionTimeoutGuard = {
-    // 🔥 JAVÍTÁS: Sokkal türelmesebb Timeout limitet adtam az állami / lassú oldalaknak
     run: (promise, ms, operationName) => {
         let timeoutId;
         const timeoutPromise = new Promise((_, reject) => { timeoutId = setTimeout(() => reject(new Error(`[Timeout] 🛑 ${operationName} megfagyott, túllépte a(z) ${ms/1000} másodpercet! A folyamatot kilőttük.`)), ms); });
@@ -595,7 +594,7 @@ async function runScraper() {
         const companiesSnapshot = await db.collection("companies").where("is_active", "!=", false).get();
         if (companiesSnapshot.empty) { console.log("⚠️ Nincs aktív cég az adatbázisban."); return; }
 
-        const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
+        const allCompanyDocs = [...companiesSnapshot.docs];
         
         const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
         let CONCURRENCY_LIMIT = 1;
@@ -646,9 +645,8 @@ async function runScraper() {
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        // 🔥 JAVÍTÁS: Sokkal nagyobb Timeout a lassú oldalaknak
-// 🔥 JAVÍTÁS: A maximális türelmi idő egy cégnél 10 perc helyett 2 perc! Ha addig nem végez, a Hóhér kilövi.
-const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 120000, `Scrape_${company.name}`);                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
+                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 120000, `Scrape_${company.name}`);                        
+                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
                         if (attempt === 3 || err.message.includes('zárolva') || isReplay) throw err; 
@@ -742,14 +740,41 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
             }
         };
 
-        const workerTask = async (workerId) => {
-            while (companyQueue.length > 0) {
-                if (isShuttingDown) break;
-                const doc = companyQueue.shift(); 
-                await processCompany(workerId, doc, false);
+        // 🔥 SZAKASZOS MŰKÖDÉS (BATCH PROCESSING & CHECKPOINTING)
+        const COMPANY_BATCH_SIZE = 3; 
+        
+        for (let i = 0; i < allCompanyDocs.length; i += COMPANY_BATCH_SIZE) {
+            const batchDocs = allCompanyDocs.slice(i, i + COMPANY_BATCH_SIZE);
+            const companyQueue = new FastPointerQueue(batchDocs);
+            
+            console.log(`\n======================================================`);
+            console.log(`📦 SZAKASZ FELDOLGOZÁSA: ${i + 1} - ${i + batchDocs.length} / ${allCompanyDocs.length} cég`);
+            console.log(`======================================================\n`);
+
+            const workerTask = async (workerId) => {
+                while (companyQueue.length > 0) {
+                    if (isShuttingDown) break;
+                    const doc = companyQueue.shift(); 
+                    await processCompany(workerId, doc, false);
+                }
+            };
+            
+            await Promise.all(Array.from({ length: CONCURRENCY_LIMIT }, (_, idx) => workerTask(idx + 1)));
+            
+            if (isShuttingDown) break;
+
+            // 💾 CHECKPOINT MENTÉS (Részeredmények azonnali kiírása a RAM védelme miatt)
+            console.log(`\n💾 [CHECKPOINT] Részeredmények mentése a jobs.json-be...`);
+            const currentJobsArray = Array.from(finalJobsMap.values());
+            await writeJsonStream(OUTPUT_JSON_PATH, currentJobsArray);
+            
+            // 🛌 MÉLYALVÁS (A macOS TCP és DNS cache kiürítéséhez és a RAM Flushhoz)
+            if (i + COMPANY_BATCH_SIZE < allCompanyDocs.length) {
+                console.log(`🛌 [DEEP SLEEP] A szakasz véget ért. A rendszer 10 másodpercig pihen a memória és a hálózati portok (TCP) felszabadítása miatt...\n`);
+                if (global.gc) global.gc(); 
+                await new Promise(resolve => setTimeout(resolve, 10000));
             }
-        };
-        await Promise.all(Array.from({ length: CONCURRENCY_LIMIT }, (_, i) => workerTask(i + 1)));
+        }
 
         if (dlqQueue.length > 0 && !isShuttingDown) {
             console.log(`\n🔄 [AUTO-HEAL] DLQ Replay indítása ${dlqQueue.length} sikertelen cégen...`);
@@ -761,9 +786,8 @@ const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, b
             }
         }
 
-        console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba (Stream módban)...`);
+        console.log(`\n💾 VÉGSŐ Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba (Stream módban)...`);
         const allNewJobsArray = Array.from(finalJobsMap.values());
-        
         await writeJsonStream(OUTPUT_JSON_PATH, allNewJobsArray);
 
         console.log("📈 Telemetria & Market Pulse mentése a Firebase-be...");

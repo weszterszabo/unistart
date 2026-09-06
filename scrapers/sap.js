@@ -12,7 +12,7 @@ const HEADERS = {
 
 const secureAgent = new https.Agent({ keepAlive: true, maxSockets: 10, rejectUnauthorized: false });
 
-// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ ÉS RAM PAJZS
+// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ
 async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
     return new Promise((resolve, reject) => {
         let isDone = false;
@@ -40,8 +40,7 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
                 let data = '';
                 res.on('data', chunk => {
                     data += chunk;
-                    // 🔥 RAM VÉDELEM: 800 KB felett azonnal elvágjuk! (Az SAP oldalak tele vannak gigászi rejtett JSON blobokkal)
-                    if (data.length > 800000) {
+                    if (data.length > 1000000) {
                         if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
                     }
                 });
@@ -169,12 +168,12 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           if (!details) { process.stdout.write(`❌ `); return null; }
           process.stdout.write(`✔️ `);
 
-          const safeText = details.rawText ? details.rawText.substring(0, 9000) : "";
+          const safeText = details.rawText ? details.rawText.substring(0, 8000) : "";
           const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
           
           let analysis = null;
           try {
-              // Beiktatunk egy lélegzetvételnyi szünetet a processzornak
+              // 0 ms késleltetés, hogy a Node.js fellélegezzen és fusson a Timeout
               await new Promise(r => setImmediate(r));
               analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
           } catch(e) { return null; }
@@ -212,7 +211,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - MEMÓRIABIZTOS, CPU-VÉDETT VERZIÓ!
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - PROCESSZOR PAJZS (Anti-ReDoS)
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
 
@@ -236,8 +235,10 @@ async function getDeepDetails(jobUrl, preLoc) {
     let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
-    // JSON-LD kinyerés
-    const jsonLdMatches = [...resHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+    // 🔥 CPU PAJZS 1: Az első 120 ezer karakter bőven elég az álláshoz. A többi SAP szemét, eldobjuk!
+    let safeHtml = resHtml.substring(0, 120000);
+
+    const jsonLdMatches = [...safeHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
     for (const match of jsonLdMatches) {
         try {
             const data = JSON.parse(match[1].replace(/[\u0000-\u0019]+/g,""));
@@ -263,15 +264,14 @@ async function getDeepDetails(jobUrl, preLoc) {
     details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
     if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) return null; 
 
-    // 🔥 CPU ÉS RAM PAJZS: Végre egy O(N) biztonságos regex tisztító, ami SOSEM OMOMLIK ÖSSZE!
-    let cleanText = resHtml.replace(/<script[^>]*>[\s\S]*?(<\/script>|$)/gi, ' ')
-                           .replace(/<style[^>]*>[\s\S]*?(<\/style>|$)/gi, ' ')
-                           .replace(/<!--[\s\S]*?(-->|$)/gi, ' ')
-                           .replace(/<[^>]+>/g, ' ')
-                           .replace(/\s+/g, ' ')
-                           .trim();
+    // 🔥 CPU PAJZS 2: A halálos "|$" eltávolítva a regexekből! Nincs több fagyás (Backtracking)!
+    let cleanText = safeHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
+                            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
+                            .replace(/<!--[\s\S]*?-->/gi, ' ')
+                            .replace(/<[^>]+>/g, ' ')
+                            .replace(/\s+/g, ' ')
+                            .trim();
                            
-    // Szigorú maximum hossz!
     cleanText = cleanText.substring(0, 8000);
 
     if (!details.employment_type) {

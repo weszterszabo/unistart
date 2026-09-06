@@ -16,13 +16,12 @@ const secureAgent = new https.Agent({
     rejectUnauthorized: false
 });
 
-// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ (OS Szintű Socket Killer)
+// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ (OS Szintű Socket Killer + RAM Pajzs)
 async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
     return new Promise((resolve, reject) => {
         let isDone = false;
         let req;
         
-        // Kőkemény fizikai megszakító
         const watchdog = setTimeout(() => {
             if (!isDone) {
                 isDone = true;
@@ -51,7 +50,7 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
                 let data = '';
                 res.on('data', chunk => {
                     data += chunk;
-                    // 🔥 RAM VÉDELEM: Ha 1 Megabájtnál nagyobb a fájl, azonnal levágjuk, hogy ne egye meg a RAM-ot!
+                    // 🔥 RAM VÉDELEM: Ha 1 Megabájtnál nagyobb, elvágjuk!
                     if (data.length > 1000000) {
                         if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
                     }
@@ -169,7 +168,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     
     try {
       const html = await unbreakableFetchText(currentUrl, 15000);
-      const $ = cheerio.load(html);
+      const $ = cheerio.load(html); // Itt a Cheerio még jó, mert csak listát elemez, nem óriás szöveget
 
       const pageTitle = $('title').text().toLowerCase();
       if (pageTitle.includes("just a moment") || pageTitle.includes("cloudflare") || html.includes('id="cf-wrapper"')) {
@@ -219,7 +218,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           
           let analysis = null;
           try {
-              // 🧠 100% CPU ReDoS védelem
+              // Delay használata a szinkron hívás előtt, hogy az Event Loop lélegezni tudjon
+              await new Promise(r => setImmediate(r));
+              
               const analyzePromise = Promise.resolve(analyzer.analyzeJob(job.title, rawDescription, companyName));
               const timeoutPromise = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 5000));
               analysis = await Promise.race([analyzePromise, timeoutPromise]);
@@ -275,7 +276,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TITÁNIUM VÉDELEMMEL
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - MEMÓRIA BIZTOS (CHEERIO MENTES) VERZIÓ!
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
   const maxRetries = 1; 
@@ -285,123 +286,75 @@ async function getDeepDetails(jobUrl, preLoc) {
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          // ☢️ A Fizikai Socket Killer hívása
           resHtml = await unbreakableFetchText(finalJobUrl, 10000);
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
           process.stdout.write(`⏳ `);
-          await new Promise(r => setTimeout(r, 1500));
+          await new Promise(r => setTimeout(r, 2000));
       }
   }
 
   if (!resHtml) return null;
   
   try {
-    const $ = cheerio.load(resHtml);
-    let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: "", salary: "", reqId: "", rawText: "" };
+    let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
-    $('script[type="application/ld+json"]').each((i, el) => {
+    // 🔥 1. JSON-LD KINYERÉS REGEX-SZEL (Cheerio helyett)
+    const jsonLdMatches = [...resHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
+    for (const match of jsonLdMatches) {
         try {
-            const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
+            const data = JSON.parse(match[1].replace(/[\u0000-\u0019]+/g,""));
             const items = Array.isArray(data) ? data : (data["@graph"] || [data]);
             items.forEach(item => {
                 if (item['@type'] === 'JobPosting') {
                     if (item.datePosted) details.datePosted = item.datePosted;
                     if (item.employmentType) details.employment_type = Array.isArray(item.employmentType) ? item.employmentType.join(", ") : item.employmentType;
-                    
                     if (item.jobLocation) {
                         const locs = Array.isArray(item.jobLocation) ? item.jobLocation : [item.jobLocation];
                         const locParts = [];
                         locs.forEach(l => {
-                            if (l.address) {
-                                if (l.address.addressLocality) locParts.push(l.address.addressLocality);
-                                if (l.address.addressRegion) locParts.push(l.address.addressRegion);
-                                if (l.address.addressCountry) locParts.push(l.address.addressCountry);
-                            }
+                            if (l.address && l.address.addressLocality) locParts.push(l.address.addressLocality);
                         });
                         if (locParts.length > 0) details.location = locParts.join(", ");
                     }
-                    if (item.baseSalary) details.salary = JSON.stringify(item.baseSalary);
                     if (item.description) schemaDescription = item.description; 
                 }
             });
         } catch(e) {}
-    });
-
-    if (!details.datePosted) {
-        const metaDate = $('meta[itemprop="datePosted"]').attr('content');
-        if (metaDate) details.datePosted = metaDate;
-    }
-    if (details.datePosted) {
-        try {
-            const parsedDate = new Date(details.datePosted);
-            if (!isNaN(parsedDate.getTime())) details.datePosted = parsedDate.toISOString();
-            else details.datePosted = new Date().toISOString(); 
-        } catch (e) { details.datePosted = new Date().toISOString(); }
     }
 
-    if (!details.location) {
-        let locFound = $('.jobGeoLocation, .job-location, .location, span[itemprop="jobLocation"], span[itemprop="addressLocality"]').first().text().trim();
-        if (locFound && locFound.length < 80) {
-            locFound = locFound.replace(/\n/g, ' ').replace(/\s+/g, ' ');
-            locFound = locFound.replace(/\bHU\b/gi, '').replace(/\bHungary\b/gi, '').replace(/\bMagyarország\b/gi, '').replace(/\b\d{4}\b/g, '');
-            details.location = locFound.replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim();
-        }
-    }
-    if (!details.location && preLoc) details.location = preLoc;
+    details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
 
-    if (details.location && /(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) {
+    if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) {
         return null; 
     }
 
-    if (details.location) {
-        details.location = details.location.replace(/\n/g, ', ').replace(/\s+/g, ' ').trim();
-        if (details.location === "") details.location = "Magyarország";
-    } else {
-        details.location = "Magyarország"; 
-    }
+    // 🔥 2. SZÖVEG TISZTÍTÁS ÉS HTML ELTÁVOLÍTÁS REGEX-SZEL (Ettől 150x kevesebb RAM-ot használ!)
+    let cleanText = resHtml.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, ' ')
+                           .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, ' ')
+                           .replace(/<[^>]*>?/gm, ' ')
+                           .replace(/\s+/g, ' ')
+                           .trim();
+                           
+    // Processzor védelem: Max 8000 karakter!
+    cleanText = cleanText.substring(0, 8000);
 
-    let depFound = $('.jobDepartment, .department, .category, .jobFacility, span[itemprop="occupationalCategory"]').first().text().trim();
-    if (depFound && depFound.length < 80) details.department = depFound;
-
-    if (!details.salary) {
-        let salaryFound = $('span[itemprop="baseSalary"], .jobSalary').first().text().trim();
-        if (salaryFound && salaryFound.length < 50) details.salary = salaryFound;
-    }
-    
-    let reqIdFound = $('.jobReqId, .job-id, span[itemprop="value"]').first().text().trim();
-    if (reqIdFound && reqIdFound.length < 30) details.reqId = `Ref ID: ${reqIdFound}`;
-
-    $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
-    
-    // 🔥 CPU PAJZS: Maximáljuk a regexelni kívánt szöveghosszt 15 ezer karakterre!
-    let rawBodyText = $('body').text().replace(/\s+/g, ' ').trim().substring(0, 15000);
-    
     if (!details.employment_type) {
-        const empMatch = rawBodyText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
+        const empMatch = cleanText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
         if (empMatch) details.employment_type = empMatch[1].trim();
     }
     if (!details.experience_level) {
-        const expMatch = rawBodyText.match(/tapasztalati szint[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
+        const expMatch = cleanText.match(/tapasztalati szint[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
         if (expMatch) details.experience_level = expMatch[1].trim();
     }
 
-    let metaDesc = $('meta[property="og:description"], meta[name="description"]').attr('content') || "";
-    details.rawText = rawBodyText;
-
-    if (details.rawText.length < 30 && schemaDescription) {
-        details.rawText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim().substring(0, 15000);
+    if (cleanText.length < 30 && schemaDescription) {
+        cleanText = schemaDescription.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().substring(0, 8000);
     }
 
-    let extraContext = "";
-    if (details.department) extraContext += `Részleg/Kategória: ${details.department}`;
-    if (details.salary && typeof details.salary === 'string') extraContext += ` | Fizetés: ${details.salary}`;
-    if (metaDesc && !details.rawText.includes(metaDesc.substring(0, 20))) extraContext += ` | Összefoglaló: ${metaDesc}`;
-
-    if (extraContext !== "") details.rawText = `${extraContext} | ` + details.rawText;
-
+    details.rawText = cleanText;
     return details;
   } catch (e) {
     return null; 

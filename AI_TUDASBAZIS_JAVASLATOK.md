@@ -1,31 +1,46 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V81.0 OMNI-PROFESSION) - 2026. 09. 06. 12:20:29
+🧠 UNI-START AI TUDÁSBÁZIS (V81.1 OMNI-PROFESSION) - 2026. 09. 06. 12:27:49
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta matematikai paramétereit, és frissítette a kognitív immunrendszerét.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
 - Dinamikus Szigorúság (Threshold): **70.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.7299**
-- Piac Elutasítási Aránya (Rejection Rate): **880.5%**
+- Piac Elutasítási Aránya (Rejection Rate): **196.1%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 298) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **OTP Bank** (Kiírt állások: 6) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Telekom** (Kiírt állások: 6) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Aldi** (Kiírt állások: 10) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **K&H Bank** (Kiírt állások: 8) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 970) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **OTP Bank** (Kiírt állások: 67) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Telekom** (Kiírt állások: 18) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Aldi** (Kiírt állások: 76) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **K&H Bank** (Kiírt állások: 104) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
 - **HOME OFFICE** (Sebesség mutató: +310.0%) 🔥
+- **COMMUNICATION** (Sebesség mutató: +110.0%) 🔥
 - **ANGOL** (Sebesség mutató: +110.0%) 🔥
+- **HIBRID** (Sebesség mutató: +110.0%) 🔥
+- **IRODAI** (Sebesség mutató: +110.0%) 🔥
 - **ENGLISH** (Sebesség mutató: +110.0%) 🔥
 - **FRENCH** (Sebesség mutató: +110.0%) 🔥
 - **SAP** (Sebesség mutató: +110.0%) 🔥
 - **SZÉP-KÁRTYA** (Sebesség mutató: +110.0%) 🔥
+- **KÉPZÉS** (Sebesség mutató: +110.0%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
-- **ÖSSZES CÉG** (Látta: 6x)  | 🔗 Asszoc: [english, french, sap, home office] -> ⏳ Elemzés...
+- **ÖSSZES CÉG** (Látta: 11x)  | 🔗 Asszoc: [english, sap, home office, french] -> ⏳ Elemzés...
+- **EGER** (Látta: 6x)  -> ⏳ Elemzés...
 - **ÖSSZEFOGLALÓ** (Látta: 3x)  | 🔗 Asszoc: [english, sap, cafeteria, részvény] -> ⏳ Elemzés...
+- **KISKŐRÖS** (Látta: 3x)  -> ⏳ Elemzés...
+- **KAPOSVÁR** (Látta: 3x)  -> ⏳ Elemzés...
+- **CSENGER** (Látta: 3x)  -> ⏳ Elemzés...
+- **VÁLLALAT** (Látta: 3x)  -> ⏳ Elemzés...
+- **BALMAZÚJVÁROS** (Látta: 3x)  -> ⏳ Elemzés...
+- **NAGYKANIZSA** (Látta: 3x)  -> ⏳ Elemzés...
+- **VÁROS** (Látta: 3x)  -> ⏳ Elemzés...
+- **TAPASZTALATI SZINT** (Látta: 3x)  -> ⏳ Elemzés...
 - **II** (Látta: 2x)  -> ⏳ Elemzés...
+- **NONE** (Látta: 2x)  | 🔗 Asszoc: [angol, english, sap, cafeteria] -> ⏳ Elemzés...
+- **PORSCHE HUNGARIA** (Látta: 2x)  | 🔗 Asszoc: [english, sap, home office, egészségbiztosítás] -> ⏳ Elemzés...
 

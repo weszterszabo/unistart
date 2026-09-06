@@ -1,20 +1,13 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V81.1 OMNI-PROFESSION) - 2026. 09. 06. 12:27:49
+🧠 UNI-START AI TUDÁSBÁZIS (V83.1 OMNI-MASTER) - 2026. 09. 06. 12:51:29
 ======================================================
-Az MI prediktív elemzéseket futtatott, optimalizálta matematikai paramétereit, és frissítette a kognitív immunrendszerét.
+Az MI prediktív elemzéseket futtatott és szinkronizálta a kognitív immunrendszerét.
 
-### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
-- Dinamikus Szigorúság (Threshold): **70.0 pont**
+### ⚙️ Auto-Tuning (Pórázra Kötött SGD)
+- Dinamikus Szigorúság (Threshold): **45.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.7299**
-- Piac Elutasítási Aránya (Rejection Rate): **196.1%**
-
-### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 970) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **OTP Bank** (Kiírt állások: 67) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Telekom** (Kiírt állások: 18) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Aldi** (Kiírt állások: 76) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **K&H Bank** (Kiírt állások: 104) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- Piac Elutasítási Aránya (Rejection Rate): **189.4%**
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
 - **HOME OFFICE** (Sebesség mutató: +310.0%) 🔥

@@ -878,6 +878,17 @@ function generateGenerativeTLDR(companyName, jobNature, faculty, locationArray, 
 // 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA 
 // ============================================================================
 exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen Cég") {
+    // 🔥 VÉGZETES HIBA JAVÍTÁSA: CPU Fagyás (ReDoS) elleni pajzs!
+    // Mivel a Node.js egyszálú, egy 100 ezer karakteres szemét-szöveg végtelen
+    // ciklusba küldheti a Regex motort, ami blokkolja az összes timeoutot.
+    // MEGOLDÁS: Kíméletlenül levágjuk a túl hosszú, hibás szövegeket!
+    if (description && description.length > 10000) {
+        description = description.substring(0, 10000);
+    }
+    if (title && title.length > 500) {
+        title = title.substring(0, 500);
+    }
+
     const perfMarks = {};
     const mark = (name) => { perfMarks[name] = performance.now(); };
     const measure = (name, startMark) => { return Math.round((performance.now() - perfMarks[startMark]) * 100) / 100; };
@@ -919,7 +930,7 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
         try { fs.appendFileSync("kiszurt_allasok.txt", `🏢 ${companyName} | 📌 ${cleanTitle}\n   ❌ OK: ${reason}\n\n`); } catch(e) {}
         return null;
     };
-    
+
     // 🔥 1. KÜLFÖLDI ÁLLÁSOK KÍMÉLETLEN TILTÁSA (Geo-Killer)
     const foreignKillerRegex = /\b(ausztria|austria|németország|germany|svájc|switzerland|szlovákia|slovakia|románia|romania|külföld|külföldön|külföldi|anglia|uk|united kingdom|cseh|czech|lengyelország|poland|hollandia|netherlands|bécs|wien|münchen|berlin|london|pozsony|bratislava|kassa|kolozsvár|linz|graz|salzburg|tirol|frankfurt|stuttgart|nürnberg)\b/i;
     // Csekkoljuk a címet ÉS a leírás első 400 karakterét is, ahová a helyszínt szokták írni!

@@ -31,8 +31,13 @@ async function discoverSearchUrl(baseUrl) {
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        // 🔥 ITT MÁR A NATÍV, BIZTONSÁGOS FETCH-ET HASZNÁLJUK! (A Hóhér védi!)
-        const response = await fetch(base, { headers: HEADERS });
+        // 🔥 JAVÍTÁS 1: Hozzáadtuk a 10 másodperces AbortController-t!
+        const controller = new AbortController();
+        const watchdog = setTimeout(() => controller.abort(), 10000);
+        
+        const response = await fetch(base, { headers: HEADERS, signal: controller.signal });
+        clearTimeout(watchdog);
+        
         if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
         const html = await response.text();
         
@@ -59,13 +64,7 @@ async function discoverSearchUrl(baseUrl) {
         console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot. Váltás bruteforce-ra...`);
     }
 
-    const pathsToTry = [
-        "/search/", 
-        "/hu_HU/careers/SearchJobs", 
-        "/en_GB/careersmarketplace/SearchJobs", 
-        "/search-jobs", 
-        "/content/Kereses/"
-    ];
+    const pathsToTry = ["/search/", "/hu_HU/careers/SearchJobs", "/en_GB/careersmarketplace/SearchJobs", "/search-jobs", "/content/Kereses/"];
 
     for (let path of pathsToTry) {
         let testUrlObj;
@@ -76,7 +75,10 @@ async function discoverSearchUrl(baseUrl) {
         
         let testUrl = testUrlObj.toString();
         try {
-            const testRes = await fetch(testUrl, { method: 'GET', headers: HEADERS });
+            const controller = new AbortController();
+            const watchdog = setTimeout(() => controller.abort(), 5000);
+            const testRes = await fetch(testUrl, { method: 'GET', headers: HEADERS, signal: controller.signal });
+            clearTimeout(watchdog);
             if (testRes.ok) return testUrl; 
         } catch (e) { continue; }
     }
@@ -116,7 +118,12 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const response = await fetch(currentUrl, { headers: HEADERS });
+      // 🔥 JAVÍTÁS 2: Hozzáadtuk a 15 másodperces AbortController-t a lapozáshoz is!
+      const controller = new AbortController();
+      const watchdog = setTimeout(() => controller.abort(), 15000);
+      const response = await fetch(currentUrl, { headers: HEADERS, signal: controller.signal });
+      clearTimeout(watchdog);
+      
       if (!response.ok) throw new Error(`HTTP Hiba: ${response.status}`);
       const html = await response.text();
       
@@ -167,7 +174,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           }
           process.stdout.write(`✔️ `);
 
-          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
+          // 🔥 JAVÍTÁS 3: Levágjuk a túl hosszú szövegeket, mielőtt az Analyzer megkapja, hogy ne kapjon szívrohamot a processzor (ReDoS védelem)!
+          const safeText = details.rawText ? details.rawText.substring(0, 9000) : "";
+          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
           
           const analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
 
@@ -229,8 +238,13 @@ async function getDeepDetails(jobUrl, preLoc) {
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          // 🔥 A NATÍV FETCH HASZNÁLATA (A Hóhér 15mp után levágja, ha megfagy!)
-          const response = await fetch(finalJobUrl, { headers: HEADERS });
+          // 🔥 JAVÍTÁS 4: Itt is ott a 12 másodperces AbortController (Tarpit védelem)!
+          const controller = new AbortController();
+          const watchdog = setTimeout(() => controller.abort(), 12000);
+          
+          const response = await fetch(finalJobUrl, { headers: HEADERS, signal: controller.signal });
+          clearTimeout(watchdog);
+          
           if (!response.ok) throw new Error(`HTTP ${response.status}`);
           resHtml = await response.text();
           break;
@@ -320,24 +334,24 @@ async function getDeepDetails(jobUrl, preLoc) {
     let reqIdFound = $('.jobReqId, .job-id, span[itemprop="value"]').first().text().trim();
     if (reqIdFound && reqIdFound.length < 30) details.reqId = `Ref ID: ${reqIdFound}`;
 
-    $('span, p, div, li, b, strong').each((i, el) => {
-      const txt = $(el).text().replace(/\s+/g, ' ').trim();
-      const lower = txt.toLowerCase();
-
-      if (!details.employment_type && (lower.includes('foglalkoztatás típusa') || lower.includes('foglalkoztatás jellege') || lower.includes('munkaidő'))) {
-        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/foglalkoztatás (típusa|jellege):?/i, '').replace(/munkaidő:?/i, '').trim();
-        if(val.length < 50) details.employment_type = val;
-      }
-      if (!details.experience_level && lower.includes('tapasztalati szint')) {
-        let val = $(el).next().text().trim() || txt.split(':')[1]?.trim() || txt.replace(/tapasztalati szint:?/i, '').trim();
-        if(val.length < 50) details.experience_level = val;
-      }
-    });
-
+    // 🔥 JAVÍTÁS 5: Kigyomláltuk a CPU gyilkos cheerio ciklust! ($('span, p...').each() törölve)
+    // Helyette egyszeri, villámgyors Regexet használunk a megtisztított szövegen!
     $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
     
+    let rawBodyText = $('body').text().replace(/\s+/g, ' ').trim();
+    
+    // Tapasztalat és típus kinyerése regex-el:
+    if (!details.employment_type) {
+        const empMatch = rawBodyText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
+        if (empMatch) details.employment_type = empMatch[1].trim();
+    }
+    if (!details.experience_level) {
+        const expMatch = rawBodyText.match(/tapasztalati szint[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
+        if (expMatch) details.experience_level = expMatch[1].trim();
+    }
+
     let metaDesc = $('meta[property="og:description"], meta[name="description"]').attr('content') || "";
-    details.rawText = $('body').text().replace(/\s+/g, ' ').trim();
+    details.rawText = rawBodyText;
 
     if (details.rawText.length < 30 && schemaDescription) {
         details.rawText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim();

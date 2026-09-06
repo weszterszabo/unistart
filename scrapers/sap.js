@@ -74,19 +74,26 @@ function fetchSafe(urlStr, options = {}, timeoutMs = 20000, redirectCount = 0) {
             });
 
             req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
+            
+            // 🔥 ÚJ: Natív Socket szintű gyilkos időzítő (Tarpit / Fagyás ellen)
+            req.setTimeout(timeoutMs, () => {
+                if (req && !req.destroyed) req.destroy(new Error(`Socket szintű fagyás (${timeoutMs}ms)`));
+            });
+            
             req.end();
         } catch (err) { safeReject(err); }
     });
 }
 
-// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban
+// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban (Extra védelemmel)
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    await new Promise(r => setTimeout(r, 600 + Math.random() * 400));
+    // 🔥 JAVÍTÁS: Növeltük a pihenőidőt a blokkok között, hogy az SAP ne érezze DDoS támadásnak
+    await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
   }
   return results;
 }
@@ -232,10 +239,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
       jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS LOPAKODÓ ÜZEMMÓDBAN (3 szálon)
-      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (3 szálon)...`);
+      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS LOPAKODÓ ÜZEMMÓDBAN (Lassítva, 2 szálon)
+      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (2 szálon)...`);
       
-      const processedJobs = await processInBatches(jobsToProcess, 3, async (job) => {
+      const processedJobs = await processInBatches(jobsToProcess, 2, async (job) => {
           // 🔥 ÁTADJUK AZ ELŐ-LOKÁTORT A RÉSZLETEZŐ FÜGGVÉNYNEK
           const details = await getDeepDetails(job.url, job.preLoc);
           if (!details) {
@@ -308,18 +315,20 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 // 🔥 ELFOGADJA AZ ELŐ-LOKÁTORT (preLoc)
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
-  const maxRetries = 3; 
+  // 🔥 JAVÍTÁS: 3-ról 1-re csökkentjük az újrapróbálkozást, hogy ne álljon a gép percekig egy halott linknél!
+  const maxRetries = 1; 
 
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 20000);
+          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 15000); // 🔥 20 mp-ről 15 mp-re csökkentve
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
-          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
+          process.stdout.write(`⏳ `); // 🔥 Kiírunk egy homokórát, hogy lássuk: nem fagyott le, csak a Tarpitből küzd ki!
+          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
       }
   }
 

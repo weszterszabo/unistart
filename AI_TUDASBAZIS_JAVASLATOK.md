@@ -1,36 +1,37 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 06. 2:04:57
+🧠 UNI-START AI TUDÁSBÁZIS (V70.0 QUANTUM-TRANSCENDENCE) - 2026. 09. 06. 4:04:48
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
 - Dinamikus Szigorúság (Threshold): **70.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.9338** (Evolúciós ráta: 0.01)
-- Piac Elutasítási Aránya (Rejection Rate): **1079.2%**
+- Piac Elutasítási Aránya (Rejection Rate): **1066.6%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 4716) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **OTP Bank** (Kiírt állások: 104) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Telekom** (Kiírt állások: 84) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Aldi** (Kiírt állások: 140) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **K&H Bank** (Kiírt állások: 112) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 4841) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **OTP Bank** (Kiírt állások: 108) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Telekom** (Kiírt állások: 87) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Aldi** (Kiírt állások: 145) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **K&H Bank** (Kiírt állások: 116) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
+- **RÉSZVÉNY** (Sebesség mutató: +510.0%) 🔥
+- **NYUGDÍJPÉNZTÁR** (Sebesség mutató: +410.0%) 🔥
 - **ENGLISH** (Sebesség mutató: +368.3%) 🔥
 - **SAP** (Sebesség mutató: +354.4%) 🔥
 - **HOME OFFICE** (Sebesség mutató: +349.7%) 🔥
+- **CAFETERIA** (Sebesség mutató: +347.5%) 🔥
 - **COMMUNICATION** (Sebesség mutató: +310.0%) 🔥
 - **HIBRID** (Sebesség mutató: +310.0%) 🔥
 - **IRODAI** (Sebesség mutató: +310.0%) 🔥
 - **KÉPZÉS** (Sebesség mutató: +300.6%) 🔥
-- **FRENCH** (Sebesség mutató: +285.0%) 🔥
-- **SZÉP-KÁRTYA** (Sebesség mutató: +285.0%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
-- **ÖSSZES CÉG** (Látta: 58x)  | 🔗 Asszoc: [english, french, sap, home office] -> ⏳ Elemzés...
+- **ÖSSZES CÉG** (Látta: 60x)  | 🔗 Asszoc: [english, french, sap, home office] -> ⏳ Elemzés...
 - **II** (Látta: 50x)  -> ⏳ Elemzés...
-- **ÖSSZEFOGLALÓ** (Látta: 9x)  | 🔗 Asszoc: [english, sap, nyugdíjpénztár, cafeteria] -> ⏳ Elemzés...
+- **ÖSSZEFOGLALÓ** (Látta: 12x)  | 🔗 Asszoc: [english, sap, nyugdíjpénztár, cafeteria] -> ⏳ Elemzés...
 - **DOROG SZAKTERÜLET** (Látta: 4x)  | 🔗 Asszoc: [english, cafeteria, részvény, nyugdíjpénztár] -> ⏳ Elemzés...
 - **NONE** (Látta: 4x)  | 🔗 Asszoc: [english, sap, cafeteria, részvény] -> ⏳ Elemzés...
 - **TÖRLÉS** (Látta: 2x)  | 🔗 Asszoc: [english, olasz, sap, bónusz] -> ⏳ Elemzés...

@@ -1,119 +1,62 @@
 const https = require('https');
+const dns = require('dns');
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🛡️ BIZTONSÁGOS KAPCSOLAT: Állami lejárt SSL ignorálása és TCP nyitvatartás (Keep-Alive)
-const secureAgent = new https.Agent({
+// 🔥 A VARÁZSLAT: ERŐLTETETT IPv4 AGENT
+// Mivel az állami (gov.hu) szerverek IPv6 beállítása hibás (ez okozza az ECONNRESET-et Mac-en),
+// arra kényszerítjük a kapcsolatot, hogy szigorúan IPv4-en kommunikáljon!
+const ipv4Agent = new https.Agent({
     keepAlive: true,
     maxSockets: 10,
-    rejectUnauthorized: false
+    rejectUnauthorized: false, // Állami lejárt SSL ignorálása
+    lookup: (hostname, options, callback) => {
+        // Szigorúan { family: 4 } = Csakis IPv4 IP címet kérünk a DNS-től!
+        dns.lookup(hostname, { family: 4 }, callback);
+    }
 });
 
-// 🛡️ TÖKÉLETES BÖNGÉSZŐ ÁLCA (Chrome 126 ujjlenyomat)
-const BROWSER_HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-    'Accept-Language': 'hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7',
-    'sec-ch-ua': '"Not/A)Brand";v="8", "Chromium";v="126", "Google Chrome";v="126"',
-    'sec-ch-ua-mobile': '?0',
-    'sec-ch-ua-platform': '"Windows"',
-    'Connection': 'keep-alive'
-};
-
-// Dinamikus Süti Tároló
-let globalWafCookies = "";
-
-// Segédfüggvény: Natív HTTPS kérések Promise alapúvá tétele
-function makeHttpsRequest(options, postData = null) {
-    return new Promise((resolve, reject) => {
-        const req = https.request(options, (res) => {
-            let data = '';
-            res.on('data', chunk => data += chunk);
-            res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, data }));
-        });
-
-        req.on('error', e => reject(e));
-        req.on('timeout', () => { 
-            req.destroy(); 
-            reject(new Error('Közszolgállás Szerver Timeout (20s)')); 
-        });
-
-        req.setTimeout(20000); // 20 másodperc türelmi idő
-
-        if (postData) req.write(postData);
-        req.end();
-    });
-}
-
-// 🛡️ PÁNCÉLOZOTT ÉS ÖNGYÓGYÍTÓ KÉRÉS (Pre-Warm + Jitter + WAF Bypass)
+// 🛡️ BIZTONSÁGOS ÉS ÖNGYÓGYÍTÓ HTTPS KÉRÉS
 async function fetchGovApiWithRetry(postData, maxRetries = 3) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            // 1. LÉPÉS: "Előmelegítés" (Pre-flight). Megnyitjuk a főoldalt a tűzfal megnyugtatására.
-            if (!globalWafCookies) {
-                const preFlightOptions = {
+            return await new Promise((resolve, reject) => {
+                const options = {
                     hostname: 'kozszolgallas.ksz.gov.hu',
-                    path: '/',
-                    method: 'GET',
-                    agent: secureAgent,
-                    headers: { ...BROWSER_HEADERS, 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8', 'Upgrade-Insecure-Requests': '1' }
-                };
-                
-                try {
-                    const preRes = await makeHttpsRequest(preFlightOptions);
-                    // Kinyerjük és összefűzzük a tűzfal (pl. F5 BIG-IP) sütijeit
-                    if (preRes.headers['set-cookie']) {
-                        globalWafCookies = preRes.headers['set-cookie'].map(c => c.split(';')[0]).join('; ');
+                    path: '/JobAd/GetJobAdCountFilteredByCities',
+                    method: 'POST',
+                    agent: ipv4Agent,   // <-- Bevetjük az IPv4 Pajzsot
+                    timeout: 20000,     // 20 másodperc türelmi idő
+                    headers: {
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json, text/javascript, */*; q=0.01',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Origin': 'https://kozszolgallas.ksz.gov.hu',
+                        'Referer': 'https://kozszolgallas.ksz.gov.hu/',
+                        'Content-Length': Buffer.byteLength(postData)
                     }
-                } catch (e) {
-                    console.warn(`      ⚠️ [Közszolgállás] Pre-flight figyelmeztetés: ${e.message}`);
-                }
+                };
 
-                // 🔥 EMBERI KÉSLELTETÉS (Jitter): Várunk 0.8 - 1.5 másodpercet, mintha ember nézné az oldalt
-                const humanDelay = Math.floor(Math.random() * 700) + 800;
-                await new Promise(r => setTimeout(r, humanDelay));
-            }
+                const req = https.request(options, (res) => {
+                    let data = '';
+                    res.on('data', chunk => data += chunk);
+                    res.on('end', () => resolve({ status: res.statusCode, data }));
+                });
 
-            // 2. LÉPÉS: Az igazi adatlekérő POST kérés, felvértezve a tűzfal sütijével
-            const postOptions = {
-                hostname: 'kozszolgallas.ksz.gov.hu',
-                path: '/JobAd/GetJobAdCountFilteredByCities',
-                method: 'POST',
-                agent: secureAgent,
-                headers: {
-                    ...BROWSER_HEADERS,
-                    'Content-Type': 'application/json; charset=UTF-8',
-                    'Accept': 'application/json, text/javascript, */*; q=0.01',
-                    'Origin': 'https://kozszolgallas.ksz.gov.hu',
-                    'Referer': 'https://kozszolgallas.ksz.gov.hu/',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'Content-Length': Buffer.byteLength(postData)
-                }
-            };
-
-            // Hozzáadjuk a Sütit, ha van
-            if (globalWafCookies) {
-                postOptions.headers['Cookie'] = globalWafCookies;
-            }
-
-            const response = await makeHttpsRequest(postOptions, postData);
-
-            // 🔥 WAF / TŰZFAL VÉDELEM: Ha JSON helyett HTML-t (Hibaoldalt) kapunk, lebuktunk!
-            const contentType = response.headers['content-type'] || "";
-            if (contentType.includes("text/html") || response.data.includes("<html")) {
-                globalWafCookies = ""; // Sütik törlése, hogy a következő körben újat kérjen a tűzfaltól
-                throw new Error("WAF / Tűzfal HTML blokkolás érzékelve a JSON végponton!");
-            }
-
-            if (response.status !== 200) {
-                throw new Error(`Nem várt HTTP státuszkód: ${response.status}`);
-            }
-
-            return response.data;
-
+                req.on('error', e => reject(e));
+                req.on('timeout', () => { 
+                    req.destroy(); 
+                    reject(new Error('Közszolgállás Szerver Timeout (20s)')); 
+                });
+                
+                req.write(postData);
+                req.end();
+            });
         } catch (err) {
             if (attempt === maxRetries) throw err;
-            console.log(`      ⚠️ [Közszolgállás] Hálózat/Tűzfal hiba, újrapróbálkozás (${attempt}/3) [${err.message}]...`);
-            await new Promise(r => setTimeout(r, 2500 * attempt)); // Exponenciális csúsztatás (2.5s, 5.0s, stb.)
+            console.log(`      ⚠️ [Közszolgállás] Hálózat hiba, újrapróbálkozás (${attempt}/3) [${err.message}]...`);
+            await new Promise(r => setTimeout(r, 2000 * attempt)); 
         }
     }
 }
@@ -122,29 +65,35 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
 // 🚀 FŐ SCRAPER EXPORT
 // ------------------------------------------------------------------
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
-  console.log(`   ⬇️ [Közszolgállás] Phantom-Gov (Military Grade) letöltés indul...`);
+  console.log(`   ⬇️ [Közszolgállás] IPv4 Páncélos letöltés indul...`);
   const allJobs = [];
   const seenUrls = new Set();
 
   try {
     const postData = JSON.stringify({});
 
-    // A megbízható hálózati funkció hívása
-    const jsonStr = await fetchGovApiWithRetry(postData);
-    const json = JSON.parse(jsonStr);
+    const response = await fetchGovApiWithRetry(postData);
+    
+    // Tűzfal hibaoldal detektálása
+    if (response.data.includes("text/html") || response.data.includes("<html")) {
+        throw new Error("WAF / Tűzfal HTML blokkolás érzékelve!");
+    }
+
+    const json = JSON.parse(response.data);
     
     if (!json.Success || !json.Data || json.Data.length === 0) {
       console.log(`   ⏹️ [Közszolgállás] Nincs adat vagy üres válasz érkezett.`);
       return [];
     }
 
-    json.Data.forEach(job => {
-      if (!job.Speciality || !job.Id) return;
+    console.log(`      ✅ Sikeres JSON válasz! ${json.Data.length} db állás elemzése indul...`);
+
+    for (const job of json.Data) {
+      if (!job.Speciality || !job.Id) continue;
 
       const jobUrl = `https://kozszolgallas.ksz.gov.hu/JobAd/Info/${job.Id}`;
       
-      // Duplikáció védelem
-      if (seenUrls.has(jobUrl)) return;
+      if (seenUrls.has(jobUrl)) continue;
       seenUrls.add(jobUrl);
 
       const title = job.Speciality.trim();
@@ -158,19 +107,17 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           location = job.CityName.trim();
       }
 
-      // 🧠 Számból szöveges NLP csapda
       let expLevel = "";
       if (job.Experience !== null && job.Experience !== undefined) {
           expLevel = job.Experience === 0 ? "0 év tapasztalat" : `${job.Experience} év tapasztalat`;
       }
 
-      // 🕵️ MÉLY-KONTEXTUS AZ NLP-NEK
       const rawDescription = `${department} ${workType} ${expLevel} ${job.JobCategoryName || ""} ${job.EmploymentTypeName || ""}`;
       
-      // Átküldjük az AI Motornak pontozásra
+      // Küldés a V84.0 OMNI-MASTER Agyba
       const analysis = analyzer.analyzeJob(title, rawDescription, companyName);
 
-      // 🛡️ JUNIOR KAPUŐR: CSAK AKKOR MENTJÜK, HA ÁTMENT (health_score > 0)
+      // SZELLEMI KAPUŐR (health_score > 0)
       if (analysis !== null && analysis.health_score > 0) {
           
           const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -188,21 +135,19 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
             apply_url: jobUrl, 
             location: location,
             date_posted: postedDate,
-            
             experience_level: jobNature, 
             subsidiary: department,
             employment_type: workType,
-
             faculty: faculty,
             work_style: workStyle,
             tags: tags
           });
       }
-    });
+    }
 
   } catch (err) {
     console.error(`   ❌ [Közszolgállás] Végzetes Hiba:`, err.message);
-    throw err; // Továbbdobjuk a fő Orchestrátornak az auto-mentéshez
+    throw err; 
   }
 
   console.log(`   ✔️  [Közszolgállás] Siker: A szűrőn fennmaradt ${allJobs.length} db szellemi/junior állás!`);

@@ -1,4 +1,6 @@
 const cheerio = require("cheerio");
+const https = require("https");
+const http = require("http");
 const analyzer = require("../analyzer");
 
 const HEADERS = {
@@ -6,54 +8,70 @@ const HEADERS = {
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
   "Upgrade-Insecure-Requests": "1",
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-  "Connection": "close" // Nincs több Zombi Kapcsolat!
+  "Connection": "close" // 🔥 NINCS KEEP-ALIVE, hogy az OS azonnal dobja a kapcsolatot!
 };
 
-// ☢️ PÁNCÉLTEREM MEGSZAKÍTÓ (Nincs kegyelem: 6 másodperc alatt kész, vagy kuka!)
-async function unbreakableFetchText(targetUrl, timeoutMs = 6000) {
-    const controller = new AbortController();
-    
-    // Elindítjuk magát a letöltést
-    const fetchPromise = fetch(targetUrl, { 
-        headers: HEADERS, 
-        signal: controller.signal,
-        redirect: 'follow'
-    }).then(async (res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const text = await res.text();
-        return text;
-    });
+// ☢️ NATÍV OS-SZINTŰ LETÖLTŐ (A Node.js legmélyebb rétege)
+async function safeFetchHtml(targetUrl, timeoutMs = 8000) {
+    return new Promise((resolve, reject) => {
+        let isDone = false;
+        let req;
+        
+        try {
+            const urlObj = new URL(targetUrl);
+            const client = urlObj.protocol === 'http:' ? http : https;
+            const options = { 
+                hostname: urlObj.hostname, 
+                path: urlObj.pathname + urlObj.search, 
+                method: 'GET', 
+                headers: HEADERS,
+                timeout: timeoutMs // 🔥 Natív Socket Timeout!
+            };
 
-    // Csinálunk egy könyörtelen időzítőt
-    const timeoutPromise = new Promise((_, reject) => {
-        setTimeout(() => {
-            controller.abort(); // Kilövi a Fetch-et
-            reject(new Error('Kátránygödör Timeout'));
-        }, timeoutMs);
-    });
+            req = client.request(options, (res) => {
+                if (res.statusCode >= 400 && res.statusCode < 500) {
+                    if (!isDone) { isDone = true; req.destroy(); reject(new Error(`HTTP ${res.statusCode}`)); }
+                    return;
+                }
+                
+                // Redirektek követése
+                if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
+                     let redirUrl = res.headers.location.startsWith('http') ? res.headers.location : urlObj.origin + res.headers.location;
+                     if (!isDone) {
+                         isDone = true; req.destroy();
+                         safeFetchHtml(redirUrl, timeoutMs).then(resolve).catch(reject);
+                     }
+                     return;
+                }
 
-    // Amelyik hamarabb végez, az nyer! 
-    // Ha 6 mp alatt nem jön le a teljes szöveg, az időzítő kilövi az egészet.
-    const html = await Promise.race([fetchPromise, timeoutPromise]);
-    
-    // RAM Pajzs: Vágjuk le a szemetet, hogy a processzor ne fagyjon ki!
-    return html.length > 150000 ? html.substring(0, 150000) : html;
+                let data = '';
+                res.on('data', chunk => {
+                    data += chunk;
+                    // 🔥 RAM PAJZS: 150 KB-nál azonnal levágjuk a VW gigantikus szemétkódját!
+                    if (data.length > 150000) {
+                        if (!isDone) { isDone = true; req.destroy(); resolve(data); }
+                    }
+                });
+                res.on('end', () => {
+                    if (!isDone) { isDone = true; resolve(data); }
+                });
+            });
+
+            req.on('timeout', () => {
+                if (!isDone) { isDone = true; req.destroy(); reject(new Error('OS Socket Timeout')); }
+            });
+
+            req.on('error', e => { 
+                if (!isDone) { isDone = true; reject(e); } 
+            });
+            
+            req.end();
+        } catch (e) {
+            if (!isDone) { isDone = true; reject(e); }
+        }
+    });
 }
 
-// ⚡ SEGÉDFÜGGVÉNY
-async function processInBatches(items, batchSize, asyncFn) {
-  let results = [];
-  for (let i = 0; i < items.length; i += batchSize) {
-    const batch = items.slice(i, i + batchSize);
-    const batchResults = await Promise.all(batch.map(asyncFn));
-    results.push(...batchResults);
-    if (global.gc) global.gc();
-    await new Promise(r => setTimeout(r, 1000));
-  }
-  return results;
-}
-
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
@@ -62,7 +80,7 @@ async function discoverSearchUrl(baseUrl) {
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        const html = await unbreakableFetchText(base, 10000);
+        const html = await safeFetchHtml(base, 10000);
         const $ = cheerio.load(html);
         let bestLink = null;
 
@@ -89,7 +107,7 @@ async function discoverSearchUrl(baseUrl) {
         let testUrlObj;
         try { testUrlObj = new URL(base.split('?')[0] + path); originalParams.forEach((val, key) => testUrlObj.searchParams.set(key, val)); } catch(e) { continue; }
         let testUrl = testUrlObj.toString();
-        try { await unbreakableFetchText(testUrl, 5000); return testUrl; } catch (e) { continue; }
+        try { await safeFetchHtml(testUrl, 5000); return testUrl; } catch (e) { continue; }
     }
 
     const defaultUrlObj = new URL(base.split('?')[0] + "/search/");
@@ -105,25 +123,25 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   let startrow = 0; const step = 25; let hasMore = true; let page = 1;
   const searchBaseUrl = await discoverSearchUrl(baseUrl);
   
+  // 🔥 A MEGOLDÁS: Szigorú limit a tűzfal tiltása (18. kérés) ellen!
+  let totalDeepScrapes = 0;
+  const MAX_DEEP_SCRAPES = 12; 
+
   while (hasMore) {
     let currentUrl;
     try {
         const urlObj = new URL(searchBaseUrl);
-        if (!urlObj.searchParams.has('sortColumn')) urlObj.searchParams.append('sortColumn', 'referencedate');
-        if (!urlObj.searchParams.has('sortDirection')) urlObj.searchParams.append('sortDirection', 'desc');
-        if (!urlObj.searchParams.has('locale')) urlObj.searchParams.append('locale', 'hu_HU');
+        urlObj.searchParams.append('sortColumn', 'referencedate');
+        urlObj.searchParams.append('sortDirection', 'desc');
+        urlObj.searchParams.append('locale', 'hu_HU');
         urlObj.searchParams.set('startrow', startrow.toString()); currentUrl = urlObj.toString();
     } catch (e) { throw e; }
     
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const html = await unbreakableFetchText(currentUrl, 10000);
+      const html = await safeFetchHtml(currentUrl, 10000);
       const $ = cheerio.load(html);
-
-      if (html.toLowerCase().includes("just a moment") || html.toLowerCase().includes("cloudflare") || html.includes('id="cf-wrapper"')) {
-          throw new Error("WAF Captcha blokkolás!");
-      }
       
       const pageLinks = [];
       $('a').each((i, el) => {
@@ -141,45 +159,58 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       });
 
       const uniqueOnPage = pageLinks.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
-      const jobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
+      let jobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
       if (jobsToProcess.length === 0) { console.log(`   ⏹️ [SAP] Nincs több új állás az oldalon.`); hasMore = false; break; }
-      jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (1 szálon)...`);
-      
-      const processedJobs = await processInBatches(jobsToProcess, 1, async (job) => {
-          const details = await getDeepDetails(job.url, job.preLoc);
-          if (!details) { process.stdout.write(`❌ `); return null; }
-          process.stdout.write(`✔️ `);
+      // Vágjuk le a listát, ha túllépnénk a 12-es limitet!
+      if (totalDeepScrapes + jobsToProcess.length > MAX_DEEP_SCRAPES) {
+          jobsToProcess = jobsToProcess.slice(0, Math.max(0, MAX_DEEP_SCRAPES - totalDeepScrapes));
+      }
 
-          const safeText = details.rawText ? details.rawText.substring(0, 8000) : "";
-          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
+      if (jobsToProcess.length > 0) {
+          console.log(`   ⚡ [SAP] ${jobsToProcess.length} db állás biztonságos (Anti-Ban) feldolgozása egyesével...`);
           
-          let analysis = null;
-          try {
-              analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
-          } catch(e) { return null; }
+          for (const job of jobsToProcess) {
+              totalDeepScrapes++;
+              seenUrls.add(job.url);
+              
+              const details = await getDeepDetails(job.url, job.preLoc);
+              if (!details) { process.stdout.write(`❌ `); continue; }
+              process.stdout.write(`✔️ `);
 
-          if (analysis !== null) {
-              const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
-              const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
-              let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
-              if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
+              const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
+              
+              let analysis = null;
+              try { analysis = analyzer.analyzeJob(job.title, rawDescription, companyName); } catch(e) { continue; }
 
-              return {
-                title: job.title, url: job.url, apply_url: job.url,
-                location: details.location || "Nincs megadva", date_posted: details.datePosted || new Date().toISOString(),
-                experience_level: jobNature, subsidiary: details.subsidiary || companyName,
-                employment_type: details.employment_type || "Teljes munkaidő",
-                faculty: faculty, work_style: analysis.metadata?.work_style || "", tags: tags
-              };
+              if (analysis !== null) {
+                  const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+                  const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+                  let tags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+                  if (!Array.isArray(tags) && analysis.tags?.required) tags = analysis.tags.required;
+
+                  allJobs.push({
+                    title: job.title, url: job.url, apply_url: job.url,
+                    location: details.location || "Nincs megadva", date_posted: details.datePosted || new Date().toISOString(),
+                    experience_level: jobNature, subsidiary: details.subsidiary || companyName,
+                    employment_type: details.employment_type || "Teljes munkaidő",
+                    faculty: faculty, work_style: analysis.metadata?.work_style || "", tags: tags
+                  });
+              }
+              
+              // Tűzfal pihentetése minden állás után!
+              await new Promise(r => setTimeout(r, 1500));
           }
-          return null;
-      });
+          console.log(""); 
+      }
 
-      console.log(""); 
-      allJobs.push(...processedJobs.filter(j => j !== null));
+      // 🔥 HA ELÉRTÜK A 12-T, KILÉPÜNK!
+      if (totalDeepScrapes >= MAX_DEEP_SCRAPES) {
+          console.log(`   🛑 [SAP] Elértük az Anti-Ban limitet (${MAX_DEEP_SCRAPES} állás). A Tűzfal tiltásának elkerülése végett a cég befejezve!`);
+          hasMore = false;
+          break;
+      }
 
       if (uniqueOnPage.length < step) { hasMore = false; } else { startrow += step; page++; }
 
@@ -194,16 +225,13 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - AZ ABSZOLÚT MEGSZAKÍTÓVAL
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
-
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
   try {
-      // Itt hívjuk a páncéltermet. Ha 6 mp-en belül nincs kész, azonnal kidobja!
-      resHtml = await unbreakableFetchText(finalJobUrl, 6000); 
+      resHtml = await safeFetchHtml(finalJobUrl, 8000);
   } catch (e) {
       return null; 
   }

@@ -20,10 +20,6 @@ const engines = {
 
 // Változók a teszteléshez
 // ÍRD ÁT EZT A KÉT VÁLTOZÓT, HA MÁS CÉGET AKARSZ TESZTELNI!
-const TEST_ENGINE = "siemens"; 
-const TEST_COMPANY_NAME = "siemens"; 
-const TEST_URL = ["careers.siemens.com", "jobs.siemens.com"];
-
 async function runTest() {
     console.log(`\n🧪 LOKÁLIS TESZT INDUL...`);
     console.log(`🏢 Cég: ${TEST_COMPANY_NAME} | Motor: [${TEST_ENGINE.toUpperCase()}]`);

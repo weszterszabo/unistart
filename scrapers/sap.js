@@ -12,7 +12,7 @@ const HEADERS = {
 
 const secureAgent = new https.Agent({ keepAlive: true, maxSockets: 10, rejectUnauthorized: false });
 
-// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ
+// ☢️ NUKLEÁRIS FIZIKAI MEGSZAKÍTÓ ÉS EXTRÉM RAM PAJZS
 async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
     return new Promise((resolve, reject) => {
         let isDone = false;
@@ -40,7 +40,9 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
                 let data = '';
                 res.on('data', chunk => {
                     data += chunk;
-                    if (data.length > 1000000) {
+                    // 🔥 EXTRÉM RAM VÉDELEM: 150 KB-nál könyörtelenül elvágjuk a letöltést!
+                    // A VW oldalak alján több MB felesleges JSON van, ezt sosem engedjük a memóriába!
+                    if (data.length > 150000) {
                         if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
                     }
                 });
@@ -57,13 +59,17 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 12000) {
     });
 }
 
+// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás + GC
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
+    
+    // Kényszerített GC minden batch után a memóriaszivárgás ellen!
+    if (global.gc) global.gc();
+    await new Promise(r => setTimeout(r, 1000 + Math.random() * 500));
   }
   return results;
 }
@@ -161,20 +167,19 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       if (jobsToProcess.length === 0) { console.log(`   ⏹️ [SAP] Nincs több új állás az oldalon.`); hasMore = false; break; }
       jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (2 szálon)...`);
+      // 🔥 RAM VÉDELEM 2: KIZÁRÓLAG 1 SZÁLON MEGYÜNK, hogy ne duplázzuk a memóriaterhelést!
+      console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (1 szálon)...`);
       
-      const processedJobs = await processInBatches(jobsToProcess, 2, async (job) => {
+      const processedJobs = await processInBatches(jobsToProcess, 1, async (job) => {
           const details = await getDeepDetails(job.url, job.preLoc);
           if (!details) { process.stdout.write(`❌ `); return null; }
           process.stdout.write(`✔️ `);
 
-          const safeText = details.rawText ? details.rawText.substring(0, 8000) : "";
-          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
+          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
           
           let analysis = null;
           try {
-              // 0 ms késleltetés, hogy a Node.js fellélegezzen és fusson a Timeout
-              await new Promise(r => setImmediate(r));
+              // Egyszerű és biztos hívás. Az analyzer nem fagy le, mert a szöveget már 6000 karakternél levágtuk!
               analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
           } catch(e) { return null; }
 
@@ -211,7 +216,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - PROCESSZOR PAJZS (Anti-ReDoS)
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - MEMÓRIABIZTOS, CPU-VÉDETT VERZIÓ
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
 
@@ -235,13 +240,12 @@ async function getDeepDetails(jobUrl, preLoc) {
     let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
-    // 🔥 CPU PAJZS 1: Az első 120 ezer karakter bőven elég az álláshoz. A többi SAP szemét, eldobjuk!
-    let safeHtml = resHtml.substring(0, 120000);
+    // Mivel a resHtml már garantáltan KISEBB mint 150KB, a Cheerio biztonságosan és memóriaszivárgás nélkül le tud futni!
+    const $ = cheerio.load(resHtml);
 
-    const jsonLdMatches = [...safeHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
-    for (const match of jsonLdMatches) {
+    $('script[type="application/ld+json"]').each((i, el) => {
         try {
-            const data = JSON.parse(match[1].replace(/[\u0000-\u0019]+/g,""));
+            const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
             const items = Array.isArray(data) ? data : (data["@graph"] || [data]);
             items.forEach(item => {
                 if (item['@type'] === 'JobPosting') {
@@ -259,20 +263,18 @@ async function getDeepDetails(jobUrl, preLoc) {
                 }
             });
         } catch(e) {}
-    }
+    });
 
     details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
     if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) return null; 
 
-    // 🔥 CPU PAJZS 2: A halálos "|$" eltávolítva a regexekből! Nincs több fagyás (Backtracking)!
-    let cleanText = safeHtml.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, ' ')
-                            .replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, ' ')
-                            .replace(/<!--[\s\S]*?-->/gi, ' ')
-                            .replace(/<[^>]+>/g, ' ')
-                            .replace(/\s+/g, ' ')
-                            .trim();
+    // Eltávolítjuk a felesleges tag-eket, hogy csak a tiszta szöveg maradjon
+    $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
+    let cleanText = $('body').text().replace(/\s+/g, ' ').trim();
                            
-    cleanText = cleanText.substring(0, 8000);
+    // 🔥 CPU VÉDELEM: A tiszta szöveget KŐKEMÉNYEN levágjuk 6000 karakternél!
+    // Így az analyzer.js szinkron Regex-motorja 0.001 másodperc alatt lefut, a fagyás lehetetlen.
+    cleanText = cleanText.substring(0, 6000);
 
     if (!details.employment_type) {
         const empMatch = cleanText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
@@ -284,7 +286,7 @@ async function getDeepDetails(jobUrl, preLoc) {
     }
 
     if (cleanText.length < 30 && schemaDescription) {
-        cleanText = schemaDescription.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().substring(0, 8000);
+        cleanText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim().substring(0, 6000);
     }
 
     details.rawText = cleanText;

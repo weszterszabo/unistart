@@ -6,42 +6,41 @@ const HEADERS = {
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
   "Upgrade-Insecure-Requests": "1",
   "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
-  "Connection": "close" // 🔥 NINCS TÖBB KEEP-ALIVE ZOMBI SOCKET!
+  "Connection": "close" // Nincs több Zombi Kapcsolat!
 };
 
-// ☢️ NUKLEÁRIS IZOLÁLT FETCH (MINDEN EDDIGINÉL ERŐSEBB)
-async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
+// ☢️ PÁNCÉLTEREM MEGSZAKÍTÓ (Nincs kegyelem: 6 másodperc alatt kész, vagy kuka!)
+async function unbreakableFetchText(targetUrl, timeoutMs = 6000) {
     const controller = new AbortController();
-    const id = setTimeout(() => controller.abort(), timeoutMs);
+    
+    // Elindítjuk magát a letöltést
+    const fetchPromise = fetch(targetUrl, { 
+        headers: HEADERS, 
+        signal: controller.signal,
+        redirect: 'follow'
+    }).then(async (res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const text = await res.text();
+        return text;
+    });
 
-    try {
-        const response = await fetch(targetUrl, { 
-            headers: HEADERS, 
-            signal: controller.signal,
-            redirect: 'follow' 
-        });
-        
-        clearTimeout(id);
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        
-        // Letöltjük a teljes szöveget, de ha a szerver Tarpit támadást indít közben,
-        // a Promise.race kíméletlenül elvágja a torkát 5 másodperc után!
-        const textPromise = response.text();
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error('Body Stream Timeout')), 5000)
-        );
-        
-        const html = await Promise.race([textPromise, timeoutPromise]);
-        
-        // 🔥 RAM PAJZS: Azonnal levágjuk a VW 3 Megabájtos szemétkódját!
-        return html.length > 150000 ? html.substring(0, 150000) : html;
+    // Csinálunk egy könyörtelen időzítőt
+    const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+            controller.abort(); // Kilövi a Fetch-et
+            reject(new Error('Kátránygödör Timeout'));
+        }, timeoutMs);
+    });
 
-    } catch (error) {
-        clearTimeout(id);
-        throw error;
-    }
+    // Amelyik hamarabb végez, az nyer! 
+    // Ha 6 mp alatt nem jön le a teljes szöveg, az időzítő kilövi az egészet.
+    const html = await Promise.race([fetchPromise, timeoutPromise]);
+    
+    // RAM Pajzs: Vágjuk le a szemetet, hogy a processzor ne fagyjon ki!
+    return html.length > 150000 ? html.substring(0, 150000) : html;
 }
 
+// ⚡ SEGÉDFÜGGVÉNY
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
@@ -63,7 +62,7 @@ async function discoverSearchUrl(baseUrl) {
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        const html = await unbreakableFetchText(base, 8000);
+        const html = await unbreakableFetchText(base, 10000);
         const $ = cheerio.load(html);
         let bestLink = null;
 
@@ -154,7 +153,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           if (!details) { process.stdout.write(`❌ `); return null; }
           process.stdout.write(`✔️ `);
 
-          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
+          const safeText = details.rawText ? details.rawText.substring(0, 8000) : "";
+          const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${safeText}`;
           
           let analysis = null;
           try {
@@ -194,7 +194,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   return allJobs;
 };
 
-// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TELJESEN BIZTONSÁGOS VERZIÓ
+// 🕵️ MÉLYFÚRÓ FÜGGVÉNY - AZ ABSZOLÚT MEGSZAKÍTÓVAL
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
 
@@ -202,9 +202,10 @@ async function getDeepDetails(jobUrl, preLoc) {
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
   try {
-      resHtml = await unbreakableFetchText(finalJobUrl, 6000); // Kőkemény 6 másodperces limit minden állásra!
+      // Itt hívjuk a páncéltermet. Ha 6 mp-en belül nincs kész, azonnal kidobja!
+      resHtml = await unbreakableFetchText(finalJobUrl, 6000); 
   } catch (e) {
-      return null; // Nincs retry. Ha a VW fagyaszt, azonnal kidobjuk az állást!
+      return null; 
   }
 
   if (!resHtml) return null;

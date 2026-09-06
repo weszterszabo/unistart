@@ -24182,3 +24182,1890 @@
 🏢 Ismeretlen Cég | 📌 csőszerelő, előszerelés csoportvezető
    ❌ OK: Fizikai munka a cím alapján
 
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - barcs, erkel ferenc utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siklós, szent istván tér 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- szigetvár , almás patak utca 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagyatád és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lahti utca 45.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, málomi út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, siklósi út 52/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lázár vilmos utca 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagykanizsa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dombóvár, kórház utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - baja, balcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, platán sor 6/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, átkötő u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, sopron u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, tapolcai u. 45/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - körmend, remetei filep u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - körmend, dr. remetei filep utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes-fonyód , ady endre utca 57-59.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- fonyód és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fonyód, ady endre u. 57-59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tamási, deák ferenc u. 10/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tamási, deák ferenc u. 10/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - tapolca, veszprémi út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tapolca
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, kenyérvíz u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, zanati u. 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kalocsa, pataji út 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, verseny u. 30.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siófok, zamárdi u. 1-2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - ajka, hársfa utca 1/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - ajka, hársfa u. 1/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - ajka és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - makó, f184 szegedi u. 63.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kiskőrös, kossuth utca 13.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, pápai u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - sárbogárd, ady e. utca 232-236.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - balatonfűzfő, vízmű u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - solt, kossuth lajos utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - pápa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pápa, jókai mór u. 57.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - várpalota, hétvezér út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, velinszky utca 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, magyar út 11.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - sopron, lófuttató utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - sopron és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, bánfalvi u. 12.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, lófuttató u. 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó  kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - hűtött területen - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - baranya-tolna megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - csongrád-csanád megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - békés megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kapuvár, győri u. 60.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - székesfehérvár, farkasvermi köz 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - székesfehérvár és környéke 60 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő hűtött területen - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs, friss hús áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- székesfehérvár és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőkovácsháza, árpád u. 135.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes agárd, akácfa utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- agárd, akácfa utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csorna, soproni út 66/c.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - csorna és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szentes ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentes,ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes- mór akai út 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- mór akai út 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kecskemét, szolnoki út 18.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, kossuth lajos u. 123.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, jereváni utca 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - nagykőrös, kecskeméti út 73.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - győr és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - oroszlány, környei u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - szigethalom, mű út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - érd, diósdi u. 2-4
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mosonmagyaróvár, királyhidai u. 49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szigetszentmiklós, csepeli út 16/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szarvas, csabai út 1/4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - bicske, szent lászló utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaharaszti, némedi út 102/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - békéscsaba, corvin u. 29-33.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- békéscsaba és környéke 90 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békéscsaba, corvin utca 29-33.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó pékség területre - békéscsaba, szarvasi út 15-17.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, nagytétényi út 216-218.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - gyula, szent istván u. 69/1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xxiii. kerület haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs -budapest, haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - martfű és 100 km-es környéke
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xxiii. ker., ciklámen u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- budapest xxiii. ker., ciklámen u. 3
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xi. ker., fehérvári út 211.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ix. kerület gubacsi út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budakeszi, kert utca 27-29.  1
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xviii. kerület margó tivadar u. 83.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békés, kossuth l. u. 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xi. kerület ,bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- vecsés, fő u. 244
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vecsés, fő utca 244.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. kerület, báthory u. 6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. ker., szalay utca 14.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, viii. kerület leonardo da vinci utca 23.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ii. kerület csalogány utca 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vii. ker., rákóczi út 48-50.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vi. ker.,bajcsy-zsilinszky út 61.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, vi. kerület király utca 112.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest, viii ker., hungária körút 26.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest x. kerület, maglódi út 17
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - ecser
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőtúr, földvári út 21.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xiv. kerület mogyoródi út 23-29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szolnok, tószegi u. 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest xiii. kerület béke utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület újszász utca 47/b.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - szolnok, délibáb u. 6.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- solymár, terstyánszky ödön utca 89.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület jános utca 196.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. ker. alsómalom utca 8-10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - üröm, dózsa györgy út 63.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iii. kerület szentendrei út 251-253.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, iv. kerület görgey artúr utca 14-20. (4 órás munkaidő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület görgey artúr utca 14-20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület régi fóti u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület megyeri út 53.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- dorog, bányász körönd hrsz.1732/98
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pomáz, józsef attila utca 32.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - dunakeszi, berek utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunakeszi, berek utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fót, keleti márton utca.7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentendre, dózsa györgy út 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- esztergom, dobogókői út 39.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gödöllő, ottó ferenc utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - esztergom, bánomi út 21003 hrsz.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, szadai út 7
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szeghalom, széchenyi utca 45-49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - jászberény, nagykátai út 7/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisújszállás, deák ferenc u. 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- aszód, pesti út 14-16.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, bolgár utca 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - vác, bolgár utca 1.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, balassagyarmati út 9-15.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - vác, balassagyarmati út 9-15.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, naszály utca 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - heves, kolozsvári út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 - 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 -20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - berettyóújfalu, kossuth u. 98.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - hajdúszoboszló, dózsa györgy út 62.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-bátonyterenye, berekgát köz 2. -hjk
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - salgótarján, csokonai út 23
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - eger - ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - eger, ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, mikepércsi út 168.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, mikepércsi út 168.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, derék u. 31
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, derék u. 31
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- debrecen, széchenyi út 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, balmazújvárosi út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, faraktár utca 58.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, faraktár utca 58.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tiszaújváros, lévay u. 118.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, pesti út 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - hajdúnánás, dorogi u. 108.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, józsef a. u. 74.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nyíregyháza és 80 km-es környéke
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 takarító
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 kereskedelmi üzleti kontroller
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő-bedobó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 szenior it szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior stratégiai beszerzési szakértő - contract optimization & vendor strategy
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior platform/devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior agentic software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect 1
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior tesztautomatizáló szakértő 1_osm
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior system analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior nagyvállalati számlavezetési tanácsadó
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior sérülékenységmenedzsment szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior műveleti biztonsági specialista
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior storage expert 1
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 OTP Bank | 📌 data analytics & decision expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főpénztáros ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 főpénztáros ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 gyalogos kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hr kontrolling osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kamionsofőr
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő / küldeményszállító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kiemelt egyesített kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 körzeti helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 körzeti helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményszállító / kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményszállító/kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 külterületi és támpont kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktáros
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Magyar Posta Zrt. | 📌 főpénztáros ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 főpénztáros
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 főpénztáros
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 gépjárművezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 műszakvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postahelyi helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postahelyi helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető iii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető iii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető v.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 szolgáltatásirányítási vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 értékesítési képviselő_debrecen fórum tü
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 értékesítési képviselő_győr pláza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ifrs reporting senior expert - magyar telekom mobile infra zrt.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer - caas
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer - security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior system engineer for optical transport
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 áruösszekészítő szárazáru területre
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru és zöldség- gyümölcs áruösszekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó - bag és környéke
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hűtőraktári dolgozó teljes vagy részmunkaidőben
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 pmo & project delivery specialist
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 scrum master
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer - java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer-java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer-java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior financial planning specialist
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior it team leader
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior operational test manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior team leader - ecommerce
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 medior pályázati szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior sap co kontrolling szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior üzleti elemző – robotizált megoldások szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ügyfélkapcsolati munkatárs - ózd
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villanyszerelő - makói körzet
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior esg szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MVM Csoport | 📌 hálózatépítési speciális szerelő
+   ❌ OK: Gyanús fizikai/operátor munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi vezető - észak-budapest
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi vezető - vác, aszód
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ügyfél életút és lead szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 application middleware platform infrastructure lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior oracle dba
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior banki tanácsadó  - budapest atrium hitelcentrum
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 nagyvállalati kapcsolattartó mid office munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior lakossági hitelszakértő - hitelcentrum kecskemét
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior kkv hitelezési tanácsadó - zalaegerszeg
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior kkv hitelezési tanácsadó - pécs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 befektetési szolgáltatások folyamatmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior it projektvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1 év határozott időre - értékesítési vezetői támogató - dél-kelet magyarország
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 vezető tanácsadó, lead kezelés és ügyfélélmény / észak-budapest és környéke
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vállalati ügyfél kapcsolattartó - kkv szegmens
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ügyfél kapcsolattartó  – kecskemét
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior vállalati ügyfél kapcsolattartó - kkv szegmens
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior sap rendszerszervező
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 performancia tesztmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior openshift engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 K&H Bank | 📌 székház ingatlanmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 műszak-részlegvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 tehergépkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 termelési áruátvételi szakmunkás
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 hús- csemege eladó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hús szakeladó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hús- csemege eladó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 csemege- hús eladó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 CIB Bank | 📌 senior kkv ügyfélkapcsolattartó
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kis- és középvállalati ügyfélmenedzser - budapest
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 product owner - onboarding és ügyfélkapcsolat squad
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / budapest
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / eger
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior kis és középvállalati ügyfélmenedzser - dél-dunántúli régió
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior bankfióki tanácsadó - csepel
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 ERSTE Bank | 📌 fiókvezető - hatvan/jászberény egység
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 pénzügyi tervező senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior operations analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead szoftverfejlesztő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vendor security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 technology security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior l3 application support engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 beszerző senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliens üzemeltető medior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 oss senior nyilvántartó mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 felsővezetői asszisztens
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 projektmenedzser senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior adózási munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior belső ellenőr
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior projektmenedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főkönyvi könyvelési munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 investor relations senior munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 stratégiai tervező kontroller senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzemeltetés támogató munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 helpdesk supervisor
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ifrs expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 4iG | 📌 szolgáltatás és hálózatfelügyeleti operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési kutatási és tudásmenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 tv és tartalommenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési üzleti termékstratégiai szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 adatközpont operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 cyber security network expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 lead hr specialist – compensation & benefits
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior data engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software developer in computer-aided design
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 mechanical lead designer at power electronics engineering
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 development engineer / lead designer - planetary gearbox
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior fullstack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead engineer – eaxle thermal system
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior full stack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack  developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack developer – .net core / angular / react
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 software developer – driver assistance & automated driving
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 rexroth - szenior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 folyamatmérnök csapatvezető | process engineer team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 gyártósori minőségügyi mérnök i line quality engineer
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 álláslehetőségek a maklári boschnál- szellemi munkakörökben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 npi projekt vezető | npi project leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szervízpont technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktáros-komissziós
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 safety expert for adas products
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 motorsori gépbeállító  /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cnc technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor - servocom terület
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior bérszámfejtő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 gyártósori brigádvezető / mcp - kéziszerszámgyár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 targoncavezető / mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 project controlling
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 labortechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 hw maintenance team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 mechanical project leader for adas and iss sensors
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 application center tesztjármű technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 vision folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 préselési és csavarozási folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 sample target coster
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 eaxle physical analysis team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gyártási sorfeltöltő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gépmester
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 logistics process traniee
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 regional portfolio expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 best scholarship program - 2026
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 rendszerspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 plc szerviztechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Richter Gedeon | 📌 solution architecture team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Richter Gedeon | 📌 senior enterprise architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Richter Gedeon | 📌 senior global medical advisor cns
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Richter Gedeon | 📌 commercial controlling analytics expert
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Ismeretlen Cég | 📌 finance business partner with cost control focus
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 it core service delivery expert
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 tolatásvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 általános műszerész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 analizátor technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 gastro & own brand offer management quality senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 fuel offer management senior expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 tűzoltó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior fejlesztési mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kontrolling adat & elemzés szenior szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 sales product owner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior tervező
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 head of group downstream hse
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior it business analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 mérőállomás vezérlő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 enterprise server services team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior domain architect - end-user computing  and enterprise infrastructure
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 e&p it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 group controlling steering & sustainability finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 green hydrogen value chain project management expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 biztonsági operátor és fegyveres biztonsági őr
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 asset data team leader
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 asset data team leader
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektrikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior business development project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 group m&s finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 master data management lead developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vizsgálólaboratóriumi technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 építésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 e&p segment finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 investigation expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior jogtanácsos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 marketing strategy & trade marketing senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 corporate m&s finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior low carbon drilling expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 finomítás rendszerkezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 finomítás rendszerkezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 lánctalpas darukezelő és / vagy  lánctalpas földmunkagép kezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 csővezetéképítési szakmunkás
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 főépítésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 építésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior ügyfélszolgálati rendszerszakértő - operációt támogató szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 downstream finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior penetration tester
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior data engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior hse business analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 group procurement digital delivery lead expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior it project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 innovative payments expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior reservoir engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 hegesztő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 campus building services & operations team lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 jogi előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 intercompany kontroll szenior szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior commercial expert – e&p
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 vegyianyag gyártó operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior azure devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 drilling & workover performance team lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 komplex forgácsoló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior tervező
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villanyszerelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kiemelt hegesztő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 chief economist
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 csőszerelő, előszerelés csoportvezető
+   ❌ OK: Fizikai munka a cím alapján
+

@@ -4,25 +4,190 @@ const fs = require("fs");
 const path = require("path");
 
 // ============================================================================
-// 🧠 0. V83.4 OMNI-MASTER (ULTIMATE AGI & BULLETPROOF ARCHITECTURE)
+// 🧠 0. V84.0 OMNI-MASTER STABLE (PREDICTIVE AGI & FULL LOGIC RESTORED)
 // ============================================================================
+const BRAIN_FILE_PATH = path.join(process.cwd(), "brain.json");
+const DISCOVERY_MD_PATH = path.join(process.cwd(), "AI_TUDASBAZIS_JAVASLATOK.md");
 
-// ----------------------------------------------------------------------------
-// 📚 1. KOGNITÍV SZÓTÁRAK ÉS KONSTANSOK (Mindennek a tetején a biztonságért)
-// ----------------------------------------------------------------------------
-const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
-const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
-const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es|ja|je)?(?:val|vel)?(?:t|k)?";
+let brainDB = {
+    metadata: { 
+        total_parsed_jobs: 0, 
+        total_rejected: 0,
+        last_calibration: Date.now(), 
+        version: "84.0_OMNI_MASTER_STABLE",
+        avg_doc_length: 400,
+        bm25_k1: 1.5,
+        bm25_b: 0.75,
+        adaptive_threshold: 40,
+        learning_rate: 0.01 
+    },
+    categories: {
+        "📍 HELYSZÍN": {}, "💻 SZOFTVER/TECH": {}, "🎁 JUTTATÁS": {},
+        "🧠 SOFT-SKILL": {}, "🌍 NYELV": {}, "👔 ÚJ SZAKMA/POZÍCIÓ": {},
+        "🧩 N-GRAM (KIFEJEZÉSEK)": {} 
+    },
+    company_profiles: {},  
+    dynamic_faculties: {}, 
+    emergent_clusters: {}, 
+    cluster_salary_curves: {},
+    auto_typos: {}, 
+    idf_stats: {},
+    anomalies: [], 
+    ontology_graph: {}, 
+    eigen_centrality: {}, 
+    skill_velocity: {}, 
+    antibodies: []         
+};
 
-const stopWords = new Set(["KFT", "ZRT", "NYRT", "B2B", "B2C", "URL", "HTTP", "HTTPS", "HUF", "EUR", "USD", "MIND", "EGY", "NEM", "VAGY", "ÍGY", "HOGY", "CSAK", "KIVÁLÓ", "VERSENYKÉPES", "STABIL", "JÓ", "RUGALMAS", "VAN", "KÉSZ", "MÁR", "EZT", "EGYÜTT", "MELY", "AMELY", "ÖSSZES", "CÉG", "ÖSSZEFOGLALÓ", "II", "III", "IV", "KERÜLET", "FELADATOK", "ELVÁRÁSOK", "ELŐNY", "AMIT", "KÍNÁLUNK"]);
-const detoxRules = [ { regex: /<[^>]*>?/gm, replacement: ' ' }, { regex: /&nbsp;/gi, replacement: ' ' }, { regex: /\r\n|\n|\r/g, replacement: ' \n ' } ];
+function levenshteinDistance(a, b) {
+    if (a.length === 0) return b.length; if (b.length === 0) return a.length;
+    const matrix = [];
+    for (let i = 0; i <= b.length; i++) matrix[i] = [i];
+    for (let j = 0; j <= a.length; j++) matrix[0][j] = j;
+    for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+            if (b.charAt(i - 1) === a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
+            else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+        }
+    }
+    return matrix[b.length][a.length];
+}
+
+function cosineSimilarity(vecA, vecB) {
+    let dotProduct = 0; let normA = 0; let normB = 0;
+    if (!vecA || !vecB) return 0;
+    const allKeys = new Set([...Object.keys(vecA), ...Object.keys(vecB)]);
+    for (const key of allKeys) {
+        const aVal = vecA[key] || 0; const bVal = vecB[key] || 0;
+        dotProduct += aVal * bVal; normA += aVal * aVal; normB += bVal * bVal;
+    }
+    if (normA === 0 || normB === 0) return 0;
+    return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
+}
+
+try {
+    if (fs.existsSync(BRAIN_FILE_PATH)) {
+        const fileContent = fs.readFileSync(BRAIN_FILE_PATH, 'utf8');
+        if (fileContent.trim() !== "") {
+            const parsedBrain = JSON.parse(fileContent);
+            if (parsedBrain.categories) brainDB = { ...brainDB, ...parsedBrain };
+            if (!brainDB.company_profiles) brainDB.company_profiles = {};
+            if (brainDB.metadata && !brainDB.metadata.learning_rate) brainDB.metadata.learning_rate = 0.01;
+            if (brainDB.metadata.adaptive_threshold > 55) brainDB.metadata.adaptive_threshold = 45; 
+        }
+    }
+} catch (e) { console.warn("⚠️ [Transcendence] A szingularitás elérése folyamatban..."); }
+
+process.on('exit', () => {
+    try {
+        fs.writeFileSync(BRAIN_FILE_PATH, JSON.stringify(brainDB, null, 2), 'utf8');
+        let report = `\n======================================================\n🧠 UNI-START AI TUDÁSBÁZIS (V84.0 OMNI-MASTER) - ${new Date().toLocaleString('hu-HU')}\n======================================================\n`;
+        report += `Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.\n\n`;
+
+        report += `### ⚙️ Auto-Tuning (Stochastic Gradient Descent)\n`;
+        report += `- Dinamikus Szigorúság (Threshold): **${brainDB.metadata.adaptive_threshold.toFixed(1)} pont**\n`;
+        report += `- Kifejezés-telítettség (BM25 K1): **${brainDB.metadata.bm25_k1.toFixed(4)}** (Evolúciós ráta: ${brainDB.metadata.learning_rate})\n`;
+        const rejectRate = (brainDB.metadata.total_rejected / Math.max(1, brainDB.metadata.total_parsed_jobs)) * 100;
+        report += `- Piac Elutasítási Aránya (Rejection Rate): **${rejectRate.toFixed(1)}%**\n\n`;
+
+        const highChurnComps = Object.entries(brainDB.company_profiles)
+            .filter(([_, data]) => data.jobs > 3 && data.churn_probability > 40)
+            .sort((a, b) => b[1].churn_probability - a[1].churn_probability);
+        
+        if (highChurnComps.length > 0) {
+            report += `### 🔮 PREDIKTÍV FLUKTUÁCIÓ (Azon cégek, ahol valószínű a korai felmondás)\n`;
+            highChurnComps.slice(0, 5).forEach(([comp, data]) => {
+                const dangerLvl = data.churn_probability > 70 ? "🚨 KRITIKUS LEMORZSOLÓDÁS" : "⚠️ Magas kockázat";
+                report += `- **${comp}**: **${data.churn_probability.toFixed(1)}% esély** a felmondásra 6 hónapon belül. (${dangerLvl})\n`;
+            });
+            report += `\n`;
+        }
+
+        const toxicCompanies = Object.entries(brainDB.company_profiles).filter(([_, data]) => data.jobs > 3).sort((a, b) => b[1].toxicity_index - a[1].toxicity_index);
+        if (toxicCompanies.length > 0) {
+            report += `### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)\n`;
+            toxicCompanies.slice(0, 5).forEach(([comp, data]) => {
+                const toxLvl = data.toxicity_index > 50 ? "🚨 Nagyon Toxikus" : (data.toxicity_index > 20 ? "⚠️ Közepes" : "✅ Egészséges");
+                report += `- **${comp}** (Kiírt állások: ${data.jobs}) | HR Zsargon Átlag: ${(data.bs_total/data.jobs).toFixed(1)} | ${toxLvl}\n`;
+            });
+            report += `\n`;
+        }
+
+        const trendingSkills = Object.entries(brainDB.skill_velocity).filter(([_, data]) => data.momentum > 1.2 && data.recent_count > 3).sort((a, b) => b[1].momentum - a[1].momentum);
+        if (trendingSkills.length > 0) {
+            report += `### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)\n`;
+            trendingSkills.slice(0, 10).forEach(([skill, data]) => {
+                report += `- **${skill.toUpperCase()}** (Sebesség mutató: +${((data.momentum - 1)*100).toFixed(1)}%) 🔥\n`;
+            });
+            report += `\n`;
+        }
+
+        const dynFaculties = Object.entries(brainDB.dynamic_faculties).sort((a, b) => b[1].usage_count - a[1].usage_count);
+        if (dynFaculties.length > 0) {
+            report += `### 🌌 AI ÁLTAL GENERÁLT ÚJ FŐKATEGÓRIÁK\n`;
+            dynFaculties.forEach(([facName, data]) => {
+                const salaryMultiplier = brainDB.cluster_salary_curves[facName]?.multiplier || 1.0;
+                const premiumStr = salaryMultiplier !== 1.0 ? ` | 💰 Piaci Prémium: +${((salaryMultiplier - 1)*100).toFixed(1)}%` : "";
+                report += `- **${facName}** (Használat: ${data.usage_count}x) | Kulcsszavak: [${data.terms.join(", ")}]${premiumStr}\n`;
+            });
+            report += `\n`;
+        }
+
+        for (const [category, wordsObj] of Object.entries(brainDB.categories)) {
+            const validDiscoveries = Object.entries(wordsObj).filter(([_, data]) => data.count >= 2).sort((a, b) => b[1].count - a[1].count);
+            if (validDiscoveries.length > 0) {
+                report += `### ${category} (Top Felfedezések)\n`;
+                validDiscoveries.slice(0, 15).forEach(([word, data]) => {
+                    const topContext = Object.entries(data.context_vectors || {}).sort((a, b) => b[1] - a[1]).slice(0, 4).map(e => e[0]).join(", ");
+                    const assocStr = topContext ? ` | 🔗 Asszoc: [${topContext}]` : "";
+                    const statusStr = data.auto_promoted ? "✅ INJEKTÁLVA" : "⏳ Elemzés...";
+                    report += `- **${word.toUpperCase()}** (Látta: ${Math.round(data.count)}x) ${assocStr} -> ${statusStr}\n`;
+                });
+                report += `\n`;
+            }
+        }
+
+        fs.writeFileSync(DISCOVERY_MD_PATH, report, 'utf8');
+    } catch(e) {}
+});
+
+// ============================================================================
+// 📚 1. KOGNITÍV SZÓTÁRAK
+// ============================================================================
 
 const structuredTagsDict = {
     languages: ["angol", "német", "francia", "spanyol", "english", "german", "olasz", "orosz", "szlovák", "román", "holland", "italian", "french", "spanish", "dutch", "lengyel", "polish", "cseh", "czech", "ukrán", "ukrainian", "kínai", "chinese", "japán", "koreai", "portugál"],
-    tech: ["excel", "python", "javascript", "typescript", "sql", "java", "react", "html", "css", "aws", "git", "power bi", "sap", "figma", "photoshop", "autocad", "c++", "c#", "node.js", "docker", "kubernetes", "jira", "linux", "azure", "salesforce", "tableau", "wordpress", "angular", "vue", "django", "spring boot", "php", "laravel", "golang", "rust", "ruby", "swift", "kotlin", "bash", "powershell", "mongodb", "postgresql", "mysql", "redis", "elasticsearch", "terraform", "ansible", "jenkins", "confluence", "trello", "asana", "illustrator", "indesign", "premiere pro", "after effects", "solidworks", "revit", "archicad", "matlab", "spss", "r", "hadoop", "spark", "kafka", "snowflake", "dax", "vba", "google analytics", "seo", "sem", "hubspot", "mailchimp", "oracle", "flutter", "dart", "firebase", "supabase", "graphql", "apollo", "prisma", "nestjs", "nuxt", "tailwind", "bootstrap", "sass", "less", "webpack", "vite", "babel", "jest", "cypress", "selenium", "playwright", "gitlab", "github actions", "bitbucket", "prometheus", "grafana", "elk", "splunk", "datadog", "nlp", "llm", "openai", "machine learning", "deep learning", "opencv", "tensorflow", "pytorch", "keras", "scikit-learn", "pandas", "numpy", "fastapi", "flask", "ruby on rails", "elixir", "scala", "solidity", "web3", "blockchain", "android", "ios", "react native", "unity", "unreal engine", "sketch", "invision", "zeplin", "miro", "notion", "slack", "dotnet", ".net"],
-    soft_skills: ["kommunikáci", "csapatmunka", "proaktív", "precíz", "problémamegoldó", "analitikus", "kreatív", "önálló", "terhelhető", "agilis", "prezentációs", "ügyfélorientált", "communication", "teamwork", "proactive", "precise", "analytical", "creative", "independent", "agile", "presentation", "flexibility", "empatikus", "empathy", "vezetési", "leadership", "time management", "időgazdálkodás", "konfliktuskezelés", "conflict resolution", "tárgyalástechnika", "negotiation", "kritikus gondolkodás", "critical thinking", "alkalmazkodókészség", "adaptability", "részletorientált", "detail-oriented", "megbízható", "reliable", "reziliencia", "resilience", "growth mindset", "fejlődési hajlandóság", "érzelmi intelligencia", "eq", "multitasking", "ügyfélközpontúság", "customer focus", "storytelling", "networking", "logikus gondolkodás"],
+    tech: [
+        "excel", "python", "javascript", "typescript", "sql", "java", "react", "html", "css", "aws", "git", "power bi", "sap", "figma", "photoshop", 
+        "autocad", "c++", "c#", "node.js", "docker", "kubernetes", "jira", "linux", "azure", "salesforce", "tableau", "wordpress", "angular", "vue", 
+        "django", "spring boot", "php", "laravel", "golang", "rust", "ruby", "swift", "kotlin", "bash", "powershell", "mongodb", "postgresql", 
+        "mysql", "redis", "elasticsearch", "terraform", "ansible", "jenkins", "confluence", "trello", "asana", "illustrator", "indesign", 
+        "premiere pro", "after effects", "solidworks", "revit", "archicad", "matlab", "spss", "r", "hadoop", "spark", "kafka", "snowflake", "dax", 
+        "vba", "google analytics", "seo", "sem", "hubspot", "mailchimp", "oracle", "flutter", "dart", "firebase", "supabase", "graphql", "apollo", 
+        "prisma", "nestjs", "nuxt", "tailwind", "bootstrap", "sass", "less", "webpack", "vite", "babel", "jest", "cypress", "selenium", "playwright", 
+        "gitlab", "github actions", "bitbucket", "prometheus", "grafana", "elk", "splunk", "datadog", "nlp", "llm", "openai", "machine learning", 
+        "deep learning", "opencv", "tensorflow", "pytorch", "keras", "scikit-learn", "pandas", "numpy", "fastapi", "flask", "ruby on rails", 
+        "elixir", "scala", "solidity", "web3", "blockchain", "android", "ios", "react native", "unity", "unreal engine", "sketch", "invision", 
+        "zeplin", "miro", "notion", "slack", "dotnet", ".net"
+    ],
+    soft_skills: [
+        "kommunikáci", "csapatmunka", "proaktív", "precíz", "problémamegoldó", "analitikus", "kreatív", "önálló", "terhelhető", "agilis", 
+        "prezentációs", "ügyfélorientált", "communication", "teamwork", "proactive", "precise", "analytical", "creative", "independent", "agile", 
+        "presentation", "flexibility", "empatikus", "empathy", "vezetési", "leadership", "time management", "időgazdálkodás", "konfliktuskezelés", 
+        "conflict resolution", "tárgyalástechnika", "negotiation", "kritikus gondolkodás", "critical thinking", "alkalmazkodókészség", "adaptability", 
+        "részletorientált", "detail-oriented", "megbízható", "reliable", "reziliencia", "resilience", "growth mindset", "fejlődési hajlandóság", 
+        "érzelmi intelligencia", "eq", "multitasking", "ügyfélközpontúság", "customer focus", "storytelling", "networking", "logikus gondolkodás"
+    ],
     work_setup: ["home office", "remote", "hibrid", "távmunka", "on-site", "rugalmas munkaidő", "flexible hours", "wfh", "hybrid", "törzsmunkaidő", "core hours", "irodai", "office-based"],
-    benefits: ["cafeteria", "bónusz", "bonus", "aycm", "all you can move", "medicover", "magánegészségügy", "laptop", "céges telefon", "céges autó", "company car", "utazástámogatás", "bejárás támogatás", "szép kártya", "szép-kártya", "angol oktatás", "nyelvtanfolyam", "language course", "training", "képzés", "továbbképzés", "részvény", "stock options", "esop", "rsu", "gyümölcsnap", "fruit day", "csapatépítő", "teambuilding", "kutyabarát", "dog-friendly", "parkoló", "parking", "13. havi fizetés", "14. havi fizetés", "pulykapénz", "prémium", "teljesítménybónusz", "éves bónusz", "mozgóbér", "sportkártya", "swiss clinic", "egészségbiztosítás", "életbiztosítás", "nyugdíjpénztár", "önkéntes nyugdíjpénztár", "bkk bérlet", "országbérlet", "vármegyebérlet", "céges busz", "kerékpártároló", "macbook", "home office támogatás", "rezsitámogatás", "tanulmányi szerződés", "szakmai tréning", "konferencia", "kávé", "tea", "snack", "csocsó", "pingpong", "extra szabadnap", "születésnapi szabadnap"]
+    benefits: [
+        "cafeteria", "bónusz", "bonus", "aycm", "all you can move", "medicover", "magánegészségügy", "laptop", "céges telefon", "céges autó", 
+        "company car", "utazástámogatás", "bejárás támogatás", "szép kártya", "szép-kártya", "angol oktatás", "nyelvtanfolyam", "language course", 
+        "training", "képzés", "továbbképzés", "részvény", "stock options", "esop", "rsu", "gyümölcsnap", "fruit day", "csapatépítő", "teambuilding", 
+        "kutyabarát", "dog-friendly", "parkoló", "parking", "13. havi fizetés", "14. havi fizetés", "pulykapénz", "prémium", "teljesítménybónusz", 
+        "éves bónusz", "mozgóbér", "sportkártya", "swiss clinic", "egészségbiztosítás", "életbiztosítás", "nyugdíjpénztár", "önkéntes nyugdíjpénztár", 
+        "bkk bérlet", "országbérlet", "vármegyebérlet", "céges busz", "kerékpártároló", "macbook", "home office támogatás", "rezsitámogatás", 
+        "tanulmányi szerződés", "szakmai tréning", "konferencia", "kávé", "tea", "snack", "csocsó", "pingpong", "extra szabadnap", "születésnapi szabadnap"
+    ]
 };
 
 const typoToleranceDict = {
@@ -31,6 +196,45 @@ const typoToleranceDict = {
     "react": ["reactjs", "react.js"], "vue": ["vuejs", "vue.js"], "angular": ["angularjs", "angular.js"], "typescript": ["ts"],
     "postgresql": ["postgres", "postgre"], "dotnet": [".net", "dot net"], "c++": ["cpp", "c/c++"], "c#": ["c-sharp", "c sharp"]
 };
+
+let injectedCount = 0;
+for (const [cat, words] of Object.entries(brainDB.categories)) {
+    for (const [word, meta] of Object.entries(words)) {
+        
+        if (!meta.auto_promoted && meta.count >= 5 && Object.keys(meta.context_vectors || {}).length > 3) {
+            for (const knownTech of structuredTagsDict.tech) {
+                const knownMeta = brainDB.categories["💻 SZOFTVER/TECH"][knownTech.toLowerCase()];
+                if (knownMeta && knownMeta.context_vectors) {
+                    const similarity = cosineSimilarity(meta.context_vectors, knownMeta.context_vectors);
+                    if (similarity > 0.90 && levenshteinDistance(word, knownTech.toLowerCase()) <= 3) {
+                        brainDB.auto_typos[knownTech] = word; brainDB.antibodies.push(word); 
+                        console.log(`🤖🔗 [Szemantikus Szintézis] Az MI rájött: "${word}" valójában a "${knownTech}" szinonimája!`);
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (meta.auto_promoted) {
+            if (/(senior|expert|lead|manager|head|director|igazgató)/i.test(word) || brainDB.antibodies.includes(word)) {
+                meta.auto_promoted = false; delete brainDB.categories[cat][word]; continue;
+            }
+            if (Date.now() - meta.last_seen > 45 * 86400000) { meta.auto_promoted = false; continue; } 
+            
+            if (cat === "💻 SZOFTVER/TECH" && !structuredTagsDict.tech.includes(word)) { structuredTagsDict.tech.push(word); injectedCount++; }
+            if (cat === "🧩 N-GRAM (KIFEJEZÉSEK)" && !structuredTagsDict.tech.includes(word) && !structuredTagsDict.soft_skills.includes(word)) { 
+                structuredTagsDict.tech.push(word); injectedCount++; 
+            }
+            if (cat === "🧠 SOFT-SKILL" && !structuredTagsDict.soft_skills.includes(word)) { structuredTagsDict.soft_skills.push(word); injectedCount++; }
+            if (cat === "🎁 JUTTATÁS" && !structuredTagsDict.benefits.includes(word)) { structuredTagsDict.benefits.push(word); injectedCount++; }
+            if (cat === "🌍 NYELV" && !structuredTagsDict.languages.includes(word)) { structuredTagsDict.languages.push(word); injectedCount++; }
+        }
+    }
+}
+for (const [correct, typo] of Object.entries(brainDB.auto_typos)) {
+    if (!typoToleranceDict[correct]) typoToleranceDict[correct] = [];
+    if (!typoToleranceDict[correct].includes(typo)) { typoToleranceDict[correct].push(typo); injectedCount++; }
+}
 
 const techMultipliers = {
     highTier: ["aws", "azure", "docker", "kubernetes", "python", "golang", "rust", "react", "angular", "vue", "machine learning", "ai engineer", "data scientist", "pytorch", "tensorflow", "snowflake"],
@@ -51,6 +255,7 @@ const transitDict = { "Könnyen megközelíthető": /\b(könnyen megközelíthet
 const interviewDict = { "1 körös interjú (Gyors)": /\b(1 körös interjú|egy körös interjú|one-round interview|egyetlen interjú|gyors kiválasztás)\b/i, "Többkörös interjú": /\b(több körös interjú|többkörös|multi-round interview|2 körös|3 körös|második kör)\b/i, "Próbafeladat / Teszt": /\b(próbafeladat|tesztírás|szakmai teszt|home assignment|coding task|esettanulmány|case study)\b/i, "Assessment Center": /\b(assessment center|ac|kiválasztási nap|értékelő központ)\b/i };
 const equipmentDict = { "Apple Eszköz (Mac/iPhone)": /\b(macbook|céges mac|iphone|apple eszköz|imac)\b/i, "Céges Laptop (Általános)": /\b(céges laptop|vállalati laptop|company laptop|munkaállomás|eszközöket biztosítunk)\b/i, "Céges Telefon": /\b(céges telefon|vállalati mobil|company phone)\b/i };
 const relocationDict = { "Relokációs támogatás": /\b(relocation support|relokációs támogatás|költözési támogatás|relocation package)\b/i, "Vízum / Engedély támogatás": /\b(visa sponsorship|munkavállalási engedély|visa support|munkavállalási vízum)\b/i };
+
 const toneDict = {
     "🏢 Corporate / Stabil": /\b(multinacionális|szabályozott|folyamatközpontú|korporatív|vállalati|hierarchia|corporate|compliance|szabályzat|standard|global leader|piacvezető|hosszútávú|biztonságos)\b/i,
     "🚀 Modern / Tech-vezérelt": /\b(agilis|scrum|modern tech|cutting-edge|innovatív|startup|disruptív|felhő alapú|data-driven|adatvezérelt|automatizáció)\b/i,
@@ -58,7 +263,30 @@ const toneDict = {
     "🤝 Emberközpontú / Laza": /\b(csocsó|sör|kutyabarát|laza|fiatalos|nincs dress code|pizza|gaming|csapatépítő|kávé|xbox|playstation|támogató|családias|inkluzív)\b/i
 };
 
+// 🔥 HIÁNYZÓ PRECOMPILED ENGINES (Visszaállítva a biztonságos helyére)
+const PreCompiledEngines = {
+    tone: Object.entries(toneDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    appFriction: Object.entries(appFrictionDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    careerPath: Object.entries(careerPathDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    transit: Object.entries(transitDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    interview: Object.entries(interviewDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    equipment: Object.entries(equipmentDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    relocation: Object.entries(relocationDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    hiddenReqs: Object.entries(hiddenReqsDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    urgency: Object.entries(urgencyDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    onboarding: Object.entries(onboardingDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    scam: Object.entries(scamDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
+    redFlag: Object.entries(redFlagDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') }))
+};
+
 const diversityDict = /\b(esélyegyenlőség|equal opportunity|sokszínűség|diversity|inclusive|inkluzív|akadálymentes|megváltozott munkaképességű|női vezetők|women in tech|lgbtq|büszkeség)\b/i;
+
+const stopWords = new Set(["KFT", "ZRT", "NYRT", "B2B", "B2C", "URL", "HTTP", "HTTPS", "HUF", "EUR", "USD", "MIND", "EGY", "NEM", "VAGY", "ÍGY", "HOGY", "CSAK", "KIVÁLÓ", "VERSENYKÉPES", "STABIL", "JÓ", "RUGALMAS", "VAN", "KÉSZ", "MÁR", "EZT", "EGYÜTT", "MELY", "AMELY", "ÖSSZES", "CÉG", "ÖSSZEFOGLALÓ", "II", "III", "IV", "KERÜLET", "FELADATOK", "ELVÁRÁSOK", "ELŐNY", "AMIT", "KÍNÁLUNK"]);
+const detoxRules = [ { regex: /<[^>]*>?/gm, replacement: ' ' }, { regex: /&nbsp;/gi, replacement: ' ' }, { regex: /\r\n|\n|\r/g, replacement: ' \n ' } ];
+
+const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
+const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
+const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es|ja|je)?(?:val|vel)?(?:t|k)?";
 
 const seniorWords = "senior|szenior|snr|sr\\.|medior|mid-level|mid level|mid\\b|head of|director|igazgató|főigazgató|főosztályvezető|osztályvezető|csapatvezető|team lead|tech lead|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|dékán|rektor|főorvos|főállatorvos|vezető ápoló|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer|supervisor|lead\\b";
 const compiledFatalSenior = new RegExp(huBoundaryStart + '(' + seniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
@@ -102,43 +330,9 @@ const compiledCategories = {
 const compiledAntiCategories = { "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/gi };
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba|dunaújváros|hódmezővásárhely|salgótarján|baja|cegléd|esztergom|pápa|vác|váci|gödöllő|dunakeszi|budaörs|szigetszentmiklós|gyula|hajdúböszörmény|kiskunfélegyháza|orosháza|szentes|kazincbarcika|jászberény|kiskunhalas|hatvan|mosonmagyaróvár|tata|komárom|békés|szarvas|csongrád|tiszaújváros|kisvárda|törökszentmiklós|karcag|bonyhád|paks|szekszárd|esztergom)/gi;
 
-
-// ----------------------------------------------------------------------------
-// 🚀 2. OMNI-MASTER HOISTED FUNCTIONS & CACHE
-// ----------------------------------------------------------------------------
-
-function sanitizeText(text) { return text ? String(text).normalize('NFC').toLowerCase() : ""; }
-
-const masterTypoRegex = new RegExp(`${huBoundaryStart}(${Object.values(typoToleranceDict).flat().map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})${huBoundaryEnd}`, 'gi');
-const flatTypoMap = new Map();
-for (const [correct, typos] of Object.entries(typoToleranceDict)) {
-    typos.forEach(t => flatTypoMap.set(t.toLowerCase(), correct));
-}
-
-function correctTyposAdvanced(text) {
-    const typoLog = new Set();
-    const correctedText = text.replace(masterTypoRegex, (match, p1) => {
-        const lowerMatch = p1.toLowerCase(); const replacement = flatTypoMap.get(lowerMatch);
-        if(replacement) { typoLog.add(`${lowerMatch} -> ${replacement}`); return match.replace(p1, replacement); }
-        return match;
-    });
-    return { correctedText, typosFixed: Array.from(typoLog) };
-}
-
-const PreCompiledEngines = {
-    tone: Object.entries(toneDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    appFriction: Object.entries(appFrictionDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    careerPath: Object.entries(careerPathDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    transit: Object.entries(transitDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    interview: Object.entries(interviewDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    equipment: Object.entries(equipmentDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    relocation: Object.entries(relocationDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    hiddenReqs: Object.entries(hiddenReqsDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    urgency: Object.entries(urgencyDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    onboarding: Object.entries(onboardingDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    scam: Object.entries(scamDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
-    redFlag: Object.entries(redFlagDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') }))
-};
+// ============================================================================
+// 🚀 2. OMNI-MASTER ENGINE CACHE & CLASS DEFINITIONS
+// ============================================================================
 
 class BloomFilter {
     constructor(size = 8192) { this.size = size; this.bitset = new Uint32Array(Math.ceil(size / 32)); }
@@ -161,6 +355,23 @@ for (const [group, tags] of Object.entries(structuredTagsDict)) {
         const escapedTag = cleanedTag.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
         return { original: cleanedTag, root: rootWord, globalRegex: new RegExp(huBoundaryStart + '(' + escapedTag + ')' + huBoundaryEnd, 'gi') };
     });
+}
+
+const sanitizeText = (text) => text ? String(text).normalize('NFC').toLowerCase() : "";
+const masterTypoRegex = new RegExp(`${huBoundaryStart}(${Object.values(typoToleranceDict).flat().map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})${huBoundaryEnd}`, 'gi');
+const flatTypoMap = new Map();
+for (const [correct, typos] of Object.entries(typoToleranceDict)) {
+    typos.forEach(t => flatTypoMap.set(t.toLowerCase(), correct));
+}
+
+function correctTyposAdvanced(text) {
+    const typoLog = new Set();
+    const correctedText = text.replace(masterTypoRegex, (match, p1) => {
+        const lowerMatch = p1.toLowerCase(); const replacement = flatTypoMap.get(lowerMatch);
+        if(replacement) { typoLog.add(`${lowerMatch} -> ${replacement}`); return match.replace(p1, replacement); }
+        return match;
+    });
+    return { correctedText, typosFixed: Array.from(typoLog) };
 }
 
 class AdvancedLRUCache {
@@ -189,14 +400,9 @@ function buildTextAST_FSM(text) {
         const code = text.charCodeAt(i);
         if (code === 40 || code === 91) bracketDepth++; else if (code === 41 || code === 93) bracketDepth = Math.max(0, bracketDepth - 1);
         if ((code === 46 || code === 33 || code === 63 || code === 10) && bracketDepth === 0) {
-            let wordStart = i - 1;
-            while (wordStart >= start && ((text.charCodeAt(wordStart) >= 97 && text.charCodeAt(wordStart) <= 122) || (text.charCodeAt(wordStart) >= 48 && text.charCodeAt(wordStart) <= 57) || text.charCodeAt(wordStart) > 127)) wordStart--;
-            const lastWord = text.substring(wordStart + 1, i).toLowerCase();
-            const abbreviations = new Set(["pl", "stb", "ill", "kb", "kft", "zrt", "nyrt", "bt", "dr", "prof", "tel", "fax", "e.g", "i.e"]);
-            if (code === 46 && abbreviations.has(lastWord) && i + 1 < len) { i++; continue; }
-            while (i < len && (text.charCodeAt(i) === 46 || text.charCodeAt(i) === 33 || text.charCodeAt(i) === 63 || text.charCodeAt(i) === 10)) i++;
             clauses.push({ text: text.substring(start, i), start, end: i }); start = i;
-        } else { i++; }
+        }
+        i++;
     }
     if (start < len) clauses.push({ text: text.substring(start, len), start, end: len });
     return clauses;
@@ -240,16 +446,11 @@ function initBM25IDF() {
 initBM25IDF(); 
 
 // ----------------------------------------------------------------------------
-// 🤖 3. OMNI-MASTER AGI (CHURN PREDICTOR, ONTOLOGY & AUTO-TUNING)
+// 🤖 3. QUANTUM-TRANSCENDENCE DISCOVERY (CHURN PREDICTOR & AUTO-TUNING)
 // ----------------------------------------------------------------------------
-const allKnownWordsSet = new Set();
-[...structuredTagsDict.tech, ...structuredTagsDict.languages, ...structuredTagsDict.soft_skills, ...structuredTagsDict.work_setup, ...structuredTagsDict.benefits].forEach(w => allKnownWordsSet.add(w.toLowerCase()));
-for (const [correct, typos] of Object.entries(typoToleranceDict)) { allKnownWordsSet.add(correct.toLowerCase()); typos.forEach(t => allKnownWordsSet.add(t.toLowerCase())); }
-
 function calculateEigenCentrality() {
     const graph = brainDB.ontology_graph;
     const scores = {}; Object.keys(graph).forEach(node => scores[node] = 1.0);
-    
     for (let iter = 0; iter < 5; iter++) { 
         const newScores = {};
         for (const [node, edges] of Object.entries(graph)) {
@@ -272,14 +473,13 @@ function promoteClustersToFaculties(parsedSalary) {
             const newCatName = `✨ ${topTerms[0].charAt(0).toUpperCase() + topTerms[0].slice(1)} & ${topTerms[1].charAt(0).toUpperCase() + topTerms[1].slice(1)}`;
             if (!brainDB.dynamic_faculties[newCatName]) {
                 brainDB.dynamic_faculties[newCatName] = { terms: topTerms, created_at: Date.now(), usage_count: 0 };
-                console.log(`🌌 [Omni-Master] Új főkategória született a Sötét Anyagból: ${newCatName}`);
+                console.log(`🌌 [Quantum-Transcendence] Új főkategória született a Sötét Anyagból: ${newCatName}`);
             }
             delete brainDB.emergent_clusters[clusterId]; 
         } else if (parsedSalary && parsedSalary.min_amount) {
             if (!brainDB.cluster_salary_curves[clusterId]) brainDB.cluster_salary_curves[clusterId] = { sum: 0, count: 0, multiplier: 1.0 };
             brainDB.cluster_salary_curves[clusterId].sum += parsedSalary.is_hourly ? parsedSalary.min_amount * 168 : parsedSalary.min_amount;
             brainDB.cluster_salary_curves[clusterId].count += 1;
-            
             if (brainDB.cluster_salary_curves[clusterId].count > 5) {
                 const avg = brainDB.cluster_salary_curves[clusterId].sum / brainDB.cluster_salary_curves[clusterId].count;
                 brainDB.cluster_salary_curves[clusterId].multiplier = Math.min(1.5, Math.max(0.8, avg / 500000));
@@ -297,7 +497,7 @@ function calculateChurnProbability(compProfile, urgencyMatrix) {
     return Math.min(95, prob); 
 }
 
-function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCategory, jobScoreMax, parsedSalary, bsCount, urgencyMatrix) {
+function runQuantumTranscendenceDiscovery(text, companyName, knownTagsInJob, assignedCategory, jobScoreMax, parsedSalary, bsCount, urgencyMatrix) {
     const now = Date.now();
 
     if (knownTagsInJob && knownTagsInJob.length > 0) {
@@ -327,7 +527,7 @@ function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCat
         const error = rejectRate - targetRejectRate; 
         
         brainDB.metadata.bm25_k1 = Math.max(1.2, Math.min(2.0, brainDB.metadata.bm25_k1 + (error * brainDB.metadata.learning_rate * 2)));
-        brainDB.metadata.adaptive_threshold = Math.max(30, Math.min(60, brainDB.metadata.adaptive_threshold + (error * 10)));
+        brainDB.metadata.adaptive_threshold = Math.max(30, Math.min(70, brainDB.metadata.adaptive_threshold + (error * 10)));
         
         console.log(`⚙️ [SGD Auto-Tuning] Új paraméterek: K1=${brainDB.metadata.bm25_k1.toFixed(2)}, Threshold=${brainDB.metadata.adaptive_threshold.toFixed(1)}`);
 
@@ -395,7 +595,7 @@ function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCat
         
         const threshold = type.includes("N-GRAM") ? 8 : 5; const minCompanies = type.includes("N-GRAM") ? 3 : 2;
         if (node.count >= threshold && node.companies.length >= minCompanies && !node.auto_promoted) {
-            node.auto_promoted = true; console.log(`🤖📈 [Omni-Master] Új tudás szintetizálva: "${lowerWord}" (${node.companies.length} cég használja)!`);
+            node.auto_promoted = true; 
         }
         
         const exSet = new Set(node.examples);
@@ -443,7 +643,7 @@ function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCat
 }
 
 // ----------------------------------------------------------------------------
-// SEGÉDFÜGGVÉNYEK & LOGIKAI MODELLEK
+// SEGÉDFÜGGVÉNYEK & ANOMÁLIA DETEKTOR
 // ----------------------------------------------------------------------------
 function calculateReadabilityScore(text, bsCount) {
     const words = text.split(/\s+/).length; const sentences = text.split(/[.?!]/).length;
@@ -452,16 +652,13 @@ function calculateReadabilityScore(text, bsCount) {
     if (avgWordsPerSentence > 25) clarity -= 15; 
     if (bsCount >= 5) clarity -= 20; else if (bsCount >= 2) clarity -= 10;
     if (!text.includes("feladat") && !text.includes("felelősség")) clarity -= 15; 
-    
     const desperationMatches = (text.match(/!!!|sürgős|azonnal|versenyképes/gi) || []).length;
     if (desperationMatches > 5) clarity -= 10;
-    
     return Math.max(0, Math.min(100, clarity));
 }
 
 function estimateMarketSalaryAdvanced(faculty, jobNature, flatTags) {
     let baseHourly = 1600; let premium = 1.0;
-    
     const dynFacultyMultiplier = brainDB.cluster_salary_curves[faculty]?.multiplier;
     if (dynFacultyMultiplier) premium *= dynFacultyMultiplier;
 
@@ -473,10 +670,8 @@ function estimateMarketSalaryAdvanced(faculty, jobNature, flatTags) {
         const cleanTag = tag.toLowerCase();
         if (techMultipliers.highTier.includes(cleanTag)) premium += 0.15;
         else if (techMultipliers.midTier.includes(cleanTag)) premium += 0.05;
-        
         const centrality = brainDB.eigen_centrality[cleanTag];
         if (centrality && centrality > 0.8) premium += 0.10;
-
         const skillVel = brainDB.skill_velocity[cleanTag];
         if (skillVel && skillVel.momentum > 1.3) premium += 0.08; 
         else if (skillVel && skillVel.momentum < 0.6) premium -= 0.05; 
@@ -678,7 +873,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     
     mark('total_start');
     
-    // 🔥 AZONNALI SZÁMOLÁS
     brainDB.metadata.total_parsed_jobs += 1;
     
     const rawCombine = `${sanitizeText(title)}||${description ? description.length : 0}||${companyName}`;

@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 // ============================================================================
-// 🧠 0. V84.0 OMNI-MASTER STABLE (PREDICTIVE AGI & FULL LOGIC RESTORED)
+// 🧠 0. V84.1 OMNI-MASTER STABLE (PREDICTIVE AGI & NAME HOTFIX)
 // ============================================================================
 const BRAIN_FILE_PATH = path.join(process.cwd(), "brain.json");
 const DISCOVERY_MD_PATH = path.join(process.cwd(), "AI_TUDASBAZIS_JAVASLATOK.md");
@@ -14,7 +14,7 @@ let brainDB = {
         total_parsed_jobs: 0, 
         total_rejected: 0,
         last_calibration: Date.now(), 
-        version: "84.0_OMNI_MASTER_STABLE",
+        version: "84.1_OMNI_MASTER_STABLE",
         avg_doc_length: 400,
         bm25_k1: 1.5,
         bm25_b: 0.75,
@@ -76,12 +76,12 @@ try {
             if (brainDB.metadata.adaptive_threshold > 55) brainDB.metadata.adaptive_threshold = 45; 
         }
     }
-} catch (e) { console.warn("⚠️ [Transcendence] A szingularitás elérése folyamatban..."); }
+} catch (e) { console.warn("⚠️ [Omni-Master] Szingularitás esemény: Új háló inicializálása..."); }
 
 process.on('exit', () => {
     try {
         fs.writeFileSync(BRAIN_FILE_PATH, JSON.stringify(brainDB, null, 2), 'utf8');
-        let report = `\n======================================================\n🧠 UNI-START AI TUDÁSBÁZIS (V84.0 OMNI-MASTER) - ${new Date().toLocaleString('hu-HU')}\n======================================================\n`;
+        let report = `\n======================================================\n🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - ${new Date().toLocaleString('hu-HU')}\n======================================================\n`;
         report += `Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.\n\n`;
 
         report += `### ⚙️ Auto-Tuning (Stochastic Gradient Descent)\n`;
@@ -197,10 +197,12 @@ const typoToleranceDict = {
     "postgresql": ["postgres", "postgre"], "dotnet": [".net", "dot net"], "c++": ["cpp", "c/c++"], "c#": ["c-sharp", "c sharp"]
 };
 
+// 🔥 TURING-OMEGA INJEKTÁLÁS ÉS SZINONIMA-ALGORITMUS
 let injectedCount = 0;
 for (const [cat, words] of Object.entries(brainDB.categories)) {
     for (const [word, meta] of Object.entries(words)) {
         
+        // 🔮 AUTONÓM SZINONIMA-FELFEDEZÉS
         if (!meta.auto_promoted && meta.count >= 5 && Object.keys(meta.context_vectors || {}).length > 3) {
             for (const knownTech of structuredTagsDict.tech) {
                 const knownMeta = brainDB.categories["💻 SZOFTVER/TECH"][knownTech.toLowerCase()];
@@ -208,7 +210,7 @@ for (const [cat, words] of Object.entries(brainDB.categories)) {
                     const similarity = cosineSimilarity(meta.context_vectors, knownMeta.context_vectors);
                     if (similarity > 0.90 && levenshteinDistance(word, knownTech.toLowerCase()) <= 3) {
                         brainDB.auto_typos[knownTech] = word; brainDB.antibodies.push(word); 
-                        console.log(`🤖🔗 [Szemantikus Szintézis] Az MI rájött: "${word}" valójában a "${knownTech}" szinonimája!`);
+                        console.log(`🤖🔗 [Szemantikus Szintézis] Az MI rájött: "${word}" valójában a "${knownTech}" szinonimája! (Hasonlóság: ${(similarity*100).toFixed(1)}%)`);
                         break;
                     }
                 }
@@ -235,7 +237,11 @@ for (const [correct, typo] of Object.entries(brainDB.auto_typos)) {
     if (!typoToleranceDict[correct]) typoToleranceDict[correct] = [];
     if (!typoToleranceDict[correct].includes(typo)) { typoToleranceDict[correct].push(typo); injectedCount++; }
 }
+if (injectedCount > 0) console.log(`🧠 [Turing-Omega] ${injectedCount} db autonóm entitás sikeresen integrálva!`);
 
+// ----------------------------------------------------------------------------
+// STATIC REGEX & CONFIGS
+// ----------------------------------------------------------------------------
 const techMultipliers = {
     highTier: ["aws", "azure", "docker", "kubernetes", "python", "golang", "rust", "react", "angular", "vue", "machine learning", "ai engineer", "data scientist", "pytorch", "tensorflow", "snowflake"],
     midTier: ["javascript", "typescript", "java", "c#", ".net", "sql", "postgresql", "mysql", "php", "laravel", "figma", "power bi", "tableau", "sap"],
@@ -263,7 +269,7 @@ const toneDict = {
     "🤝 Emberközpontú / Laza": /\b(csocsó|sör|kutyabarát|laza|fiatalos|nincs dress code|pizza|gaming|csapatépítő|kávé|xbox|playstation|támogató|családias|inkluzív)\b/i
 };
 
-// 🔥 HIÁNYZÓ PRECOMPILED ENGINES (Visszaállítva a biztonságos helyére)
+// 🔥 PRECOMPILED ENGINES
 const PreCompiledEngines = {
     tone: Object.entries(toneDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
     appFriction: Object.entries(appFrictionDict).map(([k, v]) => ({ name: k, regex: new RegExp(v.source, 'gi') })),
@@ -280,7 +286,6 @@ const PreCompiledEngines = {
 };
 
 const diversityDict = /\b(esélyegyenlőség|equal opportunity|sokszínűség|diversity|inclusive|inkluzív|akadálymentes|megváltozott munkaképességű|női vezetők|women in tech|lgbtq|büszkeség)\b/i;
-
 const stopWords = new Set(["KFT", "ZRT", "NYRT", "B2B", "B2C", "URL", "HTTP", "HTTPS", "HUF", "EUR", "USD", "MIND", "EGY", "NEM", "VAGY", "ÍGY", "HOGY", "CSAK", "KIVÁLÓ", "VERSENYKÉPES", "STABIL", "JÓ", "RUGALMAS", "VAN", "KÉSZ", "MÁR", "EZT", "EGYÜTT", "MELY", "AMELY", "ÖSSZES", "CÉG", "ÖSSZEFOGLALÓ", "II", "III", "IV", "KERÜLET", "FELADATOK", "ELVÁRÁSOK", "ELŐNY", "AMIT", "KÍNÁLUNK"]);
 const detoxRules = [ { regex: /<[^>]*>?/gm, replacement: ' ' }, { regex: /&nbsp;/gi, replacement: ' ' }, { regex: /\r\n|\n|\r/g, replacement: ' \n ' } ];
 
@@ -288,6 +293,7 @@ const huBoundaryStart = "(?:^|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])
 const huBoundaryEnd = "(?=$|[^a-zA-Z0-9_áéíóöőúüűÁÉÍÓÖŐÚÜŰ])";
 const huSuffixes = "(?:k|t|i|ba|be|ra|re|on|en|ön|hoz|hez|höz|ban|ben|ból|ből|ról|ről|tól|től|nak|nek|val|vel|ért|ig|ként|kat|ket|okat|eket|öket|knak|knek|oknak|eknek|öknek|uk|ük|juk|jük|os|es|as|ös|s|es|ja|je)?(?:val|vel)?(?:t|k)?";
 
+// 🔥 HALÁLOS TILTÓLISTA
 const seniorWords = "senior|szenior|snr|sr\\.|medior|mid-level|mid level|mid\\b|head of|director|igazgató|főigazgató|főosztályvezető|osztályvezető|csapatvezető|team lead|tech lead|vezérigazgató|c-level|executive|vp|president|tapasztalt|experienced|advanced|master|professzionális|professional|seniority|felsővezető|igazgatóhelyettes|alapító|founder|co-founder|tulajdonos|owner|partner|dékán|rektor|főorvos|főállatorvos|vezető ápoló|főmérnök|country manager|general manager|plant manager|üzletvezető|boltvezető|területi képviselő|managing director|board member|board of directors|staff engineer|principal engineer|supervisor|lead\\b";
 const compiledFatalSenior = new RegExp(huBoundaryStart + '(' + seniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -300,6 +306,7 @@ const compiledDubiousPhysical = new RegExp(huBoundaryStart + '(' + dubiousWords 
 const juniorWords = "diák|diákmunka|gyakornok|gyakornoki|intern|internship|trainee|traineeship|co-op|pályakezdő|pályakezdőket|pályaindító|karrierstart|kezdő|junior|entry-level|entry level|frissdiplomás|friss diplomás|diplomás|student|apprentice|graduate|fresh graduate|tanuló|szövetkezet|iskolaszövetkezet|diákszövetkezet|undergrad|undergraduate|pályakezdőknek|hallgató|ösztöndíjas|scholar|mentee|melo-diak|mind-diak|eudiakok|working student|werkstudent|student worker|career starter|young professional|management trainee|graduate program|rotational program|talent program|szakmai gyakorlat";
 const compiledExplicitJunior = new RegExp(huBoundaryStart + '(' + juniorWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
+// 🔥 MAXIMÁLISAN KIBŐVÍTETT SZELLEMI MUNKAKÖR BÁZIS (White-Collar Privilege)
 const whiteCollarWords = "asszisztens|adminisztrátor|referens|munkatárs|tanácsadó|szakértő|specialista|koordinátor|intézményi koordinátor|szakmai munkatárs|szakügyintéző|tervező|fejlesztő|mérnök|elemző|kutató|tanár|tanító|oktató|pedagógus|óvodapedagógus|ügyintéző|képviselő|támogatás|ügyfélszolgálat|szerkesztő|író|könyvelő|kontroller|auditor|értékesítő|marketinges|hr|toborzó|programozó|orvos|szakorvos|háziorvos|orvoslátogató|patikavezető|ápoló|szakápoló|diplomás ápoló|gyógyszerész|jogász|ügyvéd|építész|animátor|grafikus|készítő|felelős|ügyvédjelölt|oktatásszervező|menedzser|manager|assistant|administrator|clerk|representative|associate|advisor|consultant|specialist|coordinator|designer|developer|engineer|analyst|researcher|teacher|educator|instructor|tutor|agent|support|customer service|editor|writer|copywriter|accountant|controller|auditor|sales|marketing|recruiter|programmer|architect|animator|graphic|creator|officer|executive|planner|buyer|purchaser|strategist|scientist|lawyer|legal|counsel|személyügyi|pénzügyi|bookkeeper|paralegal|sourcer|talent acquisition|ux|ui|seo|ppc|vlogger|blogger|social media|pr|szóvivő|spokesperson|jogtanácsos|pszichológus|terapeuta|laboráns|rezidens|mentőtiszt|védőnő|szülésznő|gépészmérnök|villamosmérnök|vegyészmérnök|mechatronikai|építőmérnök|építészmérnök|data scientist|adatelemző|business analyst|üzleti elemző|financial analyst|kockázatelemző|underwriter|actuarial|aktuárius|újságíró|riporter|tudósító|tolmács|fordító|logisztikus|fuvarszervező|beszerző|journalist|reporter|translator|interpreter|logistician|scrum master|product owner|agile coach|product manager|project manager|projektmenedzser|tesztelő|tester|qa|quality assurance|minőségbiztosítás|helpdesk|üzemeltető|sysadmin|rendszergazda|titkár|secretary|recepciós|receptionist|front office|back office|front-office|back-office|bankár|banker|teller|szervező|organizer|könyvtáros|librarian|modellező|modeler|statisztikus|statistician|ügyfélkapcsolati|térképész|urbanista|szociológus|múzeológus|kurátor|producer|rendező|operatőr|vágó|hangmérnök|világosító|stewardess|légiutaskísérő|meteorológus|geológus|biológus|vegyész|fizikus|matematikus|csillagász|régész|történész|filozófus|nyelvész|irodalmár|teológus|prompt engineer|ai engineer|data engineer|cloud engineer|devops|vámügyintéző|speditőr|vállalkozó|freelancer|bérszámfejtő|számlázó|vámszakértő|adatbázis|telemarketing|piackutató|biztosítás|hitelbíráló|data annotator|ai trainer|kárrendező|payroll|billing|claims|pricing|árazási|purchasing|supply chain|ellátási lánc|compliance|megfelelőségi|attorney|alkalmazott|sdr|bdr|sales development|key account|kam|customer success|ügyfélélmény|köztisztviselő|kormánytisztviselő|ügykezelő|business developer|sales support|sales operations|employer branding|content creator|rendszerszervező|network engineer|biztonsági elemző|clinical research|klinikai kutató|mlops|secops|biztonságtechnikai|hálózat|network administrator|systems engineer|growth hacker|demand generation|seo specialist|ppc specialist|motion designer|video editor|content manager|cloud architect|data protection officer|dpo|szabályozási|kockázatkezelő|hitelelemző|pályázatíró|pályázati|gyógytornász|dietetikus|csontkovács|mentős|gondozó|képalkotó|radiográfus|óvónő|tanfelügyelő|könyvvizsgáló|adószakértő|bérszámfejtési|könyvelési|gazdasági|művész|színész|rendezőasszisztens|animációs|kiadó|lapszerkesztő|hírszerkesztő|utómunka|díszlettervező|stylist|sminkes|maszkmester|jelmeztervező|grafikai|kiadványszerkesztő|webdesigner|rendszermérnök|rendszerintegrátor|tesztautomatizáló|etikus hacker|penetration tester|üzletágvezető|csoportvezető|brand manager|termékmenedzser|kategória|szortiment|vásárlói élmény|hűségprogram|partnerkapcsolati|beszállítói|beszerzési|készletgazdálkodási|raktárvezető|telephelyvezető|logisztikai|szállítmányozó|flottamenedzser|minőségirányítási|folyamatmérnök|környezetvédelmi|fenntarthatósági|Munkavédelmi|tűzvédelmi|HR Business Partner|toborzási|recruitment|kiválasztási|bér|juttatási|compensation|benefits|munkaügyi|szervezetfejlesztési|tréner|coach|hallgatói|mentor|facilitátor|moderátor|szupervízor|belső ellenőr|projektvezető|irattáros|hunter|steward|responder|enabler|soc|navigátor|üzletkötő|hitelbíráló|vizsgabiztos|restaurátor|metrológus|szociális munkás|családgondozó|nevelő|gyermekfelügyelő|dajka|kisgyermeknevelő|iskolatitkár|falugondnok|tanyagondnok|szakasszisztens|orvosírnok|szakmérnök|pénztáros";
 const compiledWhiteCollarRoles = new RegExp(huBoundaryStart + '(' + whiteCollarWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 
@@ -317,6 +324,7 @@ const academicWords = "diploma|diplomás|felsőfokú|egyetem|egyetemi|főiskola|
 const compiledAcademicReq = new RegExp(huBoundaryStart + '(' + academicWords + ')' + huSuffixes + huBoundaryEnd, 'i');
 const compiledStrictDegrees = /\b(bsc|msc|ba|ma|phd)\b/i;
 
+// 🌟 MAG-KATEGÓRIÁK
 const compiledCategories = {
     "💻 IT & Szoftverfejlesztés": /(fejlesztő|developer|programmer|it support|tesztelő|software|rendszergazda|informatikus|data engineer|devops|üzemeltető|frontend|backend|fullstack|qa|tester|scrum|agile|kiberbiztonság|cybersecurity|machine learning|ai engineer|cloud)/gi,
     "💼 Gazdasági & Üzleti": /(pénzügy|gazdaság|business|sales|marketing|hr|könyvelő|kontroller|értékesítő|emberi erőforrás|toborzó|beszerző|logisztika|projektmenedzser|közgazdász|finance|accounting|talent|ellátási lánc|supply chain|key account|b2b)/gi,
@@ -330,9 +338,10 @@ const compiledCategories = {
 const compiledAntiCategories = { "💻 IT & Szoftverfejlesztés": /(értékesítő|sales|takarító)/gi };
 const locationsDict = /(budapest|debrecen|szeged|miskolc|pécs|győr|nyíregyháza|kecskemét|székesfehérvár|szombathely|veszprém|zalaegerszeg|szolnok|tatabánya|sopron|érd|békéscsaba|dunaújváros|hódmezővásárhely|salgótarján|baja|cegléd|esztergom|pápa|vác|váci|gödöllő|dunakeszi|budaörs|szigetszentmiklós|gyula|hajdúböszörmény|kiskunfélegyháza|orosháza|szentes|kazincbarcika|jászberény|kiskunhalas|hatvan|mosonmagyaróvár|tata|komárom|békés|szarvas|csongrád|tiszaújváros|kisvárda|törökszentmiklós|karcag|bonyhád|paks|szekszárd|esztergom)/gi;
 
-// ============================================================================
+
+// ----------------------------------------------------------------------------
 // 🚀 2. OMNI-MASTER ENGINE CACHE & CLASS DEFINITIONS
-// ============================================================================
+// ----------------------------------------------------------------------------
 
 class BloomFilter {
     constructor(size = 8192) { this.size = size; this.bitset = new Uint32Array(Math.ceil(size / 32)); }
@@ -446,11 +455,12 @@ function initBM25IDF() {
 initBM25IDF(); 
 
 // ----------------------------------------------------------------------------
-// 🤖 3. QUANTUM-TRANSCENDENCE DISCOVERY (CHURN PREDICTOR & AUTO-TUNING)
+// 🤖 3. OMNI-MASTER DISCOVERY (CHURN PREDICTOR & AUTO-TUNING FULLY RESTORED)
 // ----------------------------------------------------------------------------
 function calculateEigenCentrality() {
     const graph = brainDB.ontology_graph;
     const scores = {}; Object.keys(graph).forEach(node => scores[node] = 1.0);
+    
     for (let iter = 0; iter < 5; iter++) { 
         const newScores = {};
         for (const [node, edges] of Object.entries(graph)) {
@@ -473,13 +483,14 @@ function promoteClustersToFaculties(parsedSalary) {
             const newCatName = `✨ ${topTerms[0].charAt(0).toUpperCase() + topTerms[0].slice(1)} & ${topTerms[1].charAt(0).toUpperCase() + topTerms[1].slice(1)}`;
             if (!brainDB.dynamic_faculties[newCatName]) {
                 brainDB.dynamic_faculties[newCatName] = { terms: topTerms, created_at: Date.now(), usage_count: 0 };
-                console.log(`🌌 [Quantum-Transcendence] Új főkategória született a Sötét Anyagból: ${newCatName}`);
+                console.log(`🌌 [Omni-Master] Új főkategória született a Sötét Anyagból: ${newCatName}`);
             }
             delete brainDB.emergent_clusters[clusterId]; 
         } else if (parsedSalary && parsedSalary.min_amount) {
             if (!brainDB.cluster_salary_curves[clusterId]) brainDB.cluster_salary_curves[clusterId] = { sum: 0, count: 0, multiplier: 1.0 };
             brainDB.cluster_salary_curves[clusterId].sum += parsedSalary.is_hourly ? parsedSalary.min_amount * 168 : parsedSalary.min_amount;
             brainDB.cluster_salary_curves[clusterId].count += 1;
+            
             if (brainDB.cluster_salary_curves[clusterId].count > 5) {
                 const avg = brainDB.cluster_salary_curves[clusterId].sum / brainDB.cluster_salary_curves[clusterId].count;
                 brainDB.cluster_salary_curves[clusterId].multiplier = Math.min(1.5, Math.max(0.8, avg / 500000));
@@ -497,7 +508,7 @@ function calculateChurnProbability(compProfile, urgencyMatrix) {
     return Math.min(95, prob); 
 }
 
-function runQuantumTranscendenceDiscovery(text, companyName, knownTagsInJob, assignedCategory, jobScoreMax, parsedSalary, bsCount, urgencyMatrix) {
+function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCategory, jobScoreMax, parsedSalary, bsCount, urgencyMatrix) {
     const now = Date.now();
 
     if (knownTagsInJob && knownTagsInJob.length > 0) {
@@ -527,7 +538,7 @@ function runQuantumTranscendenceDiscovery(text, companyName, knownTagsInJob, ass
         const error = rejectRate - targetRejectRate; 
         
         brainDB.metadata.bm25_k1 = Math.max(1.2, Math.min(2.0, brainDB.metadata.bm25_k1 + (error * brainDB.metadata.learning_rate * 2)));
-        brainDB.metadata.adaptive_threshold = Math.max(30, Math.min(70, brainDB.metadata.adaptive_threshold + (error * 10)));
+        brainDB.metadata.adaptive_threshold = Math.max(30, Math.min(60, brainDB.metadata.adaptive_threshold + (error * 10)));
         
         console.log(`⚙️ [SGD Auto-Tuning] Új paraméterek: K1=${brainDB.metadata.bm25_k1.toFixed(2)}, Threshold=${brainDB.metadata.adaptive_threshold.toFixed(1)}`);
 
@@ -901,15 +912,6 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     let k1 = brainDB.metadata.bm25_k1; 
     let b = brainDB.metadata.bm25_b;
     
-    const docBloom = new BloomFilter(8192);
-    for (let i=0; i<docWords.length; i++) {
-        if (docWords[i].length > 2) docBloom.add(docWords[i]);
-        if (docWords[i].length > 3) {
-            const cleanW = docWords[i].toLowerCase();
-            brainDB.idf_stats[cleanW] = (brainDB.idf_stats[cleanW] || 0) + 1;
-        }
-    }
-
     mark('guard_start');
     
     const logReject = (reason) => {

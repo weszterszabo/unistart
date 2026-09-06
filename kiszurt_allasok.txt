@@ -17696,3 +17696,801 @@
 🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisvárda, attila út 2/a.
    ❌ OK: Fizikai munka a cím alapján
 
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - barcs, erkel ferenc utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siklós, szent istván tér 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- szigetvár , almás patak utca 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagyatád és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lahti utca 45.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, málomi út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, siklósi út 52/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lázár vilmos utca 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagykanizsa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dombóvár, kórház utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - baja, balcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, platán sor 6/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, átkötő u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, sopron u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, tapolcai u. 45/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - körmend, remetei filep u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - körmend, dr. remetei filep utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes-fonyód , ady endre utca 57-59.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- fonyód és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fonyód, ady endre u. 57-59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tamási, deák ferenc u. 10/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tamási, deák ferenc u. 10/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - tapolca, veszprémi út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tapolca
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, kenyérvíz u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, zanati u. 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kalocsa, pataji út 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, verseny u. 30.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siófok, zamárdi u. 1-2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - ajka, hársfa utca 1/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - ajka, hársfa u. 1/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - ajka és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - makó, f184 szegedi u. 63.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kiskőrös, kossuth utca 13.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, pápai u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - sárbogárd, ady e. utca 232-236.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - balatonfűzfő, vízmű u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - solt, kossuth lajos utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - pápa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pápa, jókai mór u. 57.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - várpalota, hétvezér út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, velinszky utca 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, magyar út 11.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - sopron, lófuttató utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - sopron és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, bánfalvi u. 12.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, lófuttató u. 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó  kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - hűtött területen - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - baranya-tolna megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - csongrád-csanád megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - békés megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kapuvár, győri u. 60.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - székesfehérvár, farkasvermi köz 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - székesfehérvár és környéke 60 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő hűtött területen - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs, friss hús áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- székesfehérvár és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőkovácsháza, árpád u. 135.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes agárd, akácfa utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- agárd, akácfa utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csorna, soproni út 66/c.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - csorna és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szentes ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentes,ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes- mór akai út 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- mór akai út 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kecskemét, szolnoki út 18.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, kossuth lajos u. 123.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, jereváni utca 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - nagykőrös, kecskeméti út 73.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - győr és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - oroszlány, környei u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - szigethalom, mű út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - érd, diósdi u. 2-4
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mosonmagyaróvár, királyhidai u. 49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szigetszentmiklós, csepeli út 16/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szarvas, csabai út 1/4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - bicske, szent lászló utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaharaszti, némedi út 102/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - békéscsaba, corvin u. 29-33.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- békéscsaba és környéke 90 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békéscsaba, corvin utca 29-33.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó pékség területre - békéscsaba, szarvasi út 15-17.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, nagytétényi út 216-218.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - gyula, szent istván u. 69/1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xxiii. kerület haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs -budapest, haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - martfű és 100 km-es környéke
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xxiii. ker., ciklámen u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- budapest xxiii. ker., ciklámen u. 3
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xi. ker., fehérvári út 211.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ix. kerület gubacsi út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budakeszi, kert utca 27-29.  1
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xviii. kerület margó tivadar u. 83.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békés, kossuth l. u. 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xi. kerület ,bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- vecsés, fő u. 244
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vecsés, fő utca 244.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. kerület, báthory u. 6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. ker., szalay utca 14.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, viii. kerület leonardo da vinci utca 23.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ii. kerület csalogány utca 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vii. ker., rákóczi út 48-50.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vi. ker.,bajcsy-zsilinszky út 61.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, vi. kerület király utca 112.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest, viii ker., hungária körút 26.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest x. kerület, maglódi út 17
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - ecser
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőtúr, földvári út 21.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xiv. kerület mogyoródi út 23-29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szolnok, tószegi u. 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest xiii. kerület béke utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület újszász utca 47/b.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - szolnok, délibáb u. 6.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- solymár, terstyánszky ödön utca 89.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület jános utca 196.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. ker. alsómalom utca 8-10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - üröm, dózsa györgy út 63.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iii. kerület szentendrei út 251-253.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, iv. kerület görgey artúr utca 14-20. (4 órás munkaidő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület görgey artúr utca 14-20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület régi fóti u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület megyeri út 53.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- dorog, bányász körönd hrsz.1732/98
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pomáz, józsef attila utca 32.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - dunakeszi, berek utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunakeszi, berek utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fót, keleti márton utca.7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentendre, dózsa györgy út 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- esztergom, dobogókői út 39.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gödöllő, ottó ferenc utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - esztergom, bánomi út 21003 hrsz.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, szadai út 7
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szeghalom, széchenyi utca 45-49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - jászberény, nagykátai út 7/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisújszállás, deák ferenc u. 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- aszód, pesti út 14-16.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, bolgár utca 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - vác, bolgár utca 1.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, balassagyarmati út 9-15.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - vác, balassagyarmati út 9-15.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, naszály utca 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - heves, kolozsvári út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 - 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 -20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - berettyóújfalu, kossuth u. 98.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - hajdúszoboszló, dózsa györgy út 62.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-bátonyterenye, berekgát köz 2. -hjk
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - salgótarján, csokonai út 23
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - eger - ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - eger, ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, mikepércsi út 168.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, mikepércsi út 168.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, derék u. 31
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, derék u. 31
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- debrecen, széchenyi út 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, balmazújvárosi út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, faraktár utca 58.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, faraktár utca 58.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tiszaújváros, lévay u. 118.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, pesti út 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - hajdúnánás, dorogi u. 108.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, józsef a. u. 74.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nyíregyháza és 80 km-es környéke
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 takarító
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 kereskedelmi üzleti kontroller
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő-bedobó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 áruösszekészítő szárazáru területre
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru és zöldség- gyümölcs áruösszekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 áruösszekészítő szárazáru területre
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru és zöldség- gyümölcs áruösszekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+

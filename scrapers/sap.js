@@ -11,7 +11,8 @@ const HEADERS = {
   "Connection": "close"
 };
 
-// ☢️ NATÍV OS-SZINTŰ LETÖLTŐ KAPCSOLAT-ÚJRAHASZNOSÍTÁS (POOLING) NÉLKÜL!
+const secureAgent = new https.Agent({ keepAlive: true, maxSockets: 10, rejectUnauthorized: false });
+
 async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
     return new Promise((resolve, reject) => {
         let isDone = false;
@@ -28,14 +29,7 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
         try {
             const urlObj = new URL(targetUrl);
             const client = urlObj.protocol === 'http:' ? http : https;
-            const options = { 
-                hostname: urlObj.hostname, 
-                path: urlObj.pathname + urlObj.search, 
-                method: 'GET', 
-                agent: false, // 🔥 MINDEN KÉRÉS FRISS SOCKETET KAP! Nincs beragadás!
-                headers: HEADERS,
-                timeout: timeoutMs
-            };
+            const options = { hostname: urlObj.hostname, path: urlObj.pathname + urlObj.search, method: 'GET', agent: false, headers: HEADERS, timeout: timeoutMs };
 
             req = client.request(options, (res) => {
                 if (res.statusCode >= 400 && res.statusCode < 500) {
@@ -55,8 +49,7 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
                 let data = '';
                 res.on('data', chunk => {
                     data += chunk;
-                    // 🔥 RAM PAJZS: 150 KB-nál levágjuk a hatalmas SAP kódokat!
-                    if (data.length > 150000) {
+                    if (data.length > 150000) { // RAM védelem 150KB
                         if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
                     }
                 });
@@ -80,7 +73,6 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
     });
 }
 
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
@@ -131,7 +123,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   
   let startrow = 0; const step = 25; let hasMore = true; let page = 1;
   const searchBaseUrl = await discoverSearchUrl(baseUrl);
-  
+
   while (hasMore) {
     let currentUrl;
     try {
@@ -199,7 +191,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
               }
               
               if (global.gc) global.gc();
-              await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
+              await new Promise(r => setTimeout(r, 2500 + Math.random() * 2000));
           }
           console.log(""); 
       }
@@ -237,11 +229,10 @@ async function getDeepDetails(jobUrl, preLoc) {
   
   try {
     let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
-    
-    // 🔥 SOHA TÖBBÉ REGEX! Mivel a letöltő 150KB-nál levágta a szöveget,
-    // a Cheerio 1 milliszekundum alatt, nulla CPU használattal kiszedi belőle az adatot!
-    const $ = cheerio.load(resHtml);
     let schemaDescription = "";
+
+    // 🔥 NINCS TÖBB REGEX! CSAK BIZTONSÁGOS CHEERIO!
+    const $ = cheerio.load(resHtml);
 
     $('script[type="application/ld+json"]').each((i, el) => {
         try {
@@ -268,7 +259,7 @@ async function getDeepDetails(jobUrl, preLoc) {
     details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
     if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) return null; 
 
-    // Tisztítás Regex helyett Cheerio-val! A processzorod fel fog lélegezni!
+    // Tisztítás cheerio-val, a CPU garantáltan nyugodt marad!
     $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
     let cleanText = $('body').text().replace(/\s+/g, ' ').trim();
                            

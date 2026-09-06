@@ -1,13 +1,13 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V83.1 OMNI-MASTER) - 2026. 09. 06. 12:51:29
+🧠 UNI-START AI TUDÁSBÁZIS (V83.3 OMNI-MASTER) - 2026. 09. 06. 12:59:22
 ======================================================
 Az MI prediktív elemzéseket futtatott és szinkronizálta a kognitív immunrendszerét.
 
 ### ⚙️ Auto-Tuning (Pórázra Kötött SGD)
 - Dinamikus Szigorúság (Threshold): **45.0 pont**
 - Kifejezés-telítettség (BM25 K1): **1.7299**
-- Piac Elutasítási Aránya (Rejection Rate): **189.4%**
+- Piac Elutasítási Aránya (Rejection Rate): **189.1%**
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
 - **HOME OFFICE** (Sebesség mutató: +310.0%) 🔥

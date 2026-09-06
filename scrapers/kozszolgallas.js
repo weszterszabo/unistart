@@ -1,60 +1,49 @@
-const https = require('https');
-const crypto = require('crypto');
+const { exec } = require("child_process");
+const util = require("util");
+const execAsync = util.promisify(exec);
+
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🔥 PÁNCÉLOZOTT AGENT (Nincs DNS trükközés, csak SNI és Keep-Alive)
-const secureAgent = new https.Agent({
-    keepAlive: true,
-    rejectUnauthorized: false // Állami lejárt SSL ignorálása
-});
+// 🛡️ NATÍV OS-SZINTŰ LETÖLTÉS (cURL) - GitHub Actions Linux szerverekre optimalizálva
+async function fetchGovApiWithCurl(postData, maxRetries = 3) {
+    // Megvédjük az aposztrófokat a Linux bash környezetben
+    const safePostData = postData.replace(/'/g, "'\\''");
+    
+    // GitHub Actions (Ubuntu) kompatibilis cURL hívás
+    // Standard Windows ujjlenyomatot használunk, hogy a tűzfal ne fogjon gyanút az adatközpontból!
+    const command = `curl -s -X POST "https://kozszolgallas.ksz.gov.hu/JobAd/GetJobAdCountFilteredByCities" \
+        -H "Content-Type: application/json; charset=UTF-8" \
+        -H "Accept: application/json, text/javascript, */*; q=0.01" \
+        -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36" \
+        -H "X-Requested-With: XMLHttpRequest" \
+        -H "Origin: https://kozszolgallas.ksz.gov.hu" \
+        -H "Referer: https://kozszolgallas.ksz.gov.hu/" \
+        --data-raw '${safePostData}' \
+        --compressed \
+        --ipv4 \
+        --insecure \
+        --max-time 25`; // 25 mp türelmi idő a felhőből
 
-// 🛡️ BIZTONSÁGOS ÉS ÖNGYÓGYÍTÓ HTTPS KÉRÉS
-async function fetchGovApiWithRetry(postData, maxRetries = 3) {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
-            return await new Promise((resolve, reject) => {
-                const options = {
-                    hostname: 'kozszolgallas.ksz.gov.hu',
-                    path: '/JobAd/GetJobAdCountFilteredByCities',
-                    method: 'POST',
-                    agent: secureAgent,
-                    
-                    // 🚨 A MÁGIA ITT VAN: SNI (Server Name Indication) beállítása. 
-                    // E nélkül a magyar állami tűzfal azonnal eldobja a kérést (ECONNRESET)!
-                    servername: 'kozszolgallas.ksz.gov.hu', 
-                    
-                    timeout: 20000, // 20 másodperc türelmi idő a gov.hu-nak
-                    headers: {
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json, text/javascript, */*; q=0.01',
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Origin': 'https://kozszolgallas.ksz.gov.hu',
-                        'Referer': 'https://kozszolgallas.ksz.gov.hu/',
-                        'Content-Length': Buffer.byteLength(postData)
-                    }
-                };
+            // Futtatjuk a parancsot a GitHub Ubuntu szerverén
+            const { stdout } = await execAsync(command, { maxBuffer: 1024 * 1024 * 10 });
+            
+            if (!stdout || stdout.trim() === "") {
+                throw new Error("Üres válasz érkezett a curl-től a felhőben.");
+            }
+            
+            // Ha a GitHub IP-t az állam tiltólistára tette, HTML hibaoldalt (403 Forbidden / WAF) kapunk
+            if (stdout.includes("text/html") || stdout.includes("<html") || stdout.includes("Cloudflare") || stdout.includes("F5")) {
+                throw new Error("WAF blokkolás! Az állami tűzfal letiltotta ezt a GitHub IP címet.");
+            }
 
-                const req = https.request(options, (res) => {
-                    let data = '';
-                    res.on('data', chunk => data += chunk);
-                    res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, data }));
-                });
-
-                req.on('error', e => reject(e));
-                req.on('timeout', () => { 
-                    req.destroy(); 
-                    reject(new Error('Közszolgállás Szerver Timeout (20s)')); 
-                });
-                
-                req.write(postData);
-                req.end();
-            });
+            return stdout;
         } catch (err) {
             if (attempt === maxRetries) throw err;
-            console.log(`      ⚠️ [Közszolgállás] Hálózat hiba, újrapróbálkozás (${attempt}/3) [${err.message}]...`);
-            await new Promise(r => setTimeout(r, 2000 * attempt)); 
+            console.log(`      ⚠️ [Közszolgállás] GitHub Hálózat hiba, újrapróbálkozás (${attempt}/3) [${err.message}]...`);
+            await new Promise(r => setTimeout(r, 3000 * attempt)); 
         }
     }
 }
@@ -63,29 +52,23 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
 // 🚀 FŐ SCRAPER EXPORT
 // ------------------------------------------------------------------
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
-  console.log(`   ⬇️ [Közszolgállás] Natív SNI Páncélos letöltés indul...`);
+  console.log(`   ⬇️ [Közszolgállás] Natív Cloud-cURL letöltés indul...`);
   const allJobs = [];
   const seenUrls = new Set();
 
   try {
     const postData = JSON.stringify({});
 
-    const response = await fetchGovApiWithRetry(postData);
-    
-    // Tűzfal hibaoldal detektálása
-    const contentType = response.headers['content-type'] || "";
-    if (contentType.includes("text/html") || response.data.includes("<html")) {
-        throw new Error("WAF / Tűzfal HTML blokkolás érzékelve! A szerver nem engedte be a kérést.");
-    }
-
-    const json = JSON.parse(response.data);
+    // Az operációs rendszer szintű letöltés hívása
+    const responseData = await fetchGovApiWithCurl(postData);
+    const json = JSON.parse(responseData);
     
     if (!json.Success || !json.Data || json.Data.length === 0) {
       console.log(`   ⏹️ [Közszolgállás] Nincs adat vagy üres válasz érkezett.`);
       return [];
     }
 
-    console.log(`      ✅ Sikeres JSON válasz! ${json.Data.length} db állás elemzése indul...`);
+    console.log(`      ✅ Sikeres JSON válasz a Cloudból! ${json.Data.length} db állás elemzése indul...`);
 
     for (const job of json.Data) {
       if (!job.Speciality || !job.Id) continue;
@@ -145,7 +128,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     }
 
   } catch (err) {
-    console.error(`   ❌ [Közszolgállás] Végzetes Hiba:`, err.message);
+    console.error(`   ❌ [Közszolgállás] Végzetes Hiba a GitHubon:`, err.message);
     throw err; 
   }
 

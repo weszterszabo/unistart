@@ -7,22 +7,29 @@ const os = require("os");
 const { performance } = require("perf_hooks");
 const v8 = require("v8"); 
 
-// 🔥 JAVÍTÁS: GLOBÁLIS HÁLÓZATI PAJZS (ECONNRESET és Állami Tűzfalak ellen)
+// 🔥 JAVÍTÁS: GLOBÁLIS HÁLÓZATI PAJZS ÉS "HÓHÉR" (Timeout)
 const http = require('http');
 const https = require('https');
 
-// Ezek az ügynökök (agent) folyamatosan nyitva tartják a kapcsolatot a szerverek felé (Keep-Alive)
-// A rejectUnauthorized: false pedig ignorálja a gyakran lejáró magyar állami SSL tanúsítványokat.
-const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 50, keepAliveMsecs: 30000 });
-const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 50, rejectUnauthorized: false, keepAliveMsecs: 30000 });
+// Kőkemény 15 másodperces időkorlát minden hálózati kérésre (Tarpit védelem)
+const GLOBAL_TIMEOUT_MS = 15000;
 
-// Ráerőltetjük ezeket a stabil ügynököket a globális Node.js fetch API-ra.
+// Az ügynökök (agent) hálózati szinten is levágják a fagyott szervereket
+const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 50, timeout: GLOBAL_TIMEOUT_MS });
+const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 50, rejectUnauthorized: false, timeout: GLOBAL_TIMEOUT_MS });
+
 const originalFetch = global.fetch;
 global.fetch = async (url, options = {}) => {
     options.agent = function(_parsedURL) { return _parsedURL.protocol === 'http:' ? httpAgent : httpsAgent; };
     if(!options.headers) options.headers = {};
-    options.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+    options.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36';
     options.headers['Connection'] = 'keep-alive';
+    
+    // 🚨 A HÓHÉR: Rákényszerítjük a 15 másodperces limitet a fetch hívásokra!
+    if (!options.signal && global.AbortSignal) {
+        options.signal = AbortSignal.timeout(GLOBAL_TIMEOUT_MS);
+    }
+    
     return originalFetch(url, options);
 };
 

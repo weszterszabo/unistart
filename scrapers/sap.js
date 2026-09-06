@@ -1,7 +1,4 @@
 const cheerio = require("cheerio");
-const https = require("https");
-const http = require("http");
-const zlib = require("zlib");
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
@@ -9,106 +6,36 @@ const analyzer = require("../analyzer");
 const HEADERS = {
   "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
   "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
   "Upgrade-Insecure-Requests": "1"
 };
 
-// 🛡️ LÉGMENTESÍTETT WATCHDOG FETCH + ÁTIRÁNYÍTÁS KÖVETŐ
-function fetchSafe(urlStr, options = {}, timeoutMs = 20000, redirectCount = 0) {
-    if (redirectCount > 5) return Promise.reject(new Error("Végtelen átirányítási hurok (Redirect Loop)!"));
-    
-    return new Promise((resolve, reject) => {
-        let req; let resStream; let unzipper; let isDone = false;
-
-        const safeResolve = (data) => {
-            if (isDone) return; isDone = true; clearTimeout(watchdog); resolve(data);
-        };
-        const safeReject = (err) => {
-            if (isDone) return; isDone = true; clearTimeout(watchdog);
-            if (req && !req.destroyed) req.destroy();
-            if (resStream && !resStream.destroyed) resStream.destroy();
-            if (unzipper && !unzipper.destroyed) unzipper.destroy();
-            reject(err);
-        };
-
-        const watchdog = setTimeout(() => {
-            safeReject(new Error(`Kátránygödör védelem: Abszolút időtúllépés (${timeoutMs}ms)`));
-        }, timeoutMs);
-
-        try {
-            const parsedUrl = new URL(urlStr);
-            const client = parsedUrl.protocol === 'https:' ? https : http;
-            
-            req = client.request({
-                hostname: parsedUrl.hostname, port: parsedUrl.port,
-                path: parsedUrl.pathname + parsedUrl.search,
-                method: options.method || 'GET',
-                headers: { 'Accept-Encoding': 'gzip, deflate', ...options.headers }
-            }, (res) => {
-                resStream = res;
-                res.on('error', (e) => safeReject(new Error(`Response hiba: ${e.message}`)));
-
-                // 🔀 ÁTIRÁNYÍTÁS KÖVETÉSE
-                if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
-                    clearTimeout(watchdog);
-                    const nextUrl = new URL(res.headers.location, urlStr).href;
-                    return resolve(fetchSafe(nextUrl, options, timeoutMs, redirectCount + 1));
-                }
-
-                if (res.statusCode < 200 || res.statusCode >= 400) {
-                    return safeReject(new Error(`HTTP hiba: ${res.statusCode}`));
-                }
-
-                let stream = res;
-                const encoding = (res.headers['content-encoding'] || "").toLowerCase();
-                if (encoding === 'gzip' || encoding === 'deflate') {
-                    unzipper = encoding === 'gzip' ? zlib.createGunzip() : zlib.createInflate();
-                    unzipper.on('error', (e) => safeReject(new Error(`Zlib hiba: ${e.message}`)));
-                    stream = res.pipe(unzipper);
-                }
-
-                let data = '';
-                stream.on('data', (chunk) => { data += chunk.toString('utf8'); });
-                stream.on('end', () => safeResolve(data));
-                stream.on('error', (e) => safeReject(new Error(`Stream hiba: ${e.message}`)));
-            });
-
-            req.on('error', (e) => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
-            
-            // 🔥 ÚJ: Natív Socket szintű gyilkos időzítő (Tarpit / Fagyás ellen)
-            req.setTimeout(timeoutMs, () => {
-                if (req && !req.destroyed) req.destroy(new Error(`Socket szintű fagyás (${timeoutMs}ms)`));
-            });
-            
-            req.end();
-        } catch (err) { safeReject(err); }
-    });
-}
-
-// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban (Extra védelemmel)
+// ⚡ SEGÉDFÜGGVÉNY: Párhuzamos végrehajtás blokkokban
 async function processInBatches(items, batchSize, asyncFn) {
   let results = [];
   for (let i = 0; i < items.length; i += batchSize) {
     const batch = items.slice(i, i + batchSize);
     const batchResults = await Promise.all(batch.map(asyncFn));
     results.push(...batchResults);
-    // 🔥 JAVÍTÁS: Növeltük a pihenőidőt a blokkok között, hogy az SAP ne érezze DDoS támadásnak
+    // Extra pihenőidő, hogy az SAP ne érezze DDoS támadásnak (Tarpit elkerülése)
     await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
   }
   return results;
 }
 
-// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral + URL PARAMÉTER MEGŐRZÉS)
+// 🌍 OMNI-SEARCH AUTO-DISCOVERY V2.0 (HTML-Szonárral)
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
     
-    // 🔥 ÚJ: URL Paraméterek kimentése (pl. ?locationsearch=Hungary)
     let originalParams = new URLSearchParams();
     try { originalParams = new URL(baseUrl).searchParams; } catch(e) {}
     
     try {
-        const html = await fetchSafe(base, { headers: HEADERS }, 15000);
+        // 🔥 ITT MÁR A NATÍV, BIZTONSÁGOS FETCH-ET HASZNÁLJUK! (A Hóhér védi!)
+        const response = await fetch(base, { headers: HEADERS });
+        if (!response.ok) throw new Error(`HTTP hiba: ${response.status}`);
+        const html = await response.text();
+        
         const $ = cheerio.load(html);
         let bestLink = null;
 
@@ -124,15 +51,12 @@ async function discoverSearchUrl(baseUrl) {
         if (bestLink) {
             let resolved = bestLink.startsWith('http') ? bestLink : new URL(bestLink, base).href;
             const resolvedUrlObj = new URL(resolved.split('?')[0]);
-            
-            // 🔥 Visszafűzzük a letépett keresési paramétereket az új végpontra!
             originalParams.forEach((val, key) => resolvedUrlObj.searchParams.set(key, val));
-            
             console.log(`   💡 [SAP] Szonár találat: ${resolvedUrlObj.toString()}`);
             return resolvedUrlObj.toString();
         }
     } catch (e) {
-        console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot (${e.message}). Váltás bruteforce-ra...`);
+        console.warn(`   ⚠️ [SAP] Szonár nem talált egyértelmű formot. Váltás bruteforce-ra...`);
     }
 
     const pathsToTry = [
@@ -152,8 +76,8 @@ async function discoverSearchUrl(baseUrl) {
         
         let testUrl = testUrlObj.toString();
         try {
-            await fetchSafe(testUrl, { method: 'GET', headers: HEADERS }, 5000);
-            return testUrl; 
+            const testRes = await fetch(testUrl, { method: 'GET', headers: HEADERS });
+            if (testRes.ok) return testUrl; 
         } catch (e) { continue; }
     }
 
@@ -165,16 +89,13 @@ async function discoverSearchUrl(baseUrl) {
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   console.log(`   ⬇️ [SAP] Phantom-DeepScrape letöltése indul...`);
   const allJobs = [];
-  const seenUrls = new Set();
-  
-  knownUrls.forEach(url => seenUrls.add(url));
+  const seenUrls = new Set(knownUrls);
   
   let startrow = 0;
   const step = 25; 
   let hasMore = true;
   let page = 1;
 
-  // 🌍 OMNI-SEARCH START
   const searchBaseUrl = await discoverSearchUrl(baseUrl);
   
   while (hasMore) {
@@ -183,7 +104,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         const urlObj = new URL(searchBaseUrl);
         if (!urlObj.searchParams.has('sortColumn')) urlObj.searchParams.append('sortColumn', 'referencedate');
         if (!urlObj.searchParams.has('sortDirection')) urlObj.searchParams.append('sortDirection', 'desc');
-        // Kiemelten fontos a magyar lokalizáció kérése:
         if (!urlObj.searchParams.has('locale')) urlObj.searchParams.append('locale', 'hu_HU');
         
         urlObj.searchParams.set('startrow', startrow.toString());
@@ -196,7 +116,10 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
     console.log(`   ⬇️ [SAP] Oldal ${page} (Állások ${startrow}-től) letöltése...`);
     
     try {
-      const html = await fetchSafe(currentUrl, { headers: HEADERS }, 20000);
+      const response = await fetch(currentUrl, { headers: HEADERS });
+      if (!response.ok) throw new Error(`HTTP Hiba: ${response.status}`);
+      const html = await response.text();
+      
       const $ = cheerio.load(html);
 
       // WAF Ellenőrzés
@@ -211,13 +134,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         let text = $(el).text().trim().replace(/\s+/g, ' ');
         text = text.replace(/\s*\([m|f|d|w|x|n|\/]+\)\s*/gi, ' ').trim();
 
-        // 🔥 ELŐ-LOKÁTOR: Megkeressük a link melletti spant a helyszínnel
         let preLoc = $(el).closest('tr, li, .job-tile').find('.jobFacility, .jobLocation, .location, span.jobLocation').text().trim();
 
-        // 🔭 UNIVERZÁLIS REGEX
         if (href && (href.match(/\/(job|position|career|JobDetail|opportunities|jobs)\//i) || href.match(/jobid=/i)) && text.length > 5) {
-          
-          // 🔥 GYÖKÉR-SZŰRŐ: Ha balkáni szó van a címben vagy a helyszínben, AZONNAL ELDOBJUK
           if (/\b(m\/ž|za|odnose|mjesto|klijentima|poslovalnici|persoane|serviciu|prihvatom|svetovalec|radno|suradnik)\b/i.test(text)) return;
           if (/(croatia|slovenia|romania|italy|slovakia|serbia|hrvatska)/i.test(preLoc)) return;
 
@@ -227,7 +146,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
         }
       });
 
-      // Duplikációk szűrése az oldalon belül
       const uniqueOnPage = pageLinks.filter((v, i, a) => a.findIndex(t => (t.url === v.url)) === i);
       const jobsToProcess = uniqueOnPage.filter(job => !seenUrls.has(job.url));
       
@@ -239,11 +157,9 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
       jobsToProcess.forEach(job => seenUrls.add(job.url));
 
-      // 🏎️ PÁRHUZAMOS MÉLYFÚRÁS LOPAKODÓ ÜZEMMÓDBAN (Lassítva, 2 szálon)
       console.log(`   ⚡ [SAP] ${jobsToProcess.length} db aloldal feldolgozása lopakodó módban (2 szálon)...`);
       
       const processedJobs = await processInBatches(jobsToProcess, 2, async (job) => {
-          // 🔥 ÁTADJUK AZ ELŐ-LOKÁTORT A RÉSZLETEZŐ FÜGGVÉNYNEK
           const details = await getDeepDetails(job.url, job.preLoc);
           if (!details) {
               process.stdout.write(`❌ `);
@@ -252,16 +168,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           process.stdout.write(`✔️ `);
 
           const rawDescription = `${details.employment_type} ${details.experience_level} ${details.subsidiary} ${details.department} ${details.salary} ${details.reqId} ${details.rawText}`;
-          let analysis = null;
           
-          try {
-              const analyzeTask = analyzer.analyzeJob(job.title, rawDescription, companyName);
-              const timeoutTask = new Promise((_, r) => setTimeout(() => r(new Error("NLP Timeout")), 6000));
-              analysis = await Promise.race([analyzeTask, timeoutTask]);
-              await new Promise(r => setTimeout(r, 50)); 
-          } catch (e) {
-              return null; 
-          }
+          const analysis = analyzer.analyzeJob(job.title, rawDescription, companyName);
 
           if (analysis !== null) {
               const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
@@ -312,10 +220,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 };
 
 // 🕵️ MÉLYFÚRÓ FÜGGVÉNY - TITÁNIUM VÉDELEMMEL
-// 🔥 ELFOGADJA AZ ELŐ-LOKÁTORT (preLoc)
 async function getDeepDetails(jobUrl, preLoc) {
   let resHtml = null;
-  // 🔥 JAVÍTÁS: 3-ról 1-re csökkentjük az újrapróbálkozást, hogy ne álljon a gép percekig egy halott linknél!
   const maxRetries = 1; 
 
   let finalJobUrl = jobUrl;
@@ -323,12 +229,15 @@ async function getDeepDetails(jobUrl, preLoc) {
 
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
       try {
-          resHtml = await fetchSafe(finalJobUrl, { headers: HEADERS }, 15000); // 🔥 20 mp-ről 15 mp-re csökkentve
+          // 🔥 A NATÍV FETCH HASZNÁLATA (A Hóhér 15mp után levágja, ha megfagy!)
+          const response = await fetch(finalJobUrl, { headers: HEADERS });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          resHtml = await response.text();
           break;
       } catch (e) {
           if (attempt === maxRetries) return null; 
-          process.stdout.write(`⏳ `); // 🔥 Kiírunk egy homokórát, hogy lássuk: nem fagyott le, csak a Tarpitből küzd ki!
-          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
+          process.stdout.write(`⏳ `);
+          await new Promise(r => setTimeout(r, 2000 + Math.random() * 1500));
       }
   }
 
@@ -339,7 +248,6 @@ async function getDeepDetails(jobUrl, preLoc) {
     let details = { location: "", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: "", salary: "", reqId: "", rawText: "" };
     let schemaDescription = "";
 
-    // 1. Megpróbáljuk kinyerni a JSON-LD-ből a helyszínt!
     $('script[type="application/ld+json"]').each((i, el) => {
         try {
             const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
@@ -349,7 +257,6 @@ async function getDeepDetails(jobUrl, preLoc) {
                     if (item.datePosted) details.datePosted = item.datePosted;
                     if (item.employmentType) details.employment_type = Array.isArray(item.employmentType) ? item.employmentType.join(", ") : item.employmentType;
                     
-                    // JSON-LD Helyszín kivonás
                     if (item.jobLocation) {
                         const locs = Array.isArray(item.jobLocation) ? item.jobLocation : [item.jobLocation];
                         const locParts = [];
@@ -362,7 +269,6 @@ async function getDeepDetails(jobUrl, preLoc) {
                         });
                         if (locParts.length > 0) details.location = locParts.join(", ");
                     }
-                    
                     if (item.baseSalary) details.salary = JSON.stringify(item.baseSalary);
                     if (item.description) schemaDescription = item.description; 
                 }
@@ -374,7 +280,6 @@ async function getDeepDetails(jobUrl, preLoc) {
         const metaDate = $('meta[itemprop="datePosted"]').attr('content');
         if (metaDate) details.datePosted = metaDate;
     }
-    
     if (details.datePosted) {
         try {
             const parsedDate = new Date(details.datePosted);
@@ -383,7 +288,6 @@ async function getDeepDetails(jobUrl, preLoc) {
         } catch (e) { details.datePosted = new Date().toISOString(); }
     }
 
-    // 2. Ha nincs JSON-LD, megpróbáljuk a HTML-t
     if (!details.location) {
         let locFound = $('.jobGeoLocation, .job-location, .location, span[itemprop="jobLocation"], span[itemprop="addressLocality"]').first().text().trim();
         if (locFound && locFound.length < 80) {
@@ -392,23 +296,17 @@ async function getDeepDetails(jobUrl, preLoc) {
             details.location = locFound.replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim();
         }
     }
+    if (!details.location && preLoc) details.location = preLoc;
 
-    // 3. Ha még mindig nincs, használjuk a Keresőből kimentett Elő-Lokátort!
-    if (!details.location && preLoc) {
-        details.location = preLoc;
-    }
-
-    // 🔥 VÉGSŐ GYÖKÉR-SZŰRŐ: Ha a megtalált helyszín külföldi, AZONNAL ELDOBJUK!
     if (details.location && /(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) {
         return null; 
     }
 
-    // Takarítás a szövegen (de az országnevet MEGHAGYJUK a fő scraper.js GeoGuard-ja miatt!)
     if (details.location) {
         details.location = details.location.replace(/\n/g, ', ').replace(/\s+/g, ' ').trim();
         if (details.location === "") details.location = "Magyarország";
     } else {
-        details.location = "Magyarország"; // Ha végképp semmi sincs
+        details.location = "Magyarország"; 
     }
 
     let depFound = $('.jobDepartment, .department, .category, .jobFacility, span[itemprop="occupationalCategory"]').first().text().trim();

@@ -647,8 +647,8 @@ async function runScraper() {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
                         // 🔥 JAVÍTÁS: Sokkal nagyobb Timeout a lassú oldalaknak
-                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 600000, `Scrape_${company.name}`);
-                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
+// 🔥 JAVÍTÁS: A maximális türelmi idő egy cégnél 10 perc helyett 2 perc! Ha addig nem végez, a Hóhér kilövi.
+const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 120000, `Scrape_${company.name}`);                        scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
                         if (attempt === 3 || err.message.includes('zárolva') || isReplay) throw err; 

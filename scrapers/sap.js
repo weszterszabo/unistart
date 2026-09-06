@@ -11,8 +11,7 @@ const HEADERS = {
   "Connection": "close"
 };
 
-const secureAgent = new https.Agent({ keepAlive: true, maxSockets: 10, rejectUnauthorized: false });
-
+// ☢️ NATÍV OS-SZINTŰ LETÖLTŐ KAPCSOLAT-ÚJRAHASZNOSÍTÁS (POOLING) NÉLKÜL!
 async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
     return new Promise((resolve, reject) => {
         let isDone = false;
@@ -29,18 +28,25 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
         try {
             const urlObj = new URL(targetUrl);
             const client = urlObj.protocol === 'http:' ? http : https;
-            const options = { hostname: urlObj.hostname, path: urlObj.pathname + urlObj.search, method: 'GET', agent: secureAgent, headers: HEADERS, timeout: timeoutMs };
+            const options = { 
+                hostname: urlObj.hostname, 
+                path: urlObj.pathname + urlObj.search, 
+                method: 'GET', 
+                agent: false, // 🔥 MINDEN KÉRÉS FRISS SOCKETET KAP! Nincs beragadás!
+                headers: HEADERS,
+                timeout: timeoutMs
+            };
 
             req = client.request(options, (res) => {
                 if (res.statusCode >= 400 && res.statusCode < 500) {
-                    if (!isDone) { isDone = true; req.destroy(); reject(new Error(`HTTP ${res.statusCode}`)); }
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); reject(new Error(`HTTP ${res.statusCode}`)); }
                     return;
                 }
                 
                 if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
                      let redirUrl = res.headers.location.startsWith('http') ? res.headers.location : urlObj.origin + res.headers.location;
                      if (!isDone) {
-                         isDone = true; req.destroy();
+                         isDone = true; clearTimeout(watchdog); req.destroy();
                          unbreakableFetchText(redirUrl, timeoutMs).then(resolve).catch(reject);
                      }
                      return;
@@ -49,30 +55,32 @@ async function unbreakableFetchText(targetUrl, timeoutMs = 8000) {
                 let data = '';
                 res.on('data', chunk => {
                     data += chunk;
+                    // 🔥 RAM PAJZS: 150 KB-nál levágjuk a hatalmas SAP kódokat!
                     if (data.length > 150000) {
-                        if (!isDone) { isDone = true; req.destroy(); resolve(data); }
+                        if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); resolve(data); }
                     }
                 });
                 res.on('end', () => {
-                    if (!isDone) { isDone = true; resolve(data); }
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); resolve(data); }
                 });
             });
 
             req.on('timeout', () => {
-                if (!isDone) { isDone = true; req.destroy(); reject(new Error('OS Socket Timeout')); }
+                if (!isDone) { isDone = true; clearTimeout(watchdog); req.destroy(); reject(new Error('OS Socket Timeout')); }
             });
 
             req.on('error', e => { 
-                if (!isDone) { isDone = true; reject(e); } 
+                if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); } 
             });
             
             req.end();
         } catch (e) {
-            if (!isDone) { isDone = true; reject(e); }
+            if (!isDone) { isDone = true; clearTimeout(watchdog); reject(e); }
         }
     });
 }
 
+// 🌍 OMNI-SEARCH AUTO-DISCOVERY
 async function discoverSearchUrl(baseUrl) {
     let base = baseUrl.trim().replace(/\/$/, '');
     console.log(`   🕵️ [SAP] Főoldal szonározása a titkos keresővégpontért...`);
@@ -123,7 +131,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
   
   let startrow = 0; const step = 25; let hasMore = true; let page = 1;
   const searchBaseUrl = await discoverSearchUrl(baseUrl);
-
+  
   while (hasMore) {
     let currentUrl;
     try {
@@ -161,7 +169,6 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       if (jobsToProcess.length === 0) { console.log(`   ⏹️ [SAP] Nincs több új állás az oldalon.`); hasMore = false; break; }
 
       if (jobsToProcess.length > 0) {
-          // 🔥 NINCS LIMIT! Az összeset letöltjük, de emberi tempóban!
           console.log(`   ⚡ [SAP] ${jobsToProcess.length} db állás Lopakodó feldolgozása (Emberi tempóban)...`);
           
           for (const job of jobsToProcess) {
@@ -191,10 +198,8 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
                   });
               }
               
-              // 🔥 Tűzfal pihentetése: 2.5 - 4.5 másodperc várakozás két állás között! 
-              // Ez olyan, mintha egy hús-vér ember kattintana. A szerver sosem tilt le!
               if (global.gc) global.gc();
-              await new Promise(r => setTimeout(r, 2500 + Math.random() * 2000));
+              await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
           }
           console.log(""); 
       }
@@ -217,22 +222,30 @@ async function getDeepDetails(jobUrl, preLoc) {
   let finalJobUrl = jobUrl;
   if (!finalJobUrl.includes('locale=')) finalJobUrl += (finalJobUrl.includes('?') ? '&' : '?') + 'locale=hu_HU';
 
-  try {
-      resHtml = await unbreakableFetchText(finalJobUrl, 8000);
-  } catch (e) {
-      return null; 
+  for (let attempt = 0; attempt <= 1; attempt++) {
+      try {
+          resHtml = await unbreakableFetchText(finalJobUrl, 8000);
+          break;
+      } catch (e) {
+          if (attempt === 1) return null; 
+          process.stdout.write(`⏳ `);
+          await new Promise(r => setTimeout(r, 1000));
+      }
   }
 
   if (!resHtml) return null;
   
   try {
     let details = { location: preLoc || "Magyarország", employment_type: "", experience_level: "", subsidiary: "", department: "", datePosted: new Date().toISOString(), salary: "", reqId: "", rawText: "" };
+    
+    // 🔥 SOHA TÖBBÉ REGEX! Mivel a letöltő 150KB-nál levágta a szöveget,
+    // a Cheerio 1 milliszekundum alatt, nulla CPU használattal kiszedi belőle az adatot!
+    const $ = cheerio.load(resHtml);
     let schemaDescription = "";
 
-    const jsonLdMatches = [...resHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)];
-    for (const match of jsonLdMatches) {
+    $('script[type="application/ld+json"]').each((i, el) => {
         try {
-            const data = JSON.parse(match[1].replace(/[\u0000-\u0019]+/g,""));
+            const data = JSON.parse($(el).html().replace(/[\u0000-\u0019]+/g,""));
             const items = Array.isArray(data) ? data : (data["@graph"] || [data]);
             items.forEach(item => {
                 if (item['@type'] === 'JobPosting') {
@@ -250,19 +263,16 @@ async function getDeepDetails(jobUrl, preLoc) {
                 }
             });
         } catch(e) {}
-    }
+    });
 
     details.location = details.location.replace(/\bHU\b|Hungary|Magyarország|\b\d{4}\b/gi, '').replace(/,\s*,/g, ',').replace(/(^,)|(,$)/g, '').trim() || "Magyarország";
     if (/(croatia|slovenia|romania|italy|slovakia|czech|poland|serbia|hrvatska|zagreb|split|osijek|rijeka|ljubljana|koper|maribor|cluj|bucharest)/i.test(details.location)) return null; 
 
-    let cleanText = resHtml.replace(/<script[^>]*>[\s\S]*?(<\/script>|$)/gi, ' ')
-                           .replace(/<style[^>]*>[\s\S]*?(<\/style>|$)/gi, ' ')
-                           .replace(/<!--[\s\S]*?(-->|$)/gi, ' ')
-                           .replace(/<[^>]+>/g, ' ')
-                           .replace(/\s+/g, ' ')
-                           .trim();
+    // Tisztítás Regex helyett Cheerio-val! A processzorod fel fog lélegezni!
+    $('script, style, nav, footer, header, svg, button, iframe, noscript, img').remove();
+    let cleanText = $('body').text().replace(/\s+/g, ' ').trim();
                            
-    cleanText = cleanText.substring(0, 6000);
+    cleanText = cleanText.substring(0, 8000);
 
     if (!details.employment_type) {
         const empMatch = cleanText.match(/(?:foglalkoztatás típusa|foglalkoztatás jellege|munkaidő)[:\s]+([a-zA-ZáéíóöőúüűÁÉÍÓÖŐÚÜŰ\s-]{3,30})(?:\s|$)/i);
@@ -274,7 +284,7 @@ async function getDeepDetails(jobUrl, preLoc) {
     }
 
     if (cleanText.length < 30 && schemaDescription) {
-        cleanText = schemaDescription.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim().substring(0, 6000);
+        cleanText = cheerio.load(schemaDescription).text().replace(/\s+/g, ' ').trim().substring(0, 8000);
     }
 
     details.rawText = cleanText;

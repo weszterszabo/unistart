@@ -1,11 +1,11 @@
 const https = require('https');
+const crypto = require('crypto');
 // 🧠 1. BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🔥 TISZTÍTOTT AGENT (Nincs hibás DNS felülírás, csak sima Keep-Alive)
+// 🔥 PÁNCÉLOZOTT AGENT (Nincs DNS trükközés, csak SNI és Keep-Alive)
 const secureAgent = new https.Agent({
     keepAlive: true,
-    maxSockets: 10,
     rejectUnauthorized: false // Állami lejárt SSL ignorálása
 });
 
@@ -19,12 +19,16 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
                     path: '/JobAd/GetJobAdCountFilteredByCities',
                     method: 'POST',
                     agent: secureAgent,
-                    family: 4, // <-- A MÁGIA ITT VAN: Natívan letiltja az IPv6-ot, ez megoldja az ECONNRESET-et!
-                    timeout: 20000, // 20 másodperc türelmi idő
+                    
+                    // 🚨 A MÁGIA ITT VAN: SNI (Server Name Indication) beállítása. 
+                    // E nélkül a magyar állami tűzfal azonnal eldobja a kérést (ECONNRESET)!
+                    servername: 'kozszolgallas.ksz.gov.hu', 
+                    
+                    timeout: 20000, // 20 másodperc türelmi idő a gov.hu-nak
                     headers: {
                         'Content-Type': 'application/json; charset=UTF-8',
                         'Accept': 'application/json, text/javascript, */*; q=0.01',
-                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+                        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36',
                         'X-Requested-With': 'XMLHttpRequest',
                         'Origin': 'https://kozszolgallas.ksz.gov.hu',
                         'Referer': 'https://kozszolgallas.ksz.gov.hu/',
@@ -59,7 +63,7 @@ async function fetchGovApiWithRetry(postData, maxRetries = 3) {
 // 🚀 FŐ SCRAPER EXPORT
 // ------------------------------------------------------------------
 exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
-  console.log(`   ⬇️ [Közszolgállás] IPv4 Páncélos letöltés indul...`);
+  console.log(`   ⬇️ [Közszolgállás] Natív SNI Páncélos letöltés indul...`);
   const allJobs = [];
   const seenUrls = new Set();
 
@@ -109,7 +113,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
 
       const rawDescription = `${department} ${workType} ${expLevel} ${job.JobCategoryName || ""} ${job.EmploymentTypeName || ""}`;
       
-      // Küldés a V84-es OMNI-MASTER Agyba
+      // Küldés az OMNI-MASTER Agyba
       const analysis = analyzer.analyzeJob(title, rawDescription, companyName);
 
       // SZELLEMI KAPUŐR (health_score > 0)

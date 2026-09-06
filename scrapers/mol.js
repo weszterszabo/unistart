@@ -48,14 +48,27 @@ function getCookieString() {
     return Array.from(globalCookieMap.entries()).map(([k, v]) => `${k}=${v}`).join('; ');
 }
 
-// 🛡️ BIZTONSÁGOS HTTPS KÉRÉS (Munkamenet menedzsmenttel)
+// 🛡️ BIZTONSÁGOS HTTPS KÉRÉS (Abszolút Kátránygödör védelemmel és Gyorsított Halállal)
 async function fetchTaleoApiWithRetry(postDataObj, page, isPreWarm = false) {
     const postData = postDataObj ? JSON.stringify(postDataObj) : "";
-    const maxRetries = isPreWarm ? 2 : 3;
+    
+    // 🔥 JAVÍTÁS: 3 helyett 1 újrapróbálkozás, hogy ne várakoztassa a rendszert 50 másodpercig!
+    const maxRetries = 1;
 
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
             return await new Promise((resolve, reject) => {
+                let isDone = false;
+                let watchdog;
+                
+                // Csendes lezárók a memóriaszivárgás ellen
+                const safeReject = (err) => { 
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); reject(err); } 
+                };
+                const safeResolve = (data) => { 
+                    if (!isDone) { isDone = true; clearTimeout(watchdog); resolve(data); } 
+                };
+
                 const options = {
                     hostname: 'molgroup.taleo.net',
                     path: isPreWarm ? '/careersection/mhu/jobsearch.ftl?lang=hu' : '/careersection/rest/jobboard/searchjobs?lang=hu&portal=8205100397',
@@ -78,33 +91,33 @@ async function fetchTaleoApiWithRetry(postDataObj, page, isPreWarm = false) {
                 if (cookieStr) options.headers['Cookie'] = cookieStr;
 
                 const req = https.request(options, (res) => {
-                    // Frissítjük a süti memóriát, ha a szerver újat adott!
                     updateCookies(res.headers['set-cookie']);
 
                     const contentType = res.headers['content-type'] || "";
                     if (!isPreWarm && (contentType.includes("text/html") || contentType.includes("text/plain"))) {
-                        return reject(new Error("WAF / Akamai Tűzfal blokkolás (Nem JSON érkezett)!"));
+                        return safeReject(new Error("WAF / Akamai Tűzfal blokkolás (Nem JSON érkezett)!"));
                     }
 
                     let data = '';
                     res.on('data', chunk => data += chunk);
-                    res.on('end', () => resolve({ status: res.statusCode, headers: res.headers, data }));
+                    res.on('end', () => safeResolve({ status: res.statusCode, headers: res.headers, data }));
                 });
 
-                req.on('error', e => reject(new Error(`Hálózati hiba: ${e.message}`)));
+                req.on('error', e => safeReject(new Error(`Hálózati hiba: ${e.message}`)));
                 
-                // 🔥 SOCKET GYILKOS: 15 másodperc után levágjuk a némán maradó szervert!
-                req.setTimeout(15000, () => {
-                    if (req && !req.destroyed) req.destroy(new Error('Taleo Szerver Kátránygödör Timeout (15s)'));
-                });
+                // 🔥 ABSZOLÚT WATCHDOG: 10 mp után MINDENKÉPP kíméletlenül elvágja a kábelt!
+                watchdog = setTimeout(() => {
+                    if (req && !req.destroyed) req.destroy(new Error('Abszolút Tarpit Timeout (10s)'));
+                    safeReject(new Error('Taleo Kátránygödör Timeout (10s)'));
+                }, 10000);
                 
                 if (!isPreWarm) req.write(postData);
                 req.end();
             });
         } catch (err) {
             if (attempt === maxRetries) throw err;
-            if (!isPreWarm) process.stdout.write(`⏳ `); // Homokóra jelzi, ha a Hóhér kilőtte a szálat és újrapróbálkozik
-            await new Promise(r => setTimeout(r, 2000 * attempt)); 
+            if (!isPreWarm) process.stdout.write(`⏳ `); 
+            await new Promise(r => setTimeout(r, 1500)); 
         }
     }
 }
@@ -249,7 +262,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
           hasMore = false;
       } else {
           page++;
-          // 🔥 Lopakodó mód: 1-1.5 másodperc várakozás két oldal között, hogy a WAF ne tiltson le a 6. oldalnál!
+          // 🔥 Lopakodó mód: 1-1.5 másodperc várakozás két oldal között
           await new Promise(r => setTimeout(r, 1000 + Math.random() * 500));
       }
 
@@ -259,7 +272,7 @@ exports.scrape = async function(companyName, baseUrl, knownUrls = []) {
       if (page === 1) {
           throw err; // Először hibázik -> megmentjük a régi adatokat!
       }
-      hasMore = false; // Ha lapozás közben szakad meg, mentjük ami megvan!
+      hasMore = false; // Ha lapozás közben szakad meg, kimentjük ami eddig lejött!
     }
   }
 

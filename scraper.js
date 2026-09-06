@@ -7,6 +7,28 @@ const os = require("os");
 const { performance } = require("perf_hooks");
 const v8 = require("v8"); 
 
+// 🔥 JAVÍTÁS: GLOBÁLIS HÁLÓZATI PAJZS (ECONNRESET és Állami Tűzfalak ellen)
+const http = require('http');
+const https = require('https');
+
+// Ezek az ügynökök (agent) folyamatosan nyitva tartják a kapcsolatot a szerverek felé (Keep-Alive)
+// A rejectUnauthorized: false pedig ignorálja a gyakran lejáró magyar állami SSL tanúsítványokat.
+const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 50, keepAliveMsecs: 30000 });
+const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 50, rejectUnauthorized: false, keepAliveMsecs: 30000 });
+
+// Ráerőltetjük ezeket a stabil ügynököket a globális Node.js fetch API-ra.
+const originalFetch = global.fetch;
+global.fetch = async (url, options = {}) => {
+    options.agent = function(_parsedURL) { return _parsedURL.protocol === 'http:' ? httpAgent : httpsAgent; };
+    if(!options.headers) options.headers = {};
+    options.headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36';
+    options.headers['Connection'] = 'keep-alive';
+    return originalFetch(url, options);
+};
+
+// Node.js TLS szintű hibaignorálás
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // ------------------------------------------------------------------
 // 1. DINAMIKUS MOTOROK BETÖLTÉSE (Auto-Discovery)
 // ------------------------------------------------------------------
@@ -238,6 +260,7 @@ class CircuitBreaker {
 const breakerInstance = new CircuitBreaker(3, 4 * 60 * 1000);
 
 const ExecutionTimeoutGuard = {
+    // 🔥 JAVÍTÁS: Sokkal türelmesebb Timeout limitet adtam az állami / lassú oldalaknak
     run: (promise, ms, operationName) => {
         let timeoutId;
         const timeoutPromise = new Promise((_, reject) => { timeoutId = setTimeout(() => reject(new Error(`[Timeout] 🛑 ${operationName} megfagyott, túllépte a(z) ${ms/1000} másodpercet! A folyamatot kilőttük.`)), ms); });
@@ -348,25 +371,20 @@ const GeoGuard = {
         const isRemote = /remote|távmunka|tavmunka|home office|wfh/i.test(cleanLoc);
         const isHybrid = /hybrid|hibrid/i.test(cleanLoc);
 
-        // 🔥 EXTRA TISZTÍTÁS: Emojik, Cégformák és Zavaró szavak törlése
         cleanLoc = cleanLoc.replace(/📍|🏢|📌|[\u200B-\u200D\uFEFF]/g, '');
         cleanLoc = cleanLoc.replace(/\b(Zrt\.?|Kft\.?|Nyrt\.?|Bt\.?|Inc\.?|Ltd\.?|GmbH|Kutatás és fejlesztés|Központ|Részleg|Osztály|Group)\b/gi, '');
         cleanLoc = cleanLoc.replace(/\b\d{4}\b/g, ''); 
         cleanLoc = cleanLoc.replace(/\b([IVXLCDM]+)\.?\s*ker(?:ület)?\.?/gi, ''); 
         cleanLoc = cleanLoc.replace(/(Hungary|Magyarország|Magyarorszag|\bHU\b)/gi, ''); 
 
-        // 🔥 DARABOLÁS ÉS DUPLIKÁCIÓ SZŰRÉS (Győr, , , Győr -> Győr)
         let locParts = cleanLoc.split(',')
             .map(p => p.trim())
-            .filter(p => p.length > 1); // Csak értelmes szavakat hagy meg (az üres vesszők kiesnek)
+            .filter(p => p.length > 1);
             
-        // Kiszűrjük a cégneveket a helyszínből, ha bent maradtak volna
         locParts = locParts.filter(p => !/audi|bosch|telekom|otp|lidl|bonafarm/i.test(p));
-        
-        locParts = [...new Set(locParts)]; // Egyedi értékek megtartása (Deduplikáció)
+        locParts = [...new Set(locParts)]; 
         cleanLoc = locParts.join(', ');
 
-        // Hibrid / Távmunka logikák beállítása
         if (isRemote && isHybrid) cleanLoc = "Hibrid / Távmunka";
         else if (isRemote) cleanLoc = "Távmunka";
         else if (isHybrid) { 
@@ -377,9 +395,7 @@ const GeoGuard = {
 
         if (/budapest/i.test(cleanLoc)) cleanLoc = cleanLoc.includes("Hibrid") ? "Budapest (Hibrid)" : "Budapest";
         
-        // Végső vessző és szóköz takarítás
         cleanLoc = cleanLoc.replace(/^[,.\s\-–/]+|[,.\s\-–/]+$/g, '').replace(/\s{2,}/g, ' ').trim();
-        
         if (!cleanLoc || cleanLoc.length === 0) cleanLoc = "Magyarország";
         else cleanLoc = cleanLoc.charAt(0).toUpperCase() + cleanLoc.slice(1);
 
@@ -388,7 +404,6 @@ const GeoGuard = {
 };
 GeoGuard.init(); 
 
-// 🔥 ÚJ: Zajtalan Szemantikus Hash (Deep Normalize)
 function generateSemanticHash(companyName, title, location, faculty) {
     const normalize = (str) => String(str).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]/g, '');
     const baseString = `${normalize(companyName)}|${normalize(title)}|${normalize(location)}|${normalize(faculty)}`;
@@ -430,6 +445,7 @@ class JobRecordPool {
     release(record) { this.pool[++this.freeIndex] = record; }
 }
 const globalJobPool = new JobRecordPool(5000);
+
 function sanitizeAndScoreJob(rawJobInput, companyName) {
     try {
         const rawJob = DataSchemaGuard.validate(rawJobInput);
@@ -441,17 +457,12 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
         
         let geoResult = GeoGuard.processLocation(rawLocStr);
 
-        // 🔥 ÚJ: 3D Külföld-Szkenner (Cím, URL és Nyelv alapján is ellenőriz)
         let isForeign = !geoResult.isValid;
-        
         if (!isForeign) {
-            // 1. Megnézzük a címet és az URL-t a tiltott városok/országok listájával
             const checkStr = GeoGuard.normalizeString(rawTitleStr + " " + rawJob.url.replace(/[-_]/g, ' '));
             if (GeoGuard.compiledMatrix.test(checkStr)) {
                 isForeign = true;
             }
-            
-            // 2. Kiszűrjük a balkáni/román speciális toborzási szavakat a címből
             if (/\b(m\/ž|za|odnose|radno|mjesto|klijentima|poslovalnici|persoane|serviciu|prihvatom|svetovalec|suradnik)\b/i.test(rawTitleStr)) {
                 isForeign = true;
             }
@@ -491,7 +502,7 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
         cleanJob.data_signature = crypto.createHmac('sha256', SYSTEM_SECRET).update(cleanJob.data_hash).digest('hex');
 
         let score = 100;
-        if (isForeign) score -= 100; // 💥 Ha külföldi, azonnal nullázza a pontot!
+        if (isForeign) score -= 100; 
         if (!cleanJob.title || cleanJob.title.toLowerCase().includes("teszt") || cleanJob.title.toLowerCase().includes("test")) score -= 100; 
         if (!cleanJob.url) score -= 100; 
         if (cleanJob.title === cleanJob.title.toUpperCase()) { cleanJob.title = cleanJob.title.charAt(0) + cleanJob.title.slice(1).toLowerCase(); score -= 10; }
@@ -515,7 +526,6 @@ class FastPointerQueue {
     get length() { return this.items.length - this.head; }
 }
 
-// 🔥 ÚJ: Stream-alapú RAM-kímélő JSON mentés
 async function writeJsonStream(filePath, dataArray) {
     return new Promise((resolve, reject) => {
         const stream = fs.createWriteStream(filePath, { encoding: 'utf8' });
@@ -580,13 +590,11 @@ async function runScraper() {
 
         const companyQueue = new FastPointerQueue([...companiesSnapshot.docs]);
         
-        // 🔥 AUTO-SCALING HARDWARE ANALYZER 🔥
         const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
         let CONCURRENCY_LIMIT = 1;
         if (!isGitHubActions) {
             const freeMemMB = os.freemem() / (1024 * 1024);
             const cpus = os.cpus().length;
-            // 350MB szabad memória kell minden egyes extra szálhoz, max annyi szál ahány mag van - 1.
             CONCURRENCY_LIMIT = Math.max(1, Math.min(cpus - 1, Math.floor(freeMemMB / 350)));
         }
         console.log(`🚥 Környezet: ${isGitHubActions ? 'Cloud' : 'Local'} | Dinamikus Szálak: ${CONCURRENCY_LIMIT} (Szabad RAM: ${Math.round(os.freemem()/(1024*1024))}MB)`);
@@ -631,7 +639,8 @@ async function runScraper() {
                 for (let attempt = 1; attempt <= (isReplay ? 1 : 3); attempt++) {
                     try {
                         await globalRateLimiter.consume(hostDomain, 1);
-                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 300000, `Scrape_${company.name}`);
+                        // 🔥 JAVÍTÁS: Sokkal nagyobb Timeout a lassú oldalaknak
+                        const scrapeTask = () => ExecutionTimeoutGuard.run(engine.scrape(company.name, baseUrl, knownUrlsForCompany), 600000, `Scrape_${company.name}`);
                         scrapedJobs = await measureTelemtry(`EngineRun_${company.name}`, () => breakerInstance.execute(company.name, scrapeTask));
                         break; 
                     } catch (err) { 
@@ -748,7 +757,6 @@ async function runScraper() {
         console.log(`\n💾 Adatok mentése a(z) ${OUTPUT_JSON_PATH} fájlba (Stream módban)...`);
         const allNewJobsArray = Array.from(finalJobsMap.values());
         
-        // 🔥 ÚJ: Memóriakímélő Stream mentés
         await writeJsonStream(OUTPUT_JSON_PATH, allNewJobsArray);
 
         console.log("📈 Telemetria & Market Pulse mentése a Firebase-be...");

@@ -1019,12 +1019,15 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     }
 
     if (compiledFatalSenior.test(cleanTitle) && !isExplicitJuniorTitle) return logReject("Senior pozíció a cím alapján");
-    if (compiledFatalPhysical.test(cleanTitle) && !isExplicitJuniorTitle) return logReject("Fizikai munka a cím alapján");
+    
+    // MÓDOSÍTÁS: Ha a szövegben vagy a címben szerepel, hogy diák/gyakornok (isExplicitJunior), 
+    // akkor átengedjük a fizikai munkákat, de csak akkor, ha TÉNYLEG diákszövetkezeti vagy hasonló a kontextus.
+    if (compiledFatalPhysical.test(cleanTitle) && !isExplicitJunior) return logReject("Fizikai munka a cím alapján");
     
     if (compiledDubiousPhysical.test(cleanTitle) && !isExplicitJunior && !isWhiteCollarTitle && !hasCategoryPrivilege) return logReject("Gyanús fizikai/operátor munka a cím alapján");
     
     if (isTooSenior && !isExplicitJuniorTitle) return logReject("Túl sok tapasztalatot kér (>3 év)");
-    if (!isExplicitJunior && !isWhiteCollarDesc && !hasCategoryPrivilege) return logReject("Nem junior és nem is szellemi munka (WhiteCollar Guard)"); 
+    if (!isExplicitJunior && !isWhiteCollarDesc && !hasCategoryPrivilege) return logReject("Nem junior és nem is szellemi munka (WhiteCollar Guard)");
     
     const timeGuard = measure('Guard_Time', 'guard_start');
 

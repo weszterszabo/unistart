@@ -420,7 +420,7 @@ class ProcessedJobRecord {
     constructor() {
         this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
-        this.job_nature = ""; this.salary_min = null; this.salary_max = null;
+        this.job_nature = ""; this.position_type = "graduate"; this.salary_min = null; this.salary_max = null;
         this.salary_currency = null; this.is_hourly_wage = false; this.tags = [];
         this.enriched_tags = []; this.tldr = null; this.seo_schema = null;
         this.semantic_hash = ""; this.data_hash = ""; this.data_signature = "";
@@ -431,7 +431,7 @@ class ProcessedJobRecord {
     reset() {
         this.id = ""; this.company_name = ""; this.company_id = ""; this.title = ""; this.location = "";
         this.url = ""; this.apply_url = ""; this.date_posted = ""; this.faculty = "";
-        this.job_nature = ""; this.salary_min = null; this.salary_max = null;
+        this.job_nature = ""; this.position_type = "graduate"; this.salary_min = null; this.salary_max = null;
         this.salary_currency = null; this.is_hourly_wage = false; 
         this.tags = []; this.enriched_tags = []; this.tldr = null; this.seo_schema = null; this.semantic_hash = ""; 
         this.data_hash = ""; this.data_signature = ""; this.health_score = 0; this.trace_id = ""; 
@@ -489,6 +489,7 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
             if (nlpResult) {
                 cleanJob.faculty = nlpResult.airtable_ready?.faculty || cleanJob.faculty;
                 cleanJob.job_nature = nlpResult.airtable_ready?.job_nature || cleanJob.job_nature;
+                cleanJob.position_type = nlpResult.airtable_ready?.position_type || "graduate"; // ÚJ
                 cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
                 cleanJob.salary_min = nlpResult.airtable_ready?.salary_min || null;
                 cleanJob.salary_max = nlpResult.airtable_ready?.salary_max || null;
@@ -596,6 +597,43 @@ async function runScraper() {
 
         const allCompanyDocs = [...companiesSnapshot.docs];
         
+        const BATCH_LIMIT = 10;
+        const cursorRef = db.collection("system_analytics").doc("scraper_cursor");
+        const cursorDoc = await cursorRef.get();
+        
+        let startIndex = 0;
+        if (cursorDoc.exists) {
+            startIndex = cursorDoc.data().next_index || 0;
+        }
+        
+        if (startIndex >= allCompanyDocs.length) startIndex = 0;
+
+        let targetCompanyDocs = [];
+        for (let i = 0; i < BATCH_LIMIT; i++) {
+            let currentIndex = (startIndex + i) % allCompanyDocs.length;
+            targetCompanyDocs.push(allCompanyDocs[currentIndex]);
+            if (targetCompanyDocs.length === allCompanyDocs.length) break;
+        }
+
+        let nextIndex = (startIndex + targetCompanyDocs.length) % allCompanyDocs.length;
+        await cursorRef.set({ 
+            next_index: nextIndex, 
+            last_run: FieldValue.serverTimestamp(),
+            last_scraped_companies: targetCompanyDocs.map(d => d.data().name)
+        }, { merge: true });
+
+        console.log(`\n⏳ [ÜTEMEZŐ] A motor a ${startIndex + 1}. cégtől indul. (Feldolgoz: ${targetCompanyDocs.length} db, Összes cég: ${allCompanyDocs.length})`);
+
+        const targetCompanyIds = new Set(targetCompanyDocs.map(d => d.id));
+        const targetCompanyNames = new Set(targetCompanyDocs.map(d => d.data().name));
+
+        for (const oldJob of localJobsMap.values()) {
+            if (!targetCompanyIds.has(oldJob.company_id) && !targetCompanyNames.has(oldJob.company_name)) {
+                finalJobsMap.set(oldJob.id, oldJob);
+            }
+        }
+        console.log(`🛡️ [ADATVÉDELEM] ${finalJobsMap.size} db korábbi állás érintetlenül áthelyezve a most kimaradó cégektől.`);
+
         const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
         let CONCURRENCY_LIMIT = 1;
         if (!isGitHubActions) {
@@ -743,12 +781,12 @@ async function runScraper() {
         // 🔥 SZAKASZOS MŰKÖDÉS (BATCH PROCESSING & CHECKPOINTING)
         const COMPANY_BATCH_SIZE = 3; 
         
-        for (let i = 0; i < allCompanyDocs.length; i += COMPANY_BATCH_SIZE) {
-            const batchDocs = allCompanyDocs.slice(i, i + COMPANY_BATCH_SIZE);
+        for (let i = 0; i < targetCompanyDocs.length; i += COMPANY_BATCH_SIZE) {
+            const batchDocs = targetCompanyDocs.slice(i, i + COMPANY_BATCH_SIZE);
             const companyQueue = new FastPointerQueue(batchDocs);
             
             console.log(`\n======================================================`);
-            console.log(`📦 SZAKASZ FELDOLGOZÁSA: ${i + 1} - ${i + batchDocs.length} / ${allCompanyDocs.length} cég`);
+            console.log(`📦 SZAKASZ FELDOLGOZÁSA: ${i + 1} - ${i + batchDocs.length} / ${targetCompanyDocs.length} cég`);
             console.log(`======================================================\n`);
 
             const workerTask = async (workerId) => {
@@ -769,7 +807,7 @@ async function runScraper() {
             await writeJsonStream(OUTPUT_JSON_PATH, currentJobsArray);
             
             // 🛌 MÉLYALVÁS (A macOS TCP és DNS cache kiürítéséhez és a RAM Flushhoz)
-            if (i + COMPANY_BATCH_SIZE < allCompanyDocs.length) {
+            if (i + COMPANY_BATCH_SIZE < targetCompanyDocs.length) {
                 console.log(`🛌 [DEEP SLEEP] A szakasz véget ért. A rendszer 10 másodpercig pihen a memória és a hálózati portok (TCP) felszabadítása miatt...\n`);
                 if (global.gc) global.gc(); 
                 await new Promise(resolve => setTimeout(resolve, 10000));

@@ -1086,9 +1086,20 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     let foundLocations = [...new Set((fullText.match(locationsDict) || []).map(l => l.charAt(0).toUpperCase() + l.slice(1)))];
     
     let jobNature = "Pályakezdő (Teljes munkaidő)";
-    if (/\b(diák|diákmunka|iskolaszövetkezet|student|working student|werkstudent)\b/i.test(fullText) || requiresActiveStudent) jobNature = "Diákmunka";
-    else if (/\b(gyakornok|intern|internship|trainee)\b/i.test(fullText) || isMandatoryInternship) jobNature = "Gyakornok";
-    else if (/\b(részmunkaidő|part-time|part time|4 órás|6 órás)\b/i.test(fullText)) jobNature = "Pályakezdő (Részmunkaidő)";
+    let positionType = "graduate"; // ÚJ: Szigorú angol kategória azonosító
+
+    if (/\b(diák|diákmunka|iskolaszövetkezet|student|working student|werkstudent)\b/i.test(fullText) || requiresActiveStudent) {
+        jobNature = "Diákmunka";
+        positionType = "student";
+    }
+    else if (/\b(gyakornok|intern|internship|trainee)\b/i.test(fullText) || isMandatoryInternship) {
+        jobNature = "Gyakornok";
+        positionType = "intern";
+    }
+    else if (/\b(részmunkaidő|part-time|part time|4 órás|6 órás)\b/i.test(fullText)) {
+        jobNature = "Pályakezdő (Részmunkaidő)";
+        positionType = "graduate";
+    }
 
     const timeExtract = measure('Extract_Time', 'extract_start');
 
@@ -1209,6 +1220,7 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
         airtable_ready: { 
             faculty: assignedCategory,
             job_nature: jobNature,
+            position_type: positionType, // ÚJ MEZŐ a frontend szűréshez
             contract_type: contractType,
             degree: requiredDegree,
             weekly_hours: extractedHours !== "Rugalmas" ? extractedHours : null,

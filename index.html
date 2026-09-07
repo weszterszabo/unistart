@@ -1019,22 +1019,28 @@
           document.getElementById('nav-info-mobile').classList.add('active');
           if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Információk';
           if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'none';
-        } else if (window.initialNavId === 'nav-offers') {
-          document.getElementById('forumTab').classList.add('active');
-          document.getElementById('nav-offers').classList.add('active');
-          if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Ajánlatok';
-          if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'none';
-          if (window.DOMCache.resultsTitle) window.DOMCache.resultsTitle.innerText = 'Találatok';
         } else if (window.initialNavId === 'nav-saved') {
           document.getElementById('forumTab').classList.add('active');
           document.getElementById('nav-saved').classList.add('active');
           if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Mentett Állások';
           if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'none';
           if (window.DOMCache.resultsTitle) window.DOMCache.resultsTitle.innerText = 'Találatok';
-        } else {
+        } else if (window.initialNavId === 'nav-intern') {
           document.getElementById('forumTab').classList.add('active');
-          document.getElementById('nav-forum').classList.add('active');
-          if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Karrierfórum';
+          document.getElementById('nav-intern').classList.add('active');
+          if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Gyakornoki programok';
+          if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'flex';
+        } else if (window.initialNavId === 'nav-graduate') {
+          document.getElementById('forumTab').classList.add('active');
+          document.getElementById('nav-graduate').classList.add('active');
+          if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = 'Pályakezdő állások';
+          if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'flex';
+        } else {
+          // Alapértelmezett a diákmunka
+          const defaultNav = document.getElementById(window.initialNavId) ? window.initialNavId : 'nav-student';
+          document.getElementById('forumTab').classList.add('active');
+          document.getElementById(defaultNav).classList.add('active');
+          if (window.DOMCache.titleEl) window.DOMCache.titleEl.innerText = (defaultNav === 'nav-student') ? 'Diákmunka' : 'Találatok';
           if (window.DOMCache.omnibar) window.DOMCache.omnibar.style.display = 'flex';
         }
 
@@ -1115,17 +1121,21 @@
         </div>
         
         <ul class="nav-menu">
-          <li class="nav-item active" id="nav-forum" onclick="switchNav('nav-forum', 'all', 'forumTab', 'Karrierfórum')">
-            <div class="nav-icon-box"><span class="nav-icon">💬</span></div> 
-            <span class="nav-text">Karrierfórum</span>
+          <li class="nav-item active" id="nav-student" onclick="switchNav('nav-student', 'student', 'forumTab', 'Diákmunka')">
+            <div class="nav-icon-box"><span class="nav-icon">🎒</span></div> 
+            <span class="nav-text">Diákmunka</span>
           </li>
-          <li class="nav-item" id="nav-saved" onclick="switchNav('nav-saved', 'saved', 'forumTab', 'Mentett Állások')">
+          <li class="nav-item" id="nav-intern" onclick="switchNav('nav-intern', 'intern', 'forumTab', 'Gyakornoki')">
+            <div class="nav-icon-box"><span class="nav-icon">🚀</span></div> 
+            <span class="nav-text">Gyakornoki</span>
+          </li>
+          <li class="nav-item" id="nav-graduate" onclick="switchNav('nav-graduate', 'graduate', 'forumTab', 'Pályakezdő')">
+            <div class="nav-icon-box"><span class="nav-icon">🎓</span></div> 
+            <span class="nav-text">Pályakezdő</span>
+          </li>
+          <li class="nav-item" id="nav-saved" onclick="switchNav('nav-saved', 'saved', 'forumTab', 'Kedvencek')">
             <div class="nav-icon-box"><span class="nav-icon">🤍</span></div> 
             <span class="nav-text">Kedvencek</span>
-          </li>
-          <li class="nav-item" id="nav-offers" onclick="switchNav('nav-offers', 'offers', 'forumTab', 'Ajánlatok')">
-            <div class="nav-icon-box"><span class="nav-icon">🎁</span></div> 
-            <span class="nav-text">Ajánlatok</span>
           </li>
           <li class="nav-item mobile-only-nav" id="nav-info-mobile" onclick="switchNav('nav-info-mobile', 'info', 'infoTab', 'Információk'); switchInfoTab('about');">
             <div class="nav-icon-box"><span class="nav-icon">ℹ️</span></div> 
@@ -1144,7 +1154,7 @@
 
     <main class="dashboard-main" id="dashboardMainScroll">
       <header class="dashboard-header">
-        <h1 class="dashboard-title" id="currentViewTitle">Karrierfórum</h1>
+        <h1 class="dashboard-title" id="currentViewTitle">Diákmunka</h1>
       </header>
 
       <div class="dashboard-content">
@@ -1653,9 +1663,10 @@
 
     if (!window.tabStates) {
         window.tabStates = {
-            'nav-forum': { scrollPos: 0, displayedCount: 15 },
+            'nav-student': { scrollPos: 0, displayedCount: 15 },
+            'nav-intern': { scrollPos: 0, displayedCount: 15 },
+            'nav-graduate': { scrollPos: 0, displayedCount: 15 },
             'nav-saved': { scrollPos: 0, displayedCount: 15 },
-            'nav-offers': { scrollPos: 0, displayedCount: 15 },
             'nav-info-mobile': { scrollPos: 0, displayedCount: 15 } 
         };
     }
@@ -1762,7 +1773,8 @@
             else document.getElementById('currentViewTitle').innerText = title;
 
             const omnibar = window.DOMCache ? window.DOMCache.omnibar : document.getElementById('mainOmnibar');
-            if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'offers' || mode === 'info') ? 'none' : 'flex';
+            // A kereső most már csak a mentett és infó oldalon tűnik el
+            if (omnibar) omnibar.style.display = (mode === 'saved' || mode === 'info') ? 'none' : 'flex';
 
             const resultsTitle = document.getElementById('resultsTitleText');
             if (resultsTitle && mode !== 'info') resultsTitle.innerText = "Találatok";
@@ -2368,8 +2380,12 @@
         renderActiveFilterChips();
 
         currentFilteredJobs = jobsData.filter(job => {
-            if (filterMode === 'offers') return false; 
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
+
+            // FÜL ALAPÚ SZŰRÉS: Ellenőrzi a job objektum 'position_type' mezőjét, vagy a címkéket (tags)
+            if (filterMode === 'student' && job.position_type !== 'student' && !(job.tags && job.tags.includes('Diákmunka'))) return false;
+            if (filterMode === 'intern' && job.position_type !== 'intern' && !(job.tags && job.tags.includes('Gyakornoki'))) return false;
+            if (filterMode === 'graduate' && job.position_type !== 'graduate' && !(job.tags && job.tags.includes('Pályakezdő'))) return false;
 
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
@@ -2444,11 +2460,9 @@
         
         if (currentFilteredJobs.length === 0) {
             if (filterMode === 'saved') {
-                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="switchNav('nav-forum', 'all', 'forumTab', 'Karrierfórum')">Böngészek az állások között</button></div>`;
-            } else if (filterMode === 'offers') {
-                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🎁</span><h3 style="margin-top:0;">Még nincsenek ajánlataid</h3><p>Itt fognak megjelenni a profilodhoz illő, személyre szabott exkluzív karrier ajánlatok!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="switchNav('nav-forum', 'all', 'forumTab', 'Karrierfórum')">Böngészek az állások között</button></div>`;
+                container.innerHTML = `<div class="empty-state"><span class="empty-state-icon">🤍</span><h3 style="margin-top:0;">Még nincsenek mentett állásaid</h3><p>Kattints a szív ikonra egy állásnál, hogy ide mentsd, és később is könnyen megtaláld!</p><button class="apply-btn secondary" style="margin-top: 15px;" onclick="switchNav('nav-student', 'student', 'forumTab', 'Diákmunka')">Böngészek az állások között</button></div>`;
             } else {
-                container.innerHTML = '<p style="text-align:center; grid-column: 1 / -1; color: var(--subtitle-color); padding: 40px 0; font-size: 14px;">Nincs a keresésnek megfelelő állás a listában.</p>';
+                container.innerHTML = '<div class="empty-state"><h3 style="margin-top:0;">Nincs találat ebben a kategóriában</h3><p>Nem találtunk a keresésednek megfelelő állást ezen a fülön. Próbálj meg kevesebb szűrőt használni, vagy nézz át egy másik kategóriába!</p></div>';
             }
             const anchor = document.getElementById('infiniteScrollAnchor');
             if (anchor) anchor.classList.remove('active');

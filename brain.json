@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 18493,
-    "total_rejected": 5004,
+    "total_parsed_jobs": 20101,
+    "total_rejected": 5627,
     "last_calibration": 1788812049979,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 18.92716572816929,
+    "avg_doc_length": 121.98996871899979,
     "bm25_k1": 1.498124562487132,
     "bm25_b": 0.75,
     "adaptive_threshold": 39.062281243565984,
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 27,
-        "last_seen": 1788813094550,
+        "count": 33,
+        "last_seen": 1788819008317,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -49,8 +49,8 @@
         ]
       },
       "csenger": {
-        "count": 15,
-        "last_seen": 1788813097551,
+        "count": 18,
+        "last_seen": 1788819010831,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -61,8 +61,8 @@
         ]
       },
       "pozíció megnevezése": {
-        "count": 5,
-        "last_seen": 1788813097557,
+        "count": 6,
+        "last_seen": 1788819010837,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -73,8 +73,8 @@
         ]
       },
       "vállalat": {
-        "count": 15,
-        "last_seen": 1788813097557,
+        "count": 18,
+        "last_seen": 1788819010837,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -85,8 +85,8 @@
         ]
       },
       "balmazújváros": {
-        "count": 15,
-        "last_seen": 1788813097557,
+        "count": 18,
+        "last_seen": 1788819010837,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -109,8 +109,8 @@
         ]
       },
       "nagykanizsa": {
-        "count": 12,
-        "last_seen": 1788812529050,
+        "count": 15,
+        "last_seen": 1788818533385,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -121,8 +121,8 @@
         ]
       },
       "cím": {
-        "count": 4,
-        "last_seen": 1788812530644,
+        "count": 5,
+        "last_seen": 1788818535000,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -133,8 +133,8 @@
         ]
       },
       "város": {
-        "count": 12,
-        "last_seen": 1788812530644,
+        "count": 15,
+        "last_seen": 1788818535000,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -145,8 +145,8 @@
         ]
       },
       "tapasztalati szint": {
-        "count": 12,
-        "last_seen": 1788812530644,
+        "count": 15,
+        "last_seen": 1788818535000,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -311,8 +311,8 @@
         ]
       },
       "fehérgyarmat": {
-        "count": 9,
-        "last_seen": 1788813097544,
+        "count": 12,
+        "last_seen": 1788819010825,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -592,8 +592,8 @@
         ]
       },
       "magyar út": {
-        "count": 2,
-        "last_seen": 1788812655477,
+        "count": 3,
+        "last_seen": 1788818621089,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -604,8 +604,8 @@
         ]
       },
       "lévay": {
-        "count": 2,
-        "last_seen": 1788812670590,
+        "count": 3,
+        "last_seen": 1788818635971,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -656,28 +656,28 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 3935,
+      "jobs": 4511,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Lidl": {
-      "jobs": 28,
+      "jobs": 33,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "OTP Bank": {
-      "jobs": 359,
+      "jobs": 429,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Magyar Posta Zrt.": {
-      "jobs": 143,
+      "jobs": 170,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -726,14 +726,14 @@
       "churn_probability": 15
     },
     "4iG": {
-      "jobs": 320,
+      "jobs": 397,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Bosch": {
-      "jobs": 637,
+      "jobs": 788,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -754,7 +754,7 @@
       "churn_probability": 15
     },
     "MOL Group": {
-      "jobs": 724,
+      "jobs": 726,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -856,12 +856,12 @@
       "momentum": 1.8578124999999996
     },
     "sap": {
-      "recent_count": 10,
+      "recent_count": 14,
       "historical_count": 18.128,
       "momentum": 3.5539473684210527
     },
     "analitikus": {
-      "recent_count": 10,
+      "recent_count": 11,
       "historical_count": 7.784000000000001,
       "momentum": 3.2021897810218976
     },
@@ -886,7 +886,7 @@
       "momentum": 12.1
     },
     "c#": {
-      "recent_count": 6,
+      "recent_count": 8,
       "historical_count": 2.4000000000000004,
       "momentum": 8.1
     },

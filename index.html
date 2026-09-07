@@ -2380,17 +2380,29 @@
         renderActiveFilterChips();
 
         currentFilteredJobs = jobsData.filter(job => {
+            // Ha a kedvencek fülön vagyunk
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
 
-            // FÜL ALAPÚ SZŰRÉS: Ellenőrzi a job objektum 'position_type' mezőjét, vagy a címkéket (tags)
-            if (filterMode === 'student' && job.position_type !== 'student' && !(job.tags && job.tags.includes('Diákmunka'))) return false;
-            if (filterMode === 'intern' && job.position_type !== 'intern' && !(job.tags && job.tags.includes('Gyakornoki'))) return false;
-            if (filterMode === 'graduate' && job.position_type !== 'graduate' && !(job.tags && job.tags.includes('Pályakezdő'))) return false;
+            // 🔥 FÜL ALAPÚ SZŰRÉS (Többszörösen biztosított fallback logikával)
+            if (filterMode === 'student') {
+                const isStudent = job.position_type === 'student' || (job.tags && job.tags.includes('Diákmunka')) || (job.job_nature && job.job_nature.includes('Diák'));
+                if (!isStudent) return false;
+            } else if (filterMode === 'intern') {
+                const isIntern = job.position_type === 'intern' || (job.tags && job.tags.includes('Gyakornoki')) || (job.job_nature && job.job_nature.includes('Gyakornok'));
+                if (!isIntern) return false;
+            } else if (filterMode === 'graduate') {
+                const isGraduate = job.position_type === 'graduate' || (job.job_nature && job.job_nature.includes('Pályakezdő'));
+                // Ha régi az adat és semmi sincs megadva, default pályakezdőnek vesszük, de kizárjuk a már megjelölt diák/gyakornokot
+                if (!isGraduate && job.position_type === 'student') return false;
+                if (!isGraduate && job.position_type === 'intern') return false;
+            }
 
+            // Gombos (Modal) szűrők
             const matchCompany = (activeCompanies.length === 0 || activeCompanies.includes(job.company_name));
             const matchFaculty = (activeFaculties.length === 0 || activeFaculties.includes(job.faculty));
             const matchVibe = (activeVibes.length === 0 || activeVibes.includes(job.work_style));
             
+            // Keresőmező szűrés (Címkék / Kulcsszavak)
             let matchTags = true;
             if (activeSearchTags.length > 0) {
                 matchTags = activeSearchTags.every(tag => {
@@ -2398,6 +2410,7 @@
                 });
             }
 
+            // Helyszín szűrés
             let matchLoc = true;
             if (activeLocationTags.length > 0) {
                 matchLoc = activeLocationTags.some(locTag => {
@@ -2408,6 +2421,7 @@
             return matchCompany && matchFaculty && matchVibe && matchTags && matchLoc;
         });
 
+        // Rendezés (Legújabb / Legrégebbi / A-Z)
         currentFilteredJobs.sort((a, b) => {
             if (currentSortMode === "date_desc") return b._sortTime - a._sortTime; 
             if (currentSortMode === "date_asc") return a._sortTime - b._sortTime;  
@@ -2415,6 +2429,7 @@
             return 0;
         });
 
+        // Képernyő tetejére ugrás, ha új keresés történt
         if (!isRestore) {
             displayedCount = 15; 
             if (window.activeNavId && window.tabStates[window.activeNavId]) {

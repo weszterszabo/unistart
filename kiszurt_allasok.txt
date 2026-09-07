@@ -104762,3 +104762,3943 @@
 🏢 MOL Group | 📌 operátor
    ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
 
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - barcs, erkel ferenc utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siklós, szent istván tér 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- szigetvár , almás patak utca 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagyatád és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lahti utca 45.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, málomi út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, siklósi út 52/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pécs, lázár vilmos utca 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagykanizsa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dombóvár, kórház utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - baja, balcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, platán sor 6/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - zalaegerszeg, átkötő u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, sopron u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - keszthely, tapolcai u. 45/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - körmend, remetei filep u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - körmend, dr. remetei filep utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes-fonyód , ady endre utca 57-59.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- fonyód és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fonyód, ady endre u. 57-59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tamási, deák ferenc u. 10/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tamási, deák ferenc u. 10/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - tapolca, veszprémi út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tapolca
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, kenyérvíz u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, zanati u. 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kalocsa, pataji út 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szombathely, verseny u. 30.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - siófok, zamárdi u. 1-2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - ajka, hársfa utca 1/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - ajka, hársfa u. 1/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - ajka és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - makó, f184 szegedi u. 63.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kiskőrös, kossuth utca 13.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, pápai u. 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - sárbogárd, ady e. utca 232-236.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - balatonfűzfő, vízmű u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - solt, kossuth lajos utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - pápa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pápa, jókai mór u. 57.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - várpalota, hétvezér út 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, velinszky utca 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, magyar út 11.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - sopron, lófuttató utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - sopron és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, bánfalvi u. 12.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - sopron, lófuttató u. 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó  kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő kiskunfélegyháza - szigetszentmiklósi/ecseri betanulással
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - hűtött területen - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - baranya-tolna megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - csongrád-csanád megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - békés megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó - kiskunfélegyháza
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kapuvár, győri u. 60.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - székesfehérvár, farkasvermi köz 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - székesfehérvár és környéke 60 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő hűtött területen - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs, friss hús áruösszekészítő - székesfehérvár
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- székesfehérvár és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőkovácsháza, árpád u. 135.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes agárd, akácfa utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- agárd, akácfa utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csorna, soproni út 66/c.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - csorna és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szentes ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentes,ipartelepi út 2-6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes- mór akai út 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- mór akai út 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kecskemét, szolnoki út 18.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, kossuth lajos u. 123.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - győr, jereváni utca 42.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - nagykőrös, kecskeméti út 73.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - győr és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - oroszlány, környei u. 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - szigethalom, mű út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - érd, diósdi u. 2-4
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mosonmagyaróvár, királyhidai u. 49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-szigetszentmiklós, csepeli út 16/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szarvas, csabai út 1/4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - bicske, szent lászló utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaharaszti, némedi út 102/a
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - békéscsaba, corvin u. 29-33.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- békéscsaba és környéke 90 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békéscsaba, corvin utca 29-33.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó pékség területre - békéscsaba, szarvasi út 15-17.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, nagytétényi út 216-218.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - gyula, szent istván u. 69/1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xxiii. kerület haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs -budapest, haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - martfű és 100 km-es környéke
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xxiii. ker., ciklámen u. 3.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- budapest xxiii. ker., ciklámen u. 3
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xi. ker., fehérvári út 211.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ix. kerület gubacsi út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budakeszi, kert utca 27-29.  1
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xviii. kerület margó tivadar u. 83.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - békés, kossuth l. u. 31.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xi. kerület ,bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xi. kerület bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- vecsés, fő u. 244
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vecsés, fő utca 244.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. kerület, báthory u. 6.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest xix. ker., szalay utca 14.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, viii. kerület leonardo da vinci utca 23.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, ii. kerület csalogány utca 43.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vii. ker., rákóczi út 48-50.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest vi. ker.,bajcsy-zsilinszky út 61.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, vi. kerület király utca 112.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest, viii ker., hungária körút 26.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- budapest x. kerület, maglódi út 17
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 raktári dolgozó, áruösszekészítő - ecser
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - mezőtúr, földvári út 21.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xiv. kerület mogyoródi út 23-29.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szolnok, tószegi u. 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest xiii. kerület béke utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület újszász utca 47/b.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - szolnok, délibáb u. 6.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- solymár, terstyánszky ödön utca 89.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. kerület jános utca 196.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xvi. ker. alsómalom utca 8-10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - üröm, dózsa györgy út 63.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iii. kerület szentendrei út 251-253.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - budapest, iv. kerület görgey artúr utca 14-20. (4 órás munkaidő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület görgey artúr utca 14-20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, xv. kerület régi fóti u. 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - budapest, iv. kerület megyeri út 53.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- dorog, bányász körönd hrsz.1732/98
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - pomáz, józsef attila utca 32.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - dunakeszi, berek utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunakeszi, berek utca 2.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - fót, keleti márton utca.7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szentendre, dózsa györgy út 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- esztergom, dobogókői út 39.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gödöllő, ottó ferenc utca 2-4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - esztergom, bánomi út 21003 hrsz.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, szadai út 7
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - szeghalom, széchenyi utca 45-49.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - jászberény, nagykátai út 7/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisújszállás, deák ferenc u. 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó- aszód, pesti út 14-16.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, bolgár utca 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - vác, bolgár utca 1.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, balassagyarmati út 9-15.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - vác, balassagyarmati út 9-15.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - vác, naszály utca 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - heves, kolozsvári út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 - 20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 -20.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - berettyóújfalu, kossuth u. 98.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - hajdúszoboszló, dózsa györgy út 62.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó-bátonyterenye, berekgát köz 2. -hjk
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - salgótarján, csokonai út 23
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - eger - ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - eger, ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, mikepércsi út 168.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, mikepércsi út 168.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, derék u. 31
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, derék u. 31
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs- debrecen, széchenyi út 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, balmazújvárosi út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, faraktár utca 58.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - debrecen, faraktár utca 58.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs áruösszekészítő határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 göngyölegraktári dolgozó határozott időre - hejőkürt
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - tiszaújváros, lévay u. 118.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, pesti út 5.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - hajdúnánás, dorogi u. 108.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - miskolc, józsef a. u. 74.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nyíregyháza és 80 km-es környéke
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 higiéniai munkatárs - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 kereskedelmi üzleti kontroller
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 üzemvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő-bedobó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 szenior it szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior stratégiai beszerzési szakértő - contract optimization & vendor strategy
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 alkalmazás üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 senior platform/devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior agentic software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect 1
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior system analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 alkalmazás üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 szenior nagyvállalati számlavezetési tanácsadó
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior sérülékenységmenedzsment szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 szenior ingatlangazdálkodási kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior műveleti biztonsági specialista
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 senior storage expert 1
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 OTP Bank | 📌 digital activation expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 OTP Bank | 📌 data analytics & decision expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 desktop üzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 elektromos kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főpénztáros ii.
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 főpénztáros ii.
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 főpénztáros ii.
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 főpénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 főpénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gyalogos kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hr kontrolling osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kamionsofőr
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kerékpáros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő / küldeményszállító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 kézbesítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kiemelt egyesített kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 körzeti helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 körzeti helyettes kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményfeldolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményszállító / kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 küldeményszállító/kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 külterületi és támpont kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 segédmotoros kézbesítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Magyar Posta Zrt. | 📌 műszakvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postahelyi helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postahelyi helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető ii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető iii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető iii.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 postavezető v.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Magyar Posta Zrt. | 📌 szolgáltatásirányítási vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 értékesítési képviselő_debrecen fórum tü
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 értékesítési képviselő_győr pláza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ifrs reporting senior expert - magyar telekom mobile infra zrt.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer - caas
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer - security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior system engineer for optical transport
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 áruösszekészítő szárazáru területre
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru és zöldség- gyümölcs áruösszekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szárazáru összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 zöldség-gyümölcs összekészítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 application operations expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó - bag és környéke
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 bolti eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cutover lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 hűtőraktári dolgozó teljes vagy részmunkaidőben
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 it disaster management expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert - document management
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operations expert agentic automation
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 pmo & project delivery specialist
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 scrum master
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior ai software engineer - genai
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior application manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer - java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer-java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior backend developer-java
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior devops enginer - genai platforms
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior financial planning specialist
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior it team leader
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior licence manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior operational test manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior process mining developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior solution architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior team leader - ecommerce
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 team lead / senior team lead - it security
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 medior pályázati szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior sap co kontrolling szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior üzleti elemző – robotizált megoldások szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior ügyfélkapcsolati munkatárs - ózd
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 hálózatépítési speciális szerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 villanyszerelő - makói körzet
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 medior esg szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 területi vezető - észak-budapest
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi vezető - vác, aszód
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ügyfél életút és lead szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 application middleware platform infrastructure lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior oracle dba
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior banki tanácsadó  - budapest atrium hitelcentrum
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 nagyvállalati kapcsolattartó mid office munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior lakossági hitelszakértő - hitelcentrum kecskemét
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior kkv hitelezési tanácsadó - zalaegerszeg
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior kkv hitelezési tanácsadó - pécs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 befektetési szolgáltatások folyamatmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szenior it projektvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1 év határozott időre - értékesítési vezetői támogató - dél-kelet magyarország
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 vezető tanácsadó, lead kezelés és ügyfélélmény / észak-budapest és környéke
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vállalati ügyfél kapcsolattartó - kkv szegmens
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 ügyfél kapcsolattartó  – kecskemét
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 K&H Bank | 📌 székház ingatlanmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főosztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 járási tisztifőorvos, osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 népegészségügyi ellenőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 oktatási rektorhelyettes
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 infokommunikációs előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 iskolavédőnő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezési raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 művelődési ház és könyvtár intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgatóhelyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 anaesthesiológiai-intenzív terápiás szakorvos / osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 népegészségügyi hatósági feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 orvosigazgató
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gazdasági vezető
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szülészeti osztály 
+ osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató-óvodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 önkormányzati rendész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető járási főállatorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közösségi koordinátor
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 általános rektorhelyettes
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 laboratóriumi minőségirányítási szakember
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó  nyírlak
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 egészségügyi szolgáltatások szakmai felügyeleti osztályvezetője
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 beruházási előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 népegészségügyi osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 járási vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakmunkás nyomdász
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 felszolgáló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai- és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 leltárellenőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 képzésszervező
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 technológiai karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai-iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító - sopron - gondozási egységekre
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermek neurológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 idegsebész szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 körös művelődési ház és könyvtár intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 medior it projektmenedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 köznevelési foglalkoztatotti jogviszony
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 álláspályázat növény- és talajvédelmi feladatok ellátására
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító - zsira
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tarjáni önkormányzati konyha élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ginop_plusz-3.1.1 szolgáltatást nyújtó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető, belső ellenőrzési vezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület-felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szentlőrinci média nkft. ügyvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 munkaügyi ügyintéző
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pszichiáter
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 bőrgyógyász
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézmény igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 építésügyi hatósági feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 építésügyi hatósági feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető - sopron
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tálaló
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyógyszerészeti és kutatáskoordinációs főosztály vezetője
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 radiológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pénzügyi osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jogi és igazgatási feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 foglalkoztatás-felügyeleti feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fejlesztési és beruházási osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 csegöld-császló intézményfenntartó társulás hétszínvirág óvodája és konyha intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 bőrgyógyász szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 történelem szakos tanár
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 logopédus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belső ellenőr
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 betegszállító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tárgyi eszköz nyilvántartó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 köznevelési és jogi főosztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekotthon vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgatósági titkárnő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 egyetemi adjunktus
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 anyaggazdálkodó, raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető- nagylózs telephely
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 köznevelési intézmény  vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pénzügyi ügyintéző, pénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 portás-ügyfélirányító
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fegyveres biztonsági őr
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető szakasszisztens
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 járási vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 mezőőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főosztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyintézési segéd
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pénzügyi és számviteli ügyintéző
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közgazdasági főosztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarítók irányítója munkakör mellett, üzemvezető helyettes
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belgyógyászati  osztály osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közegészségügyi és járványügyi felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekpulmonológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 sebész szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kollegiális mentor védőnő – 
+ védőnői osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 egyetemi docens
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató/intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető szakasszisztens
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fertőtlenítő-sterilizáló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 műszaki referens
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főosztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 rakodó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 infektológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 humánpolitikai előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 titkársági és igazgatási feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jogi előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület-felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ifjúságsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gondnok 
+ fizikai alkalmazott
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közép-duna vidéke hulladékgazdálkodási önkormányzati társulás projekt iroda irodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító 
+ fizikai alkalmazott
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyűjteményi főosztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezetői
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 campusigazgató
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédmunkás 
+ fizikai alkalmazott
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédmunkás 
+ fizikai alkalmazott
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fejlesztési igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 nemzeti park igazgatóságok igazgatói pozíciói
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhalány
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 általános igazgatóhelyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 éjszakás gyermkefelügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szociális és egyéb igazgatási feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ginop_plusz-3.1.1 szolgáltatást nyújtó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodaigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tárgyi eszköz nyilvántartó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodaigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató/óvodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 festő és mázoló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézmény-igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézményigazgató- helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fűtő-karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 újlak utcai általános, német nemzetiségi és magyar-angol  két tanítási nyelvű iskola - takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pénzügyi és számviteli osztály osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 újlak utcai általános, német nemzetiségi és magyar-angol  két tanítási nyelvű iskola - 3 fő takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fűtő-karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgatási irodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főnővér
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gazdasági vezető
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 logopédus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 hivatásos gondnoki
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adatrögzítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 alapszolgáltatási központ vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 logopédus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézmény-igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézmény-igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermek bőrgyógyászat
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kulturális közösségszervező
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 művelődési ház és könyvtár igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 műtőssegéd
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ápoló , 1 műszakos
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közművelődési szakember
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodaigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tagintézményigazgató-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló/ápolási részlegvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 városi bölcsőde intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 logopédus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető szakasszisztens
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gondnok/karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kisegítő dolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 költségvetési csoport csoportvezető
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 portás-takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főigazgató-helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kistérségi szociális és egészségügyi szolgáltató központ intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szociális munkatárs, a gondozási központ vezetésére vonatkozó vezetői megbízással
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 radiológus szakorvos és radiológus osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédmunkás 
+ fizikai alkalmazott
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tankerületi igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 operatív igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 urológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 képzésszervező
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 költségvetési és adóosztály vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belgyógyász szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 oxyológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 a bátmonostori óvoda-bölcsőde és konyha többcélú köznevelési intézmény óvodai 
+ intézményegység intézményegység-vezetői
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 támogatás kihelyezési és ellenőrzési főosztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítői feladatok ellátása
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekotthon vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület-felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 magasabb vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 1 fő egészségügyi operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konduktor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 hivatásos gondnok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szülészet-nőgyógyászati osztály, osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kereskedelmi csoportvezető
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai,iskolai szociális segítő munkakör
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pulmonológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aljegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 talajvédelmi felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóiroda-vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belgyógyász/ geriáter szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli kézbesítő/adatrögzítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belgyógyászati osztály osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezési-osztályvezető helyettes
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kiállítás kivitelező-teremőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gasztroenterológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekszemész szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 neurológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 sürgősségi osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ortopéd szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szemész szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 onkológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 csatornaőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 pénzügyi és gazdálkodási osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belgyógyászati osztály szakorvos / osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 üzemeltetési osztályveztő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 otthonvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 egyetemi adjunktus
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 hulladékgazdálkodási feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodaigazgató
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gátőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekotthon vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 udvaros segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 műtős, műtősnő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 budapest xvii. kerületi balassi bálint nyolcévfolyamos gimnázium - takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai dolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kertész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakmai vezető és családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító  - 2028.05.29-ig
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 informatikai osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyerekház vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 humánpolitikai osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 magasabb vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közegészségügyi-járványügyi
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 operatív adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodaigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 2 fő takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus/tagintézmény-igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus/tagintézmény-igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 magasabb vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 törvényességi felügyeleti
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konduktor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus/igazgatóhelyettes
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jogi
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 logopédus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 festő és mázoló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 igazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 bölcsődevezetői
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 javítóintézeti rendész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szülész-nőgyógyász szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gazdasági igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 érsebészeti profilvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető fejlesztő pedagógus
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület-felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető munkakörben igazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kormányzati ellenőr
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 sárvári vármelléki óvoda óvodaigazgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító- és kisegítő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 tejkonyhavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 2 fő férfi karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 foglalkozás egészségügyi szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ct-mr operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 piacfelügyeleti
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 betegszállító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 diétás szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli segédelőadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezetői
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 operatív adóellenőr i.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 víz- fűtésszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 1 fő családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 üzemeltetési előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kertész karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 minősített adatkezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő munkakör
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belső ellenőr
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 fogdai segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 számviteli referens
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető főorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gondnok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kapus , portás
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépjárművezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 cukrász
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli segédelőadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szakács (fizikai alkalmazott - szakmunkás
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítői és takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető/óvodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 városüzemeltetési irodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus/igazgatóhelyettes
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 élelmezésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kardiológiai-rehabilitációs szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli dolgozó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közbeszerzési és ellátási főigazgatóság főigazgató
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kardiológus szakorvos
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ügyviteli előadó 
+ előirányzat-gazdálkodási
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 számviteli alosztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 laboratóriumi
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető-helyettes /könyvtárvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 hivatalvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 hivatásos gondnok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 szociális diagnózis felvételét elvégző esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 járási vezető ápolói és ápoló szakfelügyelői feladat
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közegészségügyi-járványügyi, egészségügyi igazgatási feladat
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 villanyszerelő karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 udvaros-karbantartó-kertész
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédfelügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gyermekvédelmi gyám
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 traktoros, karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Közszolgállás (Állami Szféra) | 📌 intézményvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 üzemeltetési előadó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépkocsivezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 segédfelügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 anyakönyvvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 jegyző
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 irodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 esetmenedzser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 széchenyi irodalmi és művészeti akadémia titkársága  
+ titkárságvezetői
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodapedagógus
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 mentőtechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető főállatorvos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 iskolavédőnő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 digitális instruktor
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 műszaki irodavezető
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 ifjúságsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 aneszteziológia és intenzív terápiás szakorvos/osztályvezető
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 főigazgató-helyettes – a városi könyvtár és közösségi ház intézményegység-vezetője
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 terület- és településrendezési feladatok
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 belső szállító - segédmunkás munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közterület-felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 talajvédelmi felügyelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 közművelődési szakember
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 informatikai osztályvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 családsegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodai és iskolai szociális segítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 konyhai kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 gépkezelő 1
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Közszolgállás (Állami Szféra) | 📌 vezető ápoló
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Közszolgállás (Állami Szféra) | 📌 óvodavezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 műszak-részlegvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 tehergépkocsi vezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 tehergépkocsi vezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 termelési áruátvételi szakmunkás
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 hús- csemege eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 hús szakeladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 hús- csemege eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 csemege- hús eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 teherképkocsi vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 eladó-pénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 CIB Bank | 📌 senior kkv ügyfélkapcsolattartó
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 CIB Bank | 📌 valuta- és forintpénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 alkalmazás üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kis- és középvállalati ügyfélmenedzser - budapest
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 core alkalmazás üzemeltető és adatbázis kezelő munkatárs - befektetési zrt.
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 product owner - onboarding és ügyfélkapcsolat squad
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / budapest
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / eger
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior kis és középvállalati ügyfélmenedzser - dél-dunántúli régió
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szenior bankfióki tanácsadó - csepel
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 ERSTE Bank | 📌 fiókvezető - hatvan/jászberény egység
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 pénzügyi tervező senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szolgáltatás és hálózatfelügyeleti operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 senior operations analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead szoftverfejlesztő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 vendor security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 technology security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior l3 application support engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - helpdesk
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 beszerző senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 adatközpont operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 pénzügyi tervező senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szolgáltatás és hálózatfelügyeleti operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 senior operations analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead szoftverfejlesztő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 berendezés üzemeltető junior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliens üzemeltető medior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 áramellátási berendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - debrecen
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 oss senior nyilvántartó mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 junior oss alkalmazásüzemeltető mérnök
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 felsővezetői asszisztens
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 projektmenedzser senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior adózási munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior belső ellenőr
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 senior projektmenedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főkönyvi könyvelési munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 investor relations senior munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 stratégiai tervező kontroller senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzemeltetés támogató munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vendor security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 technology security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior l3 application support engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - helpdesk
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 beszerző senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 adatközpont operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető senior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk supervisor
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szerver üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 senior ifrs expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 berendezés üzemeltető junior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliens üzemeltető medior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 áramellátási berendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - debrecen
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 oss senior nyilvántartó mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 junior oss alkalmazásüzemeltető mérnök
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 felsővezetői asszisztens
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 projektmenedzser senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior adózási munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior belső ellenőr
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 senior projektmenedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főkönyvi könyvelési munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 investor relations senior munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 stratégiai tervező kontroller senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzemeltetés támogató munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető senior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk supervisor
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szerver üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 senior ifrs expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 4iG | 📌 távközlési kutatási és tudásmenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 tv és tartalommenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési üzleti termékstratégiai szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 cyber security network expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 lead hr specialist – compensation & benefits
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior data engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software developer in computer-aided design
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó mérnök | electrical maintenance engineer
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 karbantartó mérnök |  maintenance engineer
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 mechanical lead designer at power electronics engineering
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 development engineer / lead designer - planetary gearbox
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior fullstack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead engineer – eaxle thermal system
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 specialist in staffing -czech/slovakian speaking-2-year fixed-term contract
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+
+🏢 Ismeretlen Cég | 📌 senior full stack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack  developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack developer – .net core / angular / react
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 software developer – driver assistance & automated driving
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 rexroth - szenior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 folyamatmérnök csapatvezető | process engineer team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 gyártósori minőségügyi mérnök i line quality engineer
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamosmérnök | electrical engineer
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 álláslehetőségek a maklári boschnál- szellemi munkakörökben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 npi projekt vezető | npi project leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szervízpont technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktáros-komissziós
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 safety expert for adas products
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 motorsori gépbeállító  /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 épületvillamossági karbantartó / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó mérnök /mcp kéziszerszámgyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépész karbantartó technikus / mcp - kéziszerszám gyár/
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 cnc technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 villamosmérnök gyakornok
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépész üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor - servocom terület
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szenior bérszámfejtő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamos üzemeltető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó technikus  / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó technikus / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 raktári operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gyártósori brigádvezető / mcp - kéziszerszámgyár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 targoncavezető / mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 project controlling
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 labortechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 hw maintenance team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 mechanical project leader for adas and iss sensors
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 application center tesztjármű technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 vision folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 préselési és csavarozási folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 sample target coster
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 eaxle physical analysis team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gyártási sorfeltöltő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gépmester
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 logistics process traniee
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 regional portfolio expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 best scholarship program - 2026
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 rendszerspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 plc szerviztechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 senior global medical advisor cns
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 senior global medical advisor cns
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 commercial controlling analytics expert
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Richter Gedeon | 📌 commercial controlling analytics expert
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Richter Gedeon | 📌 senior global medical advisor cns
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 senior enterprise architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Richter Gedeon | 📌 commercial controlling analytics expert
+   ❌ OK: Túl sok tapasztalatot kér (>3 év)
+
+🏢 Richter Gedeon | 📌 senior enterprise architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 solution architecture team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Richter Gedeon | 📌 solution architecture team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 kereskedelmi üzleti kontroller
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Richter Gedeon | 📌 senior enterprise architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 üzemvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Richter Gedeon | 📌 solution architecture team lead
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő-bedobó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Volkswagen Group | 📌 autóvillamossági szerelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Tesco | 📌 tesco colleague - fulham palace rd express
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Volkswagen Group | 📌 autóvillamossági szerelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Volkswagen Group | 📌 műszaki fejlesztés - villamosmérnök emc szimuláció
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Tesco | 📌 tesco colleague - fulham palace rd express
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+
+🏢 Volkswagen Group | 📌 műszaki fejlesztés - villamosmérnök emc szimuláció
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Volkswagen Group | 📌 elektromos karbantartó mérnök | járműösszeszerelés
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Volkswagen Group | 📌 autóvillamossági szerelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 kereskedelmi üzleti kontroller
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Volkswagen Group | 📌 elektromos karbantartó mérnök | járműösszeszerelés
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 üzemvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 finance business partner with cost control focus
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it core service delivery expert
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 MOL Group | 📌 tolatásvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 általános műszerész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 analizátor technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 gastro & own brand offer management quality senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 területi értékesítési vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 fuel offer management senior expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 villamosmérnök
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 tűzoltó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Volkswagen Group | 📌 műszaki fejlesztés - villamosmérnök emc szimuláció
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő-bedobó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 finance business partner with cost control focus
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it core service delivery expert
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 MOL Group | 📌 tolatásvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 általános műszerész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 analizátor technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 gastro & own brand offer management quality senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 területi értékesítési vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 fuel offer management senior expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 villamosmérnök
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 tűzoltó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 laboráns
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Volkswagen Group | 📌 elektromos karbantartó mérnök | járműösszeszerelés
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+

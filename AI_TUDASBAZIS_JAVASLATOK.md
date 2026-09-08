@@ -1,49 +1,45 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 08. 18:04:07
+🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 08. 22:16:23
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
-- Dinamikus Szigorúság (Threshold): **39.1 pont**
-- Kifejezés-telítettség (BM25 K1): **1.4981** (Evolúciós ráta: 0.01)
-- Piac Elutasítási Aránya (Rejection Rate): **28.2%**
+- Dinamikus Szigorúság (Threshold): **38.4 pont**
+- Kifejezés-telítettség (BM25 K1): **1.4968** (Evolúciós ráta: 0.01)
+- Piac Elutasítási Aránya (Rejection Rate): **28.5%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 9414) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Lidl** (Kiírt állások: 58) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **OTP Bank** (Kiírt állások: 789) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Magyar Posta Zrt.** (Kiírt állások: 305) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
-- **Telekom** (Kiírt állások: 140) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 9837) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Lidl** (Kiírt állások: 63) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **OTP Bank** (Kiírt állások: 866) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Magyar Posta Zrt.** (Kiírt állások: 332) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Telekom** (Kiírt állások: 153) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
-- **PRÉMIUM** (Sebesség mutató: +3910.0%) 🔥
-- **GERMAN** (Sebesség mutató: +2310.0%) 🔥
-- **NÉMET** (Sebesség mutató: +1110.0%) 🔥
-- **JAVASCRIPT** (Sebesség mutató: +1110.0%) 🔥
-- **ÖNÁLLÓ** (Sebesség mutató: +910.0%) 🔥
-- **R** (Sebesség mutató: +910.0%) 🔥
-- **C#** (Sebesség mutató: +710.0%) 🔥
-- **NODE.JS** (Sebesség mutató: +710.0%) 🔥
-- **ITALIAN** (Sebesség mutató: +710.0%) 🔥
-- **KÉPZÉS** (Sebesség mutató: +510.0%) 🔥
+- **JAVASCRIPT** (Sebesség mutató: +1410.0%) 🔥
+- **TRAINING** (Sebesség mutató: +1310.0%) 🔥
+- **NODE.JS** (Sebesség mutató: +1243.3%) 🔥
+- **ITALIAN** (Sebesség mutató: +1243.3%) 🔥
+- **GERMAN** (Sebesség mutató: +1052.9%) 🔥
+- **ENGLISH** (Sebesség mutató: +394.0%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
 - **KORMÁNYHIVATALA TELJES** (Látta: 234x)  | 🔗 Asszoc: [linux] -> ⏳ Elemzés...
 - **XV** (Látta: 118x)  -> ⏳ Elemzés...
 - **SZAKORVOSI RENDELŐINTÉZETE** (Látta: 81x)  -> ⏳ Elemzés...
 - **ÖNKORMÁNYZATA TELJES** (Látta: 78x)  -> ⏳ Elemzés...
-- **EGER** (Látta: 66x)  -> ⏳ Elemzés...
+- **EGER** (Látta: 69x)  -> ⏳ Elemzés...
 - **ÖNKORMÁNYZAT DR** (Látta: 45x)  | 🔗 Asszoc: [analitikus] -> ⏳ Elemzés...
+- **CSENGER** (Látta: 36x)  -> ⏳ Elemzés...
+- **VÁLLALAT** (Látta: 36x)  -> ⏳ Elemzés...
+- **BALMAZÚJVÁROS** (Látta: 36x)  -> ⏳ Elemzés...
 - **XI** (Látta: 36x)  -> ⏳ Elemzés...
 - **XII** (Látta: 35x)  -> ⏳ Elemzés...
-- **CSENGER** (Látta: 33x)  -> ⏳ Elemzés...
-- **VÁLLALAT** (Látta: 33x)  -> ⏳ Elemzés...
-- **BALMAZÚJVÁROS** (Látta: 33x)  -> ⏳ Elemzés...
 - **NAGYKANIZSA** (Látta: 33x)  -> ⏳ Elemzés...
 - **VÁROS** (Látta: 33x)  -> ⏳ Elemzés...
 - **TAPASZTALATI SZINT** (Látta: 33x)  -> ⏳ Elemzés...
-- **FEHÉRGYARMAT** (Látta: 27x)  -> ⏳ Elemzés...
+- **FEHÉRGYARMAT** (Látta: 30x)  -> ⏳ Elemzés...
 
 ### 💻 SZOFTVER/TECH (Top Felfedezések)
 - **SA#** (Látta: 5x)  | 🔗 Asszoc: [szép kártya, nyugdíjpénztár, önkéntes nyugdíjpénztár, sem] -> ⏳ Elemzés...

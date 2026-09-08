@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 37067,
-    "total_rejected": 10441,
+    "total_parsed_jobs": 38331,
+    "total_rejected": 10974,
     "last_calibration": 1788812049979,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 30.72614543487877,
+    "avg_doc_length": 434.53857147308065,
     "bm25_k1": 1.498124562487132,
     "bm25_b": 0.75,
     "adaptive_threshold": 39.062281243565984,
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 51,
-        "last_seen": 1788862174847,
+        "count": 54,
+        "last_seen": 1788869017742,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -109,8 +109,8 @@
         ]
       },
       "nagykanizsa": {
-        "count": 24,
-        "last_seen": 1788854606626,
+        "count": 27,
+        "last_seen": 1788869024240,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -121,8 +121,8 @@
         ]
       },
       "cím": {
-        "count": 8,
-        "last_seen": 1788854608328,
+        "count": 9,
+        "last_seen": 1788869026114,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -133,8 +133,8 @@
         ]
       },
       "város": {
-        "count": 24,
-        "last_seen": 1788854608328,
+        "count": 27,
+        "last_seen": 1788869026114,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -145,8 +145,8 @@
         ]
       },
       "tapasztalati szint": {
-        "count": 24,
-        "last_seen": 1788854608328,
+        "count": 27,
+        "last_seen": 1788869026114,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -592,8 +592,8 @@
         ]
       },
       "magyar út": {
-        "count": 6,
-        "last_seen": 1788861785271,
+        "count": 7,
+        "last_seen": 1788869162385,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -604,8 +604,8 @@
         ]
       },
       "lévay": {
-        "count": 6,
-        "last_seen": 1788861799858,
+        "count": 7,
+        "last_seen": 1788869177003,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -667,20 +667,36 @@
         "examples": [
           "neralista helyszín:bp., 1081 ii. jános pál pápa tér. 20. jel"
         ]
-      }
-    },
-    "💻 SZOFTVER/TECH": {
-      "sa#": {
+      },
+      "grimsby": {
         "count": 1,
-        "last_seen": 1788530673547,
+        "last_seen": 1788869068289,
         "auto_promoted": false,
         "companies": [
           "Tesco"
         ],
         "context_vectors": {
-          "szép kártya": 1,
-          "nyugdíjpénztár": 1,
-          "önkéntes nyugdíjpénztár": 1
+          "teamwork": 1,
+          "flexibility": 1
+        },
+        "examples": [
+          "026 store location grimsby, market street, dn31 1pg a munkak"
+        ]
+      }
+    },
+    "💻 SZOFTVER/TECH": {
+      "sa#": {
+        "count": 5,
+        "last_seen": 1788869108600,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "szép kártya": 5,
+          "nyugdíjpénztár": 5,
+          "önkéntes nyugdíjpénztár": 5,
+          "sem": 1
         },
         "examples": [
           "yelvtanulás támogatása#li-dnimegértjük - és értékeljük -, ho"
@@ -695,14 +711,14 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 7383,
+      "jobs": 7822,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Lidl": {
-      "jobs": 48,
+      "jobs": 53,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -758,28 +774,28 @@
       "churn_probability": 15
     },
     "ERSTE Bank": {
-      "jobs": 177,
+      "jobs": 200,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "4iG": {
-      "jobs": 628,
+      "jobs": 705,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Bosch": {
-      "jobs": 1240,
+      "jobs": 1390,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Richter Gedeon": {
-      "jobs": 12,
+      "jobs": 14,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -793,7 +809,7 @@
       "churn_probability": 15
     },
     "MOL Group": {
-      "jobs": 734,
+      "jobs": 738,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -807,14 +823,14 @@
       "churn_probability": 15
     },
     "Tesco": {
-      "jobs": 20,
+      "jobs": 29,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "CIB Bank": {
-      "jobs": 2,
+      "jobs": 6,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -867,27 +883,27 @@
       "momentum": 2.183333333333333
     },
     "angol": {
-      "recent_count": 57,
+      "recent_count": 60,
       "historical_count": 13.624000000000002,
       "momentum": 2.7264591439688712
     },
     "home office": {
-      "recent_count": 44,
+      "recent_count": 53,
       "historical_count": 27.184000000000005,
       "momentum": 3.07741273100616
     },
     "hibrid": {
-      "recent_count": 49,
+      "recent_count": 59,
       "historical_count": 14.680000000000001,
       "momentum": 3.7458333333333327
     },
     "irodai": {
-      "recent_count": 71,
+      "recent_count": 86,
       "historical_count": 16.880000000000003,
       "momentum": 4.891666666666666
     },
     "english": {
-      "recent_count": 76,
+      "recent_count": 79,
       "historical_count": 21.488000000000003,
       "momentum": 4.792556634304206
     },
@@ -902,7 +918,7 @@
       "momentum": 1.8578124999999996
     },
     "sap": {
-      "recent_count": 38,
+      "recent_count": 45,
       "historical_count": 18.128,
       "momentum": 3.5539473684210527
     },
@@ -932,7 +948,7 @@
       "momentum": 12.1
     },
     "c#": {
-      "recent_count": 22,
+      "recent_count": 24,
       "historical_count": 2.4000000000000004,
       "momentum": 8.1
     },
@@ -972,7 +988,7 @@
       "momentum": 4.1
     },
     "prémium": {
-      "recent_count": 92,
+      "recent_count": 96,
       "historical_count": 8.8,
       "momentum": 40.1
     },
@@ -987,12 +1003,12 @@
       "momentum": 5.1
     },
     "képzés": {
-      "recent_count": 13,
+      "recent_count": 15,
       "historical_count": 2,
       "momentum": 6.1
     },
     "távmunka": {
-      "recent_count": 10,
+      "recent_count": 12,
       "historical_count": 1.6,
       "momentum": 4.1
     },
@@ -1002,32 +1018,32 @@
       "momentum": 2.1
     },
     "jira": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1.4000000000000001,
       "momentum": 3.1
     },
     "önálló": {
-      "recent_count": 5,
+      "recent_count": 6,
       "historical_count": 2.8,
       "momentum": 10.1
     },
     "cafeteria": {
-      "recent_count": 4,
+      "recent_count": 7,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "részvény": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "nyugdíjpénztár": {
-      "recent_count": 3,
+      "recent_count": 8,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "hibrid (2 nap ho)": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
@@ -1042,7 +1058,7 @@
       "momentum": 1.1
     },
     "r": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 2.8,
       "momentum": 10.1
     },
@@ -1112,27 +1128,47 @@
       "momentum": 1
     },
     "teamwork": {
-      "recent_count": 5,
+      "recent_count": 6,
       "historical_count": 1,
       "momentum": 1
     },
     "flexibility": {
-      "recent_count": 5,
+      "recent_count": 6,
       "historical_count": 1,
       "momentum": 1
     },
     "olasz": {
-      "recent_count": 1,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "bónusz": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1,
       "momentum": 1
     },
     "resilience": {
       "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "precíz": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "sem": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "szép kártya": {
+      "recent_count": 4,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "önkéntes nyugdíjpénztár": {
+      "recent_count": 4,
       "historical_count": 1,
       "momentum": 1
     }

@@ -133041,3 +133041,1602 @@
 🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
    ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
 
+🏢 CIB Bank | 📌 senior kkv ügyfélkapcsolattartó
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 CIB Bank | 📌 valuta- és forintpénztáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 alkalmazás üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kis- és középvállalati ügyfélmenedzser - budapest
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 core alkalmazás üzemeltető és adatbázis kezelő munkatárs - befektetési zrt.
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 product owner - onboarding és ügyfélkapcsolat squad
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / budapest
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kkv mid office munkatárs / eger
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 ERSTE Bank | 📌 fiókvezető - hatvan/jászberény egység
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 senior ifrs expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 áramellátási berendezés üzemeltető senior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 pénzügyi tervező senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szolgáltatás és hálózatfelügyeleti operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 senior operations analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead szoftverfejlesztő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 vendor security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 technology security senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior l3 application support engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - helpdesk
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 beszerző senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 berendezés üzemeltető junior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliens üzemeltető medior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 áramellátási berendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs - debrecen
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 oss senior nyilvántartó mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 felsővezetői asszisztens
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 projektmenedzser senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior adózási munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 senior belső ellenőr
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior projektmenedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 főkönyvi könyvelési munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 investor relations senior munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 stratégiai tervező kontroller senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető senior
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 üzemeltetés támogató munkatárs senior
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 helpdesk supervisor
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 szerver üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 kliensüzemeltető munkatárs
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 helpdesk l2 kliensüzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 4iG | 📌 távközlési kutatási és tudásmenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 tv és tartalommenedzsment szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 távközlési üzleti termékstratégiai szakmai vezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 4iG | 📌 cyber security network expert
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 4iG | 📌 digital solution architekt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 gl senior accountant
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead hr specialist – compensation & benefits
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior data engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior software developer in computer-aided design
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó mérnök | electrical maintenance engineer
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 karbantartó mérnök |  maintenance engineer
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 mechanical lead designer at power electronics engineering
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 development engineer / lead designer - planetary gearbox
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 medior fullstack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 lead engineer – eaxle thermal system
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 specialist in staffing -czech/slovakian speaking-2-year fixed-term contract
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+
+🏢 Ismeretlen Cég | 📌 senior full stack developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack  developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 senior fullstack developer – .net core / angular / react
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 software developer – driver assistance & automated driving
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 rexroth - szenior kontroller
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 gyártósori minőségügyi mérnök i line quality engineer
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamosmérnök | electrical engineer
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 álláslehetőségek a maklári boschnál- szellemi munkakörökben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 npi projekt vezető | npi project leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szervízpont technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 raktáros-komissziós
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 safety expert for adas products
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 motorsori gépbeállító  /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 épületvillamossági karbantartó / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó mérnök /mcp kéziszerszámgyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépész karbantartó technikus / mcp - kéziszerszám gyár/
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 cnc technikus /mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 villamosmérnök gyakornok
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gépész üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Ismeretlen Cég | 📌 cnc operátor - servocom terület
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szenior bérszámfejtő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 villamos üzemeltető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó technikus  / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 villamos karbantartó technikus / mcp - kéziszerszám gyár/
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 raktári operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 gyártósori brigádvezető / mcp - kéziszerszámgyár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 targoncavezető / mcp - kéziszerszám gyár/
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 labortechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 hw maintenance team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 mechanical project leader for adas and iss sensors
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 application center tesztjármű technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 vision folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 préselési és csavarozási folyamatspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 sample target coster
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 eaxle physical analysis team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gyártási sorfeltöltő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 gépmester
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 logistics process traniee
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 regional portfolio expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 best scholarship program - 2026
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 rendszerspecialista
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bosch | 📌 plc szerviztechnikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Richter Gedeon | 📌 szenior group accounting munkatárs
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Richter Gedeon | 📌 senior enterprise architect
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Tesco | 📌 bolti eladó - teljes munkaidő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Tesco | 📌 bolti eladó - teljes munkaidő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Tesco | 📌 pénztáros - részmunkaidő 4 óra
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Tesco | 📌 tesco colleague
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Tesco | 📌 frissáru pultos - részmunkaidő 6 óra
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Tesco | 📌 ? brigáda v tescu - 172 kč/hod!
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Tesco | 📌 ? asistent/ka prodeje
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Tesco | 📌 műszakvezető - teljes munkaidő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 nehézgépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 finance business partner with cost control focus
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 it core service delivery expert
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 MOL Group | 📌 tolatásvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 általános műszerész
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 analizátor technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 gastro & own brand offer management quality senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 fuel offer management senior expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 villamosmérnök
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 tűzoltó
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 szenior fejlesztési mérnök
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 kontrolling adat & elemzés szenior szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 sales product owner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 szenior tervező
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 head of group downstream hse
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 senior it business analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 mérőállomás vezérlő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 üzemviteli operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 enterprise server services team leader
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 senior domain architect - end-user computing  and enterprise infrastructure
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 e&p it business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 szenior projekt menedzser
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 group controlling steering & sustainability finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 green hydrogen value chain project management expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 biztonsági operátor és fegyveres biztonsági őr
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 asset data team leader
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 MOL Group | 📌 villamos üzemviteli szakértő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 asset data team leader
+   ❌ OK: Nem junior és nem is szellemi munka (WhiteCollar Guard)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 elektrikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 senior business development project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 group m&s finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 master data management lead developer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 vizsgálólaboratóriumi technikus
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 építésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 e&p segment finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 mol duális villamosmérnök bsc képzés a debreceni egyetemen – 2026
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 investigation expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 szenior jogtanácsos
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 marketing strategy & trade marketing senior expert
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 corporate m&s finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 senior low carbon drilling expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 finomítás rendszerkezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 finomítás rendszerkezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 üzemviteli operátor - villamos terület
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 kezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 lánctalpas darukezelő és / vagy  lánctalpas földmunkagép kezelő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 csővezetéképítési szakmunkás
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 főépítésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 építésvezető
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 senior ügyfélszolgálati rendszerszakértő - operációt támogató szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 általános gépészeti karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 MOL Group | 📌 downstream finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 senior penetration tester
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 medior data engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 senior hse business analyst
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 group procurement digital delivery lead expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 finance business partner
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 senior project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 senior it project manager
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 általános gépészeti karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 innovative payments expert
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 senior reservoir engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 hegesztő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 campus building services & operations team lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 intercompany kontroll szenior szakértő
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 senior commercial expert – e&p
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 vegyianyag gyártó operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 projektirányító
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 senior azure devops engineer
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 MOL Group | 📌 általános gépészeti karbantartó - forgógépes
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 MOL Group | 📌 drilling & workover performance team lead
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 komplex forgácsoló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 szenior tervező
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 MOL Group | 📌 általános gépészeti karbantartó - statikus
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 MOL Group | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 MOL Group | 📌 kiemelt hegesztő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 chief economist
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 MOL Group | 📌 csőszerelő, előszerelés csoportvezető
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagyatád és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nagykanizsa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - baja, balcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - körmend, remetei filep u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes-fonyód , ady endre utca 57-59.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- fonyód és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tamási, deák ferenc u. 10/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - ajka és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - makó, f184 szegedi u. 63.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - sárbogárd, ady e. utca 232-236.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - pápa és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 bolti dolgozó - dunaújváros, velinszky utca 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - sopron és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - baranya-tolna megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - csongrád-csanád megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 területi értékesítési vezető - békés megye
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - székesfehérvár, farkasvermi köz 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - székesfehérvár és környéke 60 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- székesfehérvár és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes agárd, akácfa utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - csorna és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes- mór akai út 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - győr és környéke 80 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - békéscsaba, corvin u. 29-33.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- békéscsaba és környéke 90 km-es körzetben
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - szolnok, délibáb u. 6.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - dunakeszi, berek utca 2.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető-helyettes - vác, bolgár utca 1.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 1. üzletvezető-helyettes - vác, balassagyarmati út 9-15.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető- gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, mikepércsi út 168.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, derék u. 31
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - debrecen, faraktár utca 58.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 2. üzletvezető-helyettes - hajdúnánás, dorogi u. 108.
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 üzletvezető - nyíregyháza és 80 km-es környéke
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - barcs, erkel ferenc utca 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - siklós, szent istván tér 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- szigetvár , almás patak utca 5.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - pécs, lahti utca 45.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - pécs, siklósi út 52/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - pécs, lázár vilmos utca 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - dombóvár, kórház utca 55.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - baja, bajcsy-zsilinszky utca 9.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - zalaegerszeg, platán sor 6/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - zalaegerszeg, átkötő u. 3.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - keszthely, sopron u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - keszthely, tapolcai u. 45/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - szekszárd, béri balogh ádám utca 94/b
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - körmend, dr. remetei filep utca 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - fonyód, ady endre u. 57-59.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - tamási, deák ferenc u. 10/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - tapolca, veszprémi út 1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - tapolca
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szombathely, kenyérvíz u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szombathely, zanati u. 42.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szombathely, verseny u. 30.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - siófok, zamárdi u. 1-2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - ajka, hársfa utca 1/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - ajka, hársfa u. 1/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - kiskőrös, kossuth utca 13.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - veszprém, cholnoky jenő u. 29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - veszprém, pápai u. 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - balatonfűzfő, vízmű u. 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - veszprém, észak-keleti útgyűrű 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - solt, kossuth lajos utca 4.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - pápa, jókai mór u. 57.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - várpalota, hétvezér út 3.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - dunaújváros, magyar út 11.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - sopron, lófuttató utca 4.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - sopron, bánfalvi u. 12.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - sopron, lófuttató u. 4.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 raktári dolgozó - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 göngyölegraktári dolgozó - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 zöldség-gyümölcs áruösszekészítő kiskunfélegyháza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 raktári dolgozó - hűtött területen - kiskunfélegyháza
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - kapuvár, győri u. 60.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 raktári dolgozó, áruösszekészítő - székesfehérvár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 raktári dolgozó, áruösszekészítő hűtött területen - székesfehérvár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 zöldség-gyümölcs, friss hús áruösszekészítő - székesfehérvár
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - mezőkovácsháza, árpád u. 135.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- agárd, akácfa utca 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - csorna, soproni út 66/c.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó-szentes ipartelepi út 2-6.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szentes,ipartelepi út 2-6.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - csongrád, fő u. 59.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - kecskemét, szolnoki út 18.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - győr, jereváni utca 42.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - nagykőrös, kecskeméti út 73.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - oroszlány, környei u. 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - szigethalom, mű út 7.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - érd, diósdi u. 2-4
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - mosonmagyaróvár, királyhidai u. 49.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó-szigetszentmiklós, csepeli út 16/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szarvas, csabai út 1/4.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - bicske, szent lászló utca 55.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - dunaharaszti, némedi út 102/a
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - békéscsaba, corvin utca 29-33.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó pékség területre - békéscsaba, szarvasi út 15-17.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, nagytétényi út 216-218.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - gyula, szent istván u. 69/1.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xxiii. kerület haraszti út 34.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs -budapest, haraszti út 34.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budaörs, károly király út 145.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - tata, piac tér 8.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest xxiii. ker., ciklámen u. 3.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs- budapest xxiii. ker., ciklámen u. 3
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó- budapest xi. ker., fehérvári út 211.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - budapest, xxi. kerület ady endre út 58.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xxi. ker., ady endre út 58.  1
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xi. kerület budaörsi út 121.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - komárom, mártírok útja 80.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, ix. kerület gubacsi út 34.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budakeszi, kert utca 27-29.  1
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xviii. kerület margó tivadar u. 83.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - békés, kossuth l. u. 31.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - budapest, xi. kerület ,bartók béla út 47.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xi. kerület bartók béla út 47.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs- vecsés, fő u. 244
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - vecsés, fő utca 244.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest xix. kerület, báthory u. 6.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, viii. kerület leonardo da vinci utca 23.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, ii. kerület csalogány utca 43.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest vii. ker., rákóczi út 48-50.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest vi. ker.,bajcsy-zsilinszky út 61.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, vi. kerület király utca 112.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest, viii ker., hungária körút 26.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest x. kerület, maglódi út 17
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 raktári dolgozó, áruösszekészítő - ecser
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - mezőtúr, földvári út 21.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xiv. kerület mogyoródi út 23-29.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szolnok, tószegi u. 5.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- budapest xiv. ker., nagy lajos király útja 121-123.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xvi. kerület újszász utca 47/b.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- solymár, terstyánszky ödön utca 89.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - budapest, xv. kerület madách utca 72.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xv. kerület madách utca 72.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xvi. kerület jános utca 196.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - pilisvörösvár, budai út 18.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xvi. ker. alsómalom utca 8-10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - üröm, dózsa györgy út 63.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, iii. kerület szentendrei út 251-253.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - budapest, iv. kerület görgey artúr utca 14-20. (4 órás munkaidő
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, iv. kerület görgey artúr utca 14-20.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, xv. kerület régi fóti u. 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - budapest, iv. kerület megyeri út 53.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- dorog, bányász körönd hrsz.1732/98
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - pomáz, józsef attila utca 32.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - dunakeszi, berek utca 2.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - fót, keleti márton utca.7.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szentendre, dózsa györgy út 20.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- esztergom, dobogókői út 39.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - gödöllő, ottó ferenc utca 2-4.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - esztergom, bánomi út 21003 hrsz.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó- veresegyház, szadai út 7
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- veresegyház, budapesti út 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - szeghalom, széchenyi utca 45-49.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - kisújszállás, deák ferenc u. 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó- aszód, pesti út 14-16.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - vác, bolgár utca 1.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - vác, balassagyarmati út 9-15.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - vác, naszály utca 20.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - heves, kolozsvári út 2/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 - 20.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - püspökladány, rákóczi utca 16 -20.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - gyöngyös, budai nagy antal tér 10.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - berettyóújfalu, kossuth u. 98.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - hajdúszoboszló, dózsa györgy út 62.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó-bátonyterenye, berekgát köz 2. -hjk
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - eger - ii. rákóczi ferenc u. 141.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - eger, ii. rákóczi ferenc u. 141.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - debrecen, mikepércsi út 168.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - debrecen, derék u. 31
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs- debrecen, széchenyi út 59.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - debrecen, balmazújvárosi út 7.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - debrecen, faraktár utca 58.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 zöldség-gyümölcs áruösszekészítő határozott időre - hejőkürt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 göngyölegraktári dolgozó határozott időre - hejőkürt
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - tiszaújváros, lévay u. 118.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 bolti dolgozó - miskolc, pesti út 5.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Lidl | 📌 higiéniai munkatárs - kisvárda, attila út 2/a.
+   ❌ OK: Fizikai munka a cím alapján
+
+🏢 Lidl | 📌 bolti dolgozó - kisvárda, attila út 2/a.
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 laboráns
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 szociális takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 automatizálási mérnök
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához termelés/mir területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához műszaki területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 laboráns
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 szociális takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 automatizálási mérnök
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához termelés/mir területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához műszaki területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 targoncavezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 laboráns
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 szociális takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 munkaidő-nyilvántartási csoportvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 automatizálási mérnök
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához termelés/mir területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzletfejlesztési projektvezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 csatlakozz a bonafarm csapatához műszaki területre szte mk duális vagy kooperatív hallgatóként!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 épületgépész
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 betanított fizikai munkatárs
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépész karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 szarvasmarha takarmányozási divízió vezető
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tisztítómester
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 plc technikus / automatizálási szakember
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 mezőgazdasági gépszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó lakatos
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gyártásközi ellenőr
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 tehenészeti állatgondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 öntözőberendezés üzemeltető
+   ❌ OK: Létesítmény/Általános üzemeltető tiltás (Nem IT)
+
+🏢 Bonafarm Csoport | 📌 hentes
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 üzemi segédmunkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 raktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi csoportvezető
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 csomagoló üzemi betanított munka
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 rakodógépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagmozgató
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 villanyszerelő
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 pasztőrös
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 raktári betanított munkás
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 gépkezelő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 erősáramú elektrotechnikus
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 karbantartó
+   ❌ OK: Karbantartó/Szerelő fizikai munka tiltása
+
+🏢 Bonafarm Csoport | 📌 baromfigondozó
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 informatikai munkatárs
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Bonafarm Csoport | 📌 élelmiszer eladó
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Bonafarm Csoport | 📌 anyagraktáros
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+

@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 25247,
-    "total_rejected": 7070,
+    "total_parsed_jobs": 28415,
+    "total_rejected": 7827,
     "last_calibration": 1788812049979,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 47.628667942976584,
+    "avg_doc_length": 28.873000420039517,
     "bm25_k1": 1.498124562487132,
     "bm25_b": 0.75,
     "adaptive_threshold": 39.062281243565984,
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 39,
-        "last_seen": 1788833485154,
+        "count": 42,
+        "last_seen": 1788840210196,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -109,8 +109,8 @@
         ]
       },
       "nagykanizsa": {
-        "count": 18,
-        "last_seen": 1788825889880,
+        "count": 21,
+        "last_seen": 1788840215425,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -121,8 +121,8 @@
         ]
       },
       "cím": {
-        "count": 6,
-        "last_seen": 1788825891789,
+        "count": 7,
+        "last_seen": 1788840216906,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -133,8 +133,8 @@
         ]
       },
       "város": {
-        "count": 18,
-        "last_seen": 1788825891789,
+        "count": 21,
+        "last_seen": 1788840216906,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -145,8 +145,8 @@
         ]
       },
       "tapasztalati szint": {
-        "count": 18,
-        "last_seen": 1788825891789,
+        "count": 21,
+        "last_seen": 1788840216906,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -323,8 +323,8 @@
         ]
       },
       "szakorvosi rendelőintézete": {
-        "count": 36,
-        "last_seen": 1788825848277,
+        "count": 45,
+        "last_seen": 1788840168354,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -336,8 +336,8 @@
         ]
       },
       "önkormányzata teljes": {
-        "count": 33,
-        "last_seen": 1788825848270,
+        "count": 42,
+        "last_seen": 1788840168347,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -349,14 +349,14 @@
         ]
       },
       "kormányhivatala teljes": {
-        "count": 104,
-        "last_seen": 1788825848278,
+        "count": 130,
+        "last_seen": 1788840168355,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
         ],
         "context_vectors": {
-          "linux": 4
+          "linux": 5
         },
         "examples": [
           "udapest főváros kormányhivatala teljes munkaidő",
@@ -376,8 +376,8 @@
         ]
       },
       "xi": {
-        "count": 16,
-        "last_seen": 1788825848169,
+        "count": 20,
+        "last_seen": 1788840168251,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -389,8 +389,8 @@
         ]
       },
       "xvii": {
-        "count": 4,
-        "last_seen": 1788825847892,
+        "count": 5,
+        "last_seen": 1788840167973,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -401,8 +401,8 @@
         ]
       },
       "xv": {
-        "count": 48,
-        "last_seen": 1788825848284,
+        "count": 62,
+        "last_seen": 1788840168361,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -414,8 +414,8 @@
         ]
       },
       "xiv": {
-        "count": 4,
-        "last_seen": 1788825847963,
+        "count": 5,
+        "last_seen": 1788840168043,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -426,8 +426,8 @@
         ]
       },
       "xii": {
-        "count": 15,
-        "last_seen": 1788825848208,
+        "count": 19,
+        "last_seen": 1788840168291,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -438,8 +438,8 @@
         ]
       },
       "xviii": {
-        "count": 7,
-        "last_seen": 1788825847983,
+        "count": 9,
+        "last_seen": 1788840168065,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -450,8 +450,8 @@
         ]
       },
       "lipótváros egészségügyi": {
-        "count": 5,
-        "last_seen": 1788825848053,
+        "count": 6,
+        "last_seen": 1788840168142,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -463,8 +463,8 @@
         ]
       },
       "önkormányzatának szivárvány": {
-        "count": 4,
-        "last_seen": 1788825848015,
+        "count": 5,
+        "last_seen": 1788840168100,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -475,8 +475,8 @@
         ]
       },
       "polgármesteri hivatala": {
-        "count": 5,
-        "last_seen": 1788825848272,
+        "count": 7,
+        "last_seen": 1788840168349,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -487,22 +487,22 @@
         ]
       },
       "önkormányzat dr": {
-        "count": 20,
-        "last_seen": 1788825848249,
+        "count": 25,
+        "last_seen": 1788840168327,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
         ],
         "context_vectors": {
-          "analitikus": 4
+          "analitikus": 5
         },
         "examples": [
           "dunavecse város önkormányzat dr. kolozs gergely kistérségi e"
         ]
       },
       "ix": {
-        "count": 8,
-        "last_seen": 1788825848039,
+        "count": 10,
+        "last_seen": 1788840168124,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -513,8 +513,8 @@
         ]
       },
       "önkormányzat városgondnokság": {
-        "count": 8,
-        "last_seen": 1788825848219,
+        "count": 10,
+        "last_seen": 1788840168300,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -526,8 +526,8 @@
         ]
       },
       "viii": {
-        "count": 4,
-        "last_seen": 1788825848208,
+        "count": 5,
+        "last_seen": 1788840168291,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -538,8 +538,8 @@
         ]
       },
       "xix kerület": {
-        "count": 8,
-        "last_seen": 1788825848255,
+        "count": 10,
+        "last_seen": 1788840168332,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -550,8 +550,8 @@
         ]
       },
       "városi szociális": {
-        "count": 4,
-        "last_seen": 1788825848250,
+        "count": 5,
+        "last_seen": 1788840168327,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -562,8 +562,8 @@
         ]
       },
       "önkormányzat teljes": {
-        "count": 8,
-        "last_seen": 1788825848260,
+        "count": 10,
+        "last_seen": 1788840168337,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -671,7 +671,7 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 5477,
+      "jobs": 5926,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -713,49 +713,49 @@
       "churn_probability": 15
     },
     "MVM Csoport": {
-      "jobs": 15,
+      "jobs": 18,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "K&H Bank": {
-      "jobs": 945,
+      "jobs": 1103,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Spar": {
-      "jobs": 8,
+      "jobs": 9,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "ERSTE Bank": {
-      "jobs": 133,
+      "jobs": 155,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "4iG": {
-      "jobs": 474,
+      "jobs": 551,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Bosch": {
-      "jobs": 939,
+      "jobs": 1090,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Richter Gedeon": {
-      "jobs": 8,
+      "jobs": 10,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -776,7 +776,7 @@
       "churn_probability": 15
     },
     "Közszolgállás (Állami Szféra)": {
-      "jobs": 4900,
+      "jobs": 6146,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -784,6 +784,13 @@
     },
     "Tesco": {
       "jobs": 18,
+      "bs_total": 0,
+      "anomalies": 0,
+      "toxicity_index": 0,
+      "churn_probability": 15
+    },
+    "CIB Bank": {
+      "jobs": 2,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -836,27 +843,27 @@
       "momentum": 2.183333333333333
     },
     "angol": {
-      "recent_count": 28,
+      "recent_count": 38,
       "historical_count": 13.624000000000002,
       "momentum": 2.7264591439688712
     },
     "home office": {
-      "recent_count": 27,
+      "recent_count": 36,
       "historical_count": 27.184000000000005,
       "momentum": 3.07741273100616
     },
     "hibrid": {
-      "recent_count": 30,
+      "recent_count": 40,
       "historical_count": 14.680000000000001,
       "momentum": 3.7458333333333327
     },
     "irodai": {
-      "recent_count": 42,
+      "recent_count": 56,
       "historical_count": 16.880000000000003,
       "momentum": 4.891666666666666
     },
     "english": {
-      "recent_count": 49,
+      "recent_count": 51,
       "historical_count": 21.488000000000003,
       "momentum": 4.792556634304206
     },
@@ -871,12 +878,12 @@
       "momentum": 1.8578124999999996
     },
     "sap": {
-      "recent_count": 23,
+      "recent_count": 29,
       "historical_count": 18.128,
       "momentum": 3.5539473684210527
     },
     "analitikus": {
-      "recent_count": 16,
+      "recent_count": 20,
       "historical_count": 7.784000000000001,
       "momentum": 3.2021897810218976
     },
@@ -896,12 +903,12 @@
       "momentum": 1.9939393939393937
     },
     "német": {
-      "recent_count": 19,
+      "recent_count": 26,
       "historical_count": 3.2,
       "momentum": 12.1
     },
     "c#": {
-      "recent_count": 14,
+      "recent_count": 16,
       "historical_count": 2.4000000000000004,
       "momentum": 8.1
     },
@@ -941,27 +948,27 @@
       "momentum": 4.1
     },
     "prémium": {
-      "recent_count": 48,
+      "recent_count": 64,
       "historical_count": 8.8,
       "momentum": 40.1
     },
     "remote": {
-      "recent_count": 6,
+      "recent_count": 8,
       "historical_count": 1.6,
       "momentum": 4.1
     },
     "linux": {
-      "recent_count": 9,
+      "recent_count": 12,
       "historical_count": 1.8,
       "momentum": 5.1
     },
     "képzés": {
-      "recent_count": 6,
+      "recent_count": 9,
       "historical_count": 2,
       "momentum": 6.1
     },
     "távmunka": {
-      "recent_count": 6,
+      "recent_count": 8,
       "historical_count": 1.6,
       "momentum": 4.1
     },
@@ -971,42 +978,42 @@
       "momentum": 2.1
     },
     "jira": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1.4000000000000001,
       "momentum": 3.1
     },
     "önálló": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 2.8,
       "momentum": 10.1
     },
     "cafeteria": {
-      "recent_count": 1,
+      "recent_count": 3,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "részvény": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "nyugdíjpénztár": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "hibrid (2 nap ho)": {
-      "recent_count": 1,
+      "recent_count": 2,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
     "kreatív": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1,
       "momentum": 1.1
     },
     "szlovák": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1,
       "momentum": 1.1
     },
@@ -1087,6 +1094,16 @@
     },
     "flexibility": {
       "recent_count": 4,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "olasz": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "bónusz": {
+      "recent_count": 1,
       "historical_count": 1,
       "momentum": 1
     }

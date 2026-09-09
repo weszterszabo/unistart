@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 51769,
-    "total_rejected": 14623,
+    "total_parsed_jobs": 53622,
+    "total_rejected": 15243,
     "last_calibration": 1788905232350,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 54.51598118375903,
+    "avg_doc_length": 25.193969620765063,
     "bm25_k1": 1.496754821730651,
     "bm25_b": 0.75,
     "adaptive_threshold": 38.37741086532544,
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 72,
-        "last_seen": 1788918867456,
+        "count": 75,
+        "last_seen": 1788937053097,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -37,8 +37,8 @@
         ]
       },
       "kaposvár": {
-        "count": 21,
-        "last_seen": 1788905754924,
+        "count": 24,
+        "last_seen": 1788937054627,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -49,8 +49,8 @@
         ]
       },
       "csenger": {
-        "count": 36,
-        "last_seen": 1788905756508,
+        "count": 39,
+        "last_seen": 1788937050185,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -61,8 +61,8 @@
         ]
       },
       "pozíció megnevezése": {
-        "count": 12,
-        "last_seen": 1788905750504,
+        "count": 13,
+        "last_seen": 1788937050204,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -73,8 +73,8 @@
         ]
       },
       "vállalat": {
-        "count": 36,
-        "last_seen": 1788905750504,
+        "count": 39,
+        "last_seen": 1788937050204,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -85,8 +85,8 @@
         ]
       },
       "balmazújváros": {
-        "count": 36,
-        "last_seen": 1788905750504,
+        "count": 39,
+        "last_seen": 1788937050204,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -311,8 +311,8 @@
         ]
       },
       "fehérgyarmat": {
-        "count": 30,
-        "last_seen": 1788905756501,
+        "count": 33,
+        "last_seen": 1788937050181,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -593,8 +593,8 @@
         ]
       },
       "magyar út": {
-        "count": 9,
-        "last_seen": 1788905353341,
+        "count": 10,
+        "last_seen": 1788936653047,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -605,8 +605,8 @@
         ]
       },
       "lévay": {
-        "count": 9,
-        "last_seen": 1788905367951,
+        "count": 10,
+        "last_seen": 1788936667622,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -646,8 +646,8 @@
         ]
       },
       "országos": {
-        "count": 4,
-        "last_seen": 1788918800963,
+        "count": 5,
+        "last_seen": 1788937079470,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -658,8 +658,8 @@
         ]
       },
       "bp": {
-        "count": 4,
-        "last_seen": 1788918800989,
+        "count": 5,
+        "last_seen": 1788937079476,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -685,8 +685,8 @@
         ]
       },
       "bóly": {
-        "count": 9,
-        "last_seen": 1788905750512,
+        "count": 12,
+        "last_seen": 1788937050218,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -697,8 +697,8 @@
         ]
       },
       "baktalórántháza": {
-        "count": 9,
-        "last_seen": 1788905756510,
+        "count": 12,
+        "last_seen": 1788937050192,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -782,56 +782,56 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 10290,
+      "jobs": 10881,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Lidl": {
-      "jobs": 63,
+      "jobs": 68,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "OTP Bank": {
-      "jobs": 866,
+      "jobs": 940,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Magyar Posta Zrt.": {
-      "jobs": 332,
+      "jobs": 359,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Telekom": {
-      "jobs": 153,
+      "jobs": 166,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Aldi": {
-      "jobs": 972,
+      "jobs": 1052,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "MVM Csoport": {
-      "jobs": 40,
+      "jobs": 45,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "K&H Bank": {
-      "jobs": 1893,
+      "jobs": 2051,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -880,7 +880,7 @@
       "churn_probability": 15
     },
     "MOL Group": {
-      "jobs": 744,
+      "jobs": 746,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -952,7 +952,7 @@
   },
   "skill_velocity": {
     "communication": {
-      "recent_count": 3,
+      "recent_count": 5,
       "historical_count": 12.744000000000002,
       "momentum": 1.5554794520547943
     },
@@ -977,7 +977,7 @@
       "momentum": 6.972037914691942
     },
     "english": {
-      "recent_count": 15,
+      "recent_count": 27,
       "historical_count": 37.99040000000001,
       "momentum": 4.9399106478034245
     },
@@ -992,12 +992,12 @@
       "momentum": 0.1
     },
     "sap": {
-      "recent_count": 9,
+      "recent_count": 11,
       "historical_count": 26.102400000000003,
       "momentum": 3.2994704324801414
     },
     "analitikus": {
-      "recent_count": 5,
+      "recent_count": 6,
       "historical_count": 14.2272,
       "momentum": 5.2387461459403895
     },
@@ -1022,62 +1022,62 @@
       "momentum": 16.975
     },
     "c#": {
-      "recent_count": 4,
+      "recent_count": 6,
       "historical_count": 8.32,
       "momentum": 13.433333333333332
     },
     "sql": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 4.48,
       "momentum": 10.1
     },
     "javascript": {
-      "recent_count": 6,
+      "recent_count": 12,
       "historical_count": 12.160000000000002,
       "momentum": 15.1
     },
     "node.js": {
-      "recent_count": 4,
+      "recent_count": 8,
       "historical_count": 8.32,
       "momentum": 13.433333333333332
     },
     "german": {
-      "recent_count": 8,
+      "recent_count": 16,
       "historical_count": 17.28,
       "momentum": 11.528571428571427
     },
     "italian": {
-      "recent_count": 4,
+      "recent_count": 8,
       "historical_count": 8.32,
       "momentum": 13.433333333333332
     },
     "java": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 4.48,
       "momentum": 10.1
     },
     "dotnet": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 4.48,
       "momentum": 10.1
     },
     "prémium": {
-      "recent_count": 16,
+      "recent_count": 28,
       "historical_count": 32.64,
       "momentum": 14.645454545454545
     },
     "remote": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 4.48,
       "momentum": 10.1
     },
     "linux": {
-      "recent_count": 3,
+      "recent_count": 5,
       "historical_count": 6.240000000000001,
       "momentum": 13.433333333333332
     },
     "képzés": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 5.4,
       "momentum": 9.6
     },

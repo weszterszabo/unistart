@@ -6,8 +6,8 @@ const https = require('https');
 
 // 🔥 JAVÍTÁS: GLOBÁLIS HÁLÓZATI PAJZS ÉS "HÓHÉR" (Tarpit védelem - az eredeti kódod alapján)
 const GLOBAL_TIMEOUT_MS = 15000;
-const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 50, timeout: GLOBAL_TIMEOUT_MS });
-const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 50, rejectUnauthorized: false, timeout: GLOBAL_TIMEOUT_MS });
+const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 500, timeout: GLOBAL_TIMEOUT_MS });
+const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 500, rejectUnauthorized: false, timeout: GLOBAL_TIMEOUT_MS });
 
 const originalFetch = global.fetch;
 global.fetch = async (url, options = {}) => {

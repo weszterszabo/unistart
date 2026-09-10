@@ -877,11 +877,11 @@ function generateGenerativeTLDR(companyName, jobNature, faculty, locationArray, 
 // ============================================================================
 // 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA 
 // ============================================================================
+// ============================================================================
+// 🚀 FŐ ELEMZŐ FÜGGVÉNY EXPORTÁLÁSA (DIÁKMUNKA VIP KIVÉTELLEL)
+// ============================================================================
 exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen Cég") {
     // 🔥 VÉGZETES HIBA JAVÍTÁSA: CPU Fagyás (ReDoS) elleni pajzs!
-    // Mivel a Node.js egyszálú, egy 100 ezer karakteres szemét-szöveg végtelen
-    // ciklusba küldheti a Regex motort, ami blokkolja az összes timeoutot.
-    // MEGOLDÁS: Kíméletlenül levágjuk a túl hosszú, hibás szövegeket!
     if (description && description.length > 10000) {
         description = description.substring(0, 10000);
     }
@@ -931,32 +931,34 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
         return null;
     };
 
+    // 🔥 VIP ARANYKÁRTYA: Ha diákszövetkezet vagy kifejezetten diákmunka, a fizikai szűrők kikapcsolnak!
+    const isStudentCoop = /diák|szövetkezet|centrum|quantum|meló/i.test(companyName) || /\b(diákmunka|iskolaszövetkezet|diákszövetkezet)\b/i.test(fullText);
+
     // 🔥 1. KÜLFÖLDI ÁLLÁSOK KÍMÉLETLEN TILTÁSA (Geo-Killer)
     const foreignKillerRegex = /\b(ausztria|austria|németország|germany|svájc|switzerland|szlovákia|slovakia|románia|romania|külföld|külföldön|külföldi|anglia|uk|united kingdom|cseh|czech|lengyelország|poland|hollandia|netherlands|bécs|wien|münchen|berlin|london|pozsony|bratislava|kassa|kolozsvár|linz|graz|salzburg|tirol|frankfurt|stuttgart|nürnberg)\b/i;
-    // Csekkoljuk a címet ÉS a leírás első 400 karakterét is, ahová a helyszínt szokták írni!
     if (foreignKillerRegex.test(cleanTitle) || foreignKillerRegex.test(fullText.substring(0, 400))) {
         return logReject("Külföldi munkavégzés blokkolva (Geo-Killer)");
     }
 
-    // 🔥 2. GÉPJÁRMŰVEZETŐ ÉS FIZIKAI MUNKÁK AZONNALI TILTÁSA
+    // 🔥 2. GÉPJÁRMŰVEZETŐ ÉS FIZIKAI MUNKÁK TILTÁSA (KIVÉVE DIÁKMUNKA)
     const hardcorePhysicalTitle = /gépjárművezető|járművezető|tehergépkocsi|buszvezető|villamos|troli|gépkezelő|takarító|biztonsági\s*(őr|szolgálat)|operátor|fizikai\s*munka|segédmunkás|futár|árufeltöltő|pénztáros|eladó|raktáros|betanított|csomagoló/i;
-    if (hardcorePhysicalTitle.test(cleanTitle)) {
+    if (!isStudentCoop && hardcorePhysicalTitle.test(cleanTitle)) {
         return logReject("Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)");
     }
 
-    // 🔥 3. ÜZEMELTETŐ / KARBANTARTÓ TILTÁS (Kivéve ha Informatikus!)
+    // 🔥 3. ÜZEMELTETŐ / KARBANTARTÓ TILTÁS (KIVÉVE DIÁKMUNKA ÉS IT)
     const isItRole = /it\s|rendszer|hálózat|cloud|szoftver/i.test(cleanTitle);
-    if (/üzemeltető/i.test(cleanTitle) && !isItRole) {
+    if (!isStudentCoop && /üzemeltető/i.test(cleanTitle) && !isItRole) {
         return logReject("Létesítmény/Általános üzemeltető tiltás (Nem IT)");
     }
-    if (/karbantartó|szerelő/i.test(cleanTitle)) {
+    if (!isStudentCoop && /karbantartó|szerelő/i.test(cleanTitle)) {
         return logReject("Karbantartó/Szerelő fizikai munka tiltása");
     }
 
     const isMandatoryInternship = /kötelező (szakmai )?gyakorlat|gyakorlat( le)?igazolás|mandatory internship/i.test(fullText);
     const requiresActiveStudent = /aktív( nappali)? (hallgatói )?jogviszony|nappali tagozat|active student/i.test(fullText);
 
-    const isExplicitStudentOrIntern = compiledExplicitJunior.test(fullText) || isMandatoryInternship || requiresActiveStudent;
+    const isExplicitStudentOrIntern = compiledExplicitJunior.test(fullText) || isMandatoryInternship || requiresActiveStudent || isStudentCoop;
 
     const hasAcademicDegree = compiledAcademicReq.test(fullText) || compiledStrictDegrees.test(fullText);
     const hasHighSchool = /\b(érettségi|középfokú|high school)\b/i.test(fullText);
@@ -984,15 +986,15 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     const hasCategoryPrivilege = (assignedCategory !== "🔍 Egyéb / Általános" && maxScore > 0.8);
 
     if (detectScamAndMLM(fullText)) return logReject("Gyanús MLM vagy átverés szótár"); 
-    if (compiledFatalLowEdu.test(fullText)) return logReject("8 általános / Betanított munka (LowEdu Guard)"); 
+    if (!isStudentCoop && compiledFatalLowEdu.test(fullText)) return logReject("8 általános / Betanított munka (LowEdu Guard)"); 
 
-    if (!isExplicitStudentOrIntern && !hasAcademicDegree && !hasHighSchool && !isWhiteCollarTitle && !isTechOrEngineering && !hasCategoryPrivilege) {
+    if (!isStudentCoop && !isExplicitStudentOrIntern && !hasAcademicDegree && !hasHighSchool && !isWhiteCollarTitle && !isTechOrEngineering && !hasCategoryPrivilege) {
         return logReject("Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)"); 
     }
 
     const isExplicitJuniorTitle = compiledExplicitJunior.test(cleanTitle);
     const isExplicitJuniorText = compiledExplicitJunior.test(fullText);
-    const isExplicitJunior = isExplicitJuniorTitle || isExplicitJuniorText;
+    const isExplicitJunior = isExplicitJuniorTitle || isExplicitJuniorText || isStudentCoop;
     const isWhiteCollarDesc = compiledWhiteCollarRoles.test(fullText) || isWhiteCollarTitle;
     
     let isTooSenior = false;
@@ -1020,14 +1022,12 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
 
     if (compiledFatalSenior.test(cleanTitle) && !isExplicitJuniorTitle) return logReject("Senior pozíció a cím alapján");
     
-    // MÓDOSÍTÁS: Ha a szövegben vagy a címben szerepel, hogy diák/gyakornok (isExplicitJunior), 
-    // akkor átengedjük a fizikai munkákat, de csak akkor, ha TÉNYLEG diákszövetkezeti vagy hasonló a kontextus.
-    if (compiledFatalPhysical.test(cleanTitle) && !isExplicitJunior) return logReject("Fizikai munka a cím alapján");
+    if (!isStudentCoop && compiledFatalPhysical.test(cleanTitle) && !isExplicitJunior) return logReject("Fizikai munka a cím alapján");
     
-    if (compiledDubiousPhysical.test(cleanTitle) && !isExplicitJunior && !isWhiteCollarTitle && !hasCategoryPrivilege) return logReject("Gyanús fizikai/operátor munka a cím alapján");
+    if (!isStudentCoop && compiledDubiousPhysical.test(cleanTitle) && !isExplicitJunior && !isWhiteCollarTitle && !hasCategoryPrivilege) return logReject("Gyanús fizikai/operátor munka a cím alapján");
     
     if (isTooSenior && !isExplicitJuniorTitle) return logReject("Túl sok tapasztalatot kér (>3 év)");
-    if (!isExplicitJunior && !isWhiteCollarDesc && !hasCategoryPrivilege) return logReject("Nem junior és nem is szellemi munka (WhiteCollar Guard)");
+    if (!isStudentCoop && !isExplicitJunior && !isWhiteCollarDesc && !hasCategoryPrivilege) return logReject("Nem junior és nem is szellemi munka (WhiteCollar Guard)");
     
     const timeGuard = measure('Guard_Time', 'guard_start');
 
@@ -1089,9 +1089,9 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
     let foundLocations = [...new Set((fullText.match(locationsDict) || []).map(l => l.charAt(0).toUpperCase() + l.slice(1)))];
     
     let jobNature = "Pályakezdő (Teljes munkaidő)";
-    let positionType = "graduate"; // ÚJ: Szigorú angol kategória azonosító
+    let positionType = "graduate"; 
 
-    if (/\b(diák|diákmunka|iskolaszövetkezet|student|working student|werkstudent)\b/i.test(fullText) || requiresActiveStudent) {
+    if (/\b(diák|diákmunka|iskolaszövetkezet|student|working student|werkstudent)\b/i.test(fullText) || requiresActiveStudent || isStudentCoop) {
         jobNature = "Diákmunka";
         positionType = "student";
     }
@@ -1162,7 +1162,8 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
 
     const activeThreshold = Math.max(25, Math.min(50, brainDB.metadata.adaptive_threshold));
 
-    if (confidenceScore < activeThreshold) {
+    // 🔥 VIP ARANYKÁRTYA 2: A diákmunkákat nem dobjuk el alacsony bizalmi index miatt sem!
+    if (!isStudentCoop && confidenceScore < activeThreshold) {
         return logReject(`Alacsony Bizalmi Index (${confidenceScore.toFixed(1)} < ${activeThreshold.toFixed(1)})`);
     }
 
@@ -1223,7 +1224,7 @@ exports.analyzeJob = function(title, description = "", companyName = "Ismeretlen
         airtable_ready: { 
             faculty: assignedCategory,
             job_nature: jobNature,
-            position_type: positionType, // ÚJ MEZŐ a frontend szűréshez
+            position_type: positionType,
             contract_type: contractType,
             degree: requiredDegree,
             weekly_hours: extractedHours !== "Rugalmas" ? extractedHours : null,

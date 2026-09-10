@@ -162610,3 +162610,108 @@
 🏢 Ismeretlen Cég | 📌 ✨csatlakozz egy országosan ismert szállodalánc csapatához szobatakarítóként!
    ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
 
+🏢 Ismeretlen Cég | 📌 próbavásárló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 termékbemutató hostess / promóter
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 rendezvényes hostess
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 promóciós hostess
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szlovák és cseh nyelvű ügyfélszolgálati munkatárs
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+
+🏢 Ismeretlen Cég | 📌 operátori munka egy modern technológiai cégnél!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 fizikai munkafolyamat-kisegítő
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 áruösszekészítő, csomagoló
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként debrecenben! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként győrben! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként nyíregyházán! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként szegeden! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 legyél eladó egy budai pékségben!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 takarító diákmunka újhartyánon!🌟
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 takarító
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 csatlakozz egy prémium szálloda csapatához szobatakarítóként!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 ✨csatlakozz egy országosan ismert szállodalánc csapatához szobatakarítóként!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 join worknow, an official foodora fleet partner, and deliver foodora orders! earn up to huf 4,000/hour + sign-up bonus! 🎉
+   ❌ OK: Senior pozíció a cím alapján
+
+🏢 Ismeretlen Cég | 📌 legyél eladó ajándékboltban az v. kerületben!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 raktári operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 műsorvezető, operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 🚴‍♂️ legyél wolt futár – dolgozz akkor, amikor szeretnél - kétheti kifizetéssel! 💸
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 telefonos operátor román nyelvtudással debrecenben és budapesten a 13. kerületben!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 legyél irodai asszisztens az i. kerületben!
+   ❌ OK: 8 általános / Betanított munka (LowEdu Guard)
+
+🏢 Ismeretlen Cég | 📌 pénztáros diákmunka etyeken! ⚡
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként a vidéki nagyvárosokban is! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 akár 3600 ft/óra foodora futárként miskolc! 🎉
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 telefonos operátor szerb/horvát/szlovén nyelvtudással!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 pénztáros diákmunka érden! ⚡
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 csatlakozz egy prémium szálloda csapatához szobatakarítóként!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 futár
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szobatakarító diákmunka hévízen!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Y Diákszövetkezet | 📌 úszómesteri tanúsítvánnyal rendelkezel? jelentkezz egy 4. kerületi élményfürdőbe!
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Y Diákszövetkezet | 📌 szlovák és cseh nyelvű ügyfélszolgálati munkatárs
+   ❌ OK: Külföldi munkavégzés blokkolva (Geo-Killer)
+

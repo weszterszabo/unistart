@@ -1,6 +1,6 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 15:50:26
+🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 16:09:08
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
@@ -10,23 +10,23 @@ Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai param
 - Piac Elutasítási Aránya (Rejection Rate): **28.5%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 13782) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 13899) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Lidl** (Kiírt állások: 83) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **OTP Bank** (Kiírt állások: 1160) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Magyar Posta Zrt.** (Kiírt állások: 435) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Telekom** (Kiírt állások: 205) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
+- **BÓNUSZ** (Sebesség mutató: +326.7%) 🔥
+- **EXCEL** (Sebesség mutató: +310.0%) 🔥
+- **PRECÍZ** (Sebesség mutató: +310.0%) 🔥
 - **FLEXIBILITY** (Sebesség mutató: +228.2%) 🔥
+- **PROBLÉMAMEGOLDÓ** (Sebesség mutató: +177.9%) 🔥
 - **KÉPZÉS** (Sebesség mutató: +150.7%) 🔥
 - **TEAMWORK** (Sebesség mutató: +118.3%) 🔥
 - **NÉMET** (Sebesség mutató: +89.6%) 🔥
 - **JAVASCRIPT** (Sebesség mutató: +58.0%) 🔥
 - **PRÉMIUM** (Sebesség mutató: +57.1%) 🔥
-- **C#** (Sebesség mutató: +54.2%) 🔥
-- **NODE.JS** (Sebesség mutató: +54.2%) 🔥
-- **ITALIAN** (Sebesség mutató: +54.2%) 🔥
-- **LINUX** (Sebesség mutató: +54.2%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
 - **KORMÁNYHIVATALA TELJES** (Látta: 361x)  | 🔗 Asszoc: [linux] -> ⏳ Elemzés...

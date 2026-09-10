@@ -1,13 +1,13 @@
 {
   "metadata": {
-    "total_parsed_jobs": 18493,
-    "total_rejected": 5004,
-    "last_calibration": 1788812049979,
+    "total_parsed_jobs": 70444,
+    "total_rejected": 20093,
+    "last_calibration": 1788997039719,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 18.92716572816929,
-    "bm25_k1": 1.498124562487132,
+    "avg_doc_length": 10.923769858145782,
+    "bm25_k1": 1.4955189558631636,
     "bm25_b": 0.75,
-    "adaptive_threshold": 39.062281243565984,
+    "adaptive_threshold": 37.75947793158171,
     "learning_rate": 0.01
   },
   "categories": {
@@ -25,8 +25,8 @@
         ]
       },
       "eger": {
-        "count": 27,
-        "last_seen": 1788813094550,
+        "count": 96,
+        "last_seen": 1789022821626,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -37,8 +37,8 @@
         ]
       },
       "kaposvár": {
-        "count": 6,
-        "last_seen": 1788697246408,
+        "count": 33,
+        "last_seen": 1789005481375,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -49,8 +49,8 @@
         ]
       },
       "csenger": {
-        "count": 15,
-        "last_seen": 1788813097551,
+        "count": 48,
+        "last_seen": 1789005477704,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -61,8 +61,8 @@
         ]
       },
       "pozíció megnevezése": {
-        "count": 5,
-        "last_seen": 1788813097557,
+        "count": 14,
+        "last_seen": 1788975035060,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -73,8 +73,8 @@
         ]
       },
       "vállalat": {
-        "count": 15,
-        "last_seen": 1788813097557,
+        "count": 42,
+        "last_seen": 1788975035060,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -85,8 +85,8 @@
         ]
       },
       "balmazújváros": {
-        "count": 15,
-        "last_seen": 1788813097557,
+        "count": 42,
+        "last_seen": 1788975035060,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -109,8 +109,8 @@
         ]
       },
       "nagykanizsa": {
-        "count": 12,
-        "last_seen": 1788812529050,
+        "count": 48,
+        "last_seen": 1789022825105,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -121,8 +121,8 @@
         ]
       },
       "cím": {
-        "count": 4,
-        "last_seen": 1788812530644,
+        "count": 16,
+        "last_seen": 1789022819831,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -133,8 +133,8 @@
         ]
       },
       "város": {
-        "count": 12,
-        "last_seen": 1788812530644,
+        "count": 48,
+        "last_seen": 1789022819831,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -145,8 +145,8 @@
         ]
       },
       "tapasztalati szint": {
-        "count": 12,
-        "last_seen": 1788812530644,
+        "count": 48,
+        "last_seen": 1789022819831,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -311,8 +311,8 @@
         ]
       },
       "fehérgyarmat": {
-        "count": 9,
-        "last_seen": 1788813097544,
+        "count": 42,
+        "last_seen": 1789005477701,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -323,8 +323,8 @@
         ]
       },
       "szakorvosi rendelőintézete": {
-        "count": 27,
-        "last_seen": 1788813137296,
+        "count": 126,
+        "last_seen": 1789022790392,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -336,8 +336,8 @@
         ]
       },
       "önkormányzata teljes": {
-        "count": 24,
-        "last_seen": 1788813137286,
+        "count": 128,
+        "last_seen": 1789022790385,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -349,14 +349,14 @@
         ]
       },
       "kormányhivatala teljes": {
-        "count": 78,
-        "last_seen": 1788813137297,
+        "count": 361,
+        "last_seen": 1789022790412,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
         ],
         "context_vectors": {
-          "linux": 3
+          "linux": 14
         },
         "examples": [
           "udapest főváros kormányhivatala teljes munkaidő",
@@ -376,8 +376,8 @@
         ]
       },
       "xi": {
-        "count": 12,
-        "last_seen": 1788813137266,
+        "count": 56,
+        "last_seen": 1789022790288,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -389,8 +389,8 @@
         ]
       },
       "xvii": {
-        "count": 3,
-        "last_seen": 1788813137178,
+        "count": 9,
+        "last_seen": 1788890594125,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -401,8 +401,8 @@
         ]
       },
       "xv": {
-        "count": 34,
-        "last_seen": 1788813137298,
+        "count": 188,
+        "last_seen": 1789022790399,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -414,8 +414,8 @@
         ]
       },
       "xiv": {
-        "count": 3,
-        "last_seen": 1788813137202,
+        "count": 14,
+        "last_seen": 1789022790066,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -426,8 +426,8 @@
         ]
       },
       "xii": {
-        "count": 11,
-        "last_seen": 1788813137278,
+        "count": 55,
+        "last_seen": 1789022790329,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -438,8 +438,8 @@
         ]
       },
       "xviii": {
-        "count": 5,
-        "last_seen": 1788813137209,
+        "count": 27,
+        "last_seen": 1789022790086,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -450,8 +450,8 @@
         ]
       },
       "lipótváros egészségügyi": {
-        "count": 4,
-        "last_seen": 1788813137231,
+        "count": 15,
+        "last_seen": 1789022790165,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -463,8 +463,8 @@
         ]
       },
       "önkormányzatának szivárvány": {
-        "count": 3,
-        "last_seen": 1788813137220,
+        "count": 14,
+        "last_seen": 1789022790128,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -475,34 +475,35 @@
         ]
       },
       "polgármesteri hivatala": {
-        "count": 3,
-        "last_seen": 1788813137223,
+        "count": 30,
+        "last_seen": 1789022790402,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
         ],
         "context_vectors": {},
         "examples": [
-          "gyei jogú város polgármesteri hivatala teljes munkaidő"
+          "gyei jogú város polgármesteri hivatala teljes munkaidő",
+          "gyei jogú város polgármesteri hivatala teljes munkaidő 3 év"
         ]
       },
       "önkormányzat dr": {
-        "count": 15,
-        "last_seen": 1788813137289,
+        "count": 70,
+        "last_seen": 1789022790363,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
         ],
         "context_vectors": {
-          "analitikus": 3
+          "analitikus": 14
         },
         "examples": [
           "dunavecse város önkormányzat dr. kolozs gergely kistérségi e"
         ]
       },
       "ix": {
-        "count": 6,
-        "last_seen": 1788813137227,
+        "count": 32,
+        "last_seen": 1789022790414,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -513,8 +514,8 @@
         ]
       },
       "önkormányzat városgondnokság": {
-        "count": 6,
-        "last_seen": 1788813137281,
+        "count": 28,
+        "last_seen": 1789022790339,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -526,8 +527,8 @@
         ]
       },
       "viii": {
-        "count": 3,
-        "last_seen": 1788813137278,
+        "count": 14,
+        "last_seen": 1789022790329,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -538,8 +539,8 @@
         ]
       },
       "xix kerület": {
-        "count": 6,
-        "last_seen": 1788813137290,
+        "count": 33,
+        "last_seen": 1789022790367,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -550,8 +551,8 @@
         ]
       },
       "városi szociális": {
-        "count": 3,
-        "last_seen": 1788813137289,
+        "count": 14,
+        "last_seen": 1789022790363,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -562,8 +563,8 @@
         ]
       },
       "önkormányzat teljes": {
-        "count": 6,
-        "last_seen": 1788813137292,
+        "count": 28,
+        "last_seen": 1789022790373,
         "auto_promoted": false,
         "companies": [
           "Közszolgállás (Állami Szféra)"
@@ -592,8 +593,8 @@
         ]
       },
       "magyar út": {
-        "count": 2,
-        "last_seen": 1788812655477,
+        "count": 13,
+        "last_seen": 1789005094301,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -604,8 +605,8 @@
         ]
       },
       "lévay": {
-        "count": 2,
-        "last_seen": 1788812670590,
+        "count": 13,
+        "last_seen": 1789005108770,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -616,32 +617,258 @@
         ]
       },
       "it is": {
-        "count": 4,
-        "last_seen": 1788812611005,
+        "count": 18,
+        "last_seen": 1788984620448,
         "auto_promoted": false,
         "companies": [
           "Tesco"
         ],
         "context_vectors": {
-          "training": 4
+          "training": 18
         },
         "examples": [
-          "ending on location. â â it is our policy to offer new collea"
+          "ending on location. â â it is our policy to offer new collea",
+          "ending on location.it is our policy to offer new colleagues"
+        ]
+      },
+      "it": {
+        "count": 3,
+        "last_seen": 1788833024321,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "training": 3
+        },
+        "examples": [
+          "ending on location. â â it's our policy to offer new colleag"
+        ]
+      },
+      "országos": {
+        "count": 9,
+        "last_seen": 1789022760650,
+        "auto_promoted": true,
+        "companies": [
+          "Ismeretlen Cég",
+          "CIB Bank"
+        ],
+        "context_vectors": {
+          "english": 1,
+          "olasz": 1,
+          "sap": 1,
+          "problémamegoldó": 1,
+          "home office": 1,
+          "cafeteria": 1,
+          "képzés": 1
+        },
+        "examples": [
+          "zakmunkás helyszín:országos, változó alállomási vezető kivit",
+          "aug. 15. helyszín: országos, hu vállalat: cib bank leányvál"
+        ]
+      },
+      "bp": {
+        "count": 5,
+        "last_seen": 1788937079476,
+        "auto_promoted": false,
+        "companies": [
+          "Ismeretlen Cég"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "neralista helyszín:bp., 1081 ii. jános pál pápa tér. 20. jel"
+        ]
+      },
+      "grimsby": {
+        "count": 1,
+        "last_seen": 1788869068289,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 1,
+          "flexibility": 1
+        },
+        "examples": [
+          "026 store location grimsby, market street, dn31 1pg a munkak"
+        ]
+      },
+      "bóly": {
+        "count": 21,
+        "last_seen": 1789005477738,
+        "auto_promoted": false,
+        "companies": [
+          "Ismeretlen Cég"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "város                                      bóly"
+        ]
+      },
+      "baktalórántháza": {
+        "count": 21,
+        "last_seen": 1789005477714,
+        "auto_promoted": false,
+        "companies": [
+          "Ismeretlen Cég"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "város                                      baktaló"
+        ]
+      },
+      "part-time": {
+        "count": 7,
+        "last_seen": 1789005043772,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 7,
+          "flexibility": 7
+        },
+        "examples": [
+          "fice / on location • part-time • határozott idejű • working",
+          "fice / on location • part-time • állandó • working hours 16"
+        ]
+      },
+      "southampton": {
+        "count": 2,
+        "last_seen": 1788918953371,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 2,
+          "flexibility": 2
+        },
+        "examples": [
+          "026 store location southampton, 1 townhill farm district cen"
+        ]
+      },
+      "xxiii": {
+        "count": 5,
+        "last_seen": 1789022790411,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros xxiii. kerület soroksár önkormányzatának szo"
+        ]
+      },
+      "york": {
+        "count": 1,
+        "last_seen": 1788957301727,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 1,
+          "flexibility": 1
+        },
+        "examples": [
+          "026 store location york, tesco; southgate; market weighton,"
+        ]
+      },
+      "edinburgh": {
+        "count": 1,
+        "last_seen": 1788957307139,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "excel": 1,
+          "power bi": 1,
+          "flexibility": 1,
+          "analytical": 1,
+          "agile": 1,
+          "leadership": 1,
+          "hybrid": 1,
+          "bonus": 1
+        },
+        "examples": [
+          "level - 2location – edinburgh, permanent office attendance"
+        ]
+      },
+      "immingham": {
+        "count": 4,
+        "last_seen": 1789005043772,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 4,
+          "flexibility": 4
+        },
+        "examples": [
+          "026 store location immingham, kennedy way; washdyke lane, dn"
+        ]
+      },
+      "mvm paksi": {
+        "count": 2,
+        "last_seen": 1788997068786,
+        "auto_promoted": false,
+        "companies": [
+          "Ismeretlen Cég"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "s felelős helyszín:mvm paksi atomerőmű zrt. üzemi területe/s"
+        ]
+      },
+      "vi": {
+        "count": 2,
+        "last_seen": 1789022790048,
+        "auto_promoted": false,
+        "companies": [
+          "Közszolgállás (Állami Szféra)"
+        ],
+        "context_vectors": {},
+        "examples": [
+          "udapest főváros vi. kerület terézvárosi polgármesteri hivata"
+        ]
+      },
+      "salisbury": {
+        "count": 1,
+        "last_seen": 1789005014435,
+        "auto_promoted": false,
+        "companies": [
+          "Tesco"
+        ],
+        "context_vectors": {
+          "teamwork": 1,
+          "flexibility": 1,
+          "training": 1
+        },
+        "examples": [
+          "026 store location salisbury, tesco stores ltd; personnel &"
         ]
       }
     },
     "💻 SZOFTVER/TECH": {
       "sa#": {
-        "count": 1,
-        "last_seen": 1788530673547,
+        "count": 7,
+        "last_seen": 1788918964426,
         "auto_promoted": false,
         "companies": [
           "Tesco"
         ],
         "context_vectors": {
-          "szép kártya": 1,
-          "nyugdíjpénztár": 1,
-          "önkéntes nyugdíjpénztár": 1
+          "szép kártya": 7,
+          "nyugdíjpénztár": 7,
+          "önkéntes nyugdíjpénztár": 7,
+          "sem": 1,
+          "problémamegoldó": 1,
+          "önálló": 1,
+          "megbízható": 1
         },
         "examples": [
           "yelvtanulás támogatása#li-dnimegértjük - és értékeljük -, ho"
@@ -656,91 +883,91 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 3935,
+      "jobs": 13744,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Lidl": {
-      "jobs": 28,
+      "jobs": 83,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "OTP Bank": {
-      "jobs": 359,
+      "jobs": 1160,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Magyar Posta Zrt.": {
-      "jobs": 143,
+      "jobs": 435,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Telekom": {
-      "jobs": 62,
+      "jobs": 205,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Aldi": {
-      "jobs": 408,
+      "jobs": 1286,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "MVM Csoport": {
-      "jobs": 12,
+      "jobs": 60,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "K&H Bank": {
-      "jobs": 787,
+      "jobs": 2522,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Spar": {
-      "jobs": 7,
+      "jobs": 17,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "ERSTE Bank": {
-      "jobs": 111,
+      "jobs": 361,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "4iG": {
-      "jobs": 320,
+      "jobs": 1248,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Bosch": {
-      "jobs": 637,
+      "jobs": 2429,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Richter Gedeon": {
-      "jobs": 6,
+      "jobs": 26,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -754,21 +981,28 @@
       "churn_probability": 15
     },
     "MOL Group": {
-      "jobs": 724,
+      "jobs": 764,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Közszolgállás (Állami Szféra)": {
-      "jobs": 3654,
+      "jobs": 17391,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Tesco": {
-      "jobs": 9,
+      "jobs": 75,
+      "bs_total": 0,
+      "anomalies": 0,
+      "toxicity_index": 0,
+      "churn_probability": 15
+    },
+    "CIB Bank": {
+      "jobs": 26,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -802,6 +1036,9 @@
     },
     "szép-kártya": {
       "összes cég": 1
+    },
+    "training": {
+      "it is": 8
     }
   },
   "eigen_centrality": {
@@ -812,266 +1049,357 @@
     "szép-kártya": 0.15,
     "angol": 0.15,
     "német": 0.15,
-    "analitikus": 0.15
+    "analitikus": 0.15,
+    "training": 0.15
   },
   "skill_velocity": {
     "communication": {
-      "recent_count": 4,
-      "historical_count": 11.680000000000001,
-      "momentum": 2.183333333333333
+      "recent_count": 2,
+      "historical_count": 11.395200000000003,
+      "momentum": 0.570809792843691
     },
     "angol": {
-      "recent_count": 18,
-      "historical_count": 13.624000000000002,
-      "momentum": 2.7264591439688712
+      "recent_count": 16,
+      "historical_count": 27.759360000000008,
+      "momentum": 1.2985377839036374
     },
     "home office": {
-      "recent_count": 18,
-      "historical_count": 27.184000000000005,
-      "momentum": 3.07741273100616
+      "recent_count": 20,
+      "historical_count": 34.55776000000001,
+      "momentum": 0.9067387724217739
     },
     "hibrid": {
-      "recent_count": 20,
-      "historical_count": 14.680000000000001,
-      "momentum": 3.7458333333333327
+      "recent_count": 22,
+      "historical_count": 28.235200000000003,
+      "momentum": 1.2254719721173395
     },
     "irodai": {
       "recent_count": 28,
-      "historical_count": 16.880000000000003,
-      "momentum": 4.891666666666666
+      "historical_count": 38.1632,
+      "momentum": 1.2987794245858761
     },
     "english": {
       "recent_count": 24,
-      "historical_count": 21.488000000000003,
-      "momentum": 4.792556634304206
+      "historical_count": 40.59232000000001,
+      "momentum": 1.442444407008086
     },
     "french": {
       "recent_count": 0,
-      "historical_count": 12.936000000000002,
-      "momentum": 2.62016129032258
+      "historical_count": 8.279040000000002,
+      "momentum": 0.1
     },
     "jenkins": {
       "recent_count": 0,
-      "historical_count": 5.896000000000001,
-      "momentum": 1.8578124999999996
+      "historical_count": 3.773440000000001,
+      "momentum": 0.1
     },
     "sap": {
-      "recent_count": 10,
-      "historical_count": 18.128,
-      "momentum": 3.5539473684210527
+      "recent_count": 12,
+      "historical_count": 27.481920000000006,
+      "momentum": 1.3642515630746597
     },
     "analitikus": {
       "recent_count": 10,
-      "historical_count": 7.784000000000001,
-      "momentum": 3.2021897810218976
+      "historical_count": 14.38176,
+      "momentum": 1.154318488529015
     },
     "agile": {
-      "recent_count": 0,
-      "historical_count": 6.224000000000001,
-      "momentum": 1.9939393939393937
+      "recent_count": 2,
+      "historical_count": 4.183360000000001,
+      "momentum": 0.3008354755784061
     },
     "szép-kártya": {
       "recent_count": 0,
-      "historical_count": 12.136000000000003,
-      "momentum": 2.2169354838709676
+      "historical_count": 7.767040000000003,
+      "momentum": 0.1
     },
     "mozgóbér": {
       "recent_count": 0,
-      "historical_count": 6.224000000000001,
-      "momentum": 1.9939393939393937
+      "historical_count": 3.983360000000001,
+      "momentum": 0.1
     },
     "német": {
-      "recent_count": 12,
-      "historical_count": 3.2,
-      "momentum": 12.1
+      "recent_count": 18,
+      "historical_count": 15.488000000000003,
+      "momentum": 1.8964071856287423
     },
     "c#": {
-      "recent_count": 6,
-      "historical_count": 2.4000000000000004,
-      "momentum": 8.1
+      "recent_count": 8,
+      "historical_count": 9.056000000000001,
+      "momentum": 1.5423076923076924
     },
     "sql": {
       "recent_count": 4,
-      "historical_count": 1.6,
-      "momentum": 4.1
+      "historical_count": 4.784000000000001,
+      "momentum": 1.4392857142857143
     },
     "javascript": {
       "recent_count": 12,
-      "historical_count": 3.2,
-      "momentum": 12.1
+      "historical_count": 13.328000000000001,
+      "momentum": 1.5802631578947366
     },
     "node.js": {
       "recent_count": 8,
-      "historical_count": 2.4000000000000004,
-      "momentum": 8.1
+      "historical_count": 9.056000000000001,
+      "momentum": 1.5423076923076924
     },
     "german": {
       "recent_count": 16,
-      "historical_count": 5.6000000000000005,
-      "momentum": 24.1
+      "historical_count": 18.624000000000002,
+      "momentum": 1.488888888888889
     },
     "italian": {
       "recent_count": 8,
-      "historical_count": 2.4000000000000004,
-      "momentum": 8.1
+      "historical_count": 9.056000000000001,
+      "momentum": 1.5423076923076924
     },
     "java": {
       "recent_count": 4,
-      "historical_count": 1.6,
-      "momentum": 4.1
+      "historical_count": 4.784000000000001,
+      "momentum": 1.4392857142857143
     },
     "dotnet": {
       "recent_count": 4,
-      "historical_count": 1.6,
-      "momentum": 4.1
+      "historical_count": 4.784000000000001,
+      "momentum": 1.4392857142857143
     },
     "prémium": {
       "recent_count": 32,
-      "historical_count": 8.8,
-      "momentum": 40.1
+      "historical_count": 35.712,
+      "momentum": 1.5705882352941176
     },
     "remote": {
       "recent_count": 4,
-      "historical_count": 1.6,
-      "momentum": 4.1
+      "historical_count": 4.784000000000001,
+      "momentum": 1.4392857142857143
     },
     "linux": {
       "recent_count": 6,
-      "historical_count": 1.8,
-      "momentum": 5.1
+      "historical_count": 6.792000000000001,
+      "momentum": 1.5423076923076922
     },
     "képzés": {
       "recent_count": 4,
-      "historical_count": 2,
-      "momentum": 6.1
+      "historical_count": 6.92,
+      "momentum": 2.5074074074074075
     },
     "távmunka": {
       "recent_count": 4,
-      "historical_count": 1.6,
-      "momentum": 4.1
+      "historical_count": 4.784000000000001,
+      "momentum": 1.4392857142857143
     },
     "czech": {
       "recent_count": 0,
-      "historical_count": 1.2000000000000002,
-      "momentum": 2.1
+      "historical_count": 0.7680000000000002,
+      "momentum": 0.1
     },
     "jira": {
       "recent_count": 0,
-      "historical_count": 1.4000000000000001,
-      "momentum": 3.1
+      "historical_count": 2.4960000000000004,
+      "momentum": 1.9867924528301886
     },
     "önálló": {
-      "recent_count": 2,
-      "historical_count": 2.8,
-      "momentum": 10.1
+      "recent_count": 0,
+      "historical_count": 3.912,
+      "momentum": 1.473626373626374
     },
     "cafeteria": {
       "recent_count": 0,
-      "historical_count": 1.2000000000000002,
-      "momentum": 2.1
+      "historical_count": 4.248000000000001,
+      "momentum": 4.396874999999999
     },
     "részvény": {
       "recent_count": 0,
-      "historical_count": 1.2000000000000002,
-      "momentum": 2.1
+      "historical_count": 2.3680000000000003,
+      "momentum": 2.140816326530612
     },
     "nyugdíjpénztár": {
       "recent_count": 0,
-      "historical_count": 1.2000000000000002,
-      "momentum": 2.1
+      "historical_count": 3.4080000000000004,
+      "momentum": 2.273913043478261
     },
     "hibrid (2 nap ho)": {
       "recent_count": 0,
-      "historical_count": 1.2000000000000002,
-      "momentum": 2.1
+      "historical_count": 2.3680000000000003,
+      "momentum": 2.140816326530612
     },
     "kreatív": {
       "recent_count": 2,
-      "historical_count": 1,
-      "momentum": 1.1
+      "historical_count": 2.5200000000000005,
+      "momentum": 1.3499999999999999
     },
     "szlovák": {
+      "recent_count": 2,
+      "historical_count": 2.5200000000000005,
+      "momentum": 1.3499999999999999
+    },
+    "r": {
+      "recent_count": 0,
+      "historical_count": 2.8320000000000003,
+      "momentum": 0.7578947368421053
+    },
+    "problémamegoldó": {
+      "recent_count": 0,
+      "historical_count": 1.4960000000000002,
+      "momentum": 2.7785714285714285
+    },
+    "kritikus gondolkodás": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "egészségbiztosítás": {
+      "recent_count": 0,
+      "historical_count": 0.7680000000000002,
+      "momentum": 0.1
+    },
+    "excel": {
+      "recent_count": 3,
+      "historical_count": 1.4400000000000002,
+      "momentum": 4.1
+    },
+    "gyümölcsnap": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "aws": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "azure": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "docker": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "kubernetes": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "kafka": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "proaktív": {
+      "recent_count": 0,
+      "historical_count": 0.6400000000000001,
+      "momentum": 0.1
+    },
+    "independent": {
+      "recent_count": 0,
+      "historical_count": 1.2800000000000002,
+      "momentum": 0.1
+    },
+    "training": {
+      "recent_count": 1,
+      "historical_count": 4.680000000000001,
+      "momentum": 2.5999999999999996
+    },
+    "teamwork": {
+      "recent_count": 4,
+      "historical_count": 2.9200000000000004,
+      "momentum": 2.183333333333333
+    },
+    "flexibility": {
+      "recent_count": 4,
+      "historical_count": 3.16,
+      "momentum": 3.2818181818181817
+    },
+    "olasz": {
+      "recent_count": 0,
+      "historical_count": 3.12,
+      "momentum": 7.242857142857142
+    },
+    "bónusz": {
+      "recent_count": 0,
+      "historical_count": 1.9600000000000002,
+      "momentum": 4.266666666666666
+    },
+    "resilience": {
+      "recent_count": 0,
+      "historical_count": 0.8,
+      "momentum": 0.1
+    },
+    "precíz": {
+      "recent_count": 2,
+      "historical_count": 1.6,
+      "momentum": 4.1
+    },
+    "sem": {
+      "recent_count": 0,
+      "historical_count": 0.8,
+      "momentum": 0.1
+    },
+    "szép kártya": {
+      "recent_count": 0,
+      "historical_count": 1.6800000000000002,
+      "momentum": 1.35
+    },
+    "önkéntes nyugdíjpénztár": {
+      "recent_count": 0,
+      "historical_count": 1.6800000000000002,
+      "momentum": 1.35
+    },
+    "presentation": {
       "recent_count": 2,
       "historical_count": 1,
       "momentum": 1.1
     },
-    "r": {
+    "csapatépítő": {
       "recent_count": 0,
-      "historical_count": 2.8,
-      "momentum": 10.1
+      "historical_count": 1,
+      "momentum": 1.1
     },
-    "problémamegoldó": {
-      "recent_count": 0,
+    "hybrid": {
+      "recent_count": 1,
       "historical_count": 1.4000000000000001,
       "momentum": 3.1
     },
-    "kritikus gondolkodás": {
+    "bonus": {
+      "recent_count": 2,
+      "historical_count": 1.4000000000000001,
+      "momentum": 3.1
+    },
+    "megbízható": {
       "recent_count": 0,
       "historical_count": 1,
       "momentum": 1.1
     },
-    "egészségbiztosítás": {
+    "prezentációs": {
       "recent_count": 0,
+      "historical_count": 1,
+      "momentum": 1.1
+    },
+    "power bi": {
+      "recent_count": 0,
+      "historical_count": 1,
+      "momentum": 1.1
+    },
+    "analytical": {
+      "recent_count": 1,
       "historical_count": 1.2000000000000002,
       "momentum": 2.1
     },
-    "excel": {
+    "leadership": {
       "recent_count": 0,
       "historical_count": 1,
       "momentum": 1.1
     },
-    "gyümölcsnap": {
-      "recent_count": 0,
+    "ukrán": {
+      "recent_count": 2,
       "historical_count": 1,
-      "momentum": 1.1
+      "momentum": 1
     },
-    "aws": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "azure": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "docker": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "kubernetes": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "kafka": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "proaktív": {
-      "recent_count": 0,
-      "historical_count": 1,
-      "momentum": 1.1
-    },
-    "independent": {
+    "miro": {
       "recent_count": 1,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "training": {
-      "recent_count": 5,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "teamwork": {
-      "recent_count": 3,
-      "historical_count": 1,
-      "momentum": 1
-    },
-    "flexibility": {
-      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     }

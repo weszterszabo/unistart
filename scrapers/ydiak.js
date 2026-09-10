@@ -21,7 +21,9 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
     try {
         // 1. SITEMAP LETÖLTÉSE
         console.log(`   🗺️ [YDIAK] Oldaltérkép (Sitemap) lekérése...`);
-        const sitemapRes = await fetch(`${baseUrl}/sitemap.xml`, { headers: HEADERS });
+        const originUrl = new URL(baseUrl).origin; // Ezzel visszakapjuk a tiszta "https://ydiak.hu"-t
+console.log(`   🗺️ [YDIAK] Oldaltérkép lekérése innen: ${originUrl}/sitemap.xml`);
+const sitemapRes = await fetch(`${originUrl}/sitemap.xml`, { headers: HEADERS });
         if (!sitemapRes.ok) throw new Error(`Sitemap HTTP Hiba: ${sitemapRes.status}`);
         
         const sitemapXml = await sitemapRes.text();

@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 70504,
-    "total_rejected": 20117,
+    "total_parsed_jobs": 70516,
+    "total_rejected": 20121,
     "last_calibration": 1788997039719,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 15.427056435384127,
+    "avg_doc_length": 15.786431754420763,
     "bm25_k1": 1.4955189558631636,
     "bm25_b": 0.75,
     "adaptive_threshold": 37.75947793158171,
@@ -883,7 +883,7 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 13776,
+      "jobs": 13782,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -1009,7 +1009,7 @@
       "churn_probability": 15
     },
     "Quantum Diákszövetkezet": {
-      "jobs": 4,
+      "jobs": 6,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -1411,7 +1411,7 @@
       "momentum": 1
     },
     "rugalmas munkaidő": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },

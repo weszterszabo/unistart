@@ -1,32 +1,32 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 16:16:57
+🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 16:31:10
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
 ### ⚙️ Auto-Tuning (Stochastic Gradient Descent)
 - Dinamikus Szigorúság (Threshold): **37.8 pont**
 - Kifejezés-telítettség (BM25 K1): **1.4955** (Evolúciós ráta: 0.01)
-- Piac Elutasítási Aránya (Rejection Rate): **28.5%**
+- Piac Elutasítási Aránya (Rejection Rate): **28.4%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 14022) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 14146) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Lidl** (Kiírt állások: 83) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **OTP Bank** (Kiírt állások: 1160) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Magyar Posta Zrt.** (Kiírt állások: 435) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Telekom** (Kiírt állások: 205) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 
 ### 📈 FELTÖREKVŐ TRENDEK (Market Momentum)
+- **OLASZ** (Sebesség mutató: +624.3%) 🔥
 - **BÓNUSZ** (Sebesség mutató: +326.7%) 🔥
 - **EXCEL** (Sebesség mutató: +310.0%) 🔥
 - **PRECÍZ** (Sebesség mutató: +310.0%) 🔥
 - **FLEXIBILITY** (Sebesség mutató: +228.2%) 🔥
+- **HYBRID** (Sebesség mutató: +210.0%) 🔥
 - **PROBLÉMAMEGOLDÓ** (Sebesség mutató: +177.9%) 🔥
 - **KÉPZÉS** (Sebesség mutató: +150.7%) 🔥
 - **TEAMWORK** (Sebesség mutató: +118.3%) 🔥
 - **NÉMET** (Sebesség mutató: +89.6%) 🔥
-- **JAVASCRIPT** (Sebesség mutató: +58.0%) 🔥
-- **PRÉMIUM** (Sebesség mutató: +57.1%) 🔥
 
 ### 📍 HELYSZÍN (Top Felfedezések)
 - **KORMÁNYHIVATALA TELJES** (Látta: 361x)  | 🔗 Asszoc: [linux] -> ⏳ Elemzés...

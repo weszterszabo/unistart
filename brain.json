@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 70828,
-    "total_rejected": 20184,
+    "total_parsed_jobs": 71128,
+    "total_rejected": 20212,
     "last_calibration": 1788997039719,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 155.34667386042491,
+    "avg_doc_length": 90.71727759408014,
     "bm25_k1": 1.4955189558631636,
     "bm25_b": 0.75,
     "adaptive_threshold": 37.75947793158171,
@@ -853,16 +853,16 @@
         ]
       },
       "fizetés bruttó": {
-        "count": 6,
-        "last_seen": 1789049793376,
+        "count": 9,
+        "last_seen": 1789050646193,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "megbízható": 4,
-          "bónusz": 4,
-          "precíz": 2
+          "megbízható": 6,
+          "bónusz": 6,
+          "precíz": 3
         },
         "examples": [
           "k partner munkavégzés helye fizetés bruttó 1 700 ft-2 700 ft",
@@ -870,60 +870,60 @@
         ]
       },
       "üllő autóval": {
-        "count": 2,
-        "last_seen": 1789049766812,
+        "count": 3,
+        "last_seen": 1789050619725,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "tea": 2
+          "tea": 3
         },
         "examples": [
           "s reggeli helyszín: üllő autóval, biciklivel vagy vonattal k"
         ]
       },
       "üllő fizetés": {
-        "count": 2,
-        "last_seen": 1789049766812,
+        "count": 3,
+        "last_seen": 1789050619725,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "tea": 2
+          "tea": 3
         },
         "examples": [
           "rszág kft munkavégzés helye üllő fizetés brutt"
         ]
       },
       "budape": {
-        "count": 2,
-        "last_seen": 1789049769569,
+        "count": 3,
+        "last_seen": 1789050622491,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "önálló": 2
+          "önálló": 3
         },
         "examples": [
           "k partner munkavégzés helye budape"
         ]
       },
       "országos fizetés": {
-        "count": 12,
-        "last_seen": 1789049808750,
+        "count": 18,
+        "last_seen": 1789050661622,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "bónusz": 4,
-          "angol": 2,
-          "megbízható": 2,
-          "precíz": 2,
-          "irodai": 2
+          "bónusz": 6,
+          "angol": 3,
+          "megbízható": 3,
+          "precíz": 3,
+          "irodai": 3
         },
         "examples": [
           "k partner munkavégzés helye országos fizetés bruttó 1 860 ft",
@@ -931,8 +931,8 @@
         ]
       },
       "törökbálint": {
-        "count": 2,
-        "last_seen": 1789049772029,
+        "count": 3,
+        "last_seen": 1789050624919,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -943,54 +943,54 @@
         ]
       },
       "gyál fizetés": {
-        "count": 2,
-        "last_seen": 1789049776234,
+        "count": 3,
+        "last_seen": 1789050629119,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "precíz": 2,
-          "irodai": 2
+          "precíz": 3,
+          "irodai": 3
         },
         "examples": [
           "k partner munkavégzés helye gyál fizetés bruttó 2 675 ft óra"
         ]
       },
       "kerület feladat": {
-        "count": 2,
-        "last_seen": 1789049785334,
+        "count": 3,
+        "last_seen": 1789050638208,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "angol": 2
+          "angol": 3
         },
         "examples": [
           "00 ft óra helyszín: 9. kerület feladat: bögrék, mágnesek és"
         ]
       },
       "dunavarsány munkaidő": {
-        "count": 2,
-        "last_seen": 1789049786709,
+        "count": 3,
+        "last_seen": 1789050639607,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "angol": 2,
-          "excel": 2,
-          "proaktív": 2,
-          "irodai": 2
+          "angol": 3,
+          "excel": 3,
+          "proaktív": 3,
+          "irodai": 3
         },
         "examples": [
           "llalatnál munkavégzés helye: dunavarsány munkaidő: rugalmas,"
         ]
       },
       "pilisvörösvár fizetés": {
-        "count": 2,
-        "last_seen": 1789049790529,
+        "count": 3,
+        "last_seen": 1789050643442,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -1001,36 +1001,36 @@
         ]
       },
       "legszebb parkjában": {
-        "count": 2,
-        "last_seen": 1789049791275,
+        "count": 3,
+        "last_seen": 1789050644115,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "megbízható": 2
+          "megbízható": 3
         },
         "examples": [
           "dolgozz a város legszebb parkjában! feltételek aktív nappali"
         ]
       },
       "csopak fizetés": {
-        "count": 2,
-        "last_seen": 1789049791590,
+        "count": 3,
+        "last_seen": 1789050644467,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "kávé": 2
+          "kávé": 3
         },
         "examples": [
           "k partner munkavégzés helye csopak fizetés bruttó 2 500 ft ó"
         ]
       },
       "ecser": {
-        "count": 6,
-        "last_seen": 1789049813299,
+        "count": 9,
+        "last_seen": 1789050666344,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -1041,36 +1041,36 @@
         ]
       },
       "kerület zugló": {
-        "count": 2,
-        "last_seen": 1789049807003,
+        "count": 3,
+        "last_seen": 1789050659842,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "precíz": 2
+          "precíz": 3
         },
         "examples": [
           ":00 közt .helyszín: 14. kerület zugló . feladatok:pakolás, m"
         ]
       },
       "elhelyezkedése miatt": {
-        "count": 1,
-        "last_seen": 1789049781102,
+        "count": 2,
+        "last_seen": 1789050634000,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
         ],
         "context_vectors": {
-          "megbízható": 1
+          "megbízható": 2
         },
         "examples": [
           "pjármű: a helyszín elhelyezkedése miatt csak autóval tudsz b"
         ]
       },
       "hévíz órabér": {
-        "count": 1,
-        "last_seen": 1789049814345,
+        "count": 2,
+        "last_seen": 1789050667389,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -1081,8 +1081,8 @@
         ]
       },
       "hévíz fizetés": {
-        "count": 1,
-        "last_seen": 1789049814345,
+        "count": 2,
+        "last_seen": 1789050667389,
         "auto_promoted": false,
         "companies": [
           "Ismeretlen Cég"
@@ -1123,7 +1123,7 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 14022,
+      "jobs": 14146,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -1249,14 +1249,14 @@
       "churn_probability": 15
     },
     "Quantum Diákszövetkezet": {
-      "jobs": 10,
+      "jobs": 16,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
     },
     "Y Diákszövetkezet": {
-      "jobs": 1,
+      "jobs": 138,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -1313,7 +1313,7 @@
       "momentum": 0.570809792843691
     },
     "angol": {
-      "recent_count": 50,
+      "recent_count": 68,
       "historical_count": 27.759360000000008,
       "momentum": 1.2985377839036374
     },
@@ -1323,12 +1323,12 @@
       "momentum": 0.9067387724217739
     },
     "hibrid": {
-      "recent_count": 24,
+      "recent_count": 25,
       "historical_count": 28.235200000000003,
       "momentum": 1.2254719721173395
     },
     "irodai": {
-      "recent_count": 74,
+      "recent_count": 97,
       "historical_count": 38.1632,
       "momentum": 1.2987794245858761
     },
@@ -1373,7 +1373,7 @@
       "momentum": 0.1
     },
     "német": {
-      "recent_count": 20,
+      "recent_count": 21,
       "historical_count": 15.488000000000003,
       "momentum": 1.8964071856287423
     },
@@ -1418,7 +1418,7 @@
       "momentum": 1.4392857142857143
     },
     "prémium": {
-      "recent_count": 34,
+      "recent_count": 36,
       "historical_count": 35.712,
       "momentum": 1.5705882352941176
     },
@@ -1433,7 +1433,7 @@
       "momentum": 1.5423076923076922
     },
     "képzés": {
-      "recent_count": 6,
+      "recent_count": 7,
       "historical_count": 6.92,
       "momentum": 2.5074074074074075
     },
@@ -1453,7 +1453,7 @@
       "momentum": 1.9867924528301886
     },
     "önálló": {
-      "recent_count": 16,
+      "recent_count": 24,
       "historical_count": 3.912,
       "momentum": 1.473626373626374
     },
@@ -1478,7 +1478,7 @@
       "momentum": 2.140816326530612
     },
     "kreatív": {
-      "recent_count": 6,
+      "recent_count": 8,
       "historical_count": 2.5200000000000005,
       "momentum": 1.3499999999999999
     },
@@ -1493,7 +1493,7 @@
       "momentum": 0.7578947368421053
     },
     "problémamegoldó": {
-      "recent_count": 8,
+      "recent_count": 12,
       "historical_count": 1.4960000000000002,
       "momentum": 2.7785714285714285
     },
@@ -1508,7 +1508,7 @@
       "momentum": 0.1
     },
     "excel": {
-      "recent_count": 11,
+      "recent_count": 15,
       "historical_count": 1.4400000000000002,
       "momentum": 4.1
     },
@@ -1543,7 +1543,7 @@
       "momentum": 0.1
     },
     "proaktív": {
-      "recent_count": 4,
+      "recent_count": 6,
       "historical_count": 0.6400000000000001,
       "momentum": 0.1
     },
@@ -1568,12 +1568,12 @@
       "momentum": 3.2818181818181817
     },
     "olasz": {
-      "recent_count": 2,
+      "recent_count": 4,
       "historical_count": 3.12,
       "momentum": 7.242857142857142
     },
     "bónusz": {
-      "recent_count": 38,
+      "recent_count": 56,
       "historical_count": 1.9600000000000002,
       "momentum": 4.266666666666666
     },
@@ -1583,12 +1583,12 @@
       "momentum": 0.1
     },
     "precíz": {
-      "recent_count": 54,
+      "recent_count": 81,
       "historical_count": 1.6,
       "momentum": 4.1
     },
     "sem": {
-      "recent_count": 5,
+      "recent_count": 8,
       "historical_count": 0.8,
       "momentum": 0.1
     },
@@ -1613,7 +1613,7 @@
       "momentum": 1.1
     },
     "hybrid": {
-      "recent_count": 3,
+      "recent_count": 4,
       "historical_count": 1.4000000000000001,
       "momentum": 3.1
     },
@@ -1623,7 +1623,7 @@
       "momentum": 3.1
     },
     "megbízható": {
-      "recent_count": 41,
+      "recent_count": 62,
       "historical_count": 1,
       "momentum": 1.1
     },
@@ -1658,72 +1658,77 @@
       "momentum": 1
     },
     "rugalmas munkaidő": {
-      "recent_count": 11,
+      "recent_count": 16,
       "historical_count": 1,
       "momentum": 1
     },
     "kávé": {
-      "recent_count": 14,
+      "recent_count": 20,
       "historical_count": 1,
       "momentum": 1
     },
     "parkoló": {
-      "recent_count": 4,
+      "recent_count": 5,
       "historical_count": 1,
       "momentum": 1
     },
     "tea": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "ügyfélközpontúság": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "vezetési": {
-      "recent_count": 8,
+      "recent_count": 12,
       "historical_count": 1,
       "momentum": 1
     },
     "proactive": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "teljesítménybónusz": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "empatikus": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "multitasking": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "csapatmunka": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "céges autó": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "laptop": {
-      "recent_count": 2,
+      "recent_count": 3,
       "historical_count": 1,
       "momentum": 1
     },
     "céges telefon": {
-      "recent_count": 2,
+      "recent_count": 3,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "román": {
+      "recent_count": 1,
       "historical_count": 1,
       "momentum": 1
     }

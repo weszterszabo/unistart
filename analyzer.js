@@ -513,7 +513,7 @@ function runOmniSentientDiscovery(text, companyName, knownTagsInJob, assignedCat
 
     if (knownTagsInJob && knownTagsInJob.length > 0) {
         const isPhysicalDoc = compiledFatalPhysical.test(text);
-        const isCompanyNameLike = /(?:cégünk|vállalatunk|csapatunk|irodánk)\s+([A-Z][a-zA-Z]+)/i;
+        const isCompanyNameLike = /(?:cégünk|vállalatunk|csapatunk|irodánk)\s+([A-Z][a-zA-Z]+)/gi;
         let companyMatch; const fakeTechs = new Set();
         while ((companyMatch = isCompanyNameLike.exec(text)) !== null) fakeTechs.add(companyMatch[1].toLowerCase());
 

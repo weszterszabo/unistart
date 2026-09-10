@@ -7,12 +7,6 @@ const HEADERS = {
     "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7"
 };
 
-const stripHtml = (html) => {
-    if (!html) return "";
-    return html.toString().replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
-};
-
-// 🛡️ A PÁNCÉLÖKÖL: Brutális, megkerülhetetlen időkorlát mindenre
 const withTimeout = (promise, ms) => {
     let timer;
     const timeoutPromise = new Promise((_, reject) => {
@@ -57,15 +51,11 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
 
         console.log(`   🎯 [YDIAK] ${jobUrls.length} db érvényes állás link kiszűrve! Letöltés indul...`);
 
-        // 4. ÁLLÁSOK EGYENKÉNTI LETÖLTÉSE PÁNCÉLÖKÖL VÉDELEMMEL
         for (let i = 0; i < jobUrls.length; i++) {
             const jobUrl = jobUrls[i];
-            
-            // Kiírjuk, hol tart, hogy biztosan lássuk
             process.stdout.write(`   ⏳ [YDIAK] ${i + 1} / ${jobUrls.length} feldolgozása... \r`);
             
             try {
-                // A teljes folyamatot betesszük a 6 másodperces présbe
                 await withTimeout((async () => {
                     const response = await fetch(jobUrl, { headers: HEADERS });
                     if (!response.ok) return;
@@ -73,18 +63,22 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
                     const html = await response.text();
                     const $ = cheerio.load(html);
 
+                    // 🧨 1. VÉDELMI VONAL: Törlünk minden rejtett kódot, formázást és SVG grafikát, ami lefagyaszthatja az NLP-t!
+                    $('script, style, noscript, iframe, svg, meta, link').remove();
+
                     let title = $('h1').first().text().replace(/\s+/g, ' ').trim() || $('title').text().split('-')[0].trim();
                     if (!title || title.length < 3) return;
 
                     let rawDescription = $('main').text() || $('.container').text() || $('body').text();
-                    rawDescription = stripHtml(rawDescription);
+                    
+                    // 🧨 2. VÉDELMI VONAL: Levágjuk a felesleget! Maximum 4000 karakter mehet be az NLP-be!
+                    rawDescription = rawDescription.replace(/\s+/g, ' ').trim().substring(0, 4000);
 
                     const urlCategory = new URL(jobUrl).pathname.split('/')[1] || "";
                     const finalDesc = `Kategória: ${urlCategory}\n${rawDescription}`;
 
                     let jobNature = "Pályakezdő", faculty = "Egyéb", finalTags = [], workStyle = "", location = "Magyarország"; 
 
-                    // 🧠 Az NLP agy is időkorlát alá kerül
                     if (analyzer && typeof analyzer.analyzeJob === 'function') {
                         const analysis = analyzer.analyzeJob(title, finalDesc);
                         if (analysis !== null) {
@@ -103,13 +97,11 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
                         faculty: faculty, work_style: workStyle,
                         tags: Array.isArray(finalTags) ? finalTags : []
                     });
-                })(), 6000); // 6 MÁSODPERC A LIMIT
+                })(), 6000); 
 
-                // Véletlenszerű pihenő, hogy emberinek tűnjünk
-                await new Promise(r => setTimeout(r, Math.floor(Math.random() * 200) + 100));
+                await new Promise(r => setTimeout(r, Math.floor(Math.random() * 150) + 100));
 
             } catch (err) {
-                // Ha fagyott a hálózat vagy az NLP, a Páncélököl ide dobja ki a kódot
                 console.log(`\n   ⚠️ [YDIAK] Ugrás! Hiba vagy megfagyott állás (időtúllépés): ${jobUrl}`);
             }
         }

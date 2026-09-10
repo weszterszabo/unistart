@@ -4,7 +4,7 @@ const path = require("path");
 const http = require('http');
 const https = require('https');
 
-// 🔥 JAVÍTÁS: GLOBÁLIS HÁLÓZATI PAJZS ÉS "HÓHÉR" (Tarpit védelem - az eredeti kódod alapján)
+// 🔥 GLOBÁLIS HÁLÓZATI PAJZS ÉS "HÓHÉR" (Tarpit védelem)
 const GLOBAL_TIMEOUT_MS = 15000;
 const httpAgent = new http.Agent({ keepAlive: true, maxSockets: 500, timeout: GLOBAL_TIMEOUT_MS });
 const httpsAgent = new https.Agent({ keepAlive: true, maxSockets: 500, rejectUnauthorized: false, timeout: GLOBAL_TIMEOUT_MS });
@@ -46,7 +46,7 @@ if (fs.existsSync(path.join(process.cwd(), "analyzer.js"))) {
 }
 
 // ------------------------------------------------------------------
-// 2. SCHEMAS, SANITIZATION & HYPER-PRECISION GEOGUARD (A te kódod)
+// 2. SCHEMAS, SANITIZATION & HYPER-PRECISION GEOGUARD
 // ------------------------------------------------------------------
 class ArenaLRUCache {
     constructor(limit = 2000) {
@@ -127,7 +127,6 @@ const GeoGuard = {
 };
 GeoGuard.init(); 
 
-// Egyszerűsített Sanitizer, ami nem kér Firebase-t, de használja a TITAN logikát
 function sanitizeAndScoreJob(rawJobInput, companyName) {
     try {
         const rawJob = DataSchemaGuard.validate(rawJobInput);
@@ -148,12 +147,24 @@ function sanitizeAndScoreJob(rawJobInput, companyName) {
 
         if (nlpEngine && cleanJob.title) {
             const nlpResult = nlpEngine.analyzeJob(cleanJob.title, rawJob.description, companyName);
-            if (nlpResult) {
-                cleanJob.job_nature = nlpResult.airtable_ready?.job_nature || "Pályakezdő";
-                cleanJob.faculty = nlpResult.airtable_ready?.faculty || "Egyéb";
-                cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
+            if (!nlpResult) return { health_score: 0, reason: "Az NLP kiszűrte." };
+
+            cleanJob.job_nature = nlpResult.airtable_ready?.job_nature || "Pályakezdő";
+            cleanJob.faculty = nlpResult.airtable_ready?.faculty || "Egyéb";
+            cleanJob.enriched_tags = nlpResult.airtable_ready?.required_tags || [];
+            cleanJob.all_nlp_data = nlpResult; 
+        }
+
+        // 🔥 KÖTELEZŐ FELÜLBÍRÁLÁS: Ha diákszövetkezet, ERŐSZAKKAL "student" kategóriába tesszük!
+        const studentPortals = ["Quantum Diákszövetkezet", "Y Diákszövetkezet", "Meló-Diák", "Human Centrum"];
+        if (studentPortals.includes(companyName)) {
+            cleanJob.job_nature = "Diákmunka";
+            if (cleanJob.all_nlp_data && cleanJob.all_nlp_data.airtable_ready) {
+                cleanJob.all_nlp_data.airtable_ready.job_nature = "Diákmunka";
+                cleanJob.all_nlp_data.airtable_ready.position_type = "student";
             }
         }
+
         return cleanJob; 
     } catch (e) {
         return { health_score: 0, error: e.message };
@@ -168,13 +179,14 @@ async function runTestScraper() {
     console.log("🚀 UniStart CHRONOS-NEXUS [LOKÁLIS TESZT MÓD]");
     console.log("======================================================\n");
     
-    // Itt definiáljuk a 4 diák állásportált
     const testTargets = [
         { id: "quantum", name: "Quantum Diákszövetkezet", url: "https://cloud.qdiak.hu/munkak" },
         { id: "ydiak", name: "Y Diákszövetkezet", url: "https://ydiak.hu/aktualis-diakmunkaink" },
         { id: "melodiak", name: "Meló-Diák", url: "https://www.melodiak.hu" },
-        { id: "minddiak", name: "Human Centrum", url: "https://www.humancentrum.hu" } // Cseréld "minddiak"-ra, ha azon a néven mentetted!
+        { id: "minddiak", name: "Human Centrum", url: "https://www.humancentrum.hu" } 
     ];
+
+    const allValidJobsForExport = [];
 
     for (const target of testTargets) {
         const engine = engines[target.id];
@@ -187,18 +199,23 @@ async function runTestScraper() {
         console.log(`\n🏢 --- ${target.name} TESZTELÉSE INDUL --- 🏢`);
         
         try {
-            // Futtatjuk magát a letöltőt a hálózati hóhér (TimeoutGuard) védelmével
             const rawJobs = await engine.scrape(target.name, target.url, []);
             console.log(`✅ Nyers állások letöltve: ${rawJobs.length} db.`);
 
             if (rawJobs.length > 0) {
                 console.log(`🧠 NLP és GeoGuard feldolgozás (Sanitizer) folyamatban...`);
                 
-                // Az első 2 állást átküldjük a teljes TITAN Sanitizeren
-                const previewJobs = rawJobs.slice(0, 2).map(job => sanitizeAndScoreJob(job, target.name));
+                let passedCount = 0;
+                for (const job of rawJobs) {
+                    const sanitizedJob = sanitizeAndScoreJob(job, target.name);
+                    // Bármi, ami megmarad (cím, link), azt elmentjük a listába!
+                    if (sanitizedJob.health_score > 0) {
+                        allValidJobsForExport.push(sanitizedJob);
+                        passedCount++;
+                    }
+                }
                 
-                console.log(`👀 Első 2 állás végleges, szűrt adata (ahogy az adatbázisba kerülne):`);
-                console.log(JSON.stringify(previewJobs, null, 2));
+                console.log(`   ✔️ Ebből ${passedCount} db sikeresen elemezve és mentésre kész.`);
             }
 
         } catch (error) {
@@ -207,7 +224,17 @@ async function runTestScraper() {
     }
 
     console.log("\n======================================================");
-    console.log("🏁 TESZT BEFEJEZŐDÖTT!");
+    console.log(`💾 FÁJLBA MENTÉS: Összesen ${allValidJobsForExport.length} db végleges állás kimentése indul...`);
+    
+    try {
+        // 🔥 Itt jön létre a jobs.json, pont ahogy kérted!
+        const outputPath = path.join(process.cwd(), "jobs.json");
+        fs.writeFileSync(outputPath, JSON.stringify(allValidJobsForExport, null, 2), 'utf8');
+        console.log(`✅ SIKER! Az állások mentve ide: ${outputPath}`);
+    } catch (e) {
+        console.error("❌ Hiba a fájl mentésekor:", e.message);
+    }
+
     console.log("======================================================\n");
 }
 

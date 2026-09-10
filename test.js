@@ -173,7 +173,7 @@ async function runTestScraper() {
         { id: "quantum", name: "Quantum Diákszövetkezet", url: "https://cloud.qdiak.hu/munkak" },
         { id: "ydiak", name: "Y Diákszövetkezet", url: "https://ydiak.hu/aktualis-diakmunkaink" },
         { id: "melodiak", name: "Meló-Diák", url: "https://www.melodiak.hu" },
-        { id: "humancentrum", name: "Human Centrum", url: "https://www.humancentrum.hu" } // Cseréld "minddiak"-ra, ha azon a néven mentetted!
+        { id: "minddiak", name: "Human Centrum", url: "https://www.humancentrum.hu" } // Cseréld "minddiak"-ra, ha azon a néven mentetted!
     ];
 
     for (const target of testTargets) {

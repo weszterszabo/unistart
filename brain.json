@@ -1,10 +1,10 @@
 {
   "metadata": {
-    "total_parsed_jobs": 70444,
-    "total_rejected": 20093,
+    "total_parsed_jobs": 70474,
+    "total_rejected": 20105,
     "last_calibration": 1788997039719,
     "version": "84.1_OMNI_MASTER_STABLE",
-    "avg_doc_length": 10.923769858145782,
+    "avg_doc_length": 13.344391682825762,
     "bm25_k1": 1.4955189558631636,
     "bm25_b": 0.75,
     "adaptive_threshold": 37.75947793158171,
@@ -883,7 +883,7 @@
   },
   "company_profiles": {
     "Ismeretlen Cég": {
-      "jobs": 13744,
+      "jobs": 13760,
       "bs_total": 0,
       "anomalies": 0,
       "toxicity_index": 0,
@@ -1007,6 +1007,13 @@
       "anomalies": 0,
       "toxicity_index": 0,
       "churn_probability": 15
+    },
+    "Quantum Diákszövetkezet": {
+      "jobs": 2,
+      "bs_total": 0,
+      "anomalies": 0,
+      "toxicity_index": 0,
+      "churn_probability": 15
     }
   },
   "dynamic_faculties": {},
@@ -1074,7 +1081,7 @@
       "momentum": 1.2254719721173395
     },
     "irodai": {
-      "recent_count": 28,
+      "recent_count": 31,
       "historical_count": 38.1632,
       "momentum": 1.2987794245858761
     },
@@ -1319,7 +1326,7 @@
       "momentum": 7.242857142857142
     },
     "bónusz": {
-      "recent_count": 0,
+      "recent_count": 1,
       "historical_count": 1.9600000000000002,
       "momentum": 4.266666666666666
     },
@@ -1399,6 +1406,21 @@
       "momentum": 1
     },
     "miro": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "rugalmas munkaidő": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "kávé": {
+      "recent_count": 1,
+      "historical_count": 1,
+      "momentum": 1
+    },
+    "parkoló": {
       "recent_count": 1,
       "historical_count": 1,
       "momentum": 1

@@ -162067,3 +162067,39 @@
 🏢 Bosch | 📌 plc szerviztechnikus
    ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
 
+🏢 Ismeretlen Cég | 📌 próbavásárló
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 termékbemutató hostess / promóter
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 rendezvényes hostess
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 promóciós hostess
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 szekrény telepítés
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 pénztáros diákmunka etyeken! ⚡
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 pénztáros diákmunka érden! ⚡
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 rendezvény kisegítő
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Ismeretlen Cég | 📌 műsorvezető, operátor
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Ismeretlen Cég | 📌 szobatakarító diákmunka hévízen!
+   ❌ OK: Szigorú fizikai/sofőr munka tiltás (Hardcore Physical Guard)
+
+🏢 Y Diákszövetkezet | 📌 dolgozz egy szuper reggeliző helyen!
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+
+🏢 Y Diákszövetkezet | 📌 dolgozz menő autókkal! gépjármű-mozgató
+   ❌ OK: Nem diákmunka, nem IT, nem szellemi szakma, és nincs egyértelmű kategóriája (Túl laza feltételek)
+

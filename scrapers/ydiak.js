@@ -71,23 +71,19 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
 
         console.log(`   🎯 [YDIAK] ${jobUrls.length} db érvényes állás link kiszűrve! Letöltés indul...`);
 
-        // 4. ÁLLÁSOK LETÖLTÉSE (NYOMKÖVETŐ MÓD)
         for (let i = 0; i < jobUrls.length; i++) {
             const jobUrl = jobUrls[i];
             
-            console.log(`\n▶️ [YDIAK] ${i + 1} / ${jobUrls.length} feldolgozása indul: ${jobUrl}`);
+            process.stdout.write(`   ⏳ [YDIAK] ${i + 1} / ${jobUrls.length} feldolgozása... \r`);
             
-            console.log(`   ├─ 1. Letöltés...`);
             const html = await vipDownload(jobUrl);
-            if (!html) { console.log(`   └─ ❌ Ugrás (Hálózati hiba)`); continue; }
+            if (!html) { continue; }
 
-            console.log(`   ├─ 2. Cheerio betöltés és tisztítás...`);
             const $ = cheerio.load(html);
             $('script, style, noscript, iframe, svg, meta, link').remove();
 
             let title = $('h1').first().text().replace(/\s+/g, ' ').trim() || $('title').text().split('-')[0].trim();
             if (!title || title.length < 3) {
-                console.log(`   └─ ❌ Ugrás (Nincs cím)`);
                 continue;
             }
 
@@ -101,21 +97,24 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
             const finalDesc = `Kategória: ${urlCategory}\n${rawDescription}`;
 
             let jobNature = "Pályakezdő", faculty = "Egyéb", finalTags = [], workStyle = "", location = "Magyarország"; 
-
-            console.log(`   ├─ 3. NLP agy hívása (Cím: ${title})`);
             
             if (analyzer && typeof analyzer.analyzeJob === 'function') {
-                const analysis = analyzer.analyzeJob(title, finalDesc);
-                if (analysis !== null) {
-                    jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
-                    faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
-                    workStyle = analysis.metadata?.work_style || analysis.work_style || "";
-                    finalTags = analysis.airtable_ready?.required_tags || analysis.tags || [];
-                    if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+               try {
+                  const analysis = await Promise.race([
+                      new Promise(resolve => resolve(analyzer.analyzeJob(title, finalDesc))),
+                      new Promise((_, reject) => setTimeout(() => reject(new Error('NLP Timeout')), 2000))
+                  ]);
+                   if (analysis !== null) {
+                       jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+                       faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+                       workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+                       finalTags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+                       if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+                   }
+                } catch (nlpErr) {
+                   console.log(`\n   ⚠️ [YDIAK] NLP hiba vagy időtúllépés az állásnál: ${title}`);
                 }
             }
-
-            console.log(`   └─ 4. Kész! NLP végzett, állás mentve.`);
 
             allJobs.push({
                 title: title, url: jobUrl, apply_url: jobUrl, location: location, 

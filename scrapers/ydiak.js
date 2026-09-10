@@ -1,134 +1,133 @@
 const cheerio = require("cheerio");
-// 🧠 BEHÚZZUK A KÖZPONTI NLP AGYAT
 const analyzer = require("../analyzer");
 
-// 🛡️ Stealth Headers a blokkolás elkerülésére
 const HEADERS = {
-  "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
-  "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7",
-  "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
-  "Cache-Control": "max-age=0",
-  "Upgrade-Insecure-Requests": "1"
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept-Language": "hu-HU,hu;q=0.9,en-US;q=0.8,en;q=0.7"
 };
 
-// HTML tisztító segédfüggvény
 const stripHtml = (html) => {
     if (!html) return "";
     return html.toString().replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
 };
 
-exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "https://ydiak.hu/aktualis-diakmunkaink", knownUrls = []) {
-  const allJobs = [];
-  const seenUrls = new Set();
-  
-  let pageCount = 1;
-  let hasNextPage = true;
-  const MAX_PAGES = 15;
-
-  console.log(`   🌐 [YDIAK SCRAPER] Indulás: ${companyName}`);
-
-  while (hasNextPage && pageCount <= MAX_PAGES) {
-    // A Laravel/Livewire a ?page= paraméterrel kezeli a lapozást
-    const currentUrl = pageCount === 1 ? baseUrl : `${baseUrl}?page=${pageCount}`;
-    console.log(`   ⬇️ [YDIAK] ${pageCount}. oldal letapogatása: ${currentUrl}`);
+exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "https://ydiak.hu", knownUrls = []) {
+    const allJobs = [];
+    const seenUrls = new Set();
     
+    console.log(`   🚀 [YDIAK SITEMAP SCRAPER] Indulás: ${companyName}`);
+
     try {
-      const response = await fetch(currentUrl, { headers: HEADERS });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP Hiba: ${response.status} - ${currentUrl}`);
-      }
-
-      const html = await response.text();
-      const $ = cheerio.load(html);
-      
-      let jobsFoundOnPage = 0;
-
-      // 🔍 Végigmegyünk az <article> álláskártyákon a beküldött HTML alapján
-      $('article').each((i, el) => {
-        // 1. URL kinyerése a jelentkezés gombból
-        const jobUrl = $(el).find('a.btn-yellow').attr('href');
+        // 1. SITEMAP LETÖLTÉSE
+        console.log(`   🗺️ [YDIAK] Oldaltérkép (Sitemap) lekérése...`);
+        const sitemapRes = await fetch(`${baseUrl}/sitemap.xml`, { headers: HEADERS });
+        if (!sitemapRes.ok) throw new Error(`Sitemap HTTP Hiba: ${sitemapRes.status}`);
         
-        if (jobUrl && !seenUrls.has(jobUrl) && !knownUrls.includes(jobUrl)) {
-            seenUrls.add(jobUrl);
+        const sitemapXml = await sitemapRes.text();
+        
+        // 2. AZ ÖSSZES LINK KINYERÉSE (Regex mágia)
+        const locMatches = [...sitemapXml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m => m[1]);
+        console.log(`   🔍 [YDIAK] Összesen ${locMatches.length} db link találva az oldaltérképen.`);
 
-            // 2. Cím kinyerése
-            const title = $(el).find('h4').text().trim() || "Névtelen pozíció";
-            
-            // 3. Lokáció és Bér kinyerése (a kártya alján lévő ikonok melletti szöveg)
-            const details = [];
-            $(el).find('.mb-6.mt-auto p').each((j, p) => {
-                details.push($(p).text().trim());
-            });
-            const location = details[0] || "Magyarország"; // Az első <p> a lokáció (Budapest XI.)
-            const salary = details[1] || ""; // A második <p> a bér (Bruttó 2 200 Ft/óra)
-
-            // 4. Kategória/Címke kinyerése a kártya tetejéről
-            const domTags = [];
-            const tagText = $(el).find('span.bg-white').first().text().trim();
-            if (tagText) domTags.push(tagText);
-
-            // 5. Rövid leírás kinyerése
-            const shortDesc = $(el).find('p.line-clamp-5').text().trim();
-
-            // 6. Szöveg előkészítése a NLP elemzéshez
-            const rawDescription = stripHtml(`
-                Fizetés: ${salary}
-                Lokáció: ${location}
-                Címkék: ${domTags.join(', ')}
-                Részletek: ${shortDesc} 
-            `);
-
-            // 🧠 7. KÖZPONTI NLP AGY HÍVÁSA
-            const analysis = analyzer.analyzeJob(title, rawDescription);
-
-            // 🛡️ KAPUŐR
-            if (analysis !== null) {
-                jobsFoundOnPage++;
-
-                const jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
-                const faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
-                const workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+        // 3. CSAK AZ ÁLLÁSOK KISZŰRÉSE (A Cheat Code logika)
+        const jobUrls = [];
+        for (const url of locMatches) {
+            try {
+                const parsed = new URL(url);
+                const pathSegments = parsed.pathname.split('/').filter(Boolean);
                 
-                // Összefésüljük a weboldal kategóriáját az NLP címkéivel
-                let finalTags = analysis.airtable_ready?.required_tags || analysis.tags || domTags;
-                if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+                // Szabály: Pontosan 2 mappa mélység (kategoria/allas-neve), nem angol, nem a kategória lista
+                if (
+                    pathSegments.length === 2 && 
+                    pathSegments[0] !== 'en' && 
+                    pathSegments[0] !== 'aktualis-diakmunkaink' &&
+                    !url.includes('/uploads/')
+                ) {
+                    if (!seenUrls.has(url) && !knownUrls.includes(url)) {
+                        jobUrls.push(url);
+                        seenUrls.add(url);
+                    }
+                }
+            } catch (e) { /* Hibás URL ignorálása */ }
+        }
+
+        console.log(`   🎯 [YDIAK] ${jobUrls.length} db érvényes állás link kiszűrve! Letöltés indul...`);
+
+        // 4. ÁLLÁSOK EGYENKÉNTI LETÖLTÉSE (Kíméletes sebességgel)
+        let processedCount = 0;
+        
+        for (const jobUrl of jobUrls) {
+            try {
+                const response = await fetch(jobUrl, { headers: HEADERS });
+                if (!response.ok) continue;
+                
+                const html = await response.text();
+                const $ = cheerio.load(html);
+
+                // Cím és tartalom kinyerése
+                let title = $('h1').first().text().replace(/\s+/g, ' ').trim() || $('title').text().split('-')[0].trim();
+                if (!title || title.length < 3) continue;
+
+                // Az Y Diák általában a cikkeket egy main, article vagy .container tagbe teszi
+                let rawDescription = $('main').text() || $('.container').text() || $('body').text();
+                rawDescription = stripHtml(rawDescription);
+
+                // Ha az URL-ből ki tudjuk nyerni a kategóriát, azt is átadjuk az NLP-nek
+                const urlCategory = new URL(jobUrl).pathname.split('/')[1] || "";
+                const finalDesc = `Kategória: ${urlCategory}\n${rawDescription}`;
+
+                // 🧠 KÖZPONTI NLP AGY HÍVÁSA
+                let jobNature = "Pályakezdő";
+                let faculty = "Egyéb";
+                let finalTags = [];
+                let workStyle = "";
+                let location = "Magyarország"; // Az NLP vagy a Sanitizer úgyis javítja a szövegből!
+
+                if (analyzer && typeof analyzer.analyzeJob === 'function') {
+                    const analysis = analyzer.analyzeJob(title, finalDesc);
+                    if (analysis !== null) {
+                        jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+                        faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+                        workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+                        finalTags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+                        if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+                    }
+                }
 
                 allJobs.push({
-                    title: title.replace(/\s+/g, ' ').trim(),
+                    title: title,
                     url: jobUrl,
                     apply_url: jobUrl,
-                    location: location.replace(/\s+/g, ' ').trim(),
+                    location: location, 
                     date_posted: new Date().toISOString(),
                     experience_level: jobNature,
                     subsidiary: companyName,
                     employment_type: "Diákmunka",
                     faculty: faculty,
                     work_style: workStyle,
-                    tags: finalTags
+                    tags: Array.isArray(finalTags) ? finalTags : []
                 });
+
+                processedCount++;
+                // Fejlődés kijelzése minden 10. állásnál
+                if (processedCount % 10 === 0) {
+                    process.stdout.write(`   ⏳ [YDIAK] ${processedCount} / ${jobUrls.length} állás feldolgozva...\r`);
+                }
+
+                // Udvarias szünet, nehogy a Tarpit védelem kivágjon minket
+                await new Promise(r => setTimeout(r, 250));
+
+            } catch (err) {
+                console.warn(`   ⚠️ [YDIAK] Hiba az oldal letöltésekor: ${jobUrl} - ${err.message}`);
             }
         }
-      });
 
-      // 🚦 8. CIKLUS KONTROLL
-      // Ha már az aktuális oldalon egyetlen új állást sem talált, akkor elfogytak az oldalak
-      if (jobsFoundOnPage === 0) {
-        hasNextPage = false;
-        console.log(`   ⏹️ [YDIAK] Nincs több állás. Lapozás befejezve.`);
-      } else {
-        pageCount++;
-        // Késleltetés a túlterhelés elkerülése végett
-        await new Promise(r => setTimeout(r, 800 + Math.random() * 500));
-      }
+        console.log(`\n   ✔️  [YDIAK] Kész! ${allJobs.length} db valid állás sikeresen megmentve a Sitemap-ből.`);
+        return allJobs;
 
     } catch (err) {
-      console.error(`   ❌ [YDIAK] Hiba az oldal olvasásakor:`, err.message);
-      if (pageCount === 1) throw err;
-      hasNextPage = false;
+        console.error(`   ❌ [YDIAK] Hiba a Sitemap feldolgozásakor:`, err.message);
+        throw err;
     }
-  }
-
-  console.log(`   ✔️  [YDIAK] Kész! ${allJobs.length} db valid állás mentve.`);
-  return allJobs;
 };

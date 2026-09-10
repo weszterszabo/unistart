@@ -2013,6 +2013,13 @@
             job._corpusClean = removeAccents(jobCorpusRaw);
             job._locClean = removeAccents((job.location || '').toLowerCase());
             
+            // Biztonsági fallback a fülek szétválasztásához
+            if (!job.position_type) {
+                 if (job.job_nature === "Diákmunka") job.position_type = 'student';
+                 else if (job.job_nature === "Gyakornok") job.position_type = 'intern';
+                 else job.position_type = 'graduate';
+            }
+            
             // Dátumok feldolgozása a nyers stringből
             let sDate = job.scraped_at || job.updated_at || 0;
             if (typeof sDate === 'string') sDate = new Date(sDate).getTime() || 0;
@@ -2383,18 +2390,13 @@
             // Ha a kedvencek fülön vagyunk
             if (filterMode === 'saved' && !savedJobIds.includes(job.id)) return false;
 
-            // 🔥 FÜL ALAPÚ SZŰRÉS (Többszörösen biztosított fallback logikával)
+            // 🔥 FÜL ALAPÚ SZŰRÉS (Szigorú szétválasztás)
             if (filterMode === 'student') {
-                const isStudent = job.position_type === 'student' || (job.tags && job.tags.includes('Diákmunka')) || (job.job_nature && job.job_nature.includes('Diák'));
-                if (!isStudent) return false;
+                if (job.position_type !== 'student' && job.job_nature !== 'Diákmunka') return false;
             } else if (filterMode === 'intern') {
-                const isIntern = job.position_type === 'intern' || (job.tags && job.tags.includes('Gyakornoki')) || (job.job_nature && job.job_nature.includes('Gyakornok'));
-                if (!isIntern) return false;
+                if (job.position_type !== 'intern' && job.job_nature !== 'Gyakornok') return false;
             } else if (filterMode === 'graduate') {
-                const isGraduate = job.position_type === 'graduate' || (job.job_nature && job.job_nature.includes('Pályakezdő'));
-                // Ha régi az adat és semmi sincs megadva, default pályakezdőnek vesszük, de kizárjuk a már megjelölt diák/gyakornokot
-                if (!isGraduate && job.position_type === 'student') return false;
-                if (!isGraduate && job.position_type === 'intern') return false;
+                if (job.position_type === 'student' || job.job_nature === 'Diákmunka' || job.position_type === 'intern' || job.job_nature === 'Gyakornok') return false;
             }
 
             // Gombos (Modal) szűrők
@@ -2521,6 +2523,17 @@
             const vibeTag = job.work_style ? `<span class="job-tag tag-vibe clickable-tag" onclick="addTagToSearch('${job.work_style.split(' ')[1]}', event)" title="Keresés erre a stílusra">${job.work_style}</span>` : '';
             const microTags = (job.tags || []).map(tag => `<span class="job-tag tag-micro clickable-tag" onclick="addTagToSearch('${tag}', event)" title="Keresés: ${tag}">${highlightTextInline(tag)}</span>`).join('');
 
+            // 🔥 ÚJ: FIZETÉS CÍMKE GENERÁLÁSA
+            let salaryTag = "";
+            if (job.salary_min) {
+                let salaryText = job.salary_min.toLocaleString('hu-HU') + " " + (job.salary_currency || "HUF");
+                if (job.salary_max && job.salary_max > job.salary_min) {
+                    salaryText += " - " + job.salary_max.toLocaleString('hu-HU');
+                }
+                salaryText += job.is_hourly_wage ? " / óra" : " / hó";
+                salaryTag = `<span class="job-tag" style="background: rgba(16, 185, 129, 0.15); color: var(--success-color); border-color: rgba(16, 185, 129, 0.3);">💰 ${salaryText}</span>`;
+            }
+
             const applyLink = job.apply_url || job.url;
             
             // A kártya kattinthatóságát kikapcsoltuk:
@@ -2531,7 +2544,7 @@
                     <h3 class="company-name">${jobTitle}</h3>
                     <p class="company-short-desc">${companyName}</p>
                     <div class="job-tags">
-                        ${locTag}${dPosted}${facultyTag}${vibeTag}${microTags}
+                        ${salaryTag}${locTag}${dPosted}${facultyTag}${vibeTag}${microTags}
                     </div>
                 </div>
                 <div class="company-card-actions">

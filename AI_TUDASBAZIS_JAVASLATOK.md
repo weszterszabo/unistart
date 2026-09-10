@@ -1,6 +1,6 @@
 
 ======================================================
-🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 15:00:16
+🧠 UNI-START AI TUDÁSBÁZIS (V84.1 OMNI-MASTER) - 2026. 09. 10. 15:13:30
 ======================================================
 Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai paramétereit, és kiszámolta a piaci fluktuációt.
 
@@ -10,7 +10,7 @@ Az MI prediktív elemzéseket futtatott, optimalizálta saját matematikai param
 - Piac Elutasítási Aránya (Rejection Rate): **28.5%**
 
 ### 🏢 CÉG-DIAGNOSZTIKA (Vállalati Kultúra Toxicitás)
-- **Ismeretlen Cég** (Kiírt állások: 13760) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
+- **Ismeretlen Cég** (Kiírt állások: 13776) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Lidl** (Kiírt állások: 83) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **OTP Bank** (Kiírt állások: 1160) | HR Zsargon Átlag: 0.0 | ✅ Egészséges
 - **Magyar Posta Zrt.** (Kiírt állások: 435) | HR Zsargon Átlag: 0.0 | ✅ Egészséges

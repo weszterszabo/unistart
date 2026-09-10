@@ -12,6 +12,15 @@ const stripHtml = (html) => {
     return html.toString().replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').trim();
 };
 
+// 🛡️ A PÁNCÉLÖKÖL: Brutális, megkerülhetetlen időkorlát mindenre
+const withTimeout = (promise, ms) => {
+    let timer;
+    const timeoutPromise = new Promise((_, reject) => {
+        timer = setTimeout(() => reject(new Error('HARD_TIMEOUT')), ms);
+    });
+    return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timer));
+};
+
 exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "https://ydiak.hu", knownUrls = []) {
     const allJobs = [];
     const seenUrls = new Set();
@@ -48,77 +57,60 @@ exports.scrape = async function(companyName = "Y Diákszövetkezet", baseUrl = "
 
         console.log(`   🎯 [YDIAK] ${jobUrls.length} db érvényes állás link kiszűrve! Letöltés indul...`);
 
-        // 4. ÁLLÁSOK EGYENKÉNTI LETÖLTÉSE (Időtúllépés elleni védelemmel)
+        // 4. ÁLLÁSOK EGYENKÉNTI LETÖLTÉSE PÁNCÉLÖKÖL VÉDELEMMEL
         for (let i = 0; i < jobUrls.length; i++) {
             const jobUrl = jobUrls[i];
             
+            // Kiírjuk, hol tart, hogy biztosan lássuk
+            process.stdout.write(`   ⏳ [YDIAK] ${i + 1} / ${jobUrls.length} feldolgozása... \r`);
+            
             try {
-                // ⏱️ HÓHÉR: Maximum 8 másodpercet adunk egy oldalnak
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 8000);
+                // A teljes folyamatot betesszük a 6 másodperces présbe
+                await withTimeout((async () => {
+                    const response = await fetch(jobUrl, { headers: HEADERS });
+                    if (!response.ok) return;
+                    
+                    const html = await response.text();
+                    const $ = cheerio.load(html);
 
-                const response = await fetch(jobUrl, { 
-                    headers: HEADERS, 
-                    signal: controller.signal 
-                });
-                
-                clearTimeout(timeoutId); // Ha letöltött, leállítjuk a stoppert
+                    let title = $('h1').first().text().replace(/\s+/g, ' ').trim() || $('title').text().split('-')[0].trim();
+                    if (!title || title.length < 3) return;
 
-                if (!response.ok) continue;
-                
-                const html = await response.text();
-                const $ = cheerio.load(html);
+                    let rawDescription = $('main').text() || $('.container').text() || $('body').text();
+                    rawDescription = stripHtml(rawDescription);
 
-                let title = $('h1').first().text().replace(/\s+/g, ' ').trim() || $('title').text().split('-')[0].trim();
-                if (!title || title.length < 3) continue;
+                    const urlCategory = new URL(jobUrl).pathname.split('/')[1] || "";
+                    const finalDesc = `Kategória: ${urlCategory}\n${rawDescription}`;
 
-                let rawDescription = $('main').text() || $('.container').text() || $('body').text();
-                rawDescription = stripHtml(rawDescription);
+                    let jobNature = "Pályakezdő", faculty = "Egyéb", finalTags = [], workStyle = "", location = "Magyarország"; 
 
-                const urlCategory = new URL(jobUrl).pathname.split('/')[1] || "";
-                const finalDesc = `Kategória: ${urlCategory}\n${rawDescription}`;
-
-                let jobNature = "Pályakezdő";
-                let faculty = "Egyéb";
-                let finalTags = [];
-                let workStyle = "";
-                let location = "Magyarország"; 
-
-                if (analyzer && typeof analyzer.analyzeJob === 'function') {
-                    const analysis = analyzer.analyzeJob(title, finalDesc);
-                    if (analysis !== null) {
-                        jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
-                        faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
-                        workStyle = analysis.metadata?.work_style || analysis.work_style || "";
-                        finalTags = analysis.airtable_ready?.required_tags || analysis.tags || [];
-                        if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+                    // 🧠 Az NLP agy is időkorlát alá kerül
+                    if (analyzer && typeof analyzer.analyzeJob === 'function') {
+                        const analysis = analyzer.analyzeJob(title, finalDesc);
+                        if (analysis !== null) {
+                            jobNature = analysis.metadata?.job_nature || analysis.job_nature || "Pályakezdő";
+                            faculty = analysis.metadata?.faculty || analysis.faculty || "Egyéb";
+                            workStyle = analysis.metadata?.work_style || analysis.work_style || "";
+                            finalTags = analysis.airtable_ready?.required_tags || analysis.tags || [];
+                            if (!Array.isArray(finalTags) && analysis.tags?.required) finalTags = analysis.tags.required;
+                        }
                     }
-                }
 
-                allJobs.push({
-                    title: title,
-                    url: jobUrl,
-                    apply_url: jobUrl,
-                    location: location, 
-                    date_posted: new Date().toISOString(),
-                    experience_level: jobNature,
-                    subsidiary: companyName,
-                    employment_type: "Diákmunka",
-                    faculty: faculty,
-                    work_style: workStyle,
-                    tags: Array.isArray(finalTags) ? finalTags : []
-                });
+                    allJobs.push({
+                        title: title, url: jobUrl, apply_url: jobUrl, location: location, 
+                        date_posted: new Date().toISOString(), experience_level: jobNature,
+                        subsidiary: companyName, employment_type: "Diákmunka",
+                        faculty: faculty, work_style: workStyle,
+                        tags: Array.isArray(finalTags) ? finalTags : []
+                    });
+                })(), 6000); // 6 MÁSODPERC A LIMIT
 
-                // Írjuk ki pontosan, hol tartunk, hogy lássuk ha megakad
-                process.stdout.write(`   ⏳ [YDIAK] ${i + 1} / ${jobUrls.length} feldolgozva... \r`);
-                
-                // Udvarias, de dinamikus szünet (hogy összezavarjuk a robot-szűrőt)
-                const randomDelay = Math.floor(Math.random() * 300) + 100;
-                await new Promise(r => setTimeout(r, randomDelay));
+                // Véletlenszerű pihenő, hogy emberinek tűnjünk
+                await new Promise(r => setTimeout(r, Math.floor(Math.random() * 200) + 100));
 
             } catch (err) {
-                // Ha a 8 másodperc lejárt, vagy egyéb hiba van, eldobjuk az oldalt és megyünk tovább
-                console.log(`\n   ⚠️ [YDIAK] Ugrás, az oldal nem válaszolt időben: ${jobUrl}`);
+                // Ha fagyott a hálózat vagy az NLP, a Páncélököl ide dobja ki a kódot
+                console.log(`\n   ⚠️ [YDIAK] Ugrás! Hiba vagy megfagyott állás (időtúllépés): ${jobUrl}`);
             }
         }
 
